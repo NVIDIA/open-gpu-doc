@@ -28,14 +28,33 @@ EVO consists of several channels:
             immediate channels.  The cursor channel allows low-latency
             cursor position updates, asynchronously to the core channel.
 
+The "NVDisplay" Engine is new in Volta, and is a major improvement upon EVO.
+The software interface consists of a set of channels as in EVO, but how those
+channels can be used is more flexible.
+
+    "core": This channel is similar to EVO's core channel, except it does not
+            support programming a surface as a base layer.
+    "window": This channel replaces EVO's base and overlay channels.  It is
+            designed support a superset of the capabilities of the earlier
+            channels, but in addition supports scaling, alpha blending, and
+            blend order, among other improvements.  Windows are not inherently
+            bound to a head and must be bound explicitly with core channel
+            methods.
+    "window immediate": Like EVO's overlay immediate, this can be used to
+            position the corresponding window channel on the raster.  Unlike
+            EVO's overlay immediate, this is a DMA channel to support
+            enqueuing more than one update at a time.
+    "cursor": This is similar to EVO's cursor channel.  There is one cursor
+            per head.
+
 There is a per-channel header file that defines the method interface to
 each channel.
 
-There are both an EVO "class name" and a software class number that are
+There are both a "class name" and a software class number that are
 used to describe the combination of channel versions used together.
 
-The table below describes which EVO class name is used with which GPU,
-and which channel header files are used with that EVO class.
+The table below describes which class name is used with which GPU,
+and which channel header files are used with that class.
 
 __________________________________________________________________________
 
@@ -127,7 +146,7 @@ Overlay Immediate Channel:  cl917b.h
 Base Channel:               cl927c.h
 Core Channel:               cl947d.h
 Overlay Channel:            cl917e.h
-GPUs:                       gm107
+GPUs:                       gm107, gm108
 __________________________________________________________________________
 
 Class Name:                 DISP025X
@@ -137,6 +156,35 @@ Overlay Immediate Channel:  cl917b.h
 Base Channel:               cl927c.h
 Core Channel:               cl957d.h
 Overlay Channel:            cl917e.h
-GPUs:                       gm204
+GPUs:                       gm200, gm204, gm206
+__________________________________________________________________________
+
+Class Name:                 DISP027X
+Software Class Number:      9770
+Cursor Channel:             cl917a.h
+Overlay Immediate Channel:  cl917b.h
+Base Channel:               cl927c.h
+Core Channel:               cl977d.h
+Overlay Channel:            cl917e.h
+GPUs:                       gp100
+__________________________________________________________________________
+
+Class Name:                 DISP028X
+Software Class Number:      9870
+Cursor Channel:             cl917a.h
+Overlay Immediate Channel:  cl917b.h
+Base Channel:               cl927c.h
+Core Channel:               cl987d.h
+Overlay Channel:            cl917e.h
+GPUs:                       gp102, gp104, gp106, gp107, gp108
+__________________________________________________________________________
+
+Class Name:                 NVD_20
+Software Class Number:      C370
+Cursor Channel:             clc37a.h
+Window Immediate Channel:   clc37b.h
+Core Channel:               clc37d.h
+Window Channel:             clc37e.h
+GPUs:                       gv100
 __________________________________________________________________________
 
