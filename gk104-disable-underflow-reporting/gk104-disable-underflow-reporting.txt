@@ -1,0 +1,89 @@
+Synopsis:
+
+How to address an intermittent problem observed on some GK104-based products.
+
+Description:
+
+A diagnostic setting was inadvertently left enabled in the production VBIOS
+builds on some NVIDIA GK104-based graphics cards.  This setting can result in a
+red screen being displayed in some rare cases, for example in response to
+certain mode-set operations.
+
+The setting in question is used as part of the product engineering process to
+make display engine underflows more easily human-detectable.  This is a scenario
+in which the bandwidth provided by the GPU's video memory interface, in the
+current performance state (at relevant clock frequencies defined by this state),
+is insufficient to satisfy the current isochronous streaming requirements of the
+display engine.
+
+The NVIDIA Accelerated Linux Graphics Driver disables this setting when it
+initializes the GPU.  However, it is NVIDIA's suggestion that independently
+developed drivers also disable it.
+
+Workaround:
+
+The underflow detection setting can be disabled by means of the per-head
+register NV_PDISP_RG_UNDERFLOW(i), accessible via the GPUs' BAR0 (where 'i' is
+the head index):
+
+  NV_PDISP_RG_UNDERFLOW(i) (0x00616308 + (i) * 2048) 
+
+Since the affected GPUs implement four heads, four such registers are
+available. To disable the underflow detection, the registers need to be
+programmed with the value 0. 
+
+Scope:
+
+The problem described above affects GK104-based products with VBIOS versions
+below 80.04.63.00.00.  This includes (but may not be limited to) the following
+products:
+
+  PCI ID  Product Name
+  ------- -----------------
+  0x11a0  GeForce GTX 680M
+  0x11a1  GeForce GTX 670MX
+  0x11a2  GeForce GTX 675MX
+  0x11a3  GeForce GTX 680MX
+  0x11bc  Quadro K5000M
+  0x11bd  Quadro K4000M
+  0x11be  Quadro K3000M
+
+Register Description:
+
+This register is used for detecting underflows and also determines what action
+the hw should take when an underflow occurs.
+
+ENABLE Turns on underflow reporting. Note that this has no effect on the
+underflow mode. The underflow mode (what to do when an underflow occurs, REPEAT
+or RED, is always active).
+
+UNDERFLOWED Indicates whether an underflow has occurred. This is a "sticky" bit.
+To clear it, software writes a '1' to this bit.  UNDERFLOWED is active
+only when the above ENABLE bit is set.
+
+UNDERFLOW_MODE Indicates what to do when an underflow occurs. If REPEAT
+is set, then the raster generator will repeat the last pixel, when a new
+pixel is not available. If RED is set, the raster generator will display
+bright red for any missing pixels.
+
+ 31            24 23           16 15            8 7             0
+.-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-. 
+|                             |0 0 0 0 0 0 0|                   | RG_UNDERFLOW
+`-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+
+#define NV_PDISP_RG_UNDERFLOW(i)             (0x00616308+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_UNDERFLOW__SIZE_1                            4 /*       */
+#define NV_PDISP_RG_UNDERFLOW_ENABLE                           0:0 /* RWIVF */
+#define NV_PDISP_RG_UNDERFLOW_ENABLE_INIT               0x00000000 /* RWI-V */
+#define NV_PDISP_RG_UNDERFLOW_ENABLE_ENABLE             0x00000001 /* RW--V */
+#define NV_PDISP_RG_UNDERFLOW_ENABLE_DISABLE            0x00000000 /* RW--V */
+#define NV_PDISP_RG_UNDERFLOW_UNDERFLOWED                      4:4 /* RWIVF */
+#define NV_PDISP_RG_UNDERFLOW_UNDERFLOWED_INIT          0x00000000 /* RWI-V */
+#define NV_PDISP_RG_UNDERFLOW_UNDERFLOWED_CLR           0x00000001 /* -W--V */
+#define NV_PDISP_RG_UNDERFLOW_UNDERFLOWED_YES           0x00000001 /* R---V */
+#define NV_PDISP_RG_UNDERFLOW_UNDERFLOWED_NO            0x00000000 /* R---V */
+#define NV_PDISP_RG_UNDERFLOW_MODE                             8:8 /* RWIVF */
+#define NV_PDISP_RG_UNDERFLOW_MODE_INIT                 0x00000000 /* RWI-V */
+#define NV_PDISP_RG_UNDERFLOW_MODE_REPEAT               0x00000000 /* RW--V */
+#define NV_PDISP_RG_UNDERFLOW_MODE_RED                  0x00000001 /* RW--V */
+

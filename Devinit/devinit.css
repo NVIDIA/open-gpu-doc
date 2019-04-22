@@ -1,0 +1,222 @@
+/* Cascading Style Sheet for devinit.xml/devinit.xsl */
+
+.title          {font-family:Ariel;font-size:16pt;font-weight:bold;margin-bottom:24pt;}
+
+.topic-header   {font-size:12pt;font-weight:bold;}
+.topic-body     {margin-left:5%;}
+.topic-paragraph
+                {
+                    margin-bottom:12pt;
+                }
+.topic-code     {font-family:Courier;}
+
+
+.index-header   {font-size:12pt;font-weight:bold;}
+.index-body     {margin-left:5%;}
+.index          {
+                    width:50em;
+                    margin-bottom:36pt;
+                    background-color:#FFFFCC;
+                    font-family:Verdana;
+                    font-size:10pt;
+                }
+.numeric-index  {
+                    width:30em;
+                    margin-bottom:36pt;
+                    background-color:#FFFFCC;
+                    font-family:Verdana;
+                    font-size:10pt;
+                }
+.index-table-header
+               {
+                    font-weight:bold;
+                    color:#FFFFFF;
+                    background-color:#800000;
+                    border-color:#000000;
+                    border-width:1pt;
+                    border-style:solid;
+                    border-top-style:none;
+                }
+.index-row      {border-color:#000000;border-width:1pt;border-style:solid;border-top-style:none;}
+.link           {width:40%;vertical-align:top}
+.numeric        {width:10%;vertical-align:top}
+.element        {width:60%;vertical-align:top}
+
+.opcode-page    {
+                    page-break-before: always
+                }
+
+.opcode         {
+                    margin-top:36pt;
+                    padding-top:12pt;
+                    border-top-color:#000000;
+                    border-top-width:4pt;
+                    border-top-style:solid;
+                    font-family:Verdana;
+                    font-size:10pt;
+                    page-break-before: always
+                }
+
+.opcode-deprecated 
+                {
+                    position:relative;
+                    margin-top:36pt;
+                    padding-top:12pt;
+                    border-top-color:#000000;
+                    border-top-width:4pt;
+                    border-top-style:solid;
+                    font-family:Verdana;
+                    font-size:10pt;
+                    background-color:#E8E8E8;
+                }
+
+.opcode-new 
+                {
+                    position:relative;
+                    margin-top:36pt;
+                    padding-top:12pt;
+                    border-top-color:#000000;
+                    border-top-width:4pt;
+                    border-top-style:solid;
+                    font-family:Verdana;
+                    font-size:10pt;
+                    background-color:#FFDDDD;
+                }
+
+.opcode-header  {
+                    border-bottom-color:#808080;
+                    border-bottom-width:1pt;
+                    border-bottom-style:solid;
+                    font-size:14pt;
+                    font-weight:bold;
+                }
+
+.summary        {margin-bottom:12pt;}
+
+.layout-header  {font-size:12pt;font-weight:bold;}
+.layout-body    {margin-left:5%;}
+.layout-table   {width:50em;margin-bottom:12pt;background-color:#FFFFE0;position:relative;}
+.parameter      {}
+.parameter-size {width:12%;overflow:hidden;vertical-align:top;}
+.parameter-name {width:35%;overflow:hidden;vertical-align:top;}
+.parameter-desc {width:53%;overflow:hidden;vertical-align:top;}
+
+
+.details-header {font-size:12pt;font-weight:bold;}
+.details-body   {margin-left:5%;}
+
+.attrib-table   {
+                    border-top-color:#FFFFFF;
+                    border-top-width:1pt;
+                    border-top-style:solid;
+                    font-size:8pt;
+                    width:50em;
+                    margin-bottom:12pt;
+                }
+.attrib-row     
+                {
+                    border-left-color:#FFFFFF;
+                    border-left-width:1pt;
+                    border-left-style:solid;
+                    border-bottom-color:#FFFFFF;
+                    border-bottom-width:1pt;
+                    border-bottom-style:solid;
+                    background-color:#E8E8E8;
+                }
+.attrib-name    {
+                    width:30%;
+                    overflow:hidden;
+                    padding:2pt;
+                    font-weight:bold;
+                    border-right-color:#FFFFFF;
+                    border-right-width:1pt;
+                    border-right-style:solid;
+                    background-color:#DDDDDD;
+                    vertical-align:top;
+                }
+.attrib-value   {
+                    width:70%;
+                    overflow:hidden;
+                    padding:2pt;
+                    border-right-color:#FFFFFF;
+                    border-right-width:1pt;
+                    border-right-style:solid;
+                    vertical-align:top;
+                }
+
+.paragraph      {margin-bottom:12pt;}
+.list           {margin-left:5%;margin-bottom:12pt;}
+.item           {}
+.note           {margin-bottom:12pt;font-style:italic;color:#FF0000;}
+.restriction    {margin-bottom:12pt;font-style:italic;color:#FF0000;}
+.todo           {margin-bottom:12pt;font-style:italic;color:#FF0000;text-decoration:blink;}
+
+
+.example-header {font-size:12pt;font-weight:bold;}
+.example-body   {margin-left:5%;}
+.example        {margin-bottom:12pt;}
+.example-description
+                {
+                }
+.example-line   {font-family:Courier;}
+
+
+.history-header {font-size:12pt;font-weight:bold;}
+.history-body   {margin-left:5%;}
+.history-table   {
+                    border-top-color:#FFFFFF;
+                    border-top-width:1pt;
+                    border-top-style:solid;
+                    font-size:8pt;
+                    width:15em;
+                    margin-bottom:12pt;
+                }
+.history-row     
+                {
+                    border-left-color:#FFFFFF;
+                    border-left-width:1pt;
+                    border-left-style:solid;
+                    border-bottom-color:#FFFFFF;
+                    border-bottom-width:1pt;
+                    border-bottom-style:solid;
+                    background-color:#E8FFE8;
+                }
+.history-core   {
+                    width:40%;
+                    overflow:hidden;
+                    padding:2pt;
+                    font-weight:bold;
+                    border-right-color:#FFFFFF;
+                    border-right-width:1pt;
+                    border-right-style:solid;
+                    background-color:#DDFFDD;
+                    vertical-align:top;
+                }
+.history-value  {
+                    width:60%;
+                    overflow:hidden;
+                    padding:2pt;
+                    border-right-color:#FFFFFF;
+                    border-right-width:1pt;
+                    border-right-style:solid;
+                    vertical-align:top;
+                }
+
+
+.audits-header  {font-size:12pt;font-weight:bold;}
+.audits-body    {margin-left:5%;}
+.audit          {margin-bottom:12pt;font-style:italic;}
+
+.watermark      {
+                    position:absolute;
+                    text-align:center;
+                    width:100%;
+                    height:100%;
+                    font-size:24pt;
+                    color:#CCCCCC;
+                    font-style:italic;
+                    z-index:-1;
+                }
+
+
+.error          {text-decoration:overline;color:#FF0000;}

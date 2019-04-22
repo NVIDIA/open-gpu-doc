@@ -1,0 +1,79 @@
+Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_PTIMER_PRI_TIMEOUT                            0x00009080 /* RW-4R */
+#define NV_PTIMER_PRI_TIMEOUT_PERIOD                           23:0 /* RWIVF */
+#define NV_PTIMER_PRI_TIMEOUT_PERIOD_MIN                 0x00000003 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_PERIOD_MAX                 0x00ffffff /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_PERIOD_RTL                 0x0000000a /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_PERIOD_SHORT               0x00000006 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_PERIOD_INIT                0x00000100 /* RWI-V */
+#define NV_PTIMER_PRI_TIMEOUT_PERIOD__PROD               0x00002000 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_EN                              31:31 /* RWIVF */
+#define NV_PTIMER_PRI_TIMEOUT_EN_DISABLED                0x00000000 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_EN_ENABLED                 0x00000001 /* RWI-V */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0                     0x00009084 /* RW-4R */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_TO                         0:0 /* RWXVF */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_TO_ERROR                   0x1 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_TO_CLEAR                   0x0 /* -W--V */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_TO_NONE                    0x0 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_WRITE                      1:1 /* RWXVF */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_WRITE_TRUE                 0x1 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_WRITE_FALSE                0x0 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_ADDR                      23:2 /* RWXVF */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_FECS_TGT                 31:31 /* RWXVF */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_FECS_TGT_TRUE              0x1 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_0_FECS_TGT_FALSE             0x0 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_1                     0x00009088 /* RW-4R */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_1_DATA                      31:0 /* RWXVF */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_1_DATA_WAS_READ              0x0 /* RW--V */
+#define NV_PTIMER_PRI_TIMEOUT_FECS_ERRCODE               0x0000908C /* RW-4R */
+#define NV_PTIMER_PRI_TIMEOUT_FECS_ERRCODE_DATA                31:0 /* RWXVF */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_3                     0x00009090 /* RW-4R */
+#define NV_PTIMER_PRI_TIMEOUT_SAVE_3_SUBID                      3:0 /* R-XVF */
+#define NV_PTIMER_INTR_0                                 0x00009100 /* RW-4R */
+#define NV_PTIMER_INTR_0_ALARM                                  0:0 /* RWXVF */
+#define NV_PTIMER_INTR_0_ALARM_NOT_PENDING               0x00000000 /* R---V */
+#define NV_PTIMER_INTR_0_ALARM_PENDING                   0x00000001 /* R---V */
+#define NV_PTIMER_INTR_0_ALARM_RESET                     0x00000001 /* -W--C */
+#define NV_PTIMER_INTR_0_TIMER                                  1:1 /* RWXVF */
+#define NV_PTIMER_INTR_0_TIMER_NOT_PENDING               0x00000000 /* R---V */
+#define NV_PTIMER_INTR_0_TIMER_PENDING                   0x00000001 /* R---V */
+#define NV_PTIMER_INTR_0_TIMER_RESET                     0x00000001 /* -W--C */
+#define NV_PTIMER_INTR_EN_0                              0x00009140 /* RW-4R */
+#define NV_PTIMER_INTR_EN_0_ALARM                               0:0 /* RWIVF */
+#define NV_PTIMER_INTR_EN_0_ALARM_DISABLED               0x00000000 /* RWI-V */
+#define NV_PTIMER_INTR_EN_0_ALARM_ENABLED                0x00000001 /* RW--V */
+#define NV_PTIMER_INTR_EN_0_TIMER                               1:1 /* RWIVF */
+#define NV_PTIMER_INTR_EN_0_TIMER_DISABLED               0x00000000 /* RWI-V */
+#define NV_PTIMER_INTR_EN_0_TIMER_ENABLED                0x00000001 /* RW--V */
+#define NV_PTIMER_GR_TICK_FREQ                           0x00009480 /* RW-4R */
+#define NV_PTIMER_GR_TICK_FREQ_SELECT                           2:0 /* RWIUF */
+#define NV_PTIMER_GR_TICK_FREQ_SELECT_MAX                0x00000000 /* RW--V */
+#define NV_PTIMER_GR_TICK_FREQ_SELECT_DEFAULT            0x00000005 /* RWI-V */
+#define NV_PTIMER_GR_TICK_FREQ_SELECT_MIN                0x00000007 /* RW--V */
+#define NV_PTIMER_ALARM_0                                0x00009420 /* RW-4R */
+#define NV_PTIMER_ALARM_0_NSEC                                 31:5 /* RWIUF */
+#define NV_PTIMER_ALARM_0_NSEC_INIT                             0x0 /* RWI-V */
+#define NV_PTIMER_TIMER_0                                0x00009428 /* RW-4R */
+#define NV_PTIMER_TIMER_0_NSEC                                 31:0 /*       */
+#define NV_PTIMER_TIMER_0_USEC                                31:10 /* RWIUF */
+#define NV_PTIMER_TIMER_0_USEC_INIT                             0x0 /* RWI-V */

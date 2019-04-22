@@ -1,0 +1,92 @@
+--------------------------------------------------------------------------------
+
+Synopsis:
+
+Description of changes made to the framebuffer partition addressing (FBPA) in
+Pascal and later NVIDIA architectures.
+
+--------------------------------------------------------------------------------
+
+Description:
+
+NVIDIA moved and expanded the MMIO space used for accessing the per-partition
+information on Pascal and later architectures.  Relative offsets to specific
+controls remain the same as for prior architectures, for the most part.
+
+--------------------------------------------------------------------------------
+
+Summary:
+
+These MMIO ranges have been moved and expanded from 0x1000 to 0x4000 in size:
+
+Name                Old Range               New Range
+NV_PFB_FBPA         0x10F000 (0x1000)       0x9A0000 (0x4000)
+NV_PFB_FBPA[i]      0x110000+(i * 0x1000)   0x900000+(i * 0x4000)
+NV_PFB_FBPA_MC[i]   0x11D000+(i * 0x1000)   0x980000+(i * 0x4000)
+
+The number of NV_PFB_FBPA[i] ranges is increased to a maximum of 16.
+The number of NV_PFB_FBPA_MC[i] ranges remains 3.
+
+Memory partition sizing and programming is the same as in prior NVIDIA
+architectures.
+
+FBPAs are grouped into logical FBP units.  In most prior NVIDIA architectures
+(except GF108) each logical FBP mapped to one FBPA.  To support High Bandwidth
+Memory (HBM) GP100 groups 2 FBPAs into each logical FBP.  This is noted here to
+be clear that the number of logical FBPs does not necessarily equate to the number
+of physical FBPAs.  The register NV_PTOP_SCAL_NUM_FBPA_PER_FBP (0x22458) defines
+this relationship in Pascal and later architectures.
+
+Per-partition memory size detection works similarly to the way it has in prior
+NVIDIA architectures:
+
+1) Determine maximum number of possible FBPAs by reading
+    NV_PTOP_SCAL_NUM_FBPAS (0x2243C)
+2) Determine number of FBPAs per FBP by reading
+    NV_PTOP_SCAL_NUM_FBPA_PER_FBP (0x22458)
+3) Determine maximum number of LTCs per FBP by reading
+    NV_FUSE_STATUS_OPT_ROP_L2_FBP(i) (0x21d70+(i)*4)
+4) For each bit not set in NV_FUSE_STATUS_OPT_FBIO (0x21C14)
+    a. Read the partition memory size from
+        NV_PFB_FBPA[i] + _CSTATUS_RAMAMOUNT (0x20C)
+    b. Up to the number of possible FBPAs determined in #1
+5) Any difference in the per-partition memory size indicates a "mixed memory"
+    configuration (Fermi & Kepler).
+6) Any difference in the per-partition LTC coverage effectively indicates a
+    "mixed memory" configuration (Maxwell and later).
+7) For "mixed memory" configurations:
+    a. Set NV_PFB_FBHUB_NUM_ACTIVE_FBPS (0x100800) bit 4 to 1.
+    b. Treat GPU FB address space as split into lower and upper sections.
+        The lower size is common partition size * FBPA count and is
+        based at 0.  The upper section starts at either 0x2'00000000
+        (Fermi/Kepler) or 0x10'00000000 (Maxwell & later) PLUS the
+        common partition size.  Its size is the remaining GPU FB not
+        already mapped in the lower section.
+    c. The upper section of memory should not be used for displayable or
+        compression-related surfaces.
+
+--------------------------------------------------------------------------------
+
+Definitions:
+
+#define NV_PTOP_SCAL_NUM_FBPAS                          0x0002243C /* R--4R */
+
+#define NV_PTOP_SCAL_NUM_FBPAS_VALUE                           4:0 /* R-IVF */
+
+
+#define NV_PTOP_SCAL_NUM_FBPA_PER_FBP                   0x00022458 /* R--4R */
+
+#define NV_PTOP_SCAL_NUM_FBPA_PER_FBP_VALUE                    4:0 /* R-IVF */
+
+
+#define NV_FUSE_STATUS_OPT_ROP_L2_FBP(i)        (0x00021d70+(i)*4) /* R-I4A */
+#define NV_FUSE_STATUS_OPT_ROP_L2_FBP__SIZE_1                   16 /*       */
+#define NV_FUSE_STATUS_OPT_ROP_L2_FBP_DATA                    31:0 /* R-IVF */
+
+#define NV_FUSE_STATUS_OPT_FBIO                         0x00021C14 /* R-I4R */
+#define NV_FUSE_STATUS_OPT_FBIO_DATA                          15:0 /* R-IVF */
+
+#define NV_PFB_FBHUB_NUM_ACTIVE_FBPS                    0x00100800 /* RW-4R */
+#define NV_PFB_FBHUB_NUM_ACTIVE_FBPS_MIXED_MEM_DENSITY         4:4 /*       */
+
+--------------------------------------------------------------------------------

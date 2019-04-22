@@ -1,0 +1,134 @@
+Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+     This manual describes the USERMODE device.  USERMODE is a mappable range of
+registers for use by usermode drivers.  The range is 64KB aligned and 64KB in
+size to match the maximum page size of systems supported by NVIDIA hardware.
+
+     Note that accesses to undefined registers in this device range do not cause
+PRI_TIMEOUT interrupts to be raised.  This is different from other PRI devices.
+Writes to undefined registers are silently thrown away.  Reads from undefined
+registers return 0.
+
+Mnemonic Description            Size    Interface
+-------  -----------            ----    ---------
+USERMODE Usermode region         64K    HOST
+
+#define NV_USERMODE                           0x0081FFFF:0x00810000 /* RW--D */
+
+                        Table 1-1  Local Devices
+
+
+
+2  -  IDENTIFICATION AND CAPABILITIES REGISTERS
+===============================================================================
+
+     The first 128 bytes of the NV_USERMODE device are reserved for up to 32
+configuration and capabilities registers.
+
+
+CFG0 - Config register 0: Class ID for the NV_USERMODE class
+
+     The USERMODE_CLASS_ID field of the CFG0 register contains the class ID for
+the class corresponding to the NV_USERMODE device.  In gv100, this is the class
+volta_usermode_a.
+
+
+#define  NV_USERMODE_CFG0                                 0x00810000 /* R--4R */
+#define  NV_USERMODE_CFG0_USERMODE_CLASS_ID                     15:0 /* R-IUF */
+#define  NV_USERMODE_CFG0_USERMODE_CLASS_ID_VALUE             50017 /* R-I-V */
+
+// Note: addresses up to 0x810080 are reserved for CGF and capabilities registers
+
+
+3  -  PTIMER CURRENT TIME REGISTERS
+===============================================================================
+
+     The TIME registers contain the current time as kept by the PTIMER; see
+dev_timer.ref.  The current time is expressed in elapsed nanoseconds since the
+UNIX epoch, 00:00 GMT, January 1, 1970 (zero hour).  It generally has a
+resolution of 32 nanoseconds.
+
+     Note: To query the current time, read TIME_1, then TIME_0, and then TIME_1
+again.  If the two readings of TIME_1 do not match, repeat the procedure.  This
+avoids incorrectly retrieving an incorrect time referring to a point up to 4
+seconds in the future: if one were to simply read TIME_0 and then TIME_1, TIME_0
+may overflow between the two reads.
+
+     TIME_0 contains the low 32 bits of the timer. The least significant 5 bits
+are always zero.  The NSEC field contains the low order bits in 32ns
+granularity.
+
+     TIME_1 contains the high order bits.  The NSEC field contains the upper 29
+bits of the timer.
+
+
+TIME_0 Register - Timer Low Bits
+
+
+#define NV_USERMODE_TIME_0                                0x00810080 /* R--4R */
+#define NV_USERMODE_TIME_0_NSEC                                 31:5 /* R-XUF */
+
+
+TIME_1 Register - Timer High Bits
+
+
+#define NV_USERMODE_TIME_1                                0x00810084 /* R--4R */
+#define NV_USERMODE_TIME_1_NSEC                                 28:0 /* R-XUF */
+
+// Note: addresses 0x810088 and 0x81008c are reserved for future TIME registers
+
+
+
+4  -  CHANNEL WORK SUBMISSION REGISTERS
+===============================================================================
+
+NOTIFY_CHANNEL_PENDING - Notify Host that a channel has new work available
+
+     Writing a channel ID to the ID field of NOTIFY_CHANNEL_PENDING tells Host
+that new work is available to run on that channel.  This causes the PENDING
+status to be set in the NV_PCCSR_CHANNEL_STATUS field for that channel and
+behaves identically to writing NV_PCCSR_CHANNEL_FORCE_PENDING, but is accessible
+to usermode drivers.  Setting pending will cause Host to schedule the channel
+the next time it comes up in the runlist.  Once the channel is scheduled, the
+PBDMA will read GP_PUT from USERD to determine whether work is actually
+available for the channel.
+
+     Submitting new work to a channel involves these steps:
+
+     1. Write methods to the pushbuffer space
+     2. Construct a new gp_fifo entry pointing to that pushbuffer space
+     3. Update GP_PUT in USERD to indicate the new gp_fifo entry is ready
+     4. Write the channel's handle to NV_USERMODE_NOTIFY_CHANNEL_PENDING_ID
+
+     Note that if the ID refers to a non-existent channel, the write will be
+ignored.  Moreover, a write to an ID that exceeds the maximum supported channel
+ID will have no effect (it will not overflow, causing some other channel to go
+pending).
+
+     Note that if the ID refers to a channel for which GP_PUT == GP_GET, Host will
+still schedule the channel in order to determine the current status of its
+GP_PUT, at which point it will discover there is no new work and move on to the
+next channel.
+
+
+#define  NV_USERMODE_NOTIFY_CHANNEL_PENDING               0x00810090 /* -W-4R */
+#define  NV_USERMODE_NOTIFY_CHANNEL_PENDING_ID                  31:0 /* -W-UF */

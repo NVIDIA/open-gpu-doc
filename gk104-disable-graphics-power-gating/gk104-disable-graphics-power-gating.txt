@@ -1,0 +1,113 @@
+Synopsis:
+
+How to disable on-boot power-gating (PGOB) of the graphics engine on some
+GK104 and GK106 based notebook products.
+
+Description:
+
+The GK104 and GK106 GPUs used in some notebook products are configured such
+that the graphics engine is power-gated at boot time.  This on-boot
+power-gating feature needs to be disabled using the sequence described below
+before the graphics engine can be initialized and used by a GPU driver.
+
+The NVIDIA Accelerated Linux GPU Driver enables the graphics engine as needed.
+However, independently developed drivers also need to enable the engine
+before attempting to communicate with it.
+
+Sequence:
+
+All register write accesses described in this section are read-modify-write
+operations.  That is, changes to fields within the affected registers must not
+change the value of other, reserved fields within the same registers.
+
+   1) Set NV_PMC_ENABLE_PGRAPH to DISABLED.
+   2) Read NV_PMC_ENABLE.
+
+   3) Set NV_PMC_ENABLE_BLG to ENABLED.
+   4) Delay 50ms.
+
+   5) Set NV_PPWR_PMU_PG_PSW_MASK_CLAMPVAL_0 to 1.
+   6) Set NV_PPWR_PMU_PG_PSW_MASK_CLAMPMSK_0 to ENABLE.
+   7) Set NV_PPWR_PMU_PG_PSW_MASK_CLAMPMSK_0 to DISABLE.
+
+   8) Set NV_THERM_CTRL_1_PGOB_OVERRIDE_VALUE to OFF.
+   9) Set NV_THERM_CTRL_1_PGOB_OVERRIDE to ENABLED.
+  10) Delay 50ms.
+
+  11) Set NV_PPWR_PMU_PG_PSW_MASK_CLAMPVAL_0 to 0.
+  12) Set NV_PPWR_PMU_PG_PSW_MASK_CLAMPMSK_0 to ENABLE.
+  13) Set NV_PPWR_PMU_PG_PSW_MASK_CLAMPMSK_0 to DISABLE.
+
+  14) Set NV_PMC_ENABLE.BLG to DISABLED.
+
+  15) Set NV_PMC_ENABLE_PGRAPH to ENABLED.
+  16) Read NV_PMC_ENABLE.
+
+Scope:
+
+The sequence is required on certain GK104 and GK106 based notebooks. However,
+it may be safely applied on all GK104 and GK106 GPUs.
+
+Register Description:
+
+     The ENABLE register is used to enable or disable an engine.  The disabled
+state is the same as a software reset.  While an engine is disabled, the
+engine's reset signal is active.
+
+31            24 23           16 15            8 7             0
+.-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-.
+|       |  0 0 0 0 0 0| |0 0| | | |0 0| |0 0 0| |0 0| | | | | | | ENABLE
+`-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+
+#define NV_PMC_ENABLE                                   0x00000200 /* RW-4R */
+
+The PGRAPH bit specifies the Graphics Engine is enabled.
+
+#define NV_PMC_ENABLE_PGRAPH                                 12:12 /* RWIVF */
+#define NV_PMC_ENABLE_PGRAPH_DISABLED                   0x00000000 /* RWI-V */
+#define NV_PMC_ENABLE_PGRAPH_ENABLED                    0x00000001 /* RW--V */
+
+The BLG bit specifies whether the Block Level Power Gating (BLPG) and Block
+Level Clock Gating (BLCG) controllers within the graphics engine are
+enabled.
+
+#define NV_PMC_ENABLE_BLG                                    27:27 /* RWIVF */
+#define NV_PMC_ENABLE_BLG_DISABLED                      0x00000000 /* RWI-V */
+#define NV_PMC_ENABLE_BLG_ENABLED                       0x00000001 /* RW--V */
+
+
+CLAMPMSK - Decides whether or not to mask the clamp enable signal for that engine.
+CLAMPVAL - Decides what value to set clamp enable signal to when CLAMPMSK is 1.
+
+ 31           24 23           16 15            8 7             0
+.-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-.
+|       |       |       |       |       |       |       |       | PG_PSW_MASK
+`-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+
+#define NV_PPWR_PMU_PG_PSW_MASK                         0x0010a78c /* RW-4R */
+
+#define NV_PPWR_PMU_PG_PSW_MASK_CLAMPMSK_0                     0:0 /* RWIUF */
+#define NV_PPWR_PMU_PG_PSW_MASK_CLAMPMSK_0_INIT         0x00000000 /* RWI-V */
+#define NV_PPWR_PMU_PG_PSW_MASK_CLAMPMSK_0_ENABLE       0x00000001 /* RW--V */
+#define NV_PPWR_PMU_PG_PSW_MASK_CLAMPMSK_0_DISABLE      0x00000000 /* RW--V */
+#define NV_PPWR_PMU_PG_PSW_MASK_CLAMPVAL_0                     1:1 /* RWIUF */
+#define NV_PPWR_PMU_PG_PSW_MASK_CLAMPVAL_0_INIT         0x00000000 /* RWI-V */
+#define NV_PPWR_PMU_PG_PSW_MASK_CLAMPVAL_0_FALSE        0x00000000 /* RW--V */
+#define NV_PPWR_PMU_PG_PSW_MASK_CLAMPVAL_0_TRUE         0x00000001 /* RW--V */
+
+
+ 31           24 23           16 15            8 7             0
+.-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-.
+|0 0| | | | | | |0 0 0| |0 0 0| |0 0 0| |0| | | | | | | | | | | | CTRL_1
+`-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+
+#define NV_THERM_CTRL_1                                 0x00020004 /* RW-4R */
+
+#define NV_THERM_CTRL_1_PGOB_OVERRIDE                        30:30 /* RWIVF */
+#define NV_THERM_CTRL_1_PGOB_OVERRIDE_INIT              0x00000000 /* RWI-V */
+#define NV_THERM_CTRL_1_PGOB_OVERRIDE_DISABLED          0x00000000 /* RW--V */
+#define NV_THERM_CTRL_1_PGOB_OVERRIDE_ENABLED           0x00000001 /* RW--V */
+#define NV_THERM_CTRL_1_PGOB_OVERRIDE_VALUE                  31:31 /* RWIVF */
+#define NV_THERM_CTRL_1_PGOB_OVERRIDE_VALUE_INIT        0x00000000 /* RWI-V */
+#define NV_THERM_CTRL_1_PGOB_OVERRIDE_VALUE_OFF         0x00000000 /* RW--V */
+#define NV_THERM_CTRL_1_PGOB_OVERRIDE_VALUE_ON          0x00000001 /* RW--V */

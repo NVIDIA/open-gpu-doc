@@ -1,0 +1,76 @@
+--------------------------------------------------------------------------------
+
+Synopsis:
+
+Description of changes made to the interrupt controller in Pascal and later
+NVIDIA architectures.
+
+--------------------------------------------------------------------------------
+
+Description:
+
+NVIDIA replaced the old interrupt control tree in Pascal and later architectures
+to migrate away from a legacy PCI interrupt based scheme toward MSI-X interrupts.
+
+--------------------------------------------------------------------------------
+
+Summary:
+
+These registers no longer exist in Pascal and later architectures:
+#define NV_PMC_INTR_2                           0x00000108 /*       */
+#define NV_PMC_INTR_LTC                         0x0000017c /* R--4R */
+#define NV_PMC_INTR_FBPA                        0x00000180 /* R--4R */
+#define NV_PMC_INTR_READ(i)             (0x00000160+(i)*4) /* R--4A */
+#define NV_PMC_INTR_IMSK(i)             (0x00000640+(i)*4) /* RW-4A */
+
+These registers are added in Pascal and later architectures:
+#define NV_PMC_INTR_MODE(i)             (0x00000120+(i)*4) /* R--4A */
+#define NV_PMC_INTR_EN_SET(i)           (0x00000160+(i)*4) /* -W-4A */
+#define NV_PMC_INTR_EN_CLEAR(i)         (0x00000180+(i)*4) /* -W-4A */
+#define NV_PMC_INTR_SW(i)               (0x000001A0+(i)*4) /* RW-4A */
+#define NV_PMC_INTR_LTC                         0x000001C0 /* R--4R */
+#define NV_PMC_INTR_FBPA                        0x000001D0 /* R--4R */
+
+The fields of the device interrupt pending register are no longer writable.
+#define NV_PMC_INTR(i)                              (0x00000100+(i)*4)
+
+The function of this register has changed.  It is now a read-only status register
+reporting the per-device interrupt enable state.
+#define NV_PMC_INTR_EN(i)                           (0x00000140+(i)*4)
+
+Furthermore, the NV_PMC_INTR(2) has been removed.  Only INTR(0) and INTR(1) exist
+on Pascal and later architectures.
+
+Each bit of NV_PMC_INTR_MODE(i) defines whether the corresponding device interrupt
+is LEVEL trigger (0) or EDGE trigger (1).
+
+NV_PMC_INTR_EN(i) is now read-only and no longer used to enable/disable interrupts.
+That task is now handled by NV_PMC_INTR_EN_SET(i) and NV_PMC_INTR_EN_CLEAR(i).
+Each bit corresponds with a GPU device.
+
+The mapping of devices to interrupts is best determined by parsing the PTOP
+DEVICE_INFO structure, however legacy devices still map to the same bitfields
+as in pre-Pascal architectures.
+
+Device              Bit#
+NVENC1              1
+CE5                 2
+NVENC2              4
+CE0                 5
+CE1                 6
+CE2/GRCOPY          7
+PFIFO               8
+REPLAYABLE_FAULT    9
+CE3                 10
+CE4                 11
+PGRAPH              12
+PFB                 13
+SEC                 15
+NVENC0              16
+NVDEC               17
+THERMAL             18
+PTIMER              20
+PMU                 24
+LTC                 25
+SW                  31
+

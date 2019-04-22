@@ -1,0 +1,2575 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.4.5" />
+<title>NVIDIA BIOS Information Table Specification</title>
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revnumber, span#revdate, span#revremark {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock {
+  padding-left: 2.0em;
+  margin-right: 10%;
+}
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock {
+  padding-left: 2.0em;
+  margin-right: 10%;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 2px solid silver;
+}
+
+div.exampleblock > div.content {
+  border-left: 2px solid silver;
+  padding: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 2px solid silver;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+</style>
+</head>
+<body>
+<div id="header">
+<h1>NVIDIA BIOS Information Table Specification</h1>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+</div>
+</div>
+<h2 id="_purpose">Purpose</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This document describes the BIOS Information Table (BIT), the
+top-level description table in the NVIDIA VBIOS.</p></div>
+<div class="paragraph"><p>The BIT points to various code sections and data tables used by both the
+BIOS and driver software.  The tables typically contain GPU and
+board-specific information.</p></div>
+<div class="paragraph"><p>VBIOS pointers may point to data beyond the end of the PC-compatible (legacy BIOS, Code Type 00h) image. If a UEFI (Code Type 03h) image follows the PC-compatible image, then the pointer must be adjusted to be an offset into the data following the UEFi Image.</p></div>
+<div class="paragraph"><p>If (pointer &gt; PC-compatible image length) {
+  adjusted_pointer = pointer + UEFI image length
+}</p></div>
+<div class="paragraph"><p>A GPU firmware file (.ROM) may contain data for HW consumption preceding the PCI Expansion ROM contents. The start of the PCI Expansion ROM can be found by checking 512 byte boundaries for the {055h,0AAh} PCI Expansion ROM signature. Additionally, the pointer to the PCI Data Structure should be followed and checked for the "PCIR" PCI Data Structure signature to confirm a valid PCI Expansion ROM has been found.
+When reading the firmware in a system using MMIO the PCI Expansion ROM will begin at PCI Expansion ROM BAR + offset 0.</p></div>
+<h3 id="_bios_information_table_structure">BIOS Information Table Structure</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The BIT is a series of tokenized structures, beginning with a BIT
+definition structure, and a series of BIT tokens and data pointers. The
+data pointers point to a grouping of data items that are used by
+NVIDIA software to locate, use, and/or modify device-specific data.</p></div>
+<h4 id="_bit_header">BIT Header</h4>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="14%" />
+<col width="1%" />
+<col width="10%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="center" valign="top"> Values </th>
+<th align="left" valign="top"> Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ID</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="center" valign="top"><p class="table">0xB8FF</p></td>
+<td align="left" valign="top"><p class="table">BIT Header Identifier</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Signature</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="center" valign="top"><p class="table">"BIT\0"</p></td>
+<td align="left" valign="top"><p class="table">BIT Header Signature</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BCD Version</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="center" valign="top"><p class="table">0x0100</p></td>
+<td align="left" valign="top"><p class="table">BCD Version 1.00 (major version in the upper byte, minor version in the lower byte)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Header Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="center" valign="top"><p class="table">12</p></td>
+<td align="left" valign="top"><p class="table">Size of BIT Header (in bytes)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Token Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="center" valign="top"><p class="table">6</p></td>
+<td align="left" valign="top"><p class="table">Size of BIT Tokens (in bytes)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Token Entries</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="center" valign="top"><p class="table">?</p></td>
+<td align="left" valign="top"><p class="table">Number of token entries that follow</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Checksum</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="center" valign="top"><p class="table">0</p></td>
+<td align="left" valign="top"><p class="table">BIT Header Checksum</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h2 id="_bit_token_structure">BIT Token Structure</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Each BIT token has the same format and length. Prior knowledge of the
+data format, based on the data version indicated, is necessary to access
+the actual data.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="28%" />
+<col width="2%" />
+<col width="68%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ID</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Unique identifier indicating what data is pointed to by the Data Pointer</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Data Version</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Version of the data structure pointed to by the Data Pointer</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Data Size</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Size of data structure pointed to by the Data Pointer (in bytes)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Data Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer (offset) to the actual data structure.  A NULL (0) pointer indicates no data exists for this token, and that it can be treated as a BIT_NOP.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_tokens">BIT Tokens</h3><div style="clear:left"></div>
+<div class="paragraph"><p><strong>Deprecated tokens and data structure versions are highlighted in <span style="color: red;">red</span>.</strong></p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="5%" />
+<col width="2%" />
+<col width="2%" />
+<col width="88%" />
+<thead>
+<tr>
+<th align="left" valign="top">Name </th>
+<th align="center" valign="top">ID </th>
+<th align="left" valign="top">Meaning </th>
+<th align="left" valign="top">Corresponding Data Structure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_I2C_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x32 (‘2’)</p></td>
+<td align="left" valign="top"><p class="table">I2C Script Pointers</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_i2c_ptrs">BIT_I2C_PTRS</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_DAC_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x41 (‘A’)</p></td>
+<td align="left" valign="top"><p class="table">DAC Data Pointers</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_dac_ptrs">BIT_DAC_PTRS</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_BIOSDATA</p></td>
+<td align="center" valign="top"><p class="table">0x42 (‘B’)</p></td>
+<td align="left" valign="top"><p class="table">BIOS Data</p></td>
+<td align="left" valign="top"><p class="table">BIOSDATA <a href="#BIT_BIOSDATA_v1"><span style="color: red;">(Version 1)</span></a> <a href="#BIT_BIOSDATA_v2">(Version 2)</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_CLOCK_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x43 (‘C’)</p></td>
+<td align="left" valign="top"><p class="table">Clock Script Pointers</p></td>
+<td align="left" valign="top"><p class="table">CLK PTRS <a href="#BIT_CLOCK_PTRS_V1"><span style="color: red;">(version 1)</span></a> <a href="#BIT_CLOCK_PTRS_V2">(version 2)</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_DFP_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x44 (‘D’)</p></td>
+<td align="left" valign="top"><p class="table">DFP/Panel Data Pointers</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_dfp_ptrs">BIT_DFP_PTRS</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_NVINIT_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x49 (‘I’)</p></td>
+<td align="left" valign="top"><p class="table">Initialization Table Pointers</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_nvinit_ptrs">BIT_NVINIT_PTRS</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_LVDS_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x4C (‘L’)</p></td>
+<td align="left" valign="top"><p class="table">LVDS Table Pointers</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_lvds_ptrs">BIT_LVDS_PTRS</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_MEMORY_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x4D (‘M’)</p></td>
+<td align="left" valign="top"><p class="table">Memory Control/Programming Pointers</p></td>
+<td align="left" valign="top"><p class="table">BIT_MEMORY_PTRS <a href="#BIT_MEMORY_PTRS_v1">(<span style="color: red;">Version 1</span>)</a> <a href="#BIT_MEMORY_PTRS_v2">(Version 2)</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_NOP</p></td>
+<td align="center" valign="top"><p class="table">0x4E (‘N’)</p></td>
+<td align="left" valign="top"><p class="table">No Operation</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_nop">BIT_NOP</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_PERF_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x50 (‘P’)</p></td>
+<td align="left" valign="top"><p class="table">Performance Table Pointers</p></td>
+<td align="left" valign="top"><p class="table">BIT_PERF_PTRS <a href="#BIT_PERF_PTRS_v1">(<span style="color: red;">Version 1</span>)</a> <a href="#BIT_PERF_PTRS_v2">(Version 2)</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_STRING_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x53 (‘S’)</p></td>
+<td align="left" valign="top"><p class="table">String Pointers</p></td>
+<td align="left" valign="top"><p class="table">BIT_STRING_PTRS <a href="#BIT_STRING_PTRS_v1">(<span style="color: red;">Version 1</span>)</a> <a href="#BIT_STRING_PTRS_v2">(Version 2)</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_TMDS_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x54 (‘T’)</p></td>
+<td align="left" valign="top"><p class="table">TMDS Table Pointers</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_tmds_ptrs">BIT_TMDS_PTRS</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_DISPLAY_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x55 (‘U’)</p></td>
+<td align="left" valign="top"><p class="table">Display Control/Programming Pointers</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_display_ptrs">BIT_DISPLAY_PTRS</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_VIRTUAL_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x56 (‘V’)</p></td>
+<td align="left" valign="top"><p class="table">Virtual Field Pointers</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_virtual_ptrs">BIT_VIRTUAL_PTRS</a></p></td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_32BIT_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x63 (‘c’)</p></td>
+<td align="left" valign="top"><p class="table">32-bit Pointer Data</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_32bit_ptrs">BIT_32BIT_PTRS</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_DP_PTRS</p></td>
+<td align="center" valign="top"><p class="table">0x64 (‘d’)</p></td>
+<td align="left" valign="top"><p class="table">DP Table Pointers</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_dp_ptrs">BIT_DP_PTRS</a></p></td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_FALCON_DATA</p></td>
+<td align="center" valign="top"><p class="table">0x70 (‘p’)</p></td>
+<td align="left" valign="top"><p class="table">Falcon Ucode Data</p></td>
+<td align="left" valign="top"><p class="table">PMU Table Pointers: <a href="#BIT_FALCON_DATA_v2">BIT_FALCON_DATA</a> or <a href="#BIT_PMU_PTRS_v1"><span style="color: red;">BIT_PMU_PTRS</span></a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_UEFI_DATA</p></td>
+<td align="center" valign="top"><p class="table">0x75 (‘u’)</p></td>
+<td align="left" valign="top"><p class="table">UEFI Driver Data</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_uefi_data">BIT_UEFI_DATA</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_MXM_DATA</p></td>
+<td align="center" valign="top"><p class="table">0x78 (‘x’)</p></td>
+<td align="left" valign="top"><p class="table">MXM Configuration Data</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_mxm_data">BIT_MXM_DATA</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT_TOKEN_BRIDGE_FW_DATA</p></td>
+<td align="center" valign="top"><p class="table">0x52 (‘R’)</p></td>
+<td align="left" valign="top"><p class="table">Bridge Firmware Data</p></td>
+<td align="left" valign="top"><p class="table"><a href="#_bit_bridge_fw_data">BIT_BRIDGE_FW_DATA</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h2 id="_parsing_rules">Parsing Rules</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The <a href="#_bit header">BIT header</a> should be searched for as follows:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+ID plus Signature should be used to locate the BIT structure.  Once
+   found, the data immediately following the BIT header is the first
+   token.
+</p>
+</li>
+<li>
+<p>
+HeaderChecksum is a 0 checksum of the entire BIT header. The correct
+   checksum can be found by adding BIT_Header.HeaderSize consecutive
+   bytes together, starting with the first byte of the BIT header. A
+   valid BIT will provide a byte sum of 00h.
+</p>
+</li>
+<li>
+<p>
+HeaderSize contains a value that indicates how big the actual BIT
+   header is. The first token can be found by adding this value to the
+   start address of the BIT header.
+</p>
+</li>
+<li>
+<p>
+TokenSize indicates how big each token entry is. All tokens are the
+   same size.
+</p>
+</li>
+<li>
+<p>
+TokenEntries indicates how many tokens are contained in the list and
+   should be processed by software.
+</p>
+</li>
+</ul></div>
+</div>
+<h2 id="_bit_data_structures">BIT Data Structures</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><strong>Deprecated data structure versions are highlighted in <span style="color: red;">red</span>.</strong></p></div>
+<h3 id="_bit_i2c_ptrs">BIT_I2C_PTRS</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains I2C scripting data.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="28%" />
+<col width="2%" />
+<col width="68%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">I2CScripts</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the I2C Scripts table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ExtHWMonInit</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to an I2C script used to initialize an external hardware monitor</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_dac_ptrs">BIT_DAC_PTRS</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains DAC related data.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">DACDataPtr</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to DAC related data</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">DACFlags</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">DAC Flags</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><div class="title">DACFlags</div><ul>
+<li>
+<p>
+Bit 0:0 - DAC Sleep Mode Support (via NV_PDISP_DAC_TEST).  Possible values are:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+0x0 - Not Supported
+</p>
+</li>
+<li>
+<p>
+0x1 - Supported
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Bits 7:1 - Reserved
+</p>
+</li>
+</ul></div>
+<h3 id="BIT_BIOSDATA_v1">BIT_BIOSDATA (<span style="color: red;">Version 1</span>)</h3><div style="clear:left"></div>
+<div class="paragraph"><p><strong><span style="color: red;">This data structure has been deprecated.</span></strong> It contains BIOS related data.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">BIOS Version</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">BIOS Binary Version</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIOS OEM Version</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">BIOS OEM Version Number</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIOS Checksum</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">BIOS 0 Checksum inserted during the build</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">INT15 POST Callbacks</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">INT15 Callbacks issued during POST</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">INT15 SYSTEM Callbacks</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">General INT15 Callbacks</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIOS Board ID</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Board ID</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Frame Count</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Number of frames to display the SignOn Message</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIOSMOD Date</p></td>
+<td align="right" valign="top"><p class="table">24</p></td>
+<td align="left" valign="top"><p class="table">Date BIOSMod was last run (in MMDDYY format)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><div class="title">INT15 POST Callbacks</div><ul>
+<li>
+<p>
+Bit 0:0 - Get Panel ID
+</p>
+</li>
+<li>
+<p>
+Bit 1:1 - Get TV Format (NTSC/PAL/NTSC-J/etc.)
+</p>
+</li>
+<li>
+<p>
+Bit 2:2 - Get Boot Device
+</p>
+</li>
+<li>
+<p>
+Bit 3:3 - Get Panel Expansion/Centering
+</p>
+</li>
+<li>
+<p>
+Bit 4:4 - Perform POST Complete Callback
+</p>
+</li>
+<li>
+<p>
+Bit 5:5 - Get RAM Configuration (OEM Specific, deprecated)
+</p>
+</li>
+<li>
+<p>
+Bit 6:6 - Get TV Connection Type (SVIDEO/Composite/etc.)
+</p>
+</li>
+<li>
+<p>
+Bit 7:7 - OEM External Initialization
+</p>
+</li>
+<li>
+<p>
+Bits 15:8 - Reserved
+</p>
+</li>
+</ul></div>
+<div class="ulist"><div class="title">INT15 SYSTEM Callbacks</div><ul>
+<li>
+<p>
+Bit 0:0 - Make DPMS Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bit 1:1 - Get TV Format Callback (NTSC/PAL/etc.)
+</p>
+</li>
+<li>
+<p>
+Bit 2:2 - Make Spread Spectrum Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bit 3:3 - Make Display Switch Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bit 4:4 - Make Device Control Setting Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bit 5:5 - Make DDC Call Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bit 6:6 - Make DFP Center/Expand Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bits 15:7 - Reserved
+</p>
+</li>
+</ul></div>
+<h3 id="BIT_BIOSDATA_v2">BIT_BIOSDATA (Version 2)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains BIOS related data.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">BIOS Version</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">BIOS Binary Version</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIOS OEM Version</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">BIOS OEM Version Number</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIOS Checksum</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">BIOS 0 Checksum inserted during the build</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">INT15 POST Callbacks</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">INT15 Callbacks during POST</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">INT15 SYSTEM Callbacks</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">General INT15 Callbacks</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Frame Count</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Number of frames to display SignOn Message</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Max Heads at POST</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Max number of heads to boot at POST</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Size Report (MSR)</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Scheme for computing memory size displayed in Control Panel.  Does not affect functionality in any way</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">hScale Factor</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Horizontal Scale Factor</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">vScale Factor</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Vertical Scale Factor</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><a href="#_data_range_table">Data Range Table</a> Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the table of pointers identifying where all data in the VGA BIOS image is located that the OS or EFI GPU driver need</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ROMpacks Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to any ROMpacks. A NULL (0) pointer indicates that no run-time ROMpacks are present<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Applied ROMpacks Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to a list of indexes of applied run-time ROMpacks</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Applied ROMpack Max</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum number of stored indexes in the list pointed to by the Applied ROMpacks pointer</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Applied ROMpack Count</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Number of applied run-time ROMpacks<br />
+NOTE: Count can be higher than amount stored at the AppliedROMpacksPtr array, if more than the value at AppliedROMpackMax were applied</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Module Map External 0</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Module Map External 0 byte.  Indicates whether modules outside of the BIT and not at fixed addresses are included in the binary</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Compression Info Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to compression information structure (for use only by stage0 build script and decompression run-time code)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><div class="title">INT15 POST Callbacks</div><ul>
+<li>
+<p>
+Bit 0:0 - Get Panel ID
+</p>
+</li>
+<li>
+<p>
+Bit 1:1 - Get TV Format (NTSC/PAL/NTSC-J/etc.)
+</p>
+</li>
+<li>
+<p>
+Bit 2:2 - Get Boot Device
+</p>
+</li>
+<li>
+<p>
+Bit 3:3 - Get Panel Expansion/Centering
+</p>
+</li>
+<li>
+<p>
+Bit 4:4 - Perform POST Complete Callback
+</p>
+</li>
+<li>
+<p>
+Bit 5:5 - Get RAM Configuration (OEM Specific – should be obsolete)
+</p>
+</li>
+<li>
+<p>
+Bit 6:6 - Get TV Connection Type (SVIDEO/Composite/etc.)
+</p>
+</li>
+<li>
+<p>
+Bit 7:7 - OEM External Initialization
+</p>
+</li>
+<li>
+<p>
+Bits 15:8 - Reserved
+</p>
+</li>
+</ul></div>
+<div class="ulist"><div class="title">INT15 SYSTEM Callbacks</div><ul>
+<li>
+<p>
+Bit 0:0 - Make DPMS Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bit 1:1 - Get TV Format Callback (NTSC/PAL/etc.)
+</p>
+</li>
+<li>
+<p>
+Bit 2:2 - Make Spread Spectrum Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bit 3:3 - Make Display Switch Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bit 4:4 - Make Device Control Setting Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bit 5:5 - Make DDC Call Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bit 6:6 - Make DFP Center/Expand Bypass Callback
+</p>
+</li>
+<li>
+<p>
+Bits 15:7 - Reserved
+</p>
+</li>
+</ul></div>
+<div class="ulist"><div class="title">Module Map External 0</div><ul>
+<li>
+<p>
+Bit 0:0 - Underflow and Error Reporting.  This mode enables HW to red-fill the screen on display pipe underflow, and causes the VBIOS to make the overscan border red on poll timeouts, as well as FB pattern test failures.
+<strong><span style="color: red;">This mode should never be enabled on production VBIOSes!</span></strong>
+</p>
+</li>
+<li>
+<p>
+Bit 1:1 - Coproc Build.  Set when a VBIOS is intended to work as a coprocessor and does not support any displays<br />
+</p>
+</li>
+<li>
+<p>
+Bit 2:2 - Reserved
+</p>
+</li>
+<li>
+<p>
+Bit 3:3 - Reserved
+</p>
+</li>
+<li>
+<p>
+Bit 4:4 - Reserved
+</p>
+</li>
+</ul></div>
+<h3 id="_data_range_table">Data Range Table</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The Data Table contains pointers identifying where all data in the VGA
+BIOS image are located that the OS GPU drivers or EFI GPU driver needs.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Only data in the x86 code type PCI firmware block are included in the
+  Data Range Table.
+</p>
+</li>
+<li>
+<p>
+Any other PCI firmware blocks present are defined to be "all data" (or
+  in the case of an EFI PCI firmware block, all code).
+</p>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Image Start</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the start of the binary image (0x0000)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIT End</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the end of the BIOS Information Table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Data Resident Start</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the start of the resident data section</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Data Resident End</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the end of the resident data section</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Data Discard Start</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the start of the discardable data section</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Data Discard End</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the end of the discardable data section</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">End of List</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">End of the list (0x0000, 0x0000)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="BIT_CLOCK_PTRS_V1">BIT_CLOCK_PTRS (<span style="color: red;">Version 1</span>)===</h3><div style="clear:left"></div>
+<div class="paragraph"><p><span style="color: red;">THIS STRUCTURE VERSION IS NOW DEPRECATED. PLEASE REFER TO VERSION 2 BELOW.</span></p></div>
+<div class="paragraph"><p>This data structure contains data related to clock programming.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">PLL Register Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the table of PLL registers</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Clock Script</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to a script to run after changing clocks</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PLL Info Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the PLL info table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Clock Frequency Table</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the fixed clock frequency table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">FIFO Table</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the DAC/CRTC FIFO settings table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Noise-Aware PLL Table</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the noise-aware PLL yable</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="BIT_CLOCK_PTRS_V2">BIT_CLOCK_PTRS (Version 2)===</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains Clock Programming related data.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> PLL Info Table Pointer </th>
+<th align="right" valign="top"> 32 </th>
+<th align="left" valign="top"> Pointer to PLL Info Table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">VBE Mode PCLK table</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to VBE Mode PCLK Table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Clocks Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Clocks Table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Clock Programming Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Clock Programming Table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">NAFLL Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to NAFLL Table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ADC Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to ADC Table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Frequency Controller Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Frequency Controller Table</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_dfp_ptrs">BIT_DFP_PTRS</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains data related to DFP programming.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">FP Established</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to a table of VESA Established Timing tables</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">FP Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the VBIOS-internal flat panel tables</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_nvinit_ptrs">BIT_NVINIT_PTRS</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains initialization table pointers.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Init Script Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the table of Devinit script pointers</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Macro Index Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the macro index table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Macro Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the macro table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Condition Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to a table of Devinit conditionals used with the INIT_CONDITION opcode</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">I/O Condition Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to a table of Devinit I/O conditionals used with the INIT_IO_CONDITION opcode</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">I/O Flag Condition Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to a table of Devinit I/O conditionals used with the INIT_IO_FLAG_CONDITION opcode</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Init Function Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the init function table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">VBIOS Private Boot Script Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the VBIOS private boot script</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Data Arrays Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the data arrays table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PCIe Settings Script Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the PCIe settings script<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Devinit Tables Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the contiguous segment containing tables required by Devinit opcodes</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Devinit Tables Size</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Size of the contiguous segment containing tables required by Devinit opcodes</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Boot Scripts Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the contiguous segment containing Devinit boot scripts</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Boot Scripts Size</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Size of the contiguous segment containing Devinit boot scripts</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">NVLink Configuration Data Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to NVLink Configuration Data<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Boot Scripts Non-GC6 Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the continuous section of devinit that is not required on GC6 exit</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Boot Scripts Size Non-GC6</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Size of contiguous section containing devinit that is not required on GC6 exit</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_lvds_ptrs">BIT_LVDS_PTRS</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains LVDS Initialization table pointers.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">LVDS Info Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the LVDS info table</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="BIT_MEMORY_PTRS_v1">BIT_MEMORY_PTRS (<span style="color: red;">Version 1</span>)</h3><div style="clear:left"></div>
+<div class="paragraph"><p><strong><span style="color: red;">Version 1 of this data structure has been deprecated.</span></strong></p></div>
+<div class="paragraph"><p>This data structure contains memory control/programming related pointers</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Reset Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the memory reset script</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Strap Data Count</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Memory strap data Count</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Strap Translation Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the memory strap translation table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Data VREF On Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the data VREF on script</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Data DQS On Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the data DQS on script</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Data DLCELL On Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the data DLCELL on script</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Data DLCELL Off Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the data DLCELL off script</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="BIT_MEMORY_PTRS_v2">BIT_MEMORY_PTRS (Version 2)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains pointers related to memory control and programming.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Strap Data Count</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Memory strap data count</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Strap Translation Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the memory strap translation table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Information Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the memory information table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+<td align="right" valign="top"><p class="table">64</p></td>
+<td align="left" valign="top"><p class="table"></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Partition Information Table</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the memory partition information table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Script List Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Memory Script List, a list of 32-bit pointers to devinit scripts used to program FB register set.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_nop">BIT_NOP</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure is a "no operation" indicator and contains no
+data. BIT_TOKEN_NOP should be skipped by processing software, and
+processing should continue at the next token.</p></div>
+<h3 id="BIT_PERF_PTRS_v1">BIT_PERF_PTRS (<span style="color: red;">Version 1</span>)</h3><div style="clear:left"></div>
+<div class="paragraph"><p><strong><span style="color: red;">Version 1 of this data structure has been deprecated.</span></strong></p></div>
+<div class="paragraph"><p>This data structure contains performance table pointers, which are stored as
+32-bit offsets to the data.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+These pointers are only used by system software, and may point
+   at data outside the base 64K ROM image.
+</p>
+</li>
+<li>
+<p>
+A conversion from Real Mode segment:offset format is done using the
+   following algorithm:
+   <tt>(((16bit)SEGMENT) &lt;&lt; 4) + ((16bit)OFFSET)</tt>
+</p>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Performance Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the performance table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Tweak Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the memory tweak table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Drive/Slew Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the drive/slew table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Board Temperature Control Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to board temperature control limits</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">GPIO Voltage Select Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the GPIO voltage select table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">AGP Clock Frequency</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">AGP clock frequency used for PCIe bus speed (in MHz)<br />
+TODO: is this AGP or PCIe?</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">NVCLK Performance Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the NVCLK performance table</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="BIT_PERF_PTRS_v2">BIT_PERF_PTRS (Version 2)</h3><div style="clear:left"></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Performance Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the performance table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Clock Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the memory clock table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Memory Tweak Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the memory tweak table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Power Control Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the power control table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Thermal Control Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the thermal control table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Thermal Device Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the thermal device table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Thermal Coolers Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the thermal coolers table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Performance Settings Script Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to a Devinit script containing performance-related settings<br />
+See Note 1.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Continuous Virtual Binning Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the continuous virtual binning table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Ventura Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the Ventura table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Power Sensors Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the power sensors table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Power Policy Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the power policy table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">P-State Clock Range Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the P-State clock range table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Voltage Frequency Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the voltage frequency table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Virtual P-State Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the virtual P-State table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Power Topology Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the power topology table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Power Leakage Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the power leakage table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Performance Test Specifications Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the performance test specifications table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Thermal Channel Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the thermal channel table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Thermal Adjustment Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the thermal adjustment table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Thermal Policy Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the thermal policy table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">P-State Memory Clock Frequency Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the P-State memory clock frequency table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Fan Cooler Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the fan cooler table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Fan Policy Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the fan policy table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">DI/DT Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to DI/DT Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Fan Test Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Fan Test Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Voltage Rail Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Voltage Rail Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Voltage Device Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Voltage Device Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Voltage Policy Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Voltage Policy Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">LowPower Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to LowPower Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">LowPower PCIe Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to LowPower PCIe Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">LowPower PCIe-Platform Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to LowPower PCIe-Platform Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">LowPower GR Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to LowPower GR Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">LowPower MS Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to LowPower MS Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">LowPower DI Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to LowPower DI Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">LowPower GC6 Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to LowPower GC6 Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">LowPower PSI Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to LowPower PSI Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Thermal Monitor Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Thermal Monitor Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Overclocking Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Overclocking Table<br /></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">LowPower NVLINK Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to LPWR NVLINK Table<br /></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>Note 1: Notes on the <strong>Performance Settings Script Pointer</strong>:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Intended to be parsed by system software to directly obtain register settings for a particular P-state, typically P0.
+</p>
+</li>
+<li>
+<p>
+May be called as a subscript from the primary device initialization script
+   so that it can be used both for initialization and to provide data for
+   P-state changes.
+</p>
+</li>
+<li>
+<p>
+Must not contain any conditions or opcodes that require reading hardware,
+   with the exception of INIT_XMEMSEL* opcodes that only need to read the
+   memory strap, which may be cached by system software.
+</p>
+</li>
+<li>
+<p>
+System software is only required to parse up to the first occurrence of the desired register.
+</p>
+</li>
+<li>
+<p>
+Parsing should terminate at the INIT_DONE opcode.<br />
+</p>
+</li>
+</ul></div>
+<h3 id="BIT_STRING_PTRS_v1">BIT_STRING_PTRS (<span style="color: red;">Version 1</span>)</h3><div style="clear:left"></div>
+<div class="paragraph"><p><strong><span style="color: red;">This data structure has been deprecated.</span></strong></p></div>
+<div class="paragraph"><p>This data structure contains pointers to strings in the VBIOS image</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+All of the strings in this structure are ‘0’ terminated.
+</p>
+</li>
+<li>
+<p>
+The “Size” bytes indicate the maximum length available for storing the string, non-inclusive of the terminating 0.
+</p>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Sign On Message Poitner</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Sign On Message</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Sign On Message Maximum Length</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of Sign On Message</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM String</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">OEM String to identify graphics controller chip or product family.  This is the last radix in the combined version string, e.g. 25 in <em>70.18.01.00.25</em></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM String Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of OEM string</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Vendor Name</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Name of the vendor that produced the display controller board product</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Vendor Name Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of OEM Vendor Name</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Product Name</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Product name of the controller board</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Product Name Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of OEM Product Name</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Product Revision</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Revision of manufacturing level of the display controller board</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Product Revision Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of OEM Product Revision</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="BIT_STRING_PTRS_v2">BIT_STRING_PTRS (Version 2)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains pointers to strings in the VBIOS image</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+All of the strings in this structure are ‘0’ terminated.
+</p>
+</li>
+<li>
+<p>
+The “Size” bytes indicate the maximum length available for storing the string, non-inclusive of the terminating 0.
+</p>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Sign On Message Poitner</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Sign On Message</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Sign On Message Maximum Length</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of Sign On Message</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Version String</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the "Version ww.xx.yy.zz" string</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Version String Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of the version string</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Copyright String</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the copyright string</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Copyright String Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of the copyright string</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM String</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">OEM String to identify graphics controller chip or product family.  This is the last radix in the combined version string, e.g. 25 in <em>70.18.01.00.25</em></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM String Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of OEM string</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Vendor Name</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Name of the vendor that produced the display controller board product</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Vendor Name Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of OEM Vendor Name</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Product Name</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Product name of the controller board</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Product Name Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of OEM Product Name</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Product Revision</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Revision of manufacturing level of the display controller board</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OEM Product Revision Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of OEM Product Revision</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_tmds_ptrs">BIT_TMDS_PTRS</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains TMDS Initialization table pointers.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">TMDS Info Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to TMDS Info Table</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_display_ptrs">BIT_DISPLAY_PTRS</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains Display Control/Programming related pointers.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Display Scripting Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Display Scripting Table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Display Control Flags</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Display Control Flags byte
+: [0:0] = Enable white overscan border for diagnostic purposes
+: [1:1] = NO_DISPLAY_SUBSYSTEM: Display subsystem isn&#8217;t included in the GPU (used for displayless coproc)
+: [2:2] = DISPLAY_FPGA: Display subsystem is on an FPGA (used for pre-SI testing).
+: [3:3] = VBIOS avoids touching mempool while drivers running
+: [4:4] = Offset PCLK between 2 heads
+: [5:5] = Boot with DP Hotplug disabled
+: [6:6] = Allow detection of DP sinks by doing a DPCD register read
+: [7:7] = Reserved</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">SLI Table Header Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the SLI Table Header</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_virtual_ptrs">BIT_VIRTUAL_PTRS</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains Virtual Field pointers.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Virtual Strap Field Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Virtual Strap Field Table</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Virtual Strap Field Register</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Virtual STrap Field Register</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Translation Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to translation table so virtual straps can be sparse</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_32bit_ptrs">BIT_32BIT_PTRS</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains BIOS related data that is located outside
+the 64K ROM image.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+It is used by the VBIOS to access tables during POST that need to be copied into the runtime image.
+</p>
+</li>
+<li>
+<p>
+No data structure is currently defined.
+</p>
+</li>
+</ul></div>
+<h3 id="_bit_dp_ptrs">BIT_DP_PTRS</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains the DP Info Table.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">DP Info Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to DP Info Table</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="BIT_PMU_PTRS_v1">BIT_PMU_PTRS (<span style="color: red;">Version 1</span>)</h3><div style="clear:left"></div>
+<div class="paragraph"><p><span style="color: red;">This data structure has been deprecated. It is superseded by BIT_FALCON_DATA (Version 2).</span></p></div>
+<div class="paragraph"><p>This data structure contains PMU-related pointers</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">PMU Function Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to PMU Function Table (Deprecated)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PMU Function Table Pointer (32-bit)</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to PMU Function Table (32-bit)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PMU Init-From-Rom Code Image Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">core80-: Pointer to PMU IFR code image in Kepler format
+core82+: Pointer to IFR IMEM image in raw format</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PMU Init-From-Rom Code Image Size</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">core80-: Size of PMU IFR code image in Kepler format
+core82+: Size of IFR IMEM image in raw format</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PMU Init-From-Rom Code Image ID</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">ID of PMU IFR code image</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PMU Init-From-Rom Code Image Info Ptr</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to info struct for IFR code image</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PMU Init-From-Rom Data Image Ptr</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">core82+: Pointer to IFR DMEM image in raw format</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PMU Init-From-Rom Data Image Size</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">core82+: Size of IFR DMEM image in raw format</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="BIT_FALCON_DATA_v2">BIT_FALCON_DATA (Version 2)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains Falcon-related data and pointers.  It
+supersedes <a href="#BIT_PMU_PTRS_v1">BIT_PMU_PTRS (Version 1)</a>.
+The name was changed for version 2 to better reflect the scope of
+associated data.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Falcon Ucode Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Pointer to Falcon Ucode Table</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_uefi_data">BIT_UEFI_DATA</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains the UEFI Driver Data structure</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Minimum UEFI Driver Version</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Minimum UEFI driver version that is required when merging with the legacy VBIOS image</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">UEFI Compatibility Level</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Specifies the legacy VBIOS UEFI compatibility level which can be used to prevent the legacy VBIOS from being merged with an incompatible UEFI driver</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">UEFI Flags</p></td>
+<td align="right" valign="top"><p class="table">64</p></td>
+<td align="left" valign="top"><p class="table">UEFI Flags
+: [0:0] Display switch support
+:: 0 = Enabled
+:: 1 = Disabled
+: [1:1] LCD diagnostics support
+:: 0 = Disabled
+:: 1 = Enabled
+: [2:2] Glitchless support
+:: 0 = Enabled
+:: 1 = Disabled
+: [63:3] Reserved (defaults to 0)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_mxm_data">BIT_MXM_DATA</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains the MXM Configuration Data structure</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Module Spec Version</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">The BCD version of the Thermal Electromechanical Specification the module was designed for</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Module Flags 0</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Module Flags 0 byte
+: [3:0] - Form Factor
+:: 0x0 = Not MXM
+:: 0x1 = Type-I
+:: 0x2 = Type-II
+:: 0x3 = Type-III
+:: 0x4 = Type-IV
+:: 0x5-0xE = Reserved
+:: 0xF = Undefined
+: [7:4] - Reserved</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Config Flags 0</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Configuration Flags 0 byte
+: [0:0] = MXM Structure Required
+: [1:1] = MXM Structure validation failed
+: [3:2] = DCB modification status
+:: 0 = VBIOS modification complete
+:: 1-2 = Reserved
+:: 3 = MXM Default DCB
+: [7:4] – Chip package type of GPU on the MXM module
+:: 0x0 = Package older than G3 type
+:: 0x1 = G3 package
+:: 0x2 = GB1-128/256 package
+:: 0x3 = GB1-64 package
+:: 0x4 = GB4-256 package
+:: 0x5-0xF = Reserved</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">DP Drive Strength Scale</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Used to modify the DP Drive Strength for DP in MXM30</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">MXM Digital Connector Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to table for mapping MXM Digital Connection number into SOR/Sublinks config</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">MXM DDC/Aux to CCB Table Pointer</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to table for mapping MXM DDC/Aux number CCB port number</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="_bit_bridge_fw_data">BIT_BRIDGE_FW_DATA</h3><div style="clear:left"></div>
+<div class="paragraph"><p>This data structure contains the Bridge Firmware Data structure</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="24%" />
+<col width="3%" />
+<col width="72%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="right" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Firmare Version</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Firmware Binary Version</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Firmware OEM Version</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Firmware OEM Verison Number</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Firmware Image Length</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Firmware Image Length in increments of 512 bytes</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">BIOSMOD Date</p></td>
+<td align="right" valign="top"><p class="table">64</p></td>
+<td align="left" valign="top"><p class="table">Date of Last BIOSMod Modification</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Firmware Flags</p></td>
+<td align="right" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table">Firmware Flags
+: [0:0] Build
+:: 0 = Release
+:: 1 = Engineering
+: [1:1] I2C
+:: 0 = Master (possible I2C slave connected)
+:: 1 = Not Master</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Engineering Product Name</p></td>
+<td align="right" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">Pointer to the Engineering Product Name</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Engineering Product Name Size</p></td>
+<td align="right" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Maximum length of the Engineering Product Name string</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-01-26 11:56:33 PDT
+</div>
+</div>
+</body>
+</html>

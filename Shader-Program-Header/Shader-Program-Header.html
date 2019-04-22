@@ -1,0 +1,2550 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Shader Program Header Specification</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Shader Program Header Specification</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_purpose">Purpose</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The first 80 bytes of a GPU program, known as the Shader Program Header (SPH),
+contains information about the program, which the GPU uses to determine how to
+execute the instructions.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sph_overall_structure">SPH Overall Structure</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Some portions of the SPH are interpreted differently depending on which stage
+of the pipeline the program is used with (e.g., Vertex or Fragment), whereas
+some portions are always interpreted the same way&#8201;&#8212;&#8201;they are common for all
+program types.</p></div>
+<div class="paragraph"><p>There are two main types of programs; PS and VTG.  PS is used for
+pixel/fragment shaders, and VTG is used for everything else.  When PS is used,
+field SphType in CommonWord0 must be set to 1; similarly, when VTG is used,
+SphType in CommonWord0 must be set to 2.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 1. SPH Type 1 Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                   </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">CommonWord0</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#CommonWord0">struct CommonWord0</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">CommonWord1</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#CommonWord1">struct CommonWord1</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">CommonWord2</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#CommonWord2">struct CommonWord2</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">CommonWord3</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#CommonWord3">struct CommonWord3</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">CommonWord4</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#CommonWord4">struct CommonWord4</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapSystemValuesA</p></td>
+<td align="left" valign="top"><p class="table">24</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapSystemValuesA">struct ImapSystemValuesA</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapSystemValuesB</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapSystemValuesB">struct ImapSystemValuesB</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapGenericVector[32]</p></td>
+<td align="left" valign="top"><p class="table">128</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapVector">struct ImapVector</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColor</p></td>
+<td align="left" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapColor">struct ImapColor</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapSystemValuesC</p></td>
+<td align="left" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapSystemValuesC">struct ImapSystemValuesC</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapFixedFncTexture[10]</p></td>
+<td align="left" valign="top"><p class="table">40</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapTexture">struct ImapTexture</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapReserved</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapSystemValuesA</p></td>
+<td align="left" valign="top"><p class="table">24</p></td>
+<td align="left" valign="top"><p class="table"><a href="#OmapSystemValuesA">struct OmapSystemValuesA</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapSystemValuesB</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table"><a href="#OmapSystemValuesB">struct OmapSystemValuesB</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapGenericVector[32]</p></td>
+<td align="left" valign="top"><p class="table">128</p></td>
+<td align="left" valign="top"><p class="table"><a href="#OmapVector">struct OmapVector</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColor</p></td>
+<td align="left" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table"><a href="#OmapColor">struct OmapColor</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapSystemValuesC</p></td>
+<td align="left" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table"><a href="#OmapSystemValuesC">struct OmapSystemValuesC</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapFixedFncTexture[10]</p></td>
+<td align="left" valign="top"><p class="table">40</p></td>
+<td align="left" valign="top"><p class="table"><a href="#OmapTexture">struct OmapTexture</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapReserved</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 2. SPH Type 2 Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                   </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">CommonWord0</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#CommonWord0">struct CommonWord0</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">CommonWord1</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#CommonWord1">struct CommonWord1</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">CommonWord2</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#CommonWord2">struct CommonWord2</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">CommonWord3</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#CommonWord3">struct CommonWord3</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">CommonWord4</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#CommonWord4">struct CommonWord4</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapSystemValuesA</p></td>
+<td align="left" valign="top"><p class="table">24</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapSystemValuesA">struct ImapSystemValuesA</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapSystemValuesB</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapSystemValuesB">struct ImapSystemValuesB</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapGenericVector[32]</p></td>
+<td align="left" valign="top"><p class="table">256</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapPixelVector">struct ImapPixelVector</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColor</p></td>
+<td align="left" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapPixelColor">struct ImapPixelColor</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapSystemValuesC</p></td>
+<td align="left" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapSystemValuesC">struct ImapSystemValuesC</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapFixedFncTexture[10]</p></td>
+<td align="left" valign="top"><p class="table">80</p></td>
+<td align="left" valign="top"><p class="table"><a href="#ImapPixelTexture">struct ImapPixelTexture</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapReserved</p></td>
+<td align="left" valign="top"><p class="table">16</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapTarget[8]</p></td>
+<td align="left" valign="top"><p class="table">32</p></td>
+<td align="left" valign="top"><p class="table"><a href="#OmapTarget">struct OmapTarget</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapSampleMask</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapDepth</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapReserved</p></td>
+<td align="left" valign="top"><p class="table">30</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sph_common_word_definitions">SPH Common Word Definitions</h2>
+<div class="sectionbody">
+<div class="tableblock" id="CommonWord0">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 3. CommonWord0 Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field           </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">SphType</p></td>
+<td align="left" valign="top"><p class="table">5</p></td>
+<td align="left" valign="top"><p class="table">enum</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Version</p></td>
+<td align="left" valign="top"><p class="table">5</p></td>
+<td align="left" valign="top"><p class="table">U05</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ShaderType</p></td>
+<td align="left" valign="top"><p class="table">4</p></td>
+<td align="left" valign="top"><p class="table">enum</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">MrtEnable</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">KillsPixels</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">DoesGlobalStore</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">SassVersion</p></td>
+<td align="left" valign="top"><p class="table">4</p></td>
+<td align="left" valign="top"><p class="table">U04</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+<td align="left" valign="top"><p class="table">5</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">DoesLoadOrStore</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">DoesFp64</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">StreamOutMask</p></td>
+<td align="left" valign="top"><p class="table">4</p></td>
+<td align="left" valign="top"><p class="table">U04</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+The SPH field SphType sets the type of shader, where the type is either
+  TYPE_01_VTG or TYPE_02_PS.
+</p>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="25%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="left" valign="top"> Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">VTG</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PS</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+The SPH field Version sets is used during development to pick the version.
+</p>
+</li>
+<li>
+<p>
+The SPH field ShaderType sets the type (e.g, VERTEX, TESSELLATION, GEOMETRY, or PIXEL)
+  of shader for the shader program.
+</p>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="25%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name                     </th>
+<th align="left" valign="top"> Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">VERTEX</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">TESSELLATION_INIT</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">TESSELLATION</p></td>
+<td align="left" valign="top"><p class="table">3</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">GEOMETRY</p></td>
+<td align="left" valign="top"><p class="table">4</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PIXEL</p></td>
+<td align="left" valign="top"><p class="table">5</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+The SPH field MrtEnable, when TRUE indicates that the pixel shader outputs
+  multiple colors (the number being controlled by the SPH Omap).  It is always
+  AND&#8217;d with SetCtMrtEnable.V(eff) to allow the driver to dynamically override the
+  MRT (Multiple Render Target) behavior of the pixel shader.  If the result is
+  TRUE, then the pixel shader outputs will each be sent to its corresponding
+  enabled target.  If the result is FALSE, then pixel shader output 0
+  will be sent to each enabled target.  This override of MRT is necessary to
+  support OGL&#8217;s DrawBuffer call (which is inherently non-MRT) when an MRT
+  enabled pixel shader is active.  This field has no effect on the blending
+  enables; that is, whether MrtEnable result is TRUE or FALSE, each color
+  target still has an independent blend enable (unless
+  SetSingleRopControl.Enable is TRUE).  This SPH field is only used for pixel
+  shaders.
+</p>
+</li>
+<li>
+<p>
+The SPH field KillsPixels, if TRUE, enables pixel shader programs to kill pixels.  When
+  set to FALSE, pixel shaders KIL instructions become no-operations and trigger
+  a hardware exception.  Also, when this field is TRUE, EarlyZ is turned off,
+  and Zcull&#8217;s visible pixel counting acceleration is turned off.  This field
+  has no effect on the texture color key operations.  This SPH field is only
+  used for pixels shaders.
+</p>
+</li>
+<li>
+<p>
+The SPH field DoesGlobalStore indicates the shader might perform a global store.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">When SPH.DoesGlobalStore == 0, any global store instructions (ST/ATOM/SUST) are
+noop&#8217;d and a hardware exception is generated.  The STL instruction may still
+be used for local stores.</td>
+</tr></table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+The SPH field StreamOutMask selects which GS output streams are enbled
+  as outputs from the GS.  There are four GS output streams, numbered 0 to 3.
+  If a stream is disabled in StreamOutMask, it is never written even if a buffer
+  is bound to it.
+</p>
+</li>
+<li>
+<p>
+The SPH field DoesLoadOrStore is used to enable power optimizations by disabling the load/store
+  path if it is not being used.  If a shader unit is only running pixel work that
+  has DoesLoadOrStore set to FALSE, and it has declared no additional CallReturnStack
+  by setting ShaderLocalMemoryCrsSize to zero, the load-store path can be
+  safely shut down temporarily.  When DoesLoadOrStore == FALSE, LD, ST, and all the
+  variations thereof in the ISA, will be noop&#8217;ed by the HW.
+</p>
+</li>
+<li>
+<p>
+The SPH field DoesFp64 is used power-off the double precision math if the compiler can
+  guarantee it will never be used.  If all of the work running on a given Shader unit
+  has DoesFp64 set to FALSE, this math block will be powered down.  Any double precision
+  instruction encountered when DoesFp64 is FALSE will be noop&#8217;ed by the HW.
+</p>
+</li>
+</ul></div>
+<div class="tableblock" id="CommonWord1">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 4. CommonWord1 Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                    </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ShaderLocalMemoryLowSize</p></td>
+<td align="left" valign="top"><p class="table">24</p></td>
+<td align="left" valign="top"><p class="table">U24</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PerPatchAttributeCount</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">U08</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+The SPH fields ShaderLocalMemoryLowSize and ShaderLocalMemoryHighSize set the
+  required size of thread-private memory, for variable storage, needed by the
+  shader program.
+</p>
+</li>
+<li>
+<p>
+The SPH field PerPatchAttributeCount indicates the number of per-patch attributes
+  that are written by the tesselation init shader (and read by the subsequent tesselation
+  shader).  Per-patch attributes are in addition to per-vertex attributes.
+  This field is only used on tesselation init shaders.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">Triangles generated by the geometry shader always have all their edge flags set
+to TRUE.</td>
+</tr></table>
+</div>
+<div class="tableblock" id="CommonWord2">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 5. CommonWord2 Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                     </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ShaderLocalMemoryHighSize</p></td>
+<td align="left" valign="top"><p class="table">24</p></td>
+<td align="left" valign="top"><p class="table">U24</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ThreadsPerInputPrimitive</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">U08</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+The SPH field ThreadsPerInputPrimitive sets the maximum number of threads that
+  are invoked for a primitive, thereby allowing the work of one shader
+  to be divided amongst several shaders.  This is the number of "instanced"
+  shaders.  This field has the following shader-specific meanings:
+</p>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="50%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Program Type             </th>
+<th align="left" valign="top"> Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">VERTEX</p></td>
+<td align="left" valign="top"><p class="table">Unused</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">TESSELLATION_INIT</p></td>
+<td align="left" valign="top"><p class="table">Sets the number of threads run per patch</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">TESSELLATION</p></td>
+<td align="left" valign="top"><p class="table">Unused</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">GEOMETRY</p></td>
+<td align="left" valign="top"><p class="table">Sets the number of threads run per primitive</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PIXEL</p></td>
+<td align="left" valign="top"><p class="table">Unused</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="CommonWord3">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 6. CommonWord3 Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                    </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ShaderLocalMemoryCrsSize</p></td>
+<td align="left" valign="top"><p class="table">24</p></td>
+<td align="left" valign="top"><p class="table">U24</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OutputTopology</p></td>
+<td align="left" valign="top"><p class="table">4</p></td>
+<td align="left" valign="top"><p class="table">enum</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+<td align="left" valign="top"><p class="table">4</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+The SPH field ShaderLocalMemoryCrsSize sets the additional (off chip) call/return stack size (CRS_SZ).
+  Units are in Bytes/Warp.  Minimum value 0, maximum 1 megabyte.  Must be multiples of 512 bytes.
+</p>
+</li>
+<li>
+<p>
+The SPH field OutputTopology sets the primitive topology of the vertices that are output from the
+  pipe stage.  This field is only used with geometry shaders, where the value must be greater than zero and
+  has a maximum of 1024.  The allowed values are:
+</p>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="25%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name          </th>
+<th align="left" valign="top"> Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">POINTLIST</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">LINESTRIP</p></td>
+<td align="left" valign="top"><p class="table">6</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">TRIANGLESTRIP</p></td>
+<td align="left" valign="top"><p class="table">7</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="CommonWord4">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 7. CommonWord4 Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">MaxOutputVertexCount</p></td>
+<td align="left" valign="top"><p class="table">12</p></td>
+<td align="left" valign="top"><p class="table">U12</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">StoreReqStart</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">U08</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+<td align="left" valign="top"><p class="table">4</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">StoreReqEnd</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">U08</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+The SPH field MaxOutputVertexCount sets the maximum number of vertices that can be output by
+  one shader thread.  This field is only used with geometry shaders, where the
+  value sets the maximum number of vertices output per thread, and OUT instructions
+  beyond this are noop&#8217;ed.
+</p>
+</li>
+<li>
+<p>
+The SPH fields StoreReqStart and StoreReqEnd set a range of attributes
+  whose corresponding Odmap values of ST or ST_LAST are treated as ST_REQ.
+  Normally, for an attribute whose Omap bit is TRUE and Odmap value is ST, when
+  the shader writes data to this output, it can not count on being able to read
+  it back,  since the next downstream shader might have its Imap bit FALSE,
+  thereby causing the Bmap bit to be FALSE.  By including a ST type of attribute
+  in the range of StoreReqStart and StoreReqEnd, the attribute&#8217;s Odmap value
+  is treated as ST_REQ, so an Omap bit being TRUE causes the Bmap bit to
+  be TRUE.  This guarantees the shader program can output the value and
+  then read it back later.  This will save register space.
+</p>
+</li>
+<li>
+<p>
+The SPH field StoreReqStart sets the first attribute whose ST or ST_LAST
+  Odmap values are treated as ST_REQ.  Note that Odmap values of discard are
+  not affected.
+</p>
+</li>
+<li>
+<p>
+The SPH field StoreReqEnd sets the last attribute whose ST of ST_LAST Odmap
+  values are treated as ST_REQ.  If no attributes are to have their Odmap value
+  treated as ST_REQ, then the SPH needs to have StoreReqStart greater
+  than StoreReqEnd.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">SPH fields StoreReqStart and StoreReqEnd are ignored for geometry and pixel
+shaders.  For geometry shaders, ALD.O is disallowed because a single geometry
+shader thread can output multiple vertices, so it is not possible to read back
+every attribute that was previously written (unlike vertex, tesselation and
+tesselation init shaders).</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sph_imap_definitions">SPH IMAP Definitions</h2>
+<div class="sectionbody">
+<div class="tableblock" id="ImapSystemValuesA">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 8. ImapSystemValuesA Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                     </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+<td align="left" valign="top"><p class="table">4</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapTessellationLodLeft</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapTessellationLodRight</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapTessellationLodBottom</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapTessellationLodTop</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapTessellationInteriorU</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapTessellationInteriorV</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+<td align="left" valign="top"><p class="table">14</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="ImapSystemValuesB">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 9. ImapSystemValuesB Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field             </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ImapPrimitiveId</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapRtArrayIndex</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapViewportIndex</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapPointSize</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapPositionX</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapPositionY</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapPositionZ</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapPositionW</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="ImapColor">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 10. ImapColor Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                       </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorFrontDiffuseRed</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorFrontDiffuseGreen</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorFrontDiffuseBlue</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorFrontDiffuseAlpha</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorFrontSpecularRed</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorFrontSpecularGreen</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorFrontSpecularBlue</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorFrontSpecularAlpha</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorBackDiffuseRed</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorBackDiffuseGreen</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorBackDiffuseBlue</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorBackDiffuseAlpha</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorBackSpecularRed</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorBackSpecularGreen</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorBackSpecularBlue</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorBackSpecularAlpha</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="ImapSystemValuesC">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 11. ImapSystemValuesC Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                            </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ImapClipDistance0</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapClipDistance1</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapClipDistance2</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapClipDistance3</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapClipDistance4</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapClipDistance5</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapClipDistance6</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapClipDistance7</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapPointSpriteS</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapPointSpriteT</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapFogCoordinate</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapTessellationEvaluationPointU</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapTessellationEvaluationPointV</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapInstanceId</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapVertexId</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="ImapPixelColor">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 12. ImapPixelColor Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                  </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorDiffuseRed</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorDiffuseGreen</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorDiffuseBlue</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorDiffuseAlpha</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorSpecularRed</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorSpecularGreen</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorSpecularBlue</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapColorSpecularAlpha</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="enumPixelImap">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 13. PixelImap enum definition</caption>
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name          </th>
+<th align="left" valign="top"> Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Unused</p></td>
+<td align="left" valign="top"><p class="table">0</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Constant</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Perspective</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ScreenLinear</p></td>
+<td align="left" valign="top"><p class="table">3</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sph_omap_definitions">SPH OMAP Definitions</h2>
+<div class="sectionbody">
+<div class="tableblock" id="OmapSystemValuesA">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 14. OmapSystemValuesA Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                     </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+<td align="left" valign="top"><p class="table">4</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapTessellationLodLeft</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapTessellationLodRight</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapTessellationLodBottom</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapTessellationLodTop</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapTessellationInteriorU</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapTessellationInteriorV</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Reserved</p></td>
+<td align="left" valign="top"><p class="table">14</p></td>
+<td align="left" valign="top"><p class="table">-</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="OmapSystemValuesB">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 15. OmapSystemValuesB Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field             </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">OmapPrimitiveId</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapRtArrayIndex</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapViewportIndex</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapPointSize</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapPositionX</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapPositionY</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapPositionZ</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapPositionW</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="OmapColor">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 16. OmapColor Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                       </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorFrontDiffuseRed</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorFrontDiffuseGreen</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorFrontDiffuseBlue</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorFrontDiffuseAlpha</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorFrontSpecularRed</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorFrontSpecularGreen</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorFrontSpecularBlue</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorFrontSpecularAlpha</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorBackDiffuseRed</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorBackDiffuseGreen</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorBackDiffuseBlue</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorBackDiffuseAlpha</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorBackSpecularRed</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorBackSpecularGreen</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorBackSpecularBlue</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapColorBackSpecularAlpha</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="OmapSystemValuesC">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 17. OmapSystemValuesC Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field                            </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">OmapClipDistance0</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapClipDistance1</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapClipDistance2</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapClipDistance3</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapClipDistance4</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapClipDistance5</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapClipDistance6</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapClipDistance7</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapPointSpriteS</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapPointSpriteT</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapFogCoordinate</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapSystemValuesReserved17</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapTessellationEvaluationPointU</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapTessellationEvaluationPointV</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapInstanceId</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapVertexId</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sph_vector_definitions">SPH Vector Definitions</h2>
+<div class="sectionbody">
+<div class="tableblock" id="ImapVector">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 18. ImapVector Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ImapX</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapY</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapZ</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapW</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="OmapVector">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 19. OmapVector Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">OmapX</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapY</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapZ</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapW</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="ImapPixelVector">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 20. ImapPixelVector Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ImapX</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapY</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapZ</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapW</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="ImapTexture">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 21. ImapTexture Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ImapS</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapT</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapR</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapQ</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="OmapTexture">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 22. OmapTexture Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">OmapS</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapT</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapR</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapQ</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="ImapPixelTexture">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 23. ImapPixelTexture Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">ImapS</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapT</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapR</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">ImapQ</p></td>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table"><a href="#enumPixelImap">enum PixelImap</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="OmapTarget">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 24. OmapTarget Definition</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Field     </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">OmapRed</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapGreen</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapBlue</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">OmapAlpha</p></td>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">bool</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated Mon May 18 17:00:56 PDT 2015
+</div>
+</div>
+</body>
+</html>
