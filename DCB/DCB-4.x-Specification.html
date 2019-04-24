@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="generator" content="AsciiDoc 8.6.8" />
-<title>Device Control Block 4.0 Specification</title>
+<title>Device Control Block 4.x Specification</title>
 <style type="text/css">
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
 
@@ -731,7 +731,7 @@ asciidoc.install();
 </head>
 <body class="article">
 <div id="header">
-<h1>Device Control Block 4.0 Specification</h1>
+<h1>Device Control Block 4.x Specification</h1>
 </div>
 <div id="content">
 <div class="sect1">
@@ -767,20 +767,29 @@ DCB 3.0 is used with Core5 VBIOS (NV4x, G7x).
 </li>
 <li>
 <p>
-DCB 4.0 is used with Core6, Core7, and Core8 VBIOS (G80+).
+DCB 4.x is used with Core6, Core7, and Core8 VBIOS (G80+).
 </p>
 </li>
 </ul></div>
+<div class="sect2">
+<h3 id="_dcb_4_1_changes">DCB 4.1 Changes</h3>
+<div class="paragraph"><p>With the GM20x family of chips, any SOR could be used to drive any analog
+pad link on the GPU.  Using SORs and sublinks as fixed constants for a
+DCB device entry no longer accurately described the board topology. To
+fix this, DCB 4.1 repurposes the Output Resource Assignment Mask and
+the Sublink Assignment Mask as a Pad Macro Assignment mask and a Pad
+Link Assignment mask respectively for Digital Flat Panel Device Entries.</p></div>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_device_control_block_structure">Device Control Block Structure</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>The 4.0 DCB Data Structure consists of the following parts:</p></div>
+<div class="paragraph"><p>The 4.x DCB Data Structure consists of the following parts:</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
-Header - The version number (0x40 for Version 4.0), the header size, the size of each DCB Entry (currently 8 bytes), the number of valid DCB Entries, pointers to different tables, and the DCB signature.  If any of the pointers here are NULL, then those tables are considered to be absent or invalid.
+Header - The version number (e.g., 0x40 for Version 4.0), the header size, the size of each DCB Entry (currently 8 bytes), the number of valid DCB Entries, pointers to different tables, and the DCB signature.  If any of the pointers here are NULL, then those tables are considered to be absent or invalid.
 </p>
 </li>
 <li>
@@ -820,7 +829,7 @@ cellspacing="0" cellpadding="4">
 <td align="left" valign="top"><p class="table">Version</p></td>
 <td align="right" valign="top"><p class="table">8</p></td>
 <td align="center" valign="top"><p class="table">O</p></td>
-<td align="left" valign="top"><p class="table">Version # of the DCB Header and Entries.  DCB 4.0 will start with a
+<td align="left" valign="top"><p class="table">Version # of the DCB Header and Entries.  E.g., DCB 4.0 will start with a
 value of 0x40 here.  A version number of zero directs the driver to use
 an internal DCB table.</p></td>
 </tr>
@@ -1027,8 +1036,8 @@ connection and as an Output Display at the same time.</td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_dcb_header_version_4_0_sizes">DCB Header Version 4.0 Sizes</h3>
-<div class="paragraph"><p>The v4.0 DCB header has added fields over time.</p></div>
+<h3 id="_dcb_header_version_4_x_sizes">DCB Header Version 4.x Sizes</h3>
+<div class="paragraph"><p>The v4.x DCB header has added fields over time.</p></div>
 <div class="tableblock">
 <table rules="all"
 width="60%"
@@ -1296,6 +1305,11 @@ Currently defined values are:</p></div>
 </li>
 <li>
 <p>
+8 = Reserved
+</p>
+</li>
+<li>
+<p>
 E = EOL (End of Line) - This signals the SW to stop parsing any more entries.
 </p>
 </li>
@@ -1305,6 +1319,7 @@ F = Skip Entry - This allows quick removal of entries from DCB.
 </p>
 </li>
 </ul></div>
+<div class="paragraph"><p>Note: LVDS entries must precede eDP entries to meet RM requirements and avoid glitches during detection.</p></div>
 <div class="paragraph"><div class="title">EDID Port</div><p>Each number refers to an entry in the
 <a href="#_communications_control_block">Communications Control Block</a> Structure
 that represents the port to use in order to query the EDID.  This number
@@ -1399,7 +1414,7 @@ is sent off from our board to the display.</p></div>
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><div class="title">DAC/SOR/PIOR Assignment (Output Resource)</div><p>Each bit defines the use of this connector with a DAC for internal CRTs
+<div class="paragraph"><div class="title">DAC/SOR/PIOR Assignment (Output Resource) for DCB 4.x:</div><p>Each bit defines the use of this connector with a DAC for internal CRTs
 and TVs, an SOR for internal DFPs, and a PIOR for external devices like
 TMDS, SDI or TV Encoders.</p></div>
 <div class="paragraph"><p>Currently defined values are:</p></div>
@@ -1422,6 +1437,57 @@ Bit 2 = DAC 2, SOR 2, or PIOR 2
 <li>
 <p>
 Bit 3 = DAC 3, SOR 3, or PIOR 3
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><div class="title">DAC/SOR/PIOR/Pad Macro Assignment (Output Resource) for DCB 4.1:</div><p>For CRT or External Encoder Device Entries:</p></div>
+<div class="paragraph"><p>Each bit defines the use of this connector with a DAC for internal CRTs
+and TVs, and a PIOR for external devices like TMDS, SDI or TV Encoders.</p></div>
+<div class="paragraph"><p>Currently defined values are:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Bit 0 = DAC 0 or PIOR 0
+</p>
+</li>
+<li>
+<p>
+Bit 1 = DAC 1 or PIOR 1
+</p>
+</li>
+<li>
+<p>
+Bit 2 = DAC 2 or PIOR 2
+</p>
+</li>
+<li>
+<p>
+Bit 3 = DAC 3 or PIOR 3
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>For Internal or External DFP Device Entries:</p></div>
+<div class="paragraph"><p>For Internal and External DFPs we can use any of the available SORs but
+the Pad Macro is fixed per Device Entry.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Bit 0 = Pad Macro 0 (Pad Links A and B)
+</p>
+</li>
+<li>
+<p>
+Bit 1 = Pad Macro 1 (Pad Links C and D)
+</p>
+</li>
+<li>
+<p>
+Bit 2 = Pad Macro 2 (Pad Links E and F)
+</p>
+</li>
+<li>
+<p>
+Bit 3 = Pad Macro 3 (Pad Link G)
 </p>
 </li>
 </ul></div>
@@ -1554,7 +1620,7 @@ cellspacing="0" cellpadding="4">
 <tr>
 <td align="center" valign="top"><p class="table">SL/DPL</p></td>
 <td align="center" valign="top"><p class="table">2</p></td>
-<td align="left" valign="top"><p class="table">Sub-link/DisplayPort Link.</p></td>
+<td align="left" valign="top"><p class="table">Sub-link/DisplayPort Link/Pad Link Assignment</p></td>
 </tr>
 <tr>
 <td align="center" valign="top"><p class="table">Rsvd</p></td>
@@ -1704,10 +1770,10 @@ panel.  Currently defined values are:</p></div>
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><div class="title">Sub-link/DisplayPort Link</div><p>This field specifies a board-supported sub-link mask for TMDS, LVDS, and
+<div class="paragraph"><div class="title">Sub-link/DisplayPort Link/Pad Link Assignment</div><p>This field specifies a board-supported sub-link mask for TMDS, LVDS, and
 SDI. For Display Port, this field specifies the link mask supported
 on the board.</p></div>
-<div class="paragraph"><p>For TMDS, LVDS, and SDI, this field lists which sub-links in each SOR are
+<div class="paragraph"><p>For DCB 4.x: For TMDS, LVDS, and SDI, this field lists which sub-links in each SOR are
 routed to the connector on the board.</p></div>
 <div class="paragraph"><p>Possible sub-link values are:</p></div>
 <div class="ulist"><ul>
@@ -1766,6 +1832,19 @@ with this SOR.  That is: DP-A or DP-B may be associated with an output device
 (OD) to output via DisplayPort, but not both simultaneously.</td>
 </tr></table>
 </div>
+<div class="paragraph"><p>For DCB 4.1: For TMDS/LVDS/DP this field describes which links of the Pad Macro are routed to the connector on the board.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Bit 0: Pad Link 0
+</p>
+</li>
+<li>
+<p>
+Bit 1: Pad Link 1
+</p>
+</li>
+</ul></div>
 <div class="paragraph"><div class="title">Reserved</div><p>Set to 0.</p></div>
 <div class="paragraph"><div class="title">External Link Type</div><p>This field describes the exact external link used on the board.  If this
 Location field in the Display Path of this DCB entry is set to ON CHIP,
@@ -1832,10 +1911,14 @@ cellspacing="0" cellpadding="4">
 <td align="left" valign="top"><p class="table">2</p></td>
 <td align="left" valign="top"><p class="table">5.4 Gbps</p></td>
 </tr>
+<tr>
+<td align="left" valign="top"><p class="table">3</p></td>
+<td align="left" valign="top"><p class="table">8.1 Gbps</p></td>
+</tr>
 </tbody>
 </table>
 </div>
-<div class="paragraph"><div class="title">Maximum Lane Mask</div><p>This field describes the maximum lanes that are populated on the board. This
+<div class="paragraph"><div class="title">Maximum Lane Count</div><p>This field describes the maximum lanes that are populated on the board. This
 field is only applicable to DisplayPort device types.</p></div>
 <div class="paragraph"><p>Possible values are:</p></div>
 <div class="tableblock">
@@ -1851,12 +1934,20 @@ cellspacing="0" cellpadding="4">
 <td align="left" valign="top"><p class="table">1 Lane</p></td>
 </tr>
 <tr>
+<td align="left" valign="top"><p class="table">0x2</p></td>
+<td align="left" valign="top"><p class="table">2 Lanes --- This value will be applicable only on Maxwell &amp; Later chips</p></td>
+</tr>
+<tr>
 <td align="left" valign="top"><p class="table">0x3</p></td>
-<td align="left" valign="top"><p class="table">2 Lanes</p></td>
+<td align="left" valign="top"><p class="table">2 Lanes --- deprecated, will be removed in DCB 6.0</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">0x4</p></td>
+<td align="left" valign="top"><p class="table">4 Lanes --- This value will be applicable only on Maxwell &amp; Later chips</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table">0xF</p></td>
-<td align="left" valign="top"><p class="table">4 Lanes</p></td>
+<td align="left" valign="top"><p class="table">4 Lanes --- deprecated, will be removed in DCB 6.0</p></td>
 </tr>
 </tbody>
 </table>
@@ -1935,7 +2026,7 @@ cellspacing="0" cellpadding="4">
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table">B</p></td>
-<td align="left" valign="top"><p class="table">Analogix ANX9801 - 4-Lane DisplayPort.</p></td>
+<td align="left" valign="top"><p class="table">Analogix ANX9801 - 4-Lane DisplayPort (deprecated on Fermi+).</p></td>
 <td align="left" valign="top"><p class="table">0x70 (transmitter), 0x72 (receiver)</p></td>
 </tr>
 <tr>
@@ -1945,12 +2036,12 @@ cellspacing="0" cellpadding="4">
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table">D</p></td>
-<td align="left" valign="top"><p class="table">Analogix ANX9805 - HDMI and DisplayPort.</p></td>
+<td align="left" valign="top"><p class="table">Analogix ANX9805 - HDMI and DisplayPort (deprecated on Fermi+).</p></td>
 <td align="left" valign="top"><p class="table">0x70, 0x72, 0x7A, 0x74</p></td>
 </tr>
 <tr>
 <td align="left" valign="top"><p class="table">E</p></td>
-<td align="left" valign="top"><p class="table">Analogix ANX9805 - HDMI and DisplayPort (Alternate Address).</p></td>
+<td align="left" valign="top"><p class="table">Analogix ANX9805 - HDMI and DisplayPort (Alternate Address) (deprecated on Fermi+).</p></td>
 <td align="left" valign="top"><p class="table">0x78, 0x76, 0x7E, 0x7C</p></td>
 </tr>
 </tbody>
@@ -2967,8 +3058,8 @@ The CVBS (Composite) signal will always follow the Y signal on the 4-pin S-Video
 <div class="sect1">
 <h2 id="_communications_control_block">Communications Control Block</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>This structure is REQUIRED in the DCB 4.0 spec. It must be listed inside
-every DCB. The VBIOS and the FCODE will use the data from this
+<div class="paragraph"><p>This structure is REQUIRED in the DCB 4.x spec. It must be listed inside
+every DCB. The VBIOS and the (U)EFI driver will use the data from this
 structure.</p></div>
 <div class="paragraph"><p>The Communications Control Block provides logical to physical
 translation of all the different ways that the GPU can use to
@@ -2987,10 +3078,15 @@ the DDC voltage requirements.</p></div>
 Crush was released in mid-2001.</td>
 </tr></table>
 </div>
-<div class="paragraph"><p>For DCB 4.0, the norm will be 4 I2C ports as exposed on G80.  With
-Display Port added in G98, we&#8217;ll expose DPAUX ports as well.</p></div>
+<div class="paragraph"><p>For DCB 4.x, the norm will be 4 I2C ports as exposed on G80.  With
+Display Port added in G98, we&#8217;ll expose a DPAUX port as well.</p></div>
 <div class="sect2">
-<h3 id="_communications_control_block_header">Communications Control Block Header</h3>
+<h3 id="_communications_control_block_0x40">Communications Control Block 0x40</h3>
+<div class="paragraph"><p>Version 0x40 of the Communications Control Block, which is used for Core
+6, and Core 6 revision 2, Core70, Core80, and Core82 (which associate
+to G8x, G9x, GT2xx, GF1xx, GKxxx, and GM10x GPUs) is described below.</p></div>
+<div class="sect3">
+<h4 id="_communications_control_block_0x40_header">Communications Control Block 0x40 Header</h4>
 <div class="tableblock">
 <table rules="all"
 width="100%"
@@ -3042,8 +3138,8 @@ cellspacing="0" cellpadding="4">
 </div>
 <div class="paragraph"><p>There is one port entry for each port used. A DVI-I connector&#8217;s two device entries share the same I2C port.</p></div>
 </div>
-<div class="sect2">
-<h3 id="_communications_control_block_entry">Communications Control Block Entry</h3>
+<div class="sect3">
+<h4 id="_communications_control_block_0x40_entry">Communications Control Block 0x40 Entry</h4>
 <div class="paragraph"><div class="title">Access Method</div><p>The first upper 8 bits of each entry is called the Access Method.  This
 field indicates how the software should control each port.  From NV50 onward
 a new port mapping was implemented.  Older I2C Access methods - CRTC
@@ -3095,8 +3191,8 @@ cellspacing="0" cellpadding="4">
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_i2c_access_method">I2C Access Method</h4>
+<div class="sect4">
+<h5 id="_i2c_access_method">I2C Access Method</h5>
 <div class="tableblock">
 <table rules="all"
 width="80%"
@@ -3258,8 +3354,8 @@ levels speeds.</p>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_display_port_aux_channel_access_method">Display Port AUX Channel Access Method</h4>
+<div class="sect4">
+<h5 id="_display_port_aux_channel_access_method">Display Port AUX Channel Access Method</h5>
 <div class="tableblock">
 <table rules="all"
 width="80%"
@@ -3430,6 +3526,128 @@ output. The values here are:</p></div>
 </ul></div>
 <div class="paragraph"><div class="title">Physical I2C Port</div><p>This is the physical I2C port used only when Hybrid Pad field is in Hybrid Mode.</p></div>
 <div class="paragraph"><div class="title">Type</div><p>Must be set to 6 to indicate Display Port AUX Channel Access Method</p></div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_communications_control_block_0x41">Communications Control Block 0x41</h3>
+<div class="paragraph"><p>Version 0x41 of the Communications Control Block, which will be used
+for GM20x+ or Core 84 and future cores, is listed below.</p></div>
+<div class="sect3">
+<h4 id="_communications_control_block_0x41_header">Communications Control Block 0x41 Header</h4>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="21%" />
+<col width="7%" />
+<col width="71%" />
+<thead>
+<tr>
+<th align="center" valign="top"> Name </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" valign="top"><p class="table">Version</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Version # of the CCB Header and Entries.  CCB 4.1 will start with a value of 0x41 here.  A version of 0 here is invalid.</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table">Header Size</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Size of the CCB Header in bytes.  In CCB 4.1 this is 6 bytes.</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table">Entry Count</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Number of CCB Entries starting directly after the end of this table.</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table">Entry Size</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Size of each entry in bytes. This field should be 4.</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table">Primary Communication Port</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Index for the primary communications port.  Specifically, if we need to talk with an external device, the port referenced by this index will be the primary port to talk with that device.</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table">Secondary Communication Port</p></td>
+<td align="left" valign="top"><p class="table">8</p></td>
+<td align="left" valign="top"><p class="table">Index for the secondary communications port.  Specifically, if we need to talk with an external device, this port referenced by this index will be the secondary port to talk with that device.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>There is one port entry for each port used. A DVI-I connector&#8217;s two device entries share the same I2C port.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_communications_control_block_0x41_entry">Communications Control Block 0x41 Entry</h4>
+<div class="paragraph"><p>There is one CCB entry for each set of communications lines (a "pad") on the board. For example, A DVI-I connector&#8217;s two device entries share the same I2C port so they point to the same CCB entry. DP and TMDS entries that are "partnered" (share the same connector and pads) also share the same CCB entry.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="21%" />
+<col width="7%" />
+<col width="71%" />
+<thead>
+<tr>
+<th align="center" valign="top"> Name </th>
+<th align="left" valign="top"> Bit width </th>
+<th align="left" valign="top"> Values and Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" valign="top"><p class="table">I2C Port</p></td>
+<td align="left" valign="top"><p class="table">5</p></td>
+<td align="left" valign="top"><p class="table">Index in PMGR for the I2C Controller that drives the physical pad denoted by this CCB entry. The value 0x1F denotes Unused, meaning that this pad does not support I2C.</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table">DPAUX Port</p></td>
+<td align="left" valign="top"><p class="table">5</p></td>
+<td align="left" valign="top"><p class="table">Index in PMGR for the DPAUX Controller that drives the physical pad denoted by this CCB entry. The value 0x1F denotes Unused, meaning that this pad does not support DPAUX.</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table">Reserved</p></td>
+<td align="left" valign="top"><p class="table">18</p></td>
+<td align="left" valign="top"><p class="table">Set as 0.</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table">I2C Port Speed</p></td>
+<td align="left" valign="top"><p class="table">4</p></td>
+<td align="left" valign="top"><p class="table">The I2C spec defines 3 different communication speeds:
+* Standard - 100 kHz
+* Fast - 400 kHz
+* High Speed - 3.4 MHz</p>
+<p class="table">Each device on an I2C bus must comply with that speed otherwise, the
+lowest device on that bus will clock stall the speed to what it can
+handle.  High Speed requires extra programming to allow a specific
+master to send the high speed data.  There are programming requirements
+to also allow for the fallback between higher level speeds and lower
+levels speeds.</p>
+<p class="table">No traffic on the I2C port may exceed the speed specified here.</p>
+<p class="table">Most (perhaps all) DCBs set this field to 0. The currently defined levels are:</p>
+<p class="table">* 0x0 = Use Defaults (Probably the only one we&#8217;ll ever use.)
+* 0x1 = 100 kHz as per Standard specification
+* 0x2 = 200 kHz
+* 0x3 = 400 kHz as per Fast specification
+* 0x4 = 800 kHz
+* 0x5 = 1.6 MHz
+* 0x6 = 3.4 MHz as per High Speed specification
+* 0x7 = 60 KHz
+* 0x8 = 300 kHz</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -5418,7 +5636,7 @@ OFF state: Low FBVREF voltage (i.e. 50% FBVDDQ)
 </li>
 <li>
 <p>
-68 = Available
+68 = Reserved
 </p>
 </li>
 <li>
@@ -5799,7 +6017,7 @@ OFF state: Disable low power state (all phase operation)
 </li>
 <li>
 <p>
-129 = PWM based serial VID voltage control.
+129 = PWM based Serial VID voltage control for NVVDD.
 </p>
 </li>
 <li>
@@ -6310,6 +6528,21 @@ given pin.</p></div>
 <li>
 <p>
 04 / 0x04 = NV_PMGR_GPIO_INPUT_FUNC_AUX_HPD(3)
+</p>
+</li>
+<li>
+<p>
+05 / 0x05 = NV_PMGR_GPIO_INPUT_FUNC_AUX_HPD(4)
+</p>
+</li>
+<li>
+<p>
+06 / 0x06 = NV_PMGR_GPIO_INPUT_FUNC_AUX_HPD(5)
+</p>
+</li>
+<li>
+<p>
+07 / 0x07 = NV_PMGR_GPIO_INPUT_FUNC_AUX_HPD(6)
 </p>
 </li>
 <li>
@@ -7394,7 +7627,15 @@ applicability.</p></div>
 </ul></div>
 </div>
 <div class="sect3">
-<h4 id="_gpio_entries_for_external_type_9_anx9805_external_dp_encoder_gpio">GPIO Entries for External Type 9 - ANX9805 External DP Encoder GPIO</h4>
+<h4 id="_gpio_entries_for_external_type_9_anx9805_external_dp_encoder_gpio_deprecated">GPIO Entries for External Type 9 - ANX9805 External DP Encoder GPIO (deprecated)</h4>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">ANX9805 is deprecated on Fermi+</td>
+</tr></table>
+</div>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -7428,7 +7669,15 @@ applicability.</p></div>
 </ul></div>
 </div>
 <div class="sect3">
-<h4 id="_gpio_entries_for_external_type_a_pic18f24k20_gpio_expander_for_p678_668">GPIO Entries for External Type A Pic18f24k20 GPIO expander for P678/668</h4>
+<h4 id="_gpio_entries_for_external_type_a_pic18f24k20_gpio_expander_for_p678_668_deprecated">GPIO Entries for External Type A Pic18f24k20 GPIO expander for P678/668 (deprecated)</h4>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">Pic18f24k20 GPIO expander is deprecated on Fermi+</td>
+</tr></table>
+</div>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -8061,6 +8310,11 @@ THERMAL CHIPS
 </li>
 <li>
 <p>
+0x0D = ADT7461
+</p>
+</li>
+<li>
+<p>
 0x04, 0x05, 0x08, and 0x09 = deprecated.
 </p>
 </li>
@@ -8085,7 +8339,7 @@ I2C POWER CONTROLLERS
 <div class="ulist"><ul>
 <li>
 <p>
-0xC0 = PIC16F690 micro controller
+0xC0 = PIC16F690 micro controller (deprecated on Fermi+)
 </p>
 </li>
 <li>
@@ -8108,6 +8362,11 @@ I2C POWER CONTROLLERS
 0x43 = CHiL CHL8203/8212/8213/8214
 </p>
 </li>
+<li>
+<p>
+0x44 = NCP4208
+</p>
+</li>
 </ul></div>
 </li>
 <li>
@@ -8123,6 +8382,16 @@ SMBUS POWER CONTROLLERS
 <li>
 <p>
 0x49 = CHiL CHL8266, CHL8316
+</p>
+</li>
+<li>
+<p>
+0x4A = DS4424N
+</p>
+</li>
+<li>
+<p>
+0x4B = NCT3933U
 </p>
 </li>
 </ul></div>
@@ -8171,6 +8440,11 @@ GENERAL PURPOSE GPIO CONTROLLERS
 0x60 = Philips PCA9555 device for EIAJ-4120 - Japanese HDTV support
 </p>
 </li>
+<li>
+<p>
+0x82 = Texas Instruments PCA9536 device for general-purpose remote I/O expansion
+</p>
+</li>
 </ul></div>
 </li>
 <li>
@@ -8181,6 +8455,16 @@ FAN CONTROLS
 <li>
 <p>
 0x70 = ADT7473, dBCool Fan Controller
+</p>
+</li>
+<li>
+<p>
+0x71 = Reserved
+</p>
+</li>
+<li>
+<p>
+0x72 = Reserved
 </p>
 </li>
 </ul></div>
@@ -9007,8 +9291,7 @@ This field dictates if this connector triggers the Hotplug G interrupt.
 If defined, then the Hotplug G interrupt must be defined inside the GPIO
 Assignment table.</p></div>
 <div class="paragraph"><div class="title">Panel Self Refresh Frame Lock A</div><p>This field dictates if this connector triggers the FrameLock A
-interrupt. If defined, then the FrameLock A interrupt must be defined
-inside the GPIO Assignment table.</p></div>
+interrupt.</p></div>
 <div class="paragraph"><div class="title">LCD ID</div><p>This field dictates if this connector is connected to LCD# GPIO(s). If
 defined, then the LCD# GPIO(s) must be defined inside the GPIO
 Assignment table. LCD ID field only applies to the connector types
@@ -9051,6 +9334,21 @@ Assignment table.</p></div>
 <li>
 <p>
 0x47 = DisplayPort Internal Connector(non-removeable)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Special case for connector platform type 0x09 = MXM module, if DCB
+connector type and MXM-SIS output connector type have below
+combinations:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+0x46 = DisplayPort External Connector and MXM-SIS connector type is 0x07 = DISPLAYPORT_INT
+</p>
+</li>
+<li>
+<p>
+0x46 = DisplayPort External Connector and MXM-SIS connector type is 0x0E = EDP_INT
 </p>
 </li>
 </ul></div>
@@ -9705,7 +10003,7 @@ this DCB index entry.  The physical logic here is found in the
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated Thu Aug 15 10:56:32 PDT 2013
+Last updated 2014-12-08
 </div>
 </div>
 </body>
