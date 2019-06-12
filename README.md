@@ -1,6 +1,12 @@
 NVIDIA open-gpu-doc repository
 ==============================
 
+For an alternate view of this site, that renders HTML content directly in
+your browser (for example, BIOS-Information-Table/BIOS-Information-Table.html),
+please see the "github pages" view, here:
+
+    https://nvidia.github.io/open-gpu-doc/
+
 This content was originally kept at:
 
     http://download.nvidia.com/open-gpu-doc/
