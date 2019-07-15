@@ -19,7 +19,17 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 --------------------------------------------------------------------------------
 
-1  -  INTRODUCTION
+CONTENTS
+
+    INTRODUCTION
+
+    INTERRUPT REGISTERS
+
+    HOST METHODS (NV_UDMA)
+
+    KEY
+
+INTRODUCTION
 ==================
 
      A Host's PBDMA unit fetches pushbuffer data from memory, generates
@@ -33,6 +43,22 @@ registers.
 address doubleword and a data doubleword.  The address specifies the operation
 to be performed.  The data is an operand.  The NV_UDMA address space contains
 the addresses of the methods that are executed by a PBDMA unit.
+
+Mnemonic  Description             Size    Interface
+--------  -----------             ----    ---------
+UDMA      Host Methods            256B
+PPBDMA    Priv PBDMA Unit         128K    HOST
+
+
+#define NV_UDMA                               0x000000FF:0x00000000 /* RW--D */
+#define NV_PPBDMA                             0x0005FFFF:0x00040000 /* RW--D */
+
+Note: As most of these registers directly reflect the current state of the PBDMA
+this means that while a Host channel switch is in progress the registers may be
+in an inconsistent state until the channel switch is complete. See dev_fifo.ref
+NV_PFIFO_PBDMA_STATUS for more information on how to tell if a chsw is in progress.
+
+
 GP_ENTRY0 and GP_ENTRY1 - GP-Entry Memory Format
 
      A pushbuffer contains the specifications of the operations that a GPU
@@ -1776,18 +1802,40 @@ NV_PPBDMA_CHANNEL_VALID is FALSE, this register should be ignored.
 
 
 
-CHANNEL - Channel Identifier
+CHANNEL register:
 
-     The NV_PPBDMA_CHANNEL register contains the channel number that is
-currently assigned to a PBDMA unit. If VALID_FALSE, then this PBDMA unit
-does not contain any valid state. After loading state from RAMFC, VALID
-is set to TRUE. After saving the state to RAMFC, or during the load of RAMFC,
-VALID is set to FALSE.
-     This information is maintained by Hardware.  This register is available for
-debug purposes.
-     One of these registers exists for each of Host's PBDMA units.  This
-register is not context switched.  This register runs on the internal-domain
-clock.
+     This register contains the channel ID of the channel currently loaded on
+the PBDMA.  If the PBDMA has been preempted and no channel is loaded or loading,
+the register contains information about the previously loaded channel.
+
+
+CHID field:
+
+     CHID contains the system channel ID of the channel currently loaded on the
+PBDMA, or the channel last loaded on the PBDMA during a channel save.  The chid
+gets populated with the ID of the loading channel during a channel switch as
+soon as the RAMFC load completes.  Note Host does not wait for the channel's
+bind acks to return.
+
+     The update of the chid field corresponds with the NV_PFIFO_PBDMA_STATUS
+register's CHAN_STATUS field as follows:
+
+  * CHAN_STATUS==VALID: CHID contains the current channel loaded on PBDMA
+  * CHAN_STATUS==INVALID or CHSW_SAVE: CHID specifies the channel that was last
+    loaded on the PBDMA if any.  If no channel has been loaded on the PBDMA, the
+    value is unspecified.
+  * CHAN_STATUS==CHSW_LOAD or CHSW_SWITCH: prior to completing the RAMFC load,
+    CHID contains the prior channel loaded if any.  After the RAMFC load
+    completes, CHID transitions to the ID of the loading channel.
+
+     The CHID field identifies the RAMFC that is currently accessible via the
+NV_PPBDMA registers.  However, note that the RAMFC requires multiple cycles to
+read, so it is possible that the PBDMA register state is not consistent during
+channel load.
+
+     This register is maintained by Hardware and is available for debug
+purposes.  One of these registers exists for each of Host's PBDMA units.  This
+register is not context switched.
 
 
 #define NV_PPBDMA_CHANNEL(i)                  (0x00040120+(i)*8192) /* RW-4A */
@@ -1795,9 +1843,6 @@ clock.
 
 #define NV_PPBDMA_CHANNEL_CHID                                 11:0 /*       */
 #define NV_PPBDMA_CHANNEL_CHID_HW                11:0 /* RWXUF */
-#define NV_PPBDMA_CHANNEL_VALID                               13:13 /* RWIVF */
-#define NV_PPBDMA_CHANNEL_VALID_FALSE                    0x00000000 /* RWI-V */
-#define NV_PPBDMA_CHANNEL_VALID_TRUE                     0x00000001 /* RW--V */
 
 
 
@@ -2057,6 +2102,7 @@ register runs on Host's internal domain clock.
 #define NV_PPBDMA_SET_CHANNEL_INFO_VEID     ((6-1)+8):8 /*       */
 
 #define NV_PPBDMA_SET_CHANNEL_INFO_RESERVED                        31:16 /*       */
+
 HCI_CTRL - Misc Additional HCE State
 
      HCE_CTRL is used for misc. HCE state that needs to be channel swapped
@@ -2114,6 +2160,7 @@ is useful for debug while the channel is loaded.
 #define NV_PPBDMA_HCE_CTRL_SET_RENDER_ENABLE_C_RCVD           20:20 /* RW-UF */
 #define NV_PPBDMA_HCE_CTRL_SET_RENDER_ENABLE_C_RCVD_NO   0x00000000 /* RW--V */
 #define NV_PPBDMA_HCE_CTRL_SET_RENDER_ENABLE_C_RCVD_YES  0x00000001 /* RW--V */
+
 TIMEOUT - Timeout Period Register
 
      The NV_PPBDMA_TIMEOUT register contains a value used for detecting
@@ -2139,7 +2186,7 @@ clock.
 #define NV_PPBDMA_TIMEOUT_PERIOD_INIT                    0x00010000 /* RWE-V */
 #define NV_PPBDMA_TIMEOUT_PERIOD_MAX                     0xffffffff /* RW--V */
 
-6  -  INTERRUPT REGISTERS
+INTERRUPT REGISTERS
 =========================
 
      The interrupt registers control the interrupts for the local devices.
@@ -2504,13 +2551,10 @@ the interrupt will be fired.  This is a potentially fatal condition for the
 channel which was loaded on the PBDMA while the engine was reset.  The PBDMA which
 encountered the interrupt will stall and prevent the channel which was loaded at
 the time the interrupt fired from being swapped out until the interrupt is cleared.
-To unblock the PBDMA, SW needs to do the following:
-
-     1. Disable all the channels in the TSG
-     2. Initiate a preempt (but do not poll for completion yet)
-     3. Clear the interrupt bit
-     4. Poll for preempt completion
-     5. Tear down the context
+To unblock the PBDMA, SW needs to enable the engine and then tear down the
+context using the procedure described in Chapter "Channel Teardown Sequence" of
+dev_fifo.ref. This interrupt needs to be cleared as part of step 4 of the
+"Channel Teardown Sequence".
 
 Note the TSG ID can be obtained by reading NV_PFIFO_PBDMA_STATUS_ID;
 see dev_fifo.ref.  The error is limited to the channel.
@@ -3097,7 +3141,7 @@ pending and the PBDMA_STALL_1 register is set for the corresponding interrupt.
 #define NV_PPBDMA_HCE_DBG1_MTHD_DATA_VAL0                 0x00000000 /* R-E-V */
 
 
-9  -  HOST METHODS (NV_UDMA)
+HOST METHODS (NV_UDMA)
 ============================
 
      This section describes the types of methods that are executed by Host.  In
@@ -4259,3 +4303,82 @@ the CLEAR_FAULTED method times out or succeeds.
      Addresses that are not defined in this device are reserved.  Those below
 0x100 are reserved for future Host methods.  Addresses 0x100 and beyond are
 reserved for the engines served by Host.
+
+KEY
+================================
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:

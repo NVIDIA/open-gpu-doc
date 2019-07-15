@@ -1,0 +1,269 @@
+Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+
+1  -  INTRODUCTION
+==================
+
+This manual contains information definition of replayable (UVM)
+and non-replayable fault buffer packet in memory. Both type of faults
+use same packet format in memory although separate fault buffers are
+used.
+
+The goal of the UVM feature is to have a single unified virtual memory space
+for both GPU and CPU memory accesses.  In addition to the unified address
+space, UVM allows the GPU driver to support demand paging, and seamlessly
+migrate pages from GPU RAM to the primary system memory.
+
+This is done by allowing page faults to be stalling and support replay, and by
+reporting page faults to the operating system or GPU driver in an efficient
+manner.
+
+Non-replayable faults are various mapping and permission related
+faults and are usually fatal.
+
+
+
+2  -  GPU FAULT BUFFER
+======================================
+This chapter describes the format of the GPU replayable and
+non-replayable fault reporting buffer used to report page faults.
+
+
+This fault buffer is written to by GMMU based on buffer location info
+set in GMMU registers (NV_PFB_PRI_MMU_REPLAY_FAULT_BUFFER_LO/HI and
+NV_PFB_PRI_MMU_NON_REPLAY_FAULT_BUFFER_LO/HI). The replayable fault
+buffer is managed by the UVM driver. The non-replayable fault buffer
+is managed by RM.
+
+
+The size of the fault buffer is controlled by SIZE register in GMMU
+which can be programmed by SW. If SW does not want to program the SIZE
+(because SW does not know/have enough info) then SW can write a SIZE
+CTL bit (SET_DEFAULT) in GMMU register to set the size to a HW
+recommended value. On that SIZE CTL bit write, GMMU will calculate the
+recommended value based on chip size and so and write the recommended
+value.
+
+
+The buffer can overflow. There is status maintained in GMMU register
+for that. If the buffer has overflowed the GPU will stop writing out new fault
+entries and proceed to drop entries until SW resets the overflow
+status (normally after processing the existing fault packets and so
+GET PTR is changed). This is done to prevent the GPU from overwriting
+unprocessed entries.  When faults are dropped they are not lost for
+replayable faults as the requets are buffered in MMU replay buffer;
+however, non-replayable faults are lost as those requests are not
+buffered for further processing; when SW triggers a replay event the
+requests for the dropped replayable faults will be replayed, fault
+again, and then be reported in the fault buffer.
+
+Each entry is of size NV_MMU_FAULT_BUFFER_PACKET_SIZE (=32) bytes and
+contains the fault information necessary for (1) the UVM driver to
+perform necessary page migrations and house keeping in response to a
+replayable fault for replayable fault and (2) the RM to perform
+graceful exit for the non-replayable fault.
+
+The ENGINE_ID field specifies the faulting MMU engine id.
+
+The APERTURE field specifies the GPU physical APERTURE of the instance block
+used for the request.  VID_MEM indicates the instance block was stored in the
+GPU devices RAM.  SYS_MEM_COHERENT indicates the instance block was stored in
+coherent system memory. SYS_MEM_NONCOHERENT indicates the page table was stored
+in non-coherent system memory.
+
+
+INST_LO is used to specify bits 32:12 of the physical 4KB aligned instance
+block associated with the faulting request.  INST_LO is aligned to this 4KB
+boundary and so the bottom 12 bits are not reported in this data structure, and
+this space is used to specify other fields.  The instance block contains the
+pointers to the page table used for the memory request.
+
+
+
+
+INST_HI contains the high order bits of the instance block associated with the
+memory request.  Space is reserved to allow INST_HI to eventually expand up to
+64 bits.
+
+ADDR_LO and ADDR_HI specify the 4K-aligned address (virtual or
+physical based on ACCESS_TYPE) of the faulting request. Up to 64 bits
+4K-aligned address can be reported; however,the bit width of the
+addresses supported by a given GPU depends on the GPU's family.
+
+PHYS_APERTURE specifies the aperture of the faulting address.
+
+
+FAULT_TYPE indicates the type of fault which occurred.  For a list of different
+fault types please see the NV_PFAULT_FAULT_TYPE_* defines in dev_fault.ref.
+
+REPLAYABLE_FAULT(RF) indicates whether this fault is a replayable fault or
+not. This bit is set false when (1) the fault is non-replayable or (2)
+fault is replayable but has been cancelled.
+
+CLIENT indicates which MMU client generated the faulting request.
+
+The ACCESS_TYPE field indicates the type of the faulting request.
+
+MMU_CLIENT_TYPE indicates whether the faulting request originated in a GPC, or
+if it came from another type of HUB client.  This field determines how the
+CLIENT field should be interpreted.
+
+
+GPC_ID specifies the GPC which generated the faulting request if MMU_CLIENT_TYPE
+will be NV_PFAULT_MMU_CLIENT_TYPE_GPC, meaning the request came from a GPC
+client.  Otherwise the GPC_ID field should be ignored.
+
+
+REPLAYABLE_FAULT_EN (R) is set to true if replayable fault is enabled for
+any client in the instance block.  It does not indicate whether the fault is replayable.
+
+VALID (V) indicates that this current buffer entry is VALID.
+
+#define NV_MMU_FAULT_BUF                                                    /* ----G */
+#define NV_MMU_FAULT_BUF_ENTRY                              0x1F:0x00000000 /* RW--M */
+
+Size of a buffer entry in bytes
+#define NV_MMU_FAULT_BUF_SIZE              32 /*       */
+
+#define NV_MMU_FAULT_BUF_ENTRY_INST_APERTURE              (9+0*32):(0*32+8) /* RWXVF */
+#define NV_MMU_FAULT_BUF_ENTRY_INST_APERTURE_VID_MEM             0x00000000 /* RW--V */
+#define NV_MMU_FAULT_BUF_ENTRY_INST_APERTURE_SYS_MEM_COHERENT    0x00000002 /* RW--V */
+#define NV_MMU_FAULT_BUF_ENTRY_INST_APERTURE_SYS_MEM_NONCOHERENT 0x00000003 /* RW--V */
+
+#define NV_MMU_FAULT_BUF_ENTRY_INST_LO                   (31+0*32):(0*32+12) /* RWXVF */
+#define NV_MMU_FAULT_BUF_ENTRY_INST_HI                   (31+1*32):(1*32+0) /* RWXVF */
+Dword-spanning field define alias
+#define NV_MMU_FAULT_BUF_ENTRY_INST                      (31+1*32):(0*32+12) /*       */
+
+#define NV_MMU_FAULT_BUF_ENTRY_ADDR_PHYS_APERTURE         (1+2*32):(2*32+0) /* RWXVF */
+#define NV_MMU_FAULT_BUF_ENTRY_ADDR_LO                   (31+2*32):(2*32+12) /* RWXVF */
+#define NV_MMU_FAULT_BUF_ENTRY_ADDR_HI                   (31+3*32):(3*32+0) /* RWXVF */
+Dword-spanning field define alias
+#define NV_MMU_FAULT_BUF_ENTRY_ADDR                      (31+3*32):(2*32+12) /*       */
+
+#define NV_MMU_FAULT_BUF_ENTRY_TIMESTAMP_LO              (31+4*32):(4*32+0) /* RWXVF */
+#define NV_MMU_FAULT_BUF_ENTRY_TIMESTAMP_HI              (31+5*32):(5*32+0) /* RWXVF */
+Dword-spanning field define alias
+#define NV_MMU_FAULT_BUF_ENTRY_TIMESTAMP                 (31+5*32):(4*32+0) /*       */
+
+#define NV_MMU_FAULT_BUF_ENTRY_ENGINE_ID                  (8+6*32):(6*32+0) /* RWXVF */
+
+#define NV_MMU_FAULT_BUF_ENTRY_FAULT_TYPE                 (4+7*32):(7*32+0) /* RWXVF */
+
+#define NV_MMU_FAULT_BUF_ENTRY_REPLAYABLE_FAULT           (7+7*32):(7*32+7) /* RWXVF */
+#define NV_MMU_FAULT_BUF_ENTRY_REPLAYABLE_FAULT_FALSE            0x00000000 /* RWX-V */
+#define NV_MMU_FAULT_BUF_ENTRY_REPLAYABLE_FAULT_TRUE             0x00000001 /* RWX-V */
+
+#define NV_MMU_FAULT_BUF_ENTRY_CLIENT                    (14+7*32):(7*32+8) /* RWXVF */
+
+#define NV_MMU_FAULT_BUF_ENTRY_ACCESS_TYPE              (19+7*32):(7*32+16) /* RWXVF */
+
+#define NV_MMU_FAULT_BUF_ENTRY_MMU_CLIENT_TYPE          (20+7*32):(7*32+20) /* RWXVF */
+
+#define NV_MMU_FAULT_BUF_ENTRY_GPC_ID                   (28+7*32):(7*32+24) /* RWXVF */
+
+
+#define NV_MMU_FAULT_BUF_ENTRY_REPLAYABLE_FAULT_EN      (30+7*32):(7*32+30) /* RWXVF */
+#define NV_MMU_FAULT_BUF_ENTRY_REPLAYABLE_FAULT_EN_FALSE         0x00000000 /* RWX-V */
+#define NV_MMU_FAULT_BUF_ENTRY_REPLAYABLE_FAULT_EN_TRUE          0x00000001 /* RWX-V */
+
+// NOTE: VALID must be in the last byte in the packet for proper write ordering
+#define NV_MMU_FAULT_BUF_ENTRY_VALID                    (31+7*32):(7*32+31) /* RWXVF */
+#define NV_MMU_FAULT_BUF_ENTRY_VALID_FALSE                       0x00000000 /* RWX-V */
+#define NV_MMU_FAULT_BUF_ENTRY_VALID_TRUE                        0x00000001 /* RWX-V */
+
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:

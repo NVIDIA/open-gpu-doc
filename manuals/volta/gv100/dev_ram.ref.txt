@@ -19,7 +19,39 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 --------------------------------------------------------------------------------
 
-2  -  GPU INSTANCE RAM (RAMIN)
+CONTENTS
+
+    Introduction
+
+    GPU Instance RAM (RAMIN)
+
+    FIFO Context RAM (RAMFC)
+
+    User-Driver Accessible RAM (RAMUSERD)
+
+    Run-List RAM (RAMRL)
+
+    Host Pushbuffer Format (FIFO_DMA)
+
+    Key
+
+INTRODUCTION
+==================
+
+     This device describes the various memory formats used by Host and the
+engines on the GPU.  It also defines the PRAMIN bar0 space controlled by
+NV_PBUS_BAR0_WINDOW.
+
+Mnemonc Description             Size    Interface
+------- -----------             ----    ---------
+PRAMIN  Priv Ram BAR0 Window      1M    HOST
+
+#define NV_PRAMIN                             0x007FFFFF:0x00700000 /* RW--M */
+
+
+
+
+GPU INSTANCE RAM (RAMIN)
 ==============================
 
      A GPU contains a block called "XVE" that manages the interface with PCI, a
@@ -342,7 +374,7 @@ is a virtual address.
 
 
 
-3  -  FIFO CONTEXT RAM (RAMFC)
+FIFO CONTEXT RAM (RAMFC)
 ==============================
 
 
@@ -470,7 +502,7 @@ corresponding register in the associated PBDMA unit's PRI space.
     Size of the full range of RAMFC in bytes.
 #define NV_RAMFC_SIZE_VAL                                0x00000200 /* ----C */
 
-4 - USER-DRIVER ACCESSIBLE RAM (RAMUSERD)
+USER-DRIVER ACCESSIBLE RAM (RAMUSERD)
 =========================================
 
      A user-level driver is allowed to access only a small portion of a GPU
@@ -548,7 +580,7 @@ unit.
 
 
 
-5 - RUN-LIST RAM (RAMRL)
+RUN-LIST RAM (RAMRL)
 ========================
 
      Software specifies the GPU contexts that hardware should "run" by writing a
@@ -779,7 +811,7 @@ number of regular channel entry, correspond to the second TSG.
 
 
 
-6  -  Host Pushbuffer Format (FIFO_DMA)
+Host Pushbuffer Format (FIFO_DMA)
 =======================================
 
      "FIFO" refers to Host.  "FIFO_DMA" means data that Host reads from memory:
@@ -1267,3 +1299,81 @@ segment via NV_PPBDMA_GP_ENTRY1_OPCODE_PB_CRC will be indeterminate.
 #define NV_FIFO_DMA_ENDSEG_OPCODE_VALUE                  0x00000007 /* ----V */
 
 
+KEY
+==================
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
