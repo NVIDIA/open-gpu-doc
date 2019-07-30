@@ -640,6 +640,103 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PFIFO_PBDMA_STATUS_INST_VALID_FALSE                0x00000000 /* R-E-V */
 #define NV_PFIFO_PBDMA_STATUS_INST_VALID_TRUE                 0x00000001 /* R---V */
 
+Channel Teardown Sequence
+===============================================================================
+
+     This section describes the sequence software (specifically RM) can use to
+tear down a channel for robust channels (RC) recovery or in the case of a fault.
+
+     In the case of a fault, Host does not guarantee that a PBDMA has saved out
+prior to RM receiving notification of the fault.  RM must determine which
+context has faulted by processing the fault buffer as described in the
+NV_PFB_PRI_MMU_FAULT_BUFFER_* register documentation in pri_mmu_hub.ref and in
+the fault buffer NV_MMU_FAULT_BUF_ENTRY documentation in dev_mmu_fault.ref.
+This context can then be torn down using the following procedure.
+     Note when a PBDMA fault or CE fault occurs, the PBDMA will save out
+automatically.  The TSG related to the context in which the fault occurred will
+not be scheduled again until the fault is handled.
+     In the case of some other issue requiring the engine to be reset, the TSG
+will need to be manually preempted.
+     In all cases, a PBDMA interrupt may occur prior to the PBDMA being able to
+switch out.  SW must handle these interrupts according to the relevant handling
+procedure before the PBDMA preempt can complete.
+
+Context TSG tear-down procedure:
+
+  1. Disable scheduling for the engine's runlist via NV_PFIFO_SCHED_DISABLE.
+     This enables SW to determine whether a context has hung later in the
+     process: otherwise, ongoing work on the runlist may keep ENG_STATUS from
+     reaching a steady state.
+
+  2. Disable all channels in the TSG being torn down or submit a new runlist
+     that does not contain the TSG.  This is to prevent the TSG from being
+     rescheduled once scheduling is re-enabled in step 6.
+
+  3. Initiate a preempt of the engine by writing the bit associated with its
+     runlist to NV_PFIFO_RUNLIST_PREEMPT.  This allows us to begin the preempt
+     process prior to doing the slow register reads needed to determine whether
+     the context has hit any interrupts or is hung.  Do not poll
+     NV_PFIFO_RUNLIST_PREEMPT for the preempt to complete.
+
+  4. Check for interrupts or hangs while waiting for the preempt to complete.
+     During the below polling, any stalling interrupts relating to the runlist
+     must be detected and handled in order for the preemption to complete.  SW
+     may opt to simply reset the engine immediately, or perform the following
+     sub-steps to more cleanly tear down the context:
+
+    a. Wait for PBDMA preempt completion: For each PBDMA which serves the
+       runlist, poll NV_PFIFO_PBDMA_STATUS(pbdma_id) to reach CHAN_STATUS
+       INVALID, indicating the no further work will run on the PBDMA during the
+       tear-down sequence.  Interleaved with the polling, PBDMA interrupts must
+       be serviced as they arise: such an interrupt can prevent the PBDMA from
+       completing its channel save.
+
+    b. Wait for engine context preempt completion: For each engine served by the
+       runlist, read NV_PFIFO_ENGINE_STATUS(engine_id) to verify the channel/TSG
+       has saved off the engine, or tell if the CTXSW is hung, via the
+       CTX_STATUS, ID, and NEXT_ID fields.  Take action based on the following
+       values for the CTX_STATUS field:
+
+      i. CTX_STATUS_SWITCH: Engine save hasn't started yet, continue to poll
+         (repeat step 4b).
+
+      ii. CTX_STATUS_INVALID: The engine context has switched off.  The
+         preemption step for this engine is complete.
+
+      iii. CTX_STATUS_VALID or CTX_STATUS_CTXSW_SAVE: check the ID field:
+        * If ID matches the TSG for the context being torn down, the engine
+          reset procedure can be performed (see step 5), or SW can continue
+          waiting by repeating step 4b.
+        * If ID does NOT match, then skip engine reset (skip step 5) for this
+          engine.  The context isn't running on the engine.
+
+      iv. CTX_STATUS_LOAD: check the NEXT_ID field:
+        * If NEXT_ID matches the TSG of the context being torn down, the engine
+          is loading the context and reset (see step 5) can be performed
+          immediately or after a delay to allow the context a chance to load and
+          be saved off.
+        * If NEXT_ID does not match the TSG ID or CHID then the context is no
+          longer on the engine.  Skip engine reset (skip step 5) for this
+          engine.
+
+       SW may alternatively wait for the CTX_STATUS to reach INVALID, but this
+       may take longer if an unrelated context is currently on the engine or
+       being switched to.
+
+  5. If a reset is needed as determined by step 4:
+
+    a. Halt the memory interface for the engine (as per the relevant engine
+       procedure).
+
+    b. Reset the engine via NV_PMC_ENABLE.
+
+    c. Take the engine out of reset and re-init the engine (as per the relevant
+       engine procedure)
+
+  6. Re-enable scheduling for the engine's runlist via NV_PFIFO_SCHED_ENABLE.
+
+After this sequence, resources for the channels in the TSG may be reclaimed.
+
 --------------------------------------------------------------------------------
                          KEY LEGEND
 --------------------------------------------------------------------------------

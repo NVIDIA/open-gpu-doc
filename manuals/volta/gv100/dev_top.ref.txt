@@ -1,0 +1,315 @@
+Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_PTOP                               0x000227FF:0x00022400 /* RW--D */
+#define NV_PTOP_SCAL_NUM_GPCS                                                0x00022430 /* R--4R */
+#define NV_PTOP_SCAL_NUM_GPCS_VALUE                                                 4:0 /* R-IVF */
+#define NV_PTOP_SCAL_NUM_GPCS_VALUE_DEFAULT                                           0 /* R-I-V */
+#define NV_PTOP_SCAL_NUM_TPC_PER_GPC                                         0x00022434 /* R--4R */
+#define NV_PTOP_SCAL_NUM_TPC_PER_GPC_VALUE                                          4:0 /* R-IVF */
+#define NV_PTOP_SCAL_NUM_TPC_PER_GPC_VALUE_DEFAULT                                    0 /* R-I-V */
+#define NV_PTOP_SCAL_NUM_FBPS                                                0x00022438 /* R--4R */
+#define NV_PTOP_SCAL_NUM_FBPS_VALUE                                                 4:0 /* R-IVF */
+#define NV_PTOP_SCAL_NUM_FBPS_VALUE_DEFAULT                                           0 /* R-I-V */
+#define NV_PTOP_SCAL_NUM_FBPAS                                               0x0002243C /* R--4R */
+#define NV_PTOP_SCAL_NUM_FBPAS_VALUE                                                4:0 /* R-IVF */
+#define NV_PTOP_SCAL_NUM_FBPAS_VALUE_DEFAULT                                          0 /* R-I-V */
+#define NV_PTOP_SCAL_NUM_LTC_PER_FBP                                        0x00022450 /* R--4R */
+#define NV_PTOP_SCAL_NUM_LTC_PER_FBP_VALUE                                         4:0 /* R-IVF */
+#define NV_PTOP_SCAL_NUM_LTC_PER_FBP_VALUE_DEFAULT                                   0 /* R-I-V */
+#define NV_PTOP_SCAL_NUM_LTCS                                               0x00022454 /* R--4R */
+#define NV_PTOP_SCAL_NUM_LTCS_VALUE                                                4:0 /* R-IVF */
+#define NV_PTOP_SCAL_NUM_LTCS_VALUE_DEFAULT                                          0 /* R-I-V */
+#define NV_PTOP_SCAL_NUM_FBPA_PER_FBP                                       0x00022458 /* R--4R */
+#define NV_PTOP_SCAL_NUM_FBPA_PER_FBP_VALUE                                        4:0 /* R-IVF */
+#define NV_PTOP_SCAL_NUM_FBPA_PER_FBP_VALUE_DEFAULT                                  0 /* R-I-V */
+#define NV_PTOP_SCAL_NUM_SLICES_PER_LTC                                     0x0002245c /* R--4R */
+#define NV_PTOP_SCAL_NUM_SLICES_PER_LTC_VALUE                                      4:0 /* R-IVF */
+#define NV_PTOP_SCAL_NUM_SLICES_PER_LTC_VALUE_DEFAULT                                0 /* R-I-V */
+
+
+DEVICE_INFO REGISTERS
+===============================================================================
+
+The device info mechanism provides a PRI readable array containing identifying
+information for the devices and engines available on the chip.  Information on a
+device's reset, interrupts, basic type, version registers, engine enumeration,
+and runlist enumeration is included, along with the ability to add additional
+enumerations.
+
+Currently, only Host-driven engines and NVLINK (via IOCTRL) are present in the
+table.
+
+
+DEVICE_INFO is an array of registers, here referred to as entries.  Each device
+in the table is described using one or more entries.  The entries are grouped
+according to the CHAIN field in each entry, which occupies the top bit.  The
+interpretation of the data in an entry is determined by the ENTRY field, which
+is present in the bottom bits of each entry.  Within each entry, valid bits
+control whether each piece of information is applicable to the current device.
+
+CHAIN, when set to ENABLE, indicates the next entry is part of the same device
+as the current entry.  DISABLE means the next entry is either invalid or part of
+a different device.
+
+ENTRY specifies the type of the entry, and defines how that entry is to be
+interpreted:
+
+     * NOT_VALID - the entry is to be ignored
+     * DATA - the entry contains the instance number, PRI base, and fault id for
+              the device
+     * ENUM - the entry provides the engine number, runlist number,
+              interrupt id, and reset id for the device
+     * ENGINE_TYPE - the entry lists the engine type (e.g. "graphics")
+
+Note the device info table does not contain engine versions or class id information.
+
+
+
+NV_PTOP_DEVICE_INFO_ENTRY == ENUM definitions:
+
+     Define prefix: NV_PTOP_DEVICE_INFO
+
+ENGINE_ENUM, when ENGINE is VALID, contains the Host engine ID for the current
+device if it is a Host engine, meaning Host can send methods to the engine.
+This id is used to index into any register array whose __SIZE_1 is equal to
+NV_HOST_NUM_ENGINES.  A given ENGINE_ENUM can be present for at most one device
+in the table.  Devices corresponding to all ENGINE_ENUM ids 0 through
+NV_HOST_NUM_ENGINES - 1 must be present in the device info table.
+
+ENGINE controls whether ENGINE_ENUM applies to the current device.  ENGINE_ENUM
+is valid only when the ENGINE field equals VALID.  If the device is not a Host
+engine, ENGINE will be NOT_VALID and ENGINE_ENUM will be 0.
+
+RUNLIST_ENUM, when RUNLIST is VALID, contains the Host runlist ID on which
+methods for the current device should be submitted if the device is a Host
+engine.  The runlist id is used to index into any register array whose __SIZE_1
+is equal to NV_HOST_NUM_RUNLISTS.  Devices corresponding to all RUNLIST_ENUM ids
+0 through NV_HOST_NUM_RUNLISTS - 1 must be present in the device info table.
+
+RUNLIST controls whether RUNLIST_ENUM applies to the current device.
+RUNLIST_ENUM is valid only when the RUNLIST field equals VALID.  If the device
+is not a Host engine, RUNLIST will be NOT_VALID and RUNLIST_ENUM will be 0.
+
+INTR_ENUM, when INTR is VALID, contains the INTR id for the current device.
+The INTR id is used to index into the NV_PMC_INTR_*_DEVICE register bitfields:
+NV_PMC_INTR_DEVICE, NV_PMC_INTR_EN_DEVICE, NV_PMC_INTR_EN_SET_DEVICE,
+NV_PMC_INTR_EN_CLEAR_DEVICE.
+
+INTR controls whether INTR_ENUM applies to the current device.  INTR_ENUM is
+valid only when the INTR field equals VALID.  If the device has no interrupt,
+INTR will be NOT_VALID and INTR_ENUM will be 0.
+
+RESET_ENUM, when RESET is VALID, contains the reset id for the current device.
+It is used to index into the NV_PMC_ENABLE_DEVICE(i),
+NV_PMC_ELPG_ENABLE_DEVICE(i) register bitfields.
+
+RESET controls whether RESET_ENUM applies to the current device.  RESET_ENUM is
+valid only when the RESET field equals VALID.  If there is no reset specific to
+the device, RESET will be NOT_VALID and RESET_ENUM will be 0.
+
+
+
+NV_PTOP_DEVICE_INFO_ENTRY == ENGINE_TYPE definitions:
+
+     Define prefix: NV_PTOP_DEVICE_INFO
+
+TYPE_ENUM specifies the engine type for the current device when that device is a
+Host engine.  The enumeration is defined by software for software.  Hardware
+does not use these values in any way.  When new engine types are defined, software
+must provide a new enumeration value for the engine.  This data is not used for
+class codes, engine versions, etc.  It is used for generic descriptions of the
+engine, like graphics, or copy engine.  A Host engine can be uniquely identified
+by its TYPE_ENUM:INST_ID pair; see the DATA entry interpretation for INST_ID.
+
+TYPE_ENUM values are expected to stay constant across GPUs and architectures.
+
+
+
+NV_PTOP_DEVICE_INFO_ENTRY == DATA definitions:
+
+     Define prefix: NV_PTOP_DEVICE_INFO_DATA
+
+TYPE defines how to interpret the fields in the DATA group.  However
+today, there is only one available interpretation which is ENUM2.  In
+the future there may be additional interpretations.
+
+INST_ID specifies the instance of a device, allowing software to distinguish
+between multiple copies of a device present on the same chip.  Devices that do
+not support instancing will report as the zeroth instance, so there is no
+associated VALID field.
+
+PRI_BASE allows SW to determine the BAR0 offset for registers in the device:
+
+  BAR0 base = (PRI_BASE << NV_PTOP_DEVICE_INFO_DATA_PRI_BASE_ALIGN)
+
+The field is designed such that the low order bit of PRI_BASE is already aligned
+appropriately within the entry register at bit position
+NV_PTOP_DEVICE_INFO_DATA_PRI_BASE_ALIGN.  The size of the range is at a minimum
+4kB but should be implied by NV_PTOP_DEVICE_INFO_TYPE_ENUM or can be defined in
+the first 4kB of the device itself.  Note that some instanced devices (such as
+logical copy engines aka LCE) share a PRI_BASE across all devices of the same
+engine type; such devices require an additional offset:
+
+  instanced base = BAR0 base + stride * INST_ID
+
+Every device must have a valid PRI_BASE defined.
+
+FAULT_ID_ENUM, when FAULT_ID is VALID, contains the MMU fault id used by this
+device.  These ids correspond to the NV_PFAULT_MMU_ENG_ID define list.
+
+FAULT_ID controls whether FAULT_ID_ENUM applies to the current device.
+FAULT_ID_ENUM is valid only when the FAULT_ID field equals VALID.  If the device
+does not have its own bind point to the MMU, FAULT_ID will be NOT_VALID and
+FAULT_ID_ENUM will be 0.
+
+
+#define NV_PTOP_DEVICE_INFO(i)                         (0x00022700+(i)*4) /* R--4A */
+#define NV_PTOP_DEVICE_INFO__SIZE_1                                    64 /*       */
+#define NV_PTOP_DEVICE_INFO_VALUE                                    31:0 /* R--VF */
+#define NV_PTOP_DEVICE_INFO_CHAIN                                   31:31 /*       */
+#define NV_PTOP_DEVICE_INFO_CHAIN_ENABLE                                1 /*       */
+#define NV_PTOP_DEVICE_INFO_CHAIN_DISABLE                               0 /*       */
+#define NV_PTOP_DEVICE_INFO_ENGINE_ENUM                             29:26 /*       */
+#define NV_PTOP_DEVICE_INFO_RUNLIST_ENUM                            24:21 /*       */
+#define NV_PTOP_DEVICE_INFO_INTR_ENUM                               19:15 /*       */
+#define NV_PTOP_DEVICE_INFO_RESET_ENUM                               13:9 /*       */
+#define NV_PTOP_DEVICE_INFO_ENGINE                                    5:5 /*       */
+#define NV_PTOP_DEVICE_INFO_ENGINE_VALID                              0x1 /*       */
+#define NV_PTOP_DEVICE_INFO_ENGINE_NOT_VALID                          0x0 /*       */
+#define NV_PTOP_DEVICE_INFO_RUNLIST                                   4:4 /*       */
+#define NV_PTOP_DEVICE_INFO_RUNLIST_VALID                             0x1 /*       */
+#define NV_PTOP_DEVICE_INFO_RUNLIST_NOT_VALID                         0x0 /*       */
+#define NV_PTOP_DEVICE_INFO_INTR                                      3:3 /*       */
+#define NV_PTOP_DEVICE_INFO_INTR_VALID                                0x1 /*       */
+#define NV_PTOP_DEVICE_INFO_INTR_NOT_VALID                            0x0 /*       */
+#define NV_PTOP_DEVICE_INFO_RESET                                     2:2 /*       */
+#define NV_PTOP_DEVICE_INFO_RESET_VALID                               0x1 /*       */
+#define NV_PTOP_DEVICE_INFO_RESET_NOT_VALID                           0x0 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM                          30:2 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_GRAPHICS                 0 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_NVDEC                    16 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_NVENC                    14 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_SEC                      13 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_LCE                      19 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_GSP                      20 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_IOCTRL                   18 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_MSPDEC                   8 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_MSPPP                    9 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_MSVLD                    10 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_MSENC                    11 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_VIC                      12 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_COPY0                    1 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_COPY1                    2 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_COPY2                    3 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_NVENC0                   14 /*       */
+#define NV_PTOP_DEVICE_INFO_TYPE_ENUM_NVENC1                   15 /*       */
+#define NV_PTOP_DEVICE_INFO_DATA                                     30:2 /*       */
+#define NV_PTOP_DEVICE_INFO_DATA_TYPE                                30:30 /*       */
+#define NV_PTOP_DEVICE_INFO_DATA_TYPE_ENUM2                          0 /*       */
+#define NV_PTOP_DEVICE_INFO_DATA_INST_ID                             29:26 /*       */
+#define NV_PTOP_DEVICE_INFO_DATA_PRI_BASE                            23:12      /*       */
+#define NV_PTOP_DEVICE_INFO_DATA_PRI_BASE_ALIGN                      12      /*       */
+#define NV_PTOP_DEVICE_INFO_DATA_FAULT_ID_ENUM                       9:3 /*       */
+#define NV_PTOP_DEVICE_INFO_DATA_FAULT_ID                            2:2      /*       */
+#define NV_PTOP_DEVICE_INFO_DATA_FAULT_ID_VALID                               0x1 /*       */
+#define NV_PTOP_DEVICE_INFO_DATA_FAULT_ID_NOT_VALID                           0x0 /*       */
+#define NV_PTOP_DEVICE_INFO_ENTRY                                     1:0 /*       */
+#define NV_PTOP_DEVICE_INFO_ENTRY_NOT_VALID                             0 /*       */
+#define NV_PTOP_DEVICE_INFO_ENTRY_DATA                                  1 /*       */
+#define NV_PTOP_DEVICE_INFO_ENTRY_ENUM                                  2 /*       */
+#define NV_PTOP_DEVICE_INFO_ENTRY_ENGINE_TYPE                           3 /*       */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:

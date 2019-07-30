@@ -34,8 +34,6 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PFB_PRI_MMU_BIND_IMB_ADDR                                      31:4 /* RWXVF */
 #define NV_PFB_PRI_MMU_BIND_IMB_ADDR_ALIGNMENT                      0x0000000c /*       */
 #define NV_PFB_PRI_MMU_BIND                                         0x00100CB0 /* RW-4R */
-#define NV_PFB_PRI_MMU_BIND_ENGINE_ID                                      7:0 /* RWEVF */
-#define NV_PFB_PRI_MMU_BIND_ENGINE_ID_INIT                          0x00000000 /* RWE-V */
 #define NV_PFB_PRI_MMU_BIND_UPPER_IMB_ADDR                                25:8 /* RWEVF */
 #define NV_PFB_PRI_MMU_BIND_UPPER_IMB_ADDR_INIT                     0x00000000 /* RWE-V */
 #define NV_PFB_PRI_MMU_BIND_OP                                           30:29 /* RWEVF */
