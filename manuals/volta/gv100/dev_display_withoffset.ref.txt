@@ -4370,8 +4370,6 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_EXTEND_ENABLE_INIT             0x00000000 /* R-I-V */
 #define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_EXTEND_ENABLE_NO               0x00000000 /* R---V */
 #define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_EXTEND_ENABLE_YES              0x00000001 /* R---V */
-#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_DBG                                 15:15 /* RWIUF */
-#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_DBG_INIT                       0x00000000 /* RWI-V */
 #define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_SET_HEIGHT                          29:16 /* RWIUF */
 #define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_SET_HEIGHT_INIT                0x00000000 /* RWI-V */
 #define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_SET_ENABLE                          30:30 /* RWIVF */
@@ -4390,8 +4388,6 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_EXTEND_ENABLE_INIT            0x00000000 /* R-I-V */
 #define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_EXTEND_ENABLE_NO              0x00000000 /* R---V */
 #define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_EXTEND_ENABLE_YES             0x00000001 /* R---V */
-#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_DBG                                15:15 /* RWIUF */
-#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_DBG_INIT                      0x00000000 /* RWI-V */
 #define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_SET_HEIGHT                         29:16 /* RWIUF */
 #define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_SET_HEIGHT_INIT               0x00000000 /* RWI-V */
 #define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_SET_ENABLE                         30:30 /* RWIVF */
@@ -4410,8 +4406,6 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_RG_RASTER_EXTEND_EXTEND_ENABLE_INIT                         0x00000000 /* R-I-V */
 #define NV_PDISP_RG_RASTER_EXTEND_EXTEND_ENABLE_NO                           0x00000000 /* R---V */
 #define NV_PDISP_RG_RASTER_EXTEND_EXTEND_ENABLE_YES                          0x00000001 /* R---V */
-#define NV_PDISP_RG_RASTER_EXTEND_DBG                                             15:15 /* RWIUF */
-#define NV_PDISP_RG_RASTER_EXTEND_DBG_INIT                                   0x00000000 /* RWI-V */
 #define NV_PDISP_RG_RASTER_EXTEND_SET_WIDTH                                       29:16 /* RWIUF */
 #define NV_PDISP_RG_RASTER_EXTEND_SET_WIDTH_INIT                             0x00000000 /* RWI-V */
 #define NV_PDISP_RG_RASTER_EXTEND_SET_ENABLE                                      30:30 /* RWIVF */
@@ -4484,19 +4478,6 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_SF_TEST_OWNER_MASK_HEAD2                                  0x00000004 /* R---V */
 #define NV_PDISP_SF_TEST_OWNER_MASK_HEAD3                                  0x00000008 /* R---V */
 #define NV_PDISP_SF_TEST_OWNER_MASK_NONE                                   0x00000000 /* R---V */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG(i)               (2*(i)+15):(2*(i)+14) /* R--UF */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG__SIZE_1                              2 /*       */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG_SLEEP                       0x00000000 /* R---V */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG_SNOOZE                      0x00000001 /* R---V */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG_AWAKE                       0x00000002 /* R---V */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG0                                 15:14 /* R--UF */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG0_SLEEP                      0x00000000 /* R---V */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG0_SNOOZE                     0x00000001 /* R---V */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG0_AWAKE                      0x00000002 /* R---V */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG1                                 17:16 /* R--UF */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG1_SLEEP                      0x00000000 /* R---V */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG1_SNOOZE                     0x00000001 /* R---V */
-#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_DEBUG1_AWAKE                      0x00000002 /* R---V */
 #define NV_PDISP_SF_AUDIO_CNTRL0(i)                               (0x00616528+(i)*2048) /* RW-4A */
 #define NV_PDISP_SF_AUDIO_CNTRL0__SIZE_1                                              8 /*       */
 #define NV_PDISP_SF_AUDIO_CNTRL0_DEVICE_ENTRY                                       6:4 /* RWIVF */

@@ -1,0 +1,348 @@
+Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_PGRAPH_PRI_SKED_HWW_ESR                                                     0x00407020  /* RW-4R */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK33_SCG_TYPE_GO_IDLE_RESTRICTION                   0:0  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK33_SCG_TYPE_GO_IDLE_RESTRICTION_FALSE      0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK33_SCG_TYPE_GO_IDLE_RESTRICTION_TRUE       0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK34_CTA_STEER_REG_WARP                             1:1  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK34_CTA_STEER_REG_WARP_FALSE                0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK34_CTA_STEER_REG_WARP_TRUE                 0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK28_PCAS_WITH_SEM                                  2:2  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK28_PCAS_WITH_SEM_FALSE                     0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK28_PCAS_WITH_SEM_TRUE                      0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK27_VSPAN_OVERFLOW                                 3:3  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK27_VSPAN_OVERFLOW_FALSE                    0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK27_VSPAN_OVERFLOW_TRUE                     0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK32_VSPAN_NONEMPTY_PREEMPT                         4:4  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK32_VSPAN_NONEMPTY_PREEMPT_FALSE            0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK32_VSPAN_NONEMPTY_PREEMPT_TRUE             0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK25_THROTTLED_IS_RESTRICTED                        5:5  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK25_THROTTLED_IS_RESTRICTED_FALSE           0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK25_THROTTLED_IS_RESTRICTED_TRUE            0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK24_CTA_RESUME                                     6:6  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK24_CTA_RESUME_FALSE                        0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK24_CTA_RESUME_TRUE                         0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK23_CONSTANT_BUFFER_SIZE                           7:7  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK23_CONSTANT_BUFFER_SIZE_FALSE              0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK23_CONSTANT_BUFFER_SIZE_TRUE               0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK02_LOCAL_MEMORY_LOW_SIZE                          9:9  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK02_LOCAL_MEMORY_LOW_SIZE_FALSE             0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK02_LOCAL_MEMORY_LOW_SIZE_TRUE              0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK03_LOCAL_MEMORY_HIGH_SIZE                       10:10  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK03_LOCAL_MEMORY_HIGH_SIZE_FALSE            0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK03_LOCAL_MEMORY_HIGH_SIZE_TRUE             0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK04_LOCAL_MEMORY_CRS_SIZE                        11:11  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK04_LOCAL_MEMORY_CRS_SIZE_FALSE             0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK04_LOCAL_MEMORY_CRS_SIZE_TRUE              0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK05_LOCAL_MEMORY_TOTAL_SIZE                      12:12  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK05_LOCAL_MEMORY_TOTAL_SIZE_FALSE           0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK05_LOCAL_MEMORY_TOTAL_SIZE_TRUE            0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK06_REGISTER_COUNT                               13:13  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK06_REGISTER_COUNT_FALSE                    0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK06_REGISTER_COUNT_TRUE                     0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK07_OUTER_PUT                                    14:14  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK07_OUTER_PUT_FALSE                         0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK07_OUTER_PUT_TRUE                          0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK08_INNER_PUT                                    15:15  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK08_INNER_PUT_FALSE                         0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK08_INNER_PUT_TRUE                          0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK09_INNER_GET                                    16:16  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK09_INNER_GET_FALSE                         0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK09_INNER_GET_TRUE                          0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK10_OUTER_GET                                    17:17  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK10_OUTER_GET_FALSE                         0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK10_OUTER_GET_TRUE                          0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK11_TOTAL_THREADS                                18:18  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK11_TOTAL_THREADS_FALSE                     0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK11_TOTAL_THREADS_TRUE                      0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK35_IGNORE_VEID_CACHE_LINE                       19:19  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK35_IGNORE_VEID_CACHE_LINE_FALSE            0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK35_IGNORE_VEID_CACHE_LINE_TRUE             0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK13_PROGRAM_OFFSET                               20:20  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK13_PROGRAM_OFFSET_FALSE                    0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK13_PROGRAM_OFFSET_TRUE                     0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK14_SHARED_MEMORY_SIZE                           21:21  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK14_SHARED_MEMORY_SIZE_FALSE                0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK14_SHARED_MEMORY_SIZE_TRUE                 0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK15_UNUSED                                       22:22  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK15_UNUSED_FALSE                            0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK15_UNUSED_TRUE                             0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK16_CTA_THREAD_DIMENSION_ZERO                    23:23  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK16_CTA_THREAD_DIMENSION_ZERO_FALSE         0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK16_CTA_THREAD_DIMENSION_ZERO_TRUE          0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK17_MEMORY_WINDOW_OVERLAP                        24:24  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK17_MEMORY_WINDOW_OVERLAP_FALSE             0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK17_MEMORY_WINDOW_OVERLAP_TRUE              0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK18_L1_CONFIG_TOO_SMALL                          25:25  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK18_L1_CONFIG_TOO_SMALL_FALSE               0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK18_L1_CONFIG_TOO_SMALL_TRUE                0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK19_CTA_REGISTER_CONSUMPTION                     26:26  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK19_CTA_REGISTER_CONSUMPTION_FALSE          0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK19_CTA_REGISTER_CONSUMPTION_TRUE           0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK20_GET_PUT_TOO_LARGE                            27:27  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK20_GET_PUT_TOO_LARGE_FALSE                 0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK20_GET_PUT_TOO_LARGE_TRUE                  0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK21_CIRCULAR_QUEUE_SIZE                          28:28  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK21_CIRCULAR_QUEUE_SIZE_FALSE               0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK21_CIRCULAR_QUEUE_SIZE_TRUE                0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK22_INVALIDATE_ACTIVE_QMD                        29:29  /* R-EVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK22_INVALIDATE_ACTIVE_QMD_FALSE             0x00000000  /* R-E-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_SKEDCHECK22_INVALIDATE_ACTIVE_QMD_TRUE              0x00000001  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_RESET                                                    30:30  /* -WEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_RESET_NONACTIVE                                            0x0  /* -WE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_RESET_ACTIVE                                               0x1  /* -W--T */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN                                                  0x00407024  /* RW-4R */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK33_SCG_TYPE_GO_IDLE_RESTRICTION                0:0  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK33_SCG_TYPE_GO_IDLE_RESTRICTION_FALSE   0x00000000  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK33_SCG_TYPE_GO_IDLE_RESTRICTION_TRUE    0x00000001  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK34_CTA_STEER_REG_WARP                          1:1  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK34_CTA_STEER_REG_WARP_FALSE             0x00000000  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK34_CTA_STEER_REG_WARP_TRUE              0x00000001  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK28_PCAS_WITH_SEM                               2:2  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK28_PCAS_WITH_SEM_FALSE                  0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK28_PCAS_WITH_SEM_TRUE                   0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK27_VSPAN_OVERFLOW                              3:3  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK27_VSPAN_OVERFLOW_FALSE                 0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK27_VSPAN_OVERFLOW_TRUE                  0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK32_VSPAN_NONEMPTY_PREEMPT                      4:4  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK32_VSPAN_NONEMPTY_PREEMPT_FALSE         0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK32_VSPAN_NONEMPTY_PREEMPT_TRUE          0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK25_THROTTLED_IS_RESTRICTED                     5:5  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK25_THROTTLED_IS_RESTRICTED_FALSE        0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK25_THROTTLED_IS_RESTRICTED_TRUE         0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK24_CTA_RESUME                                  6:6  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK24_CTA_RESUME_FALSE                     0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK24_CTA_RESUME_TRUE                      0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK23_CONSTANT_BUFFER_SIZE                        7:7  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK23_CONSTANT_BUFFER_SIZE_FALSE           0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK23_CONSTANT_BUFFER_SIZE_TRUE            0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK02_LOCAL_MEMORY_LOW_SIZE                       9:9  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK02_LOCAL_MEMORY_LOW_SIZE_DISABLED       0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK02_LOCAL_MEMORY_LOW_SIZE_ENABLED        0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK03_LOCAL_MEMORY_HIGH_SIZE                    10:10  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK03_LOCAL_MEMORY_HIGH_SIZE_DISABLED      0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK03_LOCAL_MEMORY_HIGH_SIZE_ENABLED       0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK04_LOCAL_MEMORY_CRS_SIZE                     11:11  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK04_LOCAL_MEMORY_CRS_SIZE_DISABLED       0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK04_LOCAL_MEMORY_CRS_SIZE_ENABLED        0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK05_LOCAL_MEMORY_TOTAL_SIZE                   12:12  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK05_LOCAL_MEMORY_TOTAL_SIZE_DISABLED     0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK05_LOCAL_MEMORY_TOTAL_SIZE_ENABLED      0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK06_REGISTER_COUNT                            13:13  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK06_REGISTER_COUNT_DISABLED              0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK06_REGISTER_COUNT_ENABLED               0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK07_OUTER_PUT                                 14:14  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK07_OUTER_PUT_DISABLED                   0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK07_OUTER_PUT_ENABLED                    0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK08_INNER_PUT                                 15:15  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK08_INNER_PUT_DISABLED                   0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK08_INNER_PUT_ENABLED                    0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK09_INNER_GET                                 16:16  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK09_INNER_GET_DISABLED                   0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK09_INNER_GET_ENABLED                    0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK10_OUTER_GET                                 17:17  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK10_OUTER_GET_DISABLED                   0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK10_OUTER_GET_ENABLED                    0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK11_TOTAL_THREADS                             18:18  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK11_TOTAL_THREADS_DISABLED               0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK11_TOTAL_THREADS_ENABLED                0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK35_IGNORE_VEID_CACHE_LINE                    19:19  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK35_IGNORE_VEID_CACHE_LINE_DISABLED      0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK35_IGNORE_VEID_CACHE_LINE_ENABLED       0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK13_PROGRAM_OFFSET                            20:20  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK13_PROGRAM_OFFSET_DISABLED              0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK13_PROGRAM_OFFSET_ENABLED               0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK14_SHARED_MEMORY_SIZE                        21:21  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK14_SHARED_MEMORY_SIZE_DISABLED          0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK14_SHARED_MEMORY_SIZE_ENABLED           0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK15_UNUSED                                    22:22  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK15_UNUSED_DISABLED                      0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK15_UNUSED_ENABLED                       0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK16_CTA_THREAD_DIMENSION_ZERO                 23:23  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK16_CTA_THREAD_DIMENSION_ZERO_DISABLED   0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK16_CTA_THREAD_DIMENSION_ZERO_ENABLED    0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK17_MEMORY_WINDOW_OVERLAP                     24:24  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK17_MEMORY_WINDOW_OVERLAP_DISABLED       0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK17_MEMORY_WINDOW_OVERLAP_ENABLED        0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK18_L1_CONFIG_TOO_SMALL                       25:25  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK18_L1_CONFIG_TOO_SMALL_DISABLED         0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK18_L1_CONFIG_TOO_SMALL_ENABLED          0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK19_CTA_REGISTER_CONSUMPTION                  26:26  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK19_CTA_REGISTER_CONSUMPTION_DISABLED    0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK19_CTA_REGISTER_CONSUMPTION_ENABLED     0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK20_GET_PUT_TOO_LARGE                         27:27  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK20_GET_PUT_TOO_LARGE_DISABLED           0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK20_GET_PUT_TOO_LARGE_ENABLED            0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK21_CIRCULAR_QUEUE_SIZE                       28:28  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK21_CIRCULAR_QUEUE_SIZE_DISABLED         0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK21_CIRCULAR_QUEUE_SIZE_ENABLED          0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK22_INVALIDATE_ACTIVE_QMD                     29:29  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK22_INVALIDATE_ACTIVE_QMD_DISABLED       0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_HWW_ESR_EN_SKEDCHECK22_INVALIDATE_ACTIVE_QMD_ENABLED        0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_1                              0x00407028  /* R--4R */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_1_VEID                                7:0  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_1_VEID_0                       0x00000000  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_1_CWD_SLOT                           15:8  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_1_CWD_SLOT_0                   0x00000000  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_2                              0x0040702c  /* R--4R */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_2_QMD_ID                             31:0  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_2_QMD_ID_0                     0x00000000  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_3                              0x00407030  /* R--4R */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_3_FROM                               23:0  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_3_FROM_0                       0x00000000  /* R---V */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_3_DELTA                             31:24  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_HWW_INFO_3_DELTA_0                      0x00000000  /* R---V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1                                   0x00407040  /* RW-4R */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_TM_LAUNCH_THROTTLE_LIMIT                 3:0  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_TM_LAUNCH_THROTTLE_LIMIT_INIT            0x4  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_TM_LAUNCH_THROTTLE_LIMIT_MAX             0x0  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_CTA_STEER_AUTO_CORRECT                   4:4  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_CTA_STEER_AUTO_CORRECT_INIT              0x1  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_COPY_PCAS_CLEARS_RESUME_BITS             5:5  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_COPY_PCAS_CLEARS_RESUME_BITS_NO   0x00000000  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_COPY_PCAS_CLEARS_RESUME_BITS_YES  0x00000001  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_SCG_TYPE_GO_IDLE_FULL                    6:6  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_SCG_TYPE_GO_IDLE_FULL_INIT               0x1  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_AUTO_INVALIDATE_QMD                      7:7  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_AUTO_INVALIDATE_QMD_DISABLE              0x0  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_AUTO_INVALIDATE_QMD_ENABLE               0x1  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_AUTO_INVALIDATE_QMD__PROD                0x0  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_FE_CACHE_PF_SLOT_LIMIT                  10:8  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_FE_CACHE_PF_SLOT_LIMIT_MAX               0x4  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_ENABLE_CWD_SLOT_COUNT                  11:11  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_ENABLE_CWD_SLOT_COUNT_INIT               0x0  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_TFL_PREFETCH_SLOT_LIMIT                15:12  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_TFL_PREFETCH_SLOT_LIMIT_MAX              0x0  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_PCAS_CACHE_PF_SLOT_LIMIT               18:16  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_PCAS_CACHE_PF_SLOT_LIMIT_MAX             0x4  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_TM_CACHE_PF_SLOT_LIMIT                 22:20  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_TM_CACHE_PF_SLOT_LIMIT_MAX               0x4  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_NUM_CACHE_LINES_LIMIT                  31:23  /* RWEVF */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_NUM_CACHE_LINES_LIMIT_288              0x120  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_NUM_CACHE_LINES_LIMIT_256              0x100  /* RW--V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_NUM_CACHE_LINES_LIMIT_192              0xC0   /* RW--V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_NUM_CACHE_LINES_LIMIT_128              0x80   /* RW--V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_NUM_CACHE_LINES_LIMIT_64               0x40   /* RW--V */
+#define NV_PGRAPH_PRI_SKED_DEBUG_1_NUM_CACHE_LINES_LIMIT_MAX              0x120  /* RWE-V */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY                                  0x00407054  /* R--4R */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_SFE                                     2:0  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_SFE_IDLE                                0x0  /* R---V */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_PP                                      5:3  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_PP_IDLE                                 0x0  /* R---V */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_TM                                      8:6  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_TM_IDLE                                 0x0  /* R---V */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_TFL                                    11:9  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_TFL_IDLE                                0x0  /* R---V */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_CACHE                                 14:12  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_CACHE_IDLE                              0x0  /* R---V */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_FBI_IF                                17:15  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_FBI_IF_IDLE                             0x0  /* R---V */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_FBI_CORE                              20:18  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_FBI_CORE_IDLE                           0x0  /* R---V */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_SKED_FE                               31:29  /* R-XVF */
+#define NV_PGRAPH_PRI_SKED_ACTIVITY_SKED_FE_IDLE                            0x0  /* R---V */
+#define NV_PGRAPH_PRI_SKED_SUBCTX_WATERMARK(i)                          (0x004070a0+(i)*4) /* RW-4A */
+#define NV_PGRAPH_PRI_SKED_SUBCTX_WATERMARK__SIZE_1                                     16 /*       */
+#define NV_PGRAPH_PRI_SKED_SUBCTX_WATERMARK_SUBCTX0                                    7:0 /* RWIVF */
+#define NV_PGRAPH_PRI_SKED_SUBCTX_WATERMARK_SUBCTX0_INIT                        0x00000001 /* RWI-V */
+#define NV_PGRAPH_PRI_SKED_SUBCTX_WATERMARK_SUBCTX1                                   15:8 /* RWIVF */
+#define NV_PGRAPH_PRI_SKED_SUBCTX_WATERMARK_SUBCTX1_INIT                        0x00000001 /* RWI-V */
+#define NV_PGRAPH_PRI_SKED_SUBCTX_WATERMARK_SUBCTX2                                  23:16 /* RWIVF */
+#define NV_PGRAPH_PRI_SKED_SUBCTX_WATERMARK_SUBCTX2_INIT                        0x00000001 /* RWI-V */
+#define NV_PGRAPH_PRI_SKED_SUBCTX_WATERMARK_SUBCTX3                                  31:24 /* RWIVF */
+#define NV_PGRAPH_PRI_SKED_SUBCTX_WATERMARK_SUBCTX3_INIT                        0x00000001 /* RWI-V */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
