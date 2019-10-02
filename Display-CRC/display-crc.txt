@@ -1,0 +1,556 @@
+Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+=================================================================
+
+Synopsis:
+
+This document describes how to program the NVIDIA GPU display engine to
+capture per-head per-frame Cyclic Redundancy Checks (CRCs).
+
+=================================================================
+
+To enable display CRC capturing in NVIDIA GPU display engines, the
+following steps should be performed:
+
+* Allocate memory large enough to receive the captured CRCs, in either
+  system memory or video memory.  This is referred to as "CRC notifier
+  memory".  Zero-initialize the memory, and set up the memory to be
+  accessed by the display engine in the same manner as, e.g., the
+  LUT memory.  See below for the per-GPU layout of this CRC memory.
+  The memory allocation must have 4KB alignment.
+
+* Program the per-head HEAD_SET_CONTEXT_DMA_CRC display core channel
+  method with the handle of the memory from the previous bullet.
+
+* Program the per-head HEAD_SET_CRC_CONTROL display core channel method.
+  See the descriptions of the specific method fields, for different
+  GPUs, below.
+
+* In the per-head HEAD_SET_CONTROL_OUTPUT_RESOURCE display core
+  channel method, program the CRC_MODE field to one of ACTIVE_RASTER,
+  COMPLETE_RASTER, NON_ACTIVE_RASTER to capture CRCs for the non-blanked
+  raster, the entire raster including blanking and sync, or just the
+  blanking and sync portion of the raster, respectively.
+
+* Program a display core channel UPDATE method, and kick off the core channel.
+
+* At each subsequent vblank for this head, a CRC will be written into the
+  next available entry in the CRC array.  Once all available CRC arrays
+  have been filled, subsequent CRCs will be dropped and the 'overrun'
+  bit will be set.
+
+* Stop capturing CRCs by again programming the display core channel methods:
+
+    HEAD_SET_CRC_CONTROL.PRIMARY_OUTPUT = NONE
+    HEAD_SET_CONTEXT_DMA_CRC = 0
+
+  and then programming an UPDATE method kicking off.
+
+* Wait for the status "done" field in the CRC memory to change to "TRUE".
+
+* Interpret the CRC memory according to the per-GPU memory layout
+  described below.
+
+=================================================================
+
+For Fermi through Pascal GPUs, the CRC memory layout is organized like this:
+
+    struct crc {
+        uint32_t status;
+        uint32_t reserved0;
+        struct crc_entry {
+            uint32_t status
+            uint32_t compositor_crc;
+            uint32_t primary_output_crc;
+            uint32_t secondary_output_crc;
+        } entries[255];
+    }
+
+The status 32-bit value is organized like this:
+
+     31                                                            0
+    .-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-.
+    |     COUNT     |0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0| | | | | | | |
+    `-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+
+/**
+ * This CRC notifier structure is complete, i.e. all requested CRC's have been written and the
+ * CRC notifier context DMA has been changed or made NULL_HANDLE.
+ */
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_DONE                                    0:0
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_DONE_FALSE                              0x00000000
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_DONE_TRUE                               0x00000001
+
+/**
+ * The number of CRC Entries written exceeded the notifier limit of 255. Once the notifier
+ * structure is full, further entries are simply dropped and this bit is set.
+ */
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_OVERRUN                                 1:1
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_OVERRUN_FALSE                           0x00000000
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_OVERRUN_TRUE                            0x00000001
+
+/**
+ * The engine failed to process CRC's fast enough. As a result, the proper correlation of CRC to
+ * tag has been lost. This is a fatal error for a test.
+ *
+ * (Note: "DSI" here means "Display Software Interface").
+ */
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_DSI_OVERFLOW                            2:2
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_DSI_OVERFLOW_FALSE                      0x00000000
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_DSI_OVERFLOW_TRUE                       0x00000001
+
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_COMPOSITOR_OVERFLOW                     3:3
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_COMPOSITOR_OVERFLOW_FALSE               0x00000000
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_COMPOSITOR_OVERFLOW_TRUE                0x00000001
+
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_PRIMARY_OUTPUT_OVERFLOW                 4:4
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_PRIMARY_OUTPUT_OVERFLOW_FALSE           0x00000000
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_PRIMARY_OUTPUT_OVERFLOW_TRUE            0x00000001
+
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_SECONDARY_OUTPUT_OVERFLOW               5:5
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_SECONDARY_OUTPUT_OVERFLOW_FALSE         0x00000000
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_SECONDARY_OUTPUT_OVERFLOW_TRUE          0x00000001
+
+/**
+ * This bit is set indicating that during this particular test, buffers will be presented with
+ * a present interval of 0, i.e. they may well be skipped and never presented.
+ */
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_EXPECT_BUFFER_COLLAPSE                  6:6
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_EXPECT_BUFFER_COLLAPSE_FALSE            0x00000000
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_EXPECT_BUFFER_COLLAPSE_TRUE             0x00000001
+
+/**
+ * The number of CRCs entries written to the notifier.
+ */
+#define NV907D_NOTIFIER_CRC_1_STATUS_0_COUNT                                   31:24
+
+
+
+The per-entry status 32-bit value is organized like this:
+
+     31                                                            0
+    .-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-.
+    |0| |0| |      TAG      |             TIMESTAMP                 |
+    `-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+
+/**
+ * The value of the audit timestamp when the primary output resource CRC was ready.
+ */
+#define NV907D_NOTIFIER_CRC_1_CRC_ENTRY0_2_AUDIT_TIMESTAMP                     19:0
+
+/**
+ * The value of the tag at the issuance of load V that resulted in this CRC set. The tag is
+ * initialized to zero and incremented once for each update processed in the input method
+ * stream.
+ */
+#define NV907D_NOTIFIER_CRC_1_CRC_ENTRY0_2_TAG                                 27:20
+
+/**
+ * Used to indicate that this particular set of CRC's used timestamp to control presentation
+ * start time instead of present interval.
+ */
+#define NV907D_NOTIFIER_CRC_1_CRC_ENTRY0_2_TIMESTAMP_MODE                      28:28
+#define NV907D_NOTIFIER_CRC_1_CRC_ENTRY0_2_TIMESTAMP_MODE_FALSE                0x00000000
+#define NV907D_NOTIFIER_CRC_1_CRC_ENTRY0_2_TIMESTAMP_MODE_TRUE                 0x00000001
+
+/**
+ * Once the present interval for a particular update has been met, this bit will be set on all
+ * subsequent CRC entries until the next update is processed. This allows the checker to make
+ * sure that the hardware is properly reckoning the present interval even if method processing
+ * is lagging behind. In TimestampMode, this field will be 0.
+ */
+#define NV907D_NOTIFIER_CRC_1_CRC_ENTRY0_2_PRESENT_INTERVAL_MET                30:30
+#define NV907D_NOTIFIER_CRC_1_CRC_ENTRY0_2_PRESENT_INTERVAL_MET_FALSE          0x00000000
+#define NV907D_NOTIFIER_CRC_1_CRC_ENTRY0_2_PRESENT_INTERVAL_MET_TRUE           0x00000001
+
+/**
+ * For the compositor_crc, primary_output_crc, and secondary_output_crc:
+ *
+ * The actual CRC's. One each from the compositor output, primary output, and secondary output
+ * The primary output CRC is always present, the secondary output CRC is optional. If not
+ * present, it is simply 0. The CompositorCrc is always 0.
+ */
+
+
+The HEAD_SET_CRC_CONTROL method fields are:
+
+#define NV907D_HEAD_SET_CRC_CONTROL(a)                                          (0x00000430 + (a)*0x00000300)
+
+/**
+ * Only one channel's updates can increment the tag field for CRC generation. This field
+ * controls which channel will control the tag updating.
+ */
+#define NV907D_HEAD_SET_CRC_CONTROL_CONTROLLING_CHANNEL                         1:0
+#define NV907D_HEAD_SET_CRC_CONTROL_CONTROLLING_CHANNEL_CORE                    (0x00000000)
+#define NV907D_HEAD_SET_CRC_CONTROL_CONTROLLING_CHANNEL_BASE                    (0x00000001)
+#define NV907D_HEAD_SET_CRC_CONTROL_CONTROLLING_CHANNEL_OVERLAY                 (0x00000002)
+
+/**
+ * This field specifies that buffer collapsing is expected for this CRC set. This bit isn't
+ * really used by the hardware other than to copy it to the appropriate place in the CRC
+ * notifier.
+ */
+#define NV907D_HEAD_SET_CRC_CONTROL_EXPECT_BUFFER_COLLAPSE                      2:2
+#define NV907D_HEAD_SET_CRC_CONTROL_EXPECT_BUFFER_COLLAPSE_FALSE                (0x00000000)
+#define NV907D_HEAD_SET_CRC_CONTROL_EXPECT_BUFFER_COLLAPSE_TRUE                 (0x00000001)
+
+/**
+ * This field specifies that timestamp mode is employed for this test set. This bit isn't
+ * really used by the hardware other than to copy it to the appropriate place in the CRC
+ * notifier.
+ */
+#define NV907D_HEAD_SET_CRC_CONTROL_TIMESTAMP_MODE                              3:3
+#define NV907D_HEAD_SET_CRC_CONTROL_TIMESTAMP_MODE_FALSE                        (0x00000000)
+#define NV907D_HEAD_SET_CRC_CONTROL_TIMESTAMP_MODE_TRUE                         (0x00000001)
+
+/**
+ * This field controls the source of the primary output CRC. In operation, it must always
+ * select an output resource.
+ */
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT                              19:8
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_DAC(i)                       (0x00000FF0 +(i))
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_DAC__SIZE_1                  4
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_DAC0                         (0x00000FF0)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_DAC1                         (0x00000FF1)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_DAC2                         (0x00000FF2)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_DAC3                         (0x00000FF3)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_RG(i)                        (0x00000FF8 +(i))
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_RG__SIZE_1                   4
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_RG0                          (0x00000FF8)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_RG1                          (0x00000FF9)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_RG2                          (0x00000FFA)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_RG3                          (0x00000FFB)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SOR(i)                       (0x00000F0F +(i)*16)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SOR__SIZE_1                  8
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SOR0                         (0x00000F0F)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SOR1                         (0x00000F1F)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SOR2                         (0x00000F2F)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SOR3                         (0x00000F3F)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SOR4                         (0x00000F4F)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SOR5                         (0x00000F5F)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SOR6                         (0x00000F6F)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SOR7                         (0x00000F7F)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SF(i)                        (0x00000F8F +(i)*16)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SF__SIZE_1                   4
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SF0                          (0x00000F8F)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SF1                          (0x00000F9F)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SF2                          (0x00000FAF)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_SF3                          (0x00000FBF)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_PIOR(i)                      (0x000000FF +(i)*256)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_PIOR__SIZE_1                 8
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_PIOR0                        (0x000000FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_PIOR1                        (0x000001FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_PIOR2                        (0x000002FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_PIOR3                        (0x000003FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_PIOR4                        (0x000004FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_PIOR5                        (0x000005FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_PIOR6                        (0x000006FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_PIOR7                        (0x000007FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_PRIMARY_OUTPUT_NONE                         (0x00000FFF)
+
+/**
+ * This field controls the source of the secondary output CRC. In operation, it may or may
+ * not be used.
+ */
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT                            31:20
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_DAC(i)                     (0x00000FF0 +(i))
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_DAC__SIZE_1                4
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_DAC0                       (0x00000FF0)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_DAC1                       (0x00000FF1)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_DAC2                       (0x00000FF2)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_DAC3                       (0x00000FF3)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_RG(i)                      (0x00000FF8 +(i))
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_RG__SIZE_1                 4
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_RG0                        (0x00000FF8)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_RG1                        (0x00000FF9)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_RG2                        (0x00000FFA)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_RG3                        (0x00000FFB)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SOR(i)                     (0x00000F0F +(i)*16)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SOR__SIZE_1                8
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SOR0                       (0x00000F0F)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SOR1                       (0x00000F1F)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SOR2                       (0x00000F2F)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SOR3                       (0x00000F3F)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SOR4                       (0x00000F4F)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SOR5                       (0x00000F5F)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SOR6                       (0x00000F6F)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SOR7                       (0x00000F7F)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SF(i)                      (0x00000F8F +(i)*16)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SF__SIZE_1                 4
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SF0                        (0x00000F8F)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SF1                        (0x00000F9F)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SF2                        (0x00000FAF)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_SF3                        (0x00000FBF)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_PIOR(i)                    (0x000000FF +(i)*256)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_PIOR__SIZE_1               8
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_PIOR0                      (0x000000FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_PIOR1                      (0x000001FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_PIOR2                      (0x000002FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_PIOR3                      (0x000003FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_PIOR4                      (0x000004FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_PIOR5                      (0x000005FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_PIOR6                      (0x000006FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_PIOR7                      (0x000007FF)
+#define NV907D_HEAD_SET_CRC_CONTROL_SECONDARY_OUTPUT_NONE                       (0x00000FFF)
+
+/**
+ * This field control the reporting of CRC's during snooze frames.
+ */
+#define NV907D_HEAD_SET_CRC_CONTROL_CRC_DURING_SNOOZE                           5:5
+#define NV907D_HEAD_SET_CRC_CONTROL_CRC_DURING_SNOOZE_DISABLE                   (0x00000000)
+#define NV907D_HEAD_SET_CRC_CONTROL_CRC_DURING_SNOOZE_ENABLE                    (0x00000001)
+
+
+=================================================================
+
+On Volta and newer GPUs, the CRC memory layout is organized like this:
+
+    struct crc {
+        uint32_t status;
+        uint32_t reserved[7];
+        struct crc_entry {
+            uint32_t status0;
+            uint32_t status1;
+            uint32_t reserved0;
+            uint32_t compositor_crc;
+            uint32_t rg_crc;
+            uint32_t primary_output_crc;
+            uint32_t secondary_output_crc;
+            uint32_t reserved1;
+        } entries[2047];
+    }
+
+
+The status 32-bit value is organized like this:
+
+     31                                                            0
+    .-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-.
+    |0 0 0 0|        COUNT          |0 0 0 0 0 0 0 0| | | | | | | | |
+    `-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+
+/**
+ * This CRC notifier structure is complete, i.e. all requested CRC's have been written and the
+ * CRC notifier context DMA has been changed or made NULL_HANDLE.
+ */
+#define NVC37D_NOTIFIER_CRC_STATUS_0_DONE                                      0:0
+#define NVC37D_NOTIFIER_CRC_STATUS_0_DONE_FALSE                                0x00000000
+#define NVC37D_NOTIFIER_CRC_STATUS_0_DONE_TRUE                                 0x00000001
+
+/**
+ * The number of CRC Entries written exceeded the notifier limit of 2047. Once the notifier
+ * structure is full, further entries are simply dropped and this bit is set.
+ */
+#define NVC37D_NOTIFIER_CRC_STATUS_0_OVERRUN                                   1:1
+#define NVC37D_NOTIFIER_CRC_STATUS_0_OVERRUN_FALSE                             0x00000000
+#define NVC37D_NOTIFIER_CRC_STATUS_0_OVERRUN_TRUE                              0x00000001
+
+/**
+ * The engine failed to process CRC's fast enough. As a result, the proper correlation of CRC to
+ * tag has been lost. This is a fatal error for a test.
+ *
+ * Note: "FE" means Front End.
+ */
+#define NVC37D_NOTIFIER_CRC_STATUS_0_FE_OVERFLOW                               2:2
+#define NVC37D_NOTIFIER_CRC_STATUS_0_FE_OVERFLOW_FALSE                         0x00000000
+#define NVC37D_NOTIFIER_CRC_STATUS_0_FE_OVERFLOW_TRUE                          0x00000001
+
+#define NVC37D_NOTIFIER_CRC_STATUS_0_COMPOSITOR_OVERFLOW                       3:3
+#define NVC37D_NOTIFIER_CRC_STATUS_0_COMPOSITOR_OVERFLOW_FALSE                 0x00000000
+#define NVC37D_NOTIFIER_CRC_STATUS_0_COMPOSITOR_OVERFLOW_TRUE                  0x00000001
+
+#define NVC37D_NOTIFIER_CRC_STATUS_0_RG_OVERFLOW                               4:4
+#define NVC37D_NOTIFIER_CRC_STATUS_0_RG_OVERFLOW_FALSE                         0x00000000
+#define NVC37D_NOTIFIER_CRC_STATUS_0_RG_OVERFLOW_TRUE                          0x00000001
+
+#define NVC37D_NOTIFIER_CRC_STATUS_0_PRIMARY_OUTPUT_OVERFLOW                   5:5
+#define NVC37D_NOTIFIER_CRC_STATUS_0_PRIMARY_OUTPUT_OVERFLOW_FALSE             0x00000000
+#define NVC37D_NOTIFIER_CRC_STATUS_0_PRIMARY_OUTPUT_OVERFLOW_TRUE              0x00000001
+
+#define NVC37D_NOTIFIER_CRC_STATUS_0_SECONDARY_OUTPUT_OVERFLOW                 6:6
+#define NVC37D_NOTIFIER_CRC_STATUS_0_SECONDARY_OUTPUT_OVERFLOW_FALSE           0x00000000
+#define NVC37D_NOTIFIER_CRC_STATUS_0_SECONDARY_OUTPUT_OVERFLOW_TRUE            0x00000001
+
+/**
+ * This bit is set indicating that during this particular test, buffers will be presented with
+ * a present interval of 0, i.e. they may well be skipped and never presented.
+ */
+#define NVC37D_NOTIFIER_CRC_STATUS_0_EXPECT_BUFFER_COLLAPSE                    7:7
+#define NVC37D_NOTIFIER_CRC_STATUS_0_EXPECT_BUFFER_COLLAPSE_FALSE              0x00000000
+#define NVC37D_NOTIFIER_CRC_STATUS_0_EXPECT_BUFFER_COLLAPSE_TRUE               0x00000001
+
+/**
+ * The number of CRCs entries written to the notifier.
+ */
+#define NVC37D_NOTIFIER_CRC_STATUS_0_COUNT                                     27:16
+
+
+The first per-entry status 32-bit value is organized like this:
+
+     31                                                            0
+    .-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-.
+    | |0 0 0|     TAG       |0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0|
+    `-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+
+/**
+ * The value of the tag at the issuance of load V that resulted in this CRC set. The tag is
+ * initialized to zero and incremented once for each update processed in the input method
+ * stream.
+ */
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_8_TAG                                   27:20
+
+/**
+ * Once the present interval for a particular update has been met, this bit will be set on all
+ * subsequent CRC entries until the next update is processed. This allows the checker to make
+ * sure that the hardware is properly reckoning the present interval even if method processing
+ * is lagging behind. In TimestampMode, this field will be 0.
+ */
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_8_PRESENT_INTERVAL_MET                  31:31
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_8_PRESENT_INTERVAL_MET_FALSE            0x00000000
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_8_PRESENT_INTERVAL_MET_TRUE             0x00000001
+
+The second per-entry status 32-bit value is organized like this:
+
+     31                                                            0
+    .-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-.
+    |0 0 0 0 0 0 0| |0|   |0 0 0 0 0 0 0 0| |0 0 0 0 0 0 0 0| |0| | |
+    `-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+
+/**
+ * This bit indicates whether the scanout mode is interlaced (or progressive). A 1 indicates
+ * interlaced mode.
+ */
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_INTERLACED                            0:0
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_INTERLACED_FALSE                      0x00000000
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_INTERLACED_TRUE                       0x00000001
+
+/**
+ * This bit indicates whether dithering is enabled.
+ */
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_DITHER                                1:1
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_DITHER_FALSE                          0x00000000
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_DITHER_TRUE                           0x00000001
+
+/**
+ * Used to indicate that this particular set of CRC's used timestamp to control presentation
+ * start time instead of present interval.
+ */
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_TIMESTAMP_MODE                        3:3
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_TIMESTAMP_MODE_FALSE                  0x00000000
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_TIMESTAMP_MODE_TRUE                   0x00000001
+
+/**
+ * This field indicates the interlaced sub-mode (in_out mode vs normal mode).  When we are
+ * not in interlaced mode, this should be set to normal.
+ */
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_INTERLACED_MODE                       12:12
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_INTERLACED_MODE_NORMAL                0x00000000
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_INTERLACED_MODE_IN_OUT                0x00000001
+
+/**
+ * This field indicates which phase of dithering we were in for the given frame.  When dither
+ * is not enabled, this field should be set to 0.
+ */
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_DITHER_PHASE                          22:21
+
+/**
+ * This field indicates which interlaced field this frame contains.  When interlaced mode is
+ * not enabled (and we are in progressive), this field should be set to 0.
+ */
+#define NVC37D_NOTIFIER_CRC_CRC_ENTRY0_9_INTERLACED_FIELD                      24:24
+
+
+The HEAD_SET_CRC_CONTROL method fields are:
+
+#define NVC37D_HEAD_SET_CRC_CONTROL(a)                                          (0x00002184 + (a)*0x00000400)
+
+/**
+ * Only one channel's updates can increment the tag field for CRC generation. This field
+ * controls which Window channel will control the tag updating.
+ */
+#define NVC37D_HEAD_SET_CRC_CONTROL_CONTROLLING_CHANNEL                         4:0
+
+/**
+ * This field specifies that buffer collapsing is expected for this CRC set. This bit isn't
+ * really used by the hardware other than to copy it to the appropriate place in the CRC
+ * notifier.
+ */
+#define NVC37D_HEAD_SET_CRC_CONTROL_EXPECT_BUFFER_COLLAPSE                      8:8
+#define NVC37D_HEAD_SET_CRC_CONTROL_EXPECT_BUFFER_COLLAPSE_FALSE                (0x00000000)
+#define NVC37D_HEAD_SET_CRC_CONTROL_EXPECT_BUFFER_COLLAPSE_TRUE                 (0x00000001)
+
+/**
+ * This field controls the source of the primary output CRC. If used, it must always
+ * select an output resource (SF, PIOR, or SOR).
+ */
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC                                 19:12
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_NONE                            (0x00000000)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SF                              (0x00000030)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SOR(i)                          (0x00000050 +(i))
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SOR__SIZE_1                     8
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SOR0                            (0x00000050)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SOR1                            (0x00000051)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SOR2                            (0x00000052)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SOR3                            (0x00000053)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SOR4                            (0x00000054)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SOR5                            (0x00000055)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SOR6                            (0x00000056)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_SOR7                            (0x00000057)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_PIOR(i)                         (0x00000060 +(i))
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_PIOR__SIZE_1                    4
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_PIOR0                           (0x00000060)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_PIOR1                           (0x00000061)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_PIOR2                           (0x00000062)
+#define NVC37D_HEAD_SET_CRC_CONTROL_PRIMARY_CRC_PIOR3                           (0x00000063)
+
+/**
+ * This field controls the source of the secondary output CRC. If used, it must always
+ * select an output resource (WBOR, SF, PIOR, or SOR).
+ */
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC                               27:20
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_NONE                          (0x00000000)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SF                            (0x00000030)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SOR(i)                        (0x00000050 +(i))
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SOR__SIZE_1                   8
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SOR0                          (0x00000050)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SOR1                          (0x00000051)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SOR2                          (0x00000052)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SOR3                          (0x00000053)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SOR4                          (0x00000054)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SOR5                          (0x00000055)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SOR6                          (0x00000056)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_SOR7                          (0x00000057)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_PIOR(i)                       (0x00000060 +(i))
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_PIOR__SIZE_1                  4
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_PIOR0                         (0x00000060)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_PIOR1                         (0x00000061)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_PIOR2                         (0x00000062)
+#define NVC37D_HEAD_SET_CRC_CONTROL_SECONDARY_CRC_PIOR3                         (0x00000063)
+
+/**
+ * This field control the reporting of CRC's during snooze frames.
+ * If this field is set to DISABLE, then the CRC engines in Comp, RG, and the ORs will not generate
+ * a CRC for snooze frames.
+ */
+#define NVC37D_HEAD_SET_CRC_CONTROL_CRC_DURING_SNOOZE                           9:9
+#define NVC37D_HEAD_SET_CRC_CONTROL_CRC_DURING_SNOOZE_DISABLE                   (0x00000000)
+#define NVC37D_HEAD_SET_CRC_CONTROL_CRC_DURING_SNOOZE_ENABLE                    (0x00000001)
+
+
