@@ -1,0 +1,155 @@
+Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_PFB_HSMMU_PRI_MMU_CTRL                                         0x001FAC80 /* RW-4R */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_VOL_FAULT                                      1:1 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_VOL_FAULT_ENABLED                       0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_VOL_FAULT_DISABLED                      0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_COMP_FAULT                                     2:2 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_COMP_FAULT_ENABLED                      0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_COMP_FAULT_DISABLED                     0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_MISS_GRAN                                      4:3 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_MISS_GRAN_FULL                          0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_MISS_GRAN_HALF                          0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_MISS_GRAN_QUARTER                       0x00000002 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_MISS_GRAN_NO_PTE_COMP                   0x00000003 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_CACHE_MODE                                     6:5 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_CACHE_MODE_ON                           0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_CACHE_MODE_EVICT_SMPG_PARTIALS          0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_CACHE_MODE_EVICT_ALL_PARTIALS           0x00000002 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_CACHE_MODE_OFF                          0x00000003 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_L2_SEND_MODE                                   9:9 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_L2_SEND_MODE_ONE_PTE                    0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_L2_SEND_MODE_WHOLE_CL                   0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_USE_FULL_COMP_TAG_LINE                       12:12 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_USE_FULL_COMP_TAG_LINE_FALSE            0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_USE_FULL_COMP_TAG_LINE_TRUE             0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_STRONG_BIT_OVERRIDE_ATOMIC_DISABLE           26:26 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_STRONG_BIT_OVERRIDE_ATOMIC_DISABLE_OFF  0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CTRL_STRONG_BIT_OVERRIDE_ATOMIC_DISABLE_ON   0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_CTRL                                   0x001FACC4 /* RW-4R */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_CTRL_WR_KIND                                  7:0 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_CTRL_WR_KIND_INIT                      0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_CTRL_RD_KIND                                 15:8 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_CTRL_RD_KIND_INIT                      0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_CTRL_DEBUG                                  16:16 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_CTRL_DEBUG_DISABLED                    0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_CTRL_DEBUG_ENABLED                     0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR                                     0x001FACC8 /* RW-4R */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_APERTURE                                   1:0 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_APERTURE_VID_MEM                    0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_APERTURE_PEER_MEM                   0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_APERTURE_SYS_MEM_C                  0x00000002 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_APERTURE_SYS_MEM_NC                 0x00000003 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_VOL                                        2:2 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_VOL_FALSE                           0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_VOL_TRUE                            0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_ADDR                                      31:4 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_ADDR_INIT                           0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_WR_ADDR_ALIGNMENT                      0x0000000c /*       */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD                                     0x001FACCC /* RW-4R */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_APERTURE                                   1:0 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_APERTURE_VID_MEM                    0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_APERTURE_PEER_MEM                   0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_APERTURE_SYS_MEM_C                  0x00000002 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_APERTURE_SYS_MEM_NC                 0x00000003 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_VOL                                        2:2 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_VOL_FALSE                           0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_VOL_TRUE                            0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_ADDR                                      31:4 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_ADDR_INIT                           0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_ADDR_ALIGNMENT                      0x0000000c /*       */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:

@@ -1,0 +1,483 @@
+Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK                                      0x00100CDC /* RW-4R */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION                             3:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_DEFAULT_PRIV_LEVEL   15 /* RWE-V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_ALL_LEVELS_ENABLED   0x0000000F /* RW--V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_ONLY_LEVEL3_ENABLED  0x00000008 /* RW--V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL0                      0:0 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL0_ENABLE        0x00000001 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL0_DISABLE       0x00000000 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL1                      1:1 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL1_ENABLE        0x00000001 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL1_DISABLE       0x00000000 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL2                      2:2 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL2_ENABLE        0x00000001 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL2_DISABLE       0x00000000 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL3                      3:3 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL3_ENABLE        0x00000001 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_PROTECTION_LEVEL3_DISABLE       0x00000000 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION                            7:4 /* RWEVF */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION__FUSE_SIGNAL        "mmu_plm" /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_FUSE0 15 /* RWE-V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_FUSE1 8     /* RW--V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_DEFAULT_PRIV_LEVEL  12 /* RW--V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_ALL_LEVELS_ENABLED  0x0000000F /* RW--V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_ONLY_LEVEL3_ENABLED 0x00000008 /* RW--V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL0                     4:4 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL0_ENABLE       0x00000001 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL0_DISABLE      0x00000000 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL1                     5:5 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL1_ENABLE       0x00000001 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL1_DISABLE      0x00000000 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL2                     6:6 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL2_ENABLE       0x00000001 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL2_DISABLE      0x00000000 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL3                     7:7 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL3_ENABLE       0x00000001 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_PROTECTION_LEVEL3_DISABLE      0x00000000 /*       */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_VIOLATION                              8:8 /* RWEVF */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_VIOLATION_REPORT_ERROR          0x00000001 /* RWE-V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_READ_VIOLATION_SOLDIER_ON            0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_VIOLATION                             9:9 /* RWEVF */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_VIOLATION_REPORT_ERROR         0x00000001 /* RWE-V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_WRITE_VIOLATION_SOLDIER_ON           0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_SOURCE_READ_CONTROL                       10:10 /* RWEVF */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_SOURCE_READ_CONTROL_BLOCKED          0x00000001 /* RWE-V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_SOURCE_READ_CONTROL_LOWERED          0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_SOURCE_WRITE_CONTROL                      11:11 /* RWEVF */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_SOURCE_WRITE_CONTROL_BLOCKED         0x00000001 /* RWE-V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_SOURCE_WRITE_CONTROL_LOWERED         0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_SOURCE_ENABLE                             31:12 /* RWEVF */
+#define NV_PFB_PRI_MMU_PRIV_LEVEL_MASK_SOURCE_ENABLE_ALL_SOURCES_ENABLED    0x000FFFFF /* RWE-V */
+#define NV_PFB_PRI_MMU_PAGE_FAULT_CTRL                              0x00100CF8 /* RW-4R */
+#define NV_PFB_PRI_MMU_PAGE_FAULT_CTRL_PRF_FILTER                          1:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_PAGE_FAULT_CTRL_PRF_FILTER_SEND_ALL          0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_PAGE_FAULT_CTRL_PRF_FILTER_SEND_NONE         0x00000003 /* RWE-V */
+#define NV_PFB_PRI_MMU_BIND_IMB                                     0x00100CAC /* RW-4R */
+#define NV_PFB_PRI_MMU_BIND_IMB_APERTURE                                   1:0 /* RWXVF */
+#define NV_PFB_PRI_MMU_BIND_IMB_APERTURE_VID_MEM                    0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_BIND_IMB_APERTURE_SYS_MEM_C                  0x00000002 /* RW--V */
+#define NV_PFB_PRI_MMU_BIND_IMB_APERTURE_SYS_MEM_NC                 0x00000003 /* RW--V */
+#define NV_PFB_PRI_MMU_BIND_IMB_VOL                                        2:2 /* RWXVF */
+#define NV_PFB_PRI_MMU_BIND_IMB_VOL_FALSE                           0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_BIND_IMB_VOL_TRUE                            0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_BIND_IMB_ADDR                                      31:4 /* RWXVF */
+#define NV_PFB_PRI_MMU_BIND_IMB_ADDR_ALIGNMENT                      0x0000000c /*       */
+#define NV_PFB_PRI_MMU_BIND                                         0x00100CB0 /* RW-4R */
+#define NV_PFB_PRI_MMU_BIND_UPPER_IMB_ADDR                                25:8 /* RWEVF */
+#define NV_PFB_PRI_MMU_BIND_UPPER_IMB_ADDR_INIT                     0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_BIND_OP                                           30:29 /* RWEVF */
+#define NV_PFB_PRI_MMU_BIND_OP_NORMAL                               0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_BIND_OP_SAVE                                 0x00000002 /* RW--V */
+#define NV_PFB_PRI_MMU_BIND_OP_RESTORE                              0x00000003 /* RW--V */
+#define NV_PFB_PRI_MMU_BIND_TRIGGER                                      31:31 /* RWEVF */
+#define NV_PFB_PRI_MMU_BIND_TRIGGER_FALSE                           0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_BIND_TRIGGER_TRUE                            0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_VADDR                             0x00100CB4 /* RW-4R */
+#define NV_PFB_PRI_MMU_INVALIDATE_VADDR_BITS                              31:4 /* RWEVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_VADDR_BITS_INIT                   0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_INVALIDATE_VADDR_ALIGNMENT                   0x0000000c /*       */
+#define NV_PFB_PRI_MMU_INVALIDATE_UPPER_VADDR                       0x00100CE8 /* RW-4R */
+#define NV_PFB_PRI_MMU_INVALIDATE_UPPER_VADDR_BITS                        19:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_UPPER_VADDR_BITS_INIT             0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_INVALIDATE_PDB                               0x00100CB8 /* RW-4R */
+#define NV_PFB_PRI_MMU_INVALIDATE_PDB_APERTURE                             1:1 /* RWEVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_PDB_APERTURE_INIT                 0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_INVALIDATE_PDB_APERTURE_VID_MEM              0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_PDB_APERTURE_SYS_MEM              0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_PDB_ADDR                                31:4 /* RWEVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_PDB_ADDR_INIT                     0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_INVALIDATE_PDB_ADDR_ALIGNMENT                0x0000000c /*       */
+#define NV_PFB_PRI_MMU_INVALIDATE_UPPER_PDB                         0x00100CEC /* RW-4R */
+#define NV_PFB_PRI_MMU_INVALIDATE_UPPER_PDB_ADDR                          19:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_UPPER_PDB_ADDR_INIT               0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_INVALIDATE_PASID                               0x00100E64 /* RW-4R */
+#define NV_PFB_PRI_MMU_INVALIDATE_PASID_VAL                                 19:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_PASID_VAL_INIT                      0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_INVALIDATE_SIZE                                0x00100E68 /* RW-4R */
+#define NV_PFB_PRI_MMU_INVALIDATE_SIZE_VAL                                   5:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_SIZE_VAL_INIT                       0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_INVALIDATE_SIZE_GFID                                31:26 /* RWEVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_SIZE_GFID_INIT                      0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_INVALIDATE                                   0x00100CBC /* RW-4R */
+#define NV_PFB_PRI_MMU_INVALIDATE_ALL_VA                                   0:0 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_ALL_VA_FALSE                      0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_ALL_VA_TRUE                       0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_ALL_PDB                                  1:1 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_ALL_PDB_FALSE                     0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_ALL_PDB_TRUE                      0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_HUBTLB_ONLY                              2:2 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_HUBTLB_ONLY_FALSE                 0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_HUBTLB_ONLY_TRUE                  0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_REPLAY                                   5:3 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_REPLAY_NONE                       0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_REPLAY_START                      0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_REPLAY_START_ACK_ALL              0x00000002 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_REPLAY_CANCEL_TARGETED            0x00000003 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_REPLAY_CANCEL_GLOBAL              0x00000004 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_REPLAY_CANCEL_VA_GLOBAL           0x00000005 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_SYS_MEMBAR                              6:6 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_SYS_MEMBAR_FALSE                 0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_SYS_MEMBAR_TRUE                  0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_ACK                                     8:7 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_ACK_NONE_REQUIRED                0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_ACK_INTRANODE                    0x00000002 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_ACK_GLOBALLY                     0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CANCEL_CLIENT_ID                       14:9 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_CANCEL_GPC_ID                         19:15 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_CANCEL_CLIENT_TYPE                    20:20 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_CANCEL_CLIENT_TYPE_GPC           0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CANCEL_CLIENT_TYPE_HUB           0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_USE_PASID                             21:21 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_USE_PASID_FALSE                  0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_USE_PASID_TRUE                   0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_USE_SIZE                              22:22 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_USE_SIZE_FALSE                   0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_USE_SIZE_TRUE                    0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_PROP_FLUSH                            23:23 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_PROP_FLUSH_FALSE                 0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_PROP_FLUSH_TRUE                  0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL                           26:24 /* RWXVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_ALL                  0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_PTE_ONLY             0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_UP_TO_PDE0           0x00000002 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_UP_TO_PDE1           0x00000003 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_UP_TO_PDE2           0x00000004 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_UP_TO_PDE3           0x00000005 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_UP_TO_PDE4           0x00000006 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_UP_TO_PDE5           0x00000007 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_CANCEL_READ          0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_CANCEL_WRITE         0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_CANCEL_ATOMIC_STRONG 0x00000002 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_CANCEL_RSVRVD        0x00000003 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_CANCEL_ATOMIC_WEAK   0x00000004 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_CANCEL_ATOMIC_ALL    0x00000005 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_CANCEL_WRITE_AND_ATOMIC 0x00000006 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_CACHE_LEVEL_CANCEL_ALL           0x00000007 /* RW--V */
+#define NV_PFB_PRI_MMU_INVALIDATE_TRIGGER                                31:31 /* RWEVF */
+#define NV_PFB_PRI_MMU_INVALIDATE_TRIGGER_FALSE                     0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_INVALIDATE_TRIGGER_TRUE                      0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL                                   0x00100CC4 /* RW-4R */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL_WR_KIND                                  7:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL_WR_KIND_INIT                      0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL_RD_KIND                                 15:8 /* RWEVF */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL_RD_KIND_INIT                      0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL_DEBUG                                  16:16 /* RWEVF */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL_DEBUG_DISABLED                    0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL_DEBUG_ENABLED                     0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL_PAGE_SIZE                              18:17 /* RWEVF */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL_PAGE_SIZE_4KB                     0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_DEBUG_CTRL_PAGE_SIZE_64KB                    0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_WR                                     0x00100CC8 /* RW-4R */
+#define NV_PFB_PRI_MMU_DEBUG_WR_APERTURE                                   1:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_DEBUG_WR_APERTURE_VID_MEM                    0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_DEBUG_WR_APERTURE_PEER_MEM                   0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_WR_APERTURE_SYS_MEM_C                  0x00000002 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_WR_APERTURE_SYS_MEM_NC                 0x00000003 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_WR_VOL                                        2:2 /* RWEVF */
+#define NV_PFB_PRI_MMU_DEBUG_WR_VOL_FALSE                           0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_DEBUG_WR_VOL_TRUE                            0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_WR_ADDR                                      31:4 /* RWEVF */
+#define NV_PFB_PRI_MMU_DEBUG_WR_ADDR_INIT                           0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_DEBUG_WR_ADDR_ALIGNMENT                      0x0000000c /*       */
+#define NV_PFB_PRI_MMU_DEBUG_RD                                     0x00100CCC /* RW-4R */
+#define NV_PFB_PRI_MMU_DEBUG_RD_APERTURE                                   1:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_DEBUG_RD_APERTURE_VID_MEM                    0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_DEBUG_RD_APERTURE_PEER_MEM                   0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_RD_APERTURE_SYS_MEM_C                  0x00000002 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_RD_APERTURE_SYS_MEM_NC                 0x00000003 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_RD_VOL                                        2:2 /* RWEVF */
+#define NV_PFB_PRI_MMU_DEBUG_RD_VOL_FALSE                           0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_DEBUG_RD_VOL_TRUE                            0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_DEBUG_RD_ADDR                                      31:4 /* RWEVF */
+#define NV_PFB_PRI_MMU_DEBUG_RD_ADDR_INIT                           0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_DEBUG_RD_ADDR_ALIGNMENT                      0x0000000c /*       */
+#define NV_PFB_PRI_MMU_NON_REPLAY_FAULT_BUFFER               0
+#define NV_PFB_PRI_MMU_REPLAY_FAULT_BUFFER                   1
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO(i)                     (0x00100E24+(i)*20) /* RW-4A */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO__SIZE_1                          2 /*       */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO_ADDR_MODE                      0:0 /* RW-VF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO_ADDR_MODE_VIRTUAL       0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO_ADDR_MODE_PHYSICAL      0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO_PHYS_APERTURE                  2:1 /* RW-VF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO_PHYS_APERTURE_LOCAL     0x00000000 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO_PHYS_APERTURE_SYS_COH   0x00000002 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO_PHYS_APERTURE_SYS_NCOH  0x00000003 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO_PHYS_VOL                       3:3 /* RW-VF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_LO_ADDR                         31:12 /* RW-VF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_HI(i)                     (0x00100E28+(i)*20) /* RW-4A */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_HI__SIZE_1                          2 /*       */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_HI_ADDR                          31:0 /* RW-VF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET(i)                         (0x00100E2C+(i)*20) /* RW-4A */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET__SIZE_1                     2 /*       */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET_PTR                              19:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET_PTR_RESET                  0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET_GETPTR_CORRUPTED                30:30 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET_GETPTR_CORRUPTED_NO        0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET_GETPTR_CORRUPTED_YES       0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET_GETPTR_CORRUPTED_CLEAR     0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET_OVERFLOW                        31:31 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET_OVERFLOW_NO                0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET_OVERFLOW_YES               0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_GET_OVERFLOW_CLEAR             0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_PUT(i)                         (0x00100E30+(i)*20) /* R--4A */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_PUT__SIZE_1                    2 /*       */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_PUT_PTR                               19:0 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_PUT_PTR_RESET                   0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_PUT_GETPTR_CORRUPTED                 30:30 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_PUT_GETPTR_CORRUPTED_NO         0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_PUT_GETPTR_CORRUPTED_YES        0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_PUT_OVERFLOW                         31:31 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_PUT_OVERFLOW_NO                 0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_PUT_OVERFLOW_YES                0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE(i)                    (0x00100E34+(i)*20) /* RW-4A */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE__SIZE_1                         2 /*       */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_VAL                          19:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_VAL_RESET              0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_OVERFLOW_INTR               29:29 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_OVERFLOW_INTR_DISABLE  0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_OVERFLOW_INTR_ENABLE   0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_SET_DEFAULT                 30:30 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_SET_DEFAULT_NO         0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_SET_DEFAULT_YES        0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_ENABLE                      31:31 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_ENABLE_FALSE           0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_BUFFER_SIZE_ENABLE_TRUE            0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_LO                                      0x00100E4C /* R--4R */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_LO_PHYS_APERTURE                               1:0 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_LO_PHYS_APERTURE_LOCAL                  0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_LO_PHYS_APERTURE_PEER                   0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_LO_PHYS_APERTURE_SYS_COH                0x00000002 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_LO_PHYS_APERTURE_SYS_NCOH               0x00000003 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_LO_ADDR                                      31:12 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_LO_ADDR_RESET                           0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_HI                                      0x00100E50 /* R--4R */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_HI_ADDR                                       31:0 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_ADDR_HI_ADDR_RESET                           0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INST_LO                                      0x00100E54 /* R--4R */
+#define NV_PFB_PRI_MMU_FAULT_INST_LO_ENGINE_ID                                   8:0 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INST_LO_ENGINE_ID_RESET                      0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INST_LO_APERTURE                                  11:10 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INST_LO_APERTURE_VID_MEM                     0x00000000 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INST_LO_APERTURE_SYS_MEM_COHERENT            0x00000002 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INST_LO_APERTURE_SYS_MEM_NONCOHERENT         0x00000003 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INST_LO_APERTURE_RESET                       0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INST_LO_ADDR                                      31:12 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INST_LO_ADDR_RESET                           0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INST_HI                                      0x00100E58 /* R--4R */
+#define NV_PFB_PRI_MMU_FAULT_INST_HI_ADDR                                       31:0 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INST_HI_ADDR_RESET                           0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INFO                                         0x00100E5C /* R--4R */
+#define NV_PFB_PRI_MMU_FAULT_INFO_FAULT_TYPE                                     4:0 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INFO_FAULT_TYPE_RESET                        0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_REPLAYABLE_FAULT                               7:7 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INFO_REPLAYABLE_FAULT_RESET                  0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_CLIENT                                        14:8 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INFO_CLIENT_RESET                            0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE                                  19:16 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_READ                        0x00000000 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_WRITE                       0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_ATOMIC                      0x00000002 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_PREFETCH                    0x00000003 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_VIRT_READ                   0x00000000 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_VIRT_WRITE                  0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_VIRT_ATOMIC                 0x00000002 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_VIRT_ATOMIC_STRONG          0x00000002 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_VIRT_PREFETCH               0x00000003 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_VIRT_ATOMIC_WEAK            0x00000004 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_PHYS_READ                   0x00000008 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_PHYS_WRITE                  0x00000009 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_PHYS_ATOMIC                 0x0000000a /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_PHYS_PREFETCH               0x0000000b /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_ACCESS_TYPE_RESET                       0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_CLIENT_TYPE                                  20:20 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INFO_CLIENT_TYPE_RESET                       0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_GPC_ID                                       28:24 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INFO_GPC_ID_RESET                            0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_PROTECTED_MODE                               29:29 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INFO_PROTECTED_MODE_RESET                    0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_REPLAYABLE_FAULT_EN                          30:30 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INFO_REPLAYABLE_FAULT_EN_RESET               0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_INFO_VALID                                        31:31 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_INFO_VALID_RESET                             0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS                                           0x00100E60 /* RW-4R */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR1_PHYS                                0:0 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR1_PHYS_RESET                   0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR1_PHYS_CLEAR                   0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR1_PHYS_SET                     0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR1_VIRT                                1:1 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR1_VIRT_RESET                   0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR1_VIRT_CLEAR                   0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR1_VIRT_SET                     0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR2_PHYS                                2:2 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR2_PHYS_RESET                   0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR2_PHYS_CLEAR                   0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR2_PHYS_SET                     0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR2_VIRT                                3:3 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR2_VIRT_RESET                   0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR2_VIRT_CLEAR                   0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_BAR2_VIRT_SET                     0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_IFB_PHYS                                 4:4 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_IFB_PHYS_RESET                    0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_IFB_PHYS_CLEAR                    0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_IFB_PHYS_SET                      0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_IFB_VIRT                                 5:5 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_IFB_VIRT_RESET                    0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_IFB_VIRT_CLEAR                    0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_IFB_VIRT_SET                      0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_OTHER_PHYS                               6:6 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_OTHER_PHYS_RESET                  0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_OTHER_PHYS_CLEAR                  0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_OTHER_PHYS_SET                    0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_OTHER_VIRT                               7:7 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_OTHER_VIRT_RESET                  0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_OTHER_VIRT_CLEAR                  0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_DROPPED_OTHER_VIRT_SET                    0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE                                       8:8 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_RESET                          0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_SET                            0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE                                   9:9 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_RESET                      0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_SET                        0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_ERROR                               10:10 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_ERROR_RESET                    0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_ERROR_SET                      0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_ERROR                           11:11 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_ERROR_RESET                0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_ERROR_SET                  0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_OVERFLOW                            12:12 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_OVERFLOW_RESET                 0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_OVERFLOW_SET                   0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_OVERFLOW                        13:13 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_OVERFLOW_RESET             0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_OVERFLOW_SET               0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_GETPTR_CORRUPTED                    14:14 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_GETPTR_CORRUPTED_RESET         0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_REPLAYABLE_GETPTR_CORRUPTED_SET           0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_GETPTR_CORRUPTED                15:15 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_GETPTR_CORRUPTED_RESET     0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_NON_REPLAYABLE_GETPTR_CORRUPTED_SET       0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_BUSY_TYPE                                      29:28 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_BUSY_TYPE_REPLAYABLE                      1 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_BUSY_TYPE_NON_REPLAYABLE                  0 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_BUSY_TYPE_INIT                            0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_BUSY                                           30:30 /* R-EVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_BUSY_FALSE                                0x00000000 /* R-E-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_BUSY_TRUE                                 0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_VALID                                          31:31 /* RWEVF */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_VALID_RESET                               0x00000000 /* RWE-V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_VALID_CLEAR                               0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_FAULT_STATUS_VALID_SET                                 0x00000001 /* RW--V */
+#define NV_PFB_PRI_MMU_NUM_ACTIVE_LTCS                         0x00100EC0 /* R--4R */
+#define NV_PFB_PRI_MMU_NUM_ACTIVE_LTCS_V    4:0 /* R--VF */
+#define NV_PFB_PRI_MMU_NUM_ACTIVE_LTCS_COUNT                          4:0 /* R--VF */
+#define NV_PFB_PRI_MMU_NUM_ACTIVE_LTCS_HALF_LTC                       7:7 /* R--VF */
+#define NV_PFB_PRI_MMU_NUM_ACTIVE_LTCS_HALF_LTC_DISABLED       0x00000000 /* R---V */
+#define NV_PFB_PRI_MMU_NUM_ACTIVE_LTCS_HALF_LTC_ENABLED        0x00000001 /* R---V */
+#define NV_PFB_PRI_MMU_INT_VECTOR_INFO_FAULT                                                                           0x00100EE0 /* R--4R */
+#define NV_PFB_PRI_MMU_INT_VECTOR_INFO_FAULT_VECTOR                                                                          15:0 /* R-EVF */
+#define NV_PFB_PRI_MMU_INT_VECTOR_INFO_FAULT_VECTOR_INIT                                       134 /* R-E-V */
+#define NV_PFB_PRI_MMU_INT_VECTOR_FAULT(i)                                                                     (0x00100EE4+(i)*4) /* R--4A */
+#define NV_PFB_PRI_MMU_INT_VECTOR_FAULT__SIZE_1                                                         2 /*       */
+#define NV_PFB_PRI_MMU_INT_VECTOR_FAULT_ERROR                                                                                15:0 /* R--VF */
+#define NV_PFB_PRI_MMU_INT_VECTOR_FAULT_ERROR_REPLAYABLE                           131 /* R---V */
+#define NV_PFB_PRI_MMU_INT_VECTOR_FAULT_ERROR_NON_REPLAYABLE                   133 /* R---V */
+#define NV_PFB_PRI_MMU_INT_VECTOR_FAULT_NOTIFY                                                                              31:16 /* R--VF */
+#define NV_PFB_PRI_MMU_INT_VECTOR_FAULT_NOTIFY_REPLAYABLE                                64 /* R---V */
+#define NV_PFB_PRI_MMU_INT_VECTOR_FAULT_NOTIFY_NON_REPLAYABLE                        132 /* R---V */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
