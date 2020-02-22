@@ -1,0 +1,215 @@
+Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_MMU_PTE_KIND_INVALID                       0x07 /* R---V */
+#define NV_MMU_PTE_KIND_GENERIC_MEMORY                                                  0x06 /* R---V */
+#define NV_MMU_PTE_KIND_Z16                                                             0x01 /* R---V */
+#define NV_MMU_PTE_KIND_S8                                                              0x02 /* R---V */
+#define NV_MMU_PTE_KIND_S8Z24                                                           0x03 /* R---V */
+#define NV_MMU_PTE_KIND_ZF32_X24S8                                                      0x04 /* R---V */
+#define NV_MMU_PTE_KIND_Z24S8                                                           0x05 /* R---V */
+#define NV_MMU_PTE_KIND_GENERIC_MEMORY_COMPRESSIBLE                                     0x08 /* R---V */
+#define NV_MMU_PTE_KIND_GENERIC_MEMORY_COMPRESSIBLE_DISABLE_PLC                         0x09 /* R---V */
+#define NV_MMU_PTE_KIND_S8_COMPRESSIBLE_DISABLE_PLC                                     0x0A /* R---V */
+#define NV_MMU_PTE_KIND_Z16_COMPRESSIBLE_DISABLE_PLC                                    0x0B /* R---V */
+#define NV_MMU_PTE_KIND_S8Z24_COMPRESSIBLE_DISABLE_PLC                                  0x0C /* R---V */
+#define NV_MMU_PTE_KIND_ZF32_X24S8_COMPRESSIBLE_DISABLE_PLC                             0x0D /* R---V */
+#define NV_MMU_PTE_KIND_Z24S8_COMPRESSIBLE_DISABLE_PLC                                  0x0E /* R---V */
+#define NV_MMU_PTE_KIND_SMSKED_MESSAGE                                                  0x0F /* R---V */
+#define NV_MMU_VER2_PDE                                                      /* ----G */
+#define NV_MMU_VER2_PDE_IS_PTE                                           0:0 /* RWXVF */
+#define NV_MMU_VER2_PDE_IS_PTE_TRUE                                      0x1 /* RW--V */
+#define NV_MMU_VER2_PDE_IS_PTE_FALSE                                     0x0 /* RW--V */
+#define NV_MMU_VER2_PDE_IS_PDE                                           0:0 /* RWXVF */
+#define NV_MMU_VER2_PDE_IS_PDE_TRUE                                      0x0 /* RW--V */
+#define NV_MMU_VER2_PDE_IS_PDE_FALSE                                     0x1 /* RW--V */
+#define NV_MMU_VER2_PDE_VALID                                            0:0 /* RWXVF */
+#define NV_MMU_VER2_PDE_VALID_TRUE                                       0x1 /* RW--V */
+#define NV_MMU_VER2_PDE_VALID_FALSE                                      0x0 /* RW--V */
+#define NV_MMU_VER2_PDE_APERTURE                                         2:1 /* RWXVF */
+#define NV_MMU_VER2_PDE_APERTURE_INVALID                          0x00000000 /* RW--V */
+#define NV_MMU_VER2_PDE_APERTURE_VIDEO_MEMORY                     0x00000001 /* RW--V */
+#define NV_MMU_VER2_PDE_APERTURE_SYSTEM_COHERENT_MEMORY           0x00000002 /* RW--V */
+#define NV_MMU_VER2_PDE_APERTURE_SYSTEM_NON_COHERENT_MEMORY       0x00000003 /* RW--V */
+#define NV_MMU_VER2_PDE_VOL                                              3:3 /* RWXVF */
+#define NV_MMU_VER2_PDE_VOL_TRUE                                  0x00000001 /* RW--V */
+#define NV_MMU_VER2_PDE_VOL_FALSE                                 0x00000000 /* RW--V */
+#define NV_MMU_VER2_PDE_NO_ATS                                           5:5 /* RWXVF */
+#define NV_MMU_VER2_PDE_NO_ATS_TRUE                                      0x1 /* RW--V */
+#define NV_MMU_VER2_PDE_NO_ATS_FALSE                                     0x0 /* RW--V */
+#define NV_MMU_VER2_PDE_ADDRESS_SYS                                     53:8 /* RWXVF */
+#define NV_MMU_VER2_PDE_ADDRESS_VID             (35-3):8 /* RWXVF */
+#define NV_MMU_VER2_PDE_ADDRESS_VID_PEER       35:(36-3) /* RWXVF */
+#define NV_MMU_VER2_PDE_ADDRESS_VID_PEER_0                        0x00000000 /* RW--V */
+#define NV_MMU_VER2_PDE_ADDRESS_SHIFT                             0x0000000c /*       */
+#define NV_MMU_VER2_PDE__SIZE                                              8
+#define NV_MMU_VER2_DUAL_PDE                                                      /* ----G */
+#define NV_MMU_VER2_DUAL_PDE_IS_PTE                                           0:0 /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_IS_PTE_TRUE                                      0x1 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_IS_PTE_FALSE                                     0x0 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_IS_PDE                                           0:0 /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_IS_PDE_TRUE                                      0x0 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_IS_PDE_FALSE                                     0x1 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_VALID                                            0:0 /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_VALID_TRUE                                       0x1 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_VALID_FALSE                                      0x0 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_APERTURE_BIG                                     2:1 /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_APERTURE_BIG_INVALID                      0x00000000 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_APERTURE_BIG_VIDEO_MEMORY                 0x00000001 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_APERTURE_BIG_SYSTEM_COHERENT_MEMORY       0x00000002 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_APERTURE_BIG_SYSTEM_NON_COHERENT_MEMORY   0x00000003 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_VOL_BIG                                          3:3 /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_VOL_BIG_TRUE                              0x00000001 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_VOL_BIG_FALSE                             0x00000000 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_NO_ATS                                      5:5 /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_NO_ATS_TRUE                                 0x1 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_NO_ATS_FALSE                                0x0 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_ADDRESS_BIG_SYS                                 53:(8-4) /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_ADDRESS_BIG_VID         (35-3):(8-4) /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_ADDRESS_BIG_VID_PEER   35:(36-3) /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_ADDRESS_BIG_VID_PEER_0                    0x00000000 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_APERTURE_SMALL                                 66:65 /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_APERTURE_SMALL_INVALID                    0x00000000 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_APERTURE_SMALL_VIDEO_MEMORY               0x00000001 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_APERTURE_SMALL_SYSTEM_COHERENT_MEMORY     0x00000002 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_APERTURE_SMALL_SYSTEM_NON_COHERENT_MEMORY 0x00000003 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_VOL_SMALL                                      67:67 /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_VOL_SMALL_TRUE                            0x00000001 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_VOL_SMALL_FALSE                           0x00000000 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_ADDRESS_SMALL_SYS                             117:72 /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_ADDRESS_SMALL_VID      (99-3):72 /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_ADDRESS_SMALL_VID_PEER 99:(100-3) /* RWXVF */
+#define NV_MMU_VER2_DUAL_PDE_ADDRESS_SMALL_VID_PEER_0                  0x00000000 /* RW--V */
+#define NV_MMU_VER2_DUAL_PDE_ADDRESS_SHIFT                             0x0000000c /*       */
+#define NV_MMU_VER2_DUAL_PDE_ADDRESS_BIG_SHIFT 8 /*       */
+#define NV_MMU_VER2_DUAL_PDE__SIZE                                             16
+#define NV_MMU_VER2_PTE                                                      /* ----G */
+#define NV_MMU_VER2_PTE_VALID                                            0:0 /* RWXVF */
+#define NV_MMU_VER2_PTE_VALID_TRUE                                       0x1 /* RW--V */
+#define NV_MMU_VER2_PTE_VALID_FALSE                                      0x0 /* RW--V */
+#define NV_MMU_VER2_PTE_APERTURE                                         2:1 /* RWXVF */
+#define NV_MMU_VER2_PTE_APERTURE_VIDEO_MEMORY                     0x00000000 /* RW--V */
+#define NV_MMU_VER2_PTE_APERTURE_PEER_MEMORY                      0x00000001 /* RW--V */
+#define NV_MMU_VER2_PTE_APERTURE_SYSTEM_COHERENT_MEMORY           0x00000002 /* RW--V */
+#define NV_MMU_VER2_PTE_APERTURE_SYSTEM_NON_COHERENT_MEMORY       0x00000003 /* RW--V */
+#define NV_MMU_VER2_PTE_VOL                                              3:3 /* RWXVF */
+#define NV_MMU_VER2_PTE_VOL_TRUE                                  0x00000001 /* RW--V */
+#define NV_MMU_VER2_PTE_VOL_FALSE                                 0x00000000 /* RW--V */
+#define NV_MMU_VER2_PTE_PRIVILEGE                                        5:5 /* RWXVF */
+#define NV_MMU_VER2_PTE_PRIVILEGE_TRUE                                   0x1 /* RW--V */
+#define NV_MMU_VER2_PTE_PRIVILEGE_FALSE                                  0x0 /* RW--V */
+#define NV_MMU_VER2_PTE_READ_ONLY                                        6:6 /* RWXVF */
+#define NV_MMU_VER2_PTE_READ_ONLY_TRUE                                   0x1 /* RW--V */
+#define NV_MMU_VER2_PTE_READ_ONLY_FALSE                                  0x0 /* RW--V */
+#define NV_MMU_VER2_PTE_ATOMIC_DISABLE                                   7:7 /* RWXVF */
+#define NV_MMU_VER2_PTE_ATOMIC_DISABLE_TRUE                              0x1 /* RW--V */
+#define NV_MMU_VER2_PTE_ATOMIC_DISABLE_FALSE                             0x0 /* RW--V */
+#define NV_MMU_VER2_PTE_ADDRESS_SYS                                     53:8 /* RWXVF */
+#define NV_MMU_VER2_PTE_ADDRESS_VID             (35-3):8 /* RWXVF */
+#define NV_MMU_VER2_PTE_ADDRESS_VID_PEER       35:(36-3) /* RWXVF */
+#define NV_MMU_VER2_PTE_ADDRESS_VID_PEER_0                        0x00000000 /* RW--V */
+#define NV_MMU_VER2_PTE_ADDRESS_VID_PEER_1                        0x00000001 /* RW--V */
+#define NV_MMU_VER2_PTE_ADDRESS_VID_PEER_2                        0x00000002 /* RW--V */
+#define NV_MMU_VER2_PTE_ADDRESS_VID_PEER_3                        0x00000003 /* RW--V */
+#define NV_MMU_VER2_PTE_ADDRESS_VID_PEER_4                        0x00000004 /* RW--V */
+#define NV_MMU_VER2_PTE_ADDRESS_VID_PEER_5                        0x00000005 /* RW--V */
+#define NV_MMU_VER2_PTE_ADDRESS_VID_PEER_6                        0x00000006 /* RW--V */
+#define NV_MMU_VER2_PTE_ADDRESS_VID_PEER_7                        0x00000007 /* RW--V */
+#define NV_MMU_VER2_PTE_COMPTAGLINE   (20+35):36 /* RWXVF */
+#define NV_MMU_VER2_PTE_KIND                                           63:56 /* RWXVF */
+#define NV_MMU_VER2_PTE_ADDRESS_SHIFT                             0x0000000c /*       */
+#define NV_MMU_VER2_PTE__SIZE                                              8
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
