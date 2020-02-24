@@ -1,0 +1,1581 @@
+Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_PFIFO                              0x00003FFF:0x00002000 /* RW--D */
+#define NV_PCCSR                              0x0080FFFF:0x00800000 /* RW--D */
+#define NV_PFIFO_CFG0                                 0x00002004 /* R--4R */
+#define NV_PFIFO_CFG0_NUM_PBDMA                              7:0 /* R-IUF */
+#define NV_PFIFO_CFG0_NUM_PBDMA_INIT                           12 /* R-I-V */
+#define NV_PFIFO_CFG0_PBDMA_FAULT_ID                        23:16 /* R-IUF */
+#define NV_PFIFO_CFG0_PBDMA_FAULT_ID_INIT            32 /* R-I-V */
+#define NV_PFIFO_CFG1                                 0x00002008 /* R--4R */
+#define NV_PFIFO_CFG1_NUM_CHANNELS                          31:0 /* R-IUF */
+#define NV_PFIFO_CFG1_NUM_CHANNELS_INIT                     4096 /* R-I-V */
+#define NV_PFIFO_CFG2                                 0x0000200c /* R--4R */
+#define NV_PFIFO_CFG2_HOST_CLASS_ID                         15:0 /* R-IUF */
+#define NV_PFIFO_CFG2_HOST_CLASS_ID_VALUE                 50287 /* R-I-V */
+#define NV_PFIFO_CONFIG                                  0x00002200 /* RW-4R */
+#define NV_PFIFO_CONFIG_SEM_ACQ_STRENGTH                        0:0 /* RWIVF */
+#define NV_PFIFO_CONFIG_SEM_ACQ_STRENGTH_WEAK            0x00000000 /* RWI-V */
+#define NV_PFIFO_CONFIG_SEM_ACQ_STRENGTH_STRONG          0x00000001 /* RW--V */
+#define NV_PFIFO_CONFIG_SEM_REL_STRENGTH                        4:4 /* RWIVF */
+#define NV_PFIFO_CONFIG_SEM_REL_STRENGTH_WEAK            0x00000000 /* RW--V */
+#define NV_PFIFO_CONFIG_SEM_REL_STRENGTH_STRONG          0x00000001 /* RWI-V */
+#define NV_PFIFO_CONFIG_L2_EVICT                                9:8 /* RWIVF */
+#define NV_PFIFO_CONFIG_L2_EVICT_FIRST                   0x00000000 /* RWI-V */
+#define NV_PFIFO_CONFIG_L2_EVICT_NORMAL                  0x00000001 /* RW--V */
+#define NV_PFIFO_ACQ_PRETEST                             0x00002250 /* RW-4R */
+#define NV_PFIFO_ACQ_PRETEST_TIMEOUT                            7:0 /* RWIUF */
+#define NV_PFIFO_ACQ_PRETEST_TIMEOUT_8                   0x00000008 /* RWI-V */
+#define NV_PFIFO_ACQ_PRETEST_TIMESCALE                        15:12 /* RWIUF */
+#define NV_PFIFO_ACQ_PRETEST_TIMESCALE_0                 0x00000000 /* RWI-V */
+#define NV_PFIFO_ACQ_PRETEST_TIMESCALE_10                0x0000000a /* RW--V */
+#define NV_PFIFO_USERD_WRITEBACK                         0x0000225C /* RW-4R */
+#define NV_PFIFO_USERD_WRITEBACK_TIMER                          7:0 /* RWIUF */
+#define NV_PFIFO_USERD_WRITEBACK_TIMER_DISABLED          0x00000000 /* RW--V */
+#define NV_PFIFO_USERD_WRITEBACK_TIMER_SHORT             0x00000003 /* RW--V */
+#define NV_PFIFO_USERD_WRITEBACK_TIMER_100US             0x00000064 /* RWI-V */
+#define NV_PFIFO_USERD_WRITEBACK_TIMESCALE                    15:12 /* RWIUF */
+#define NV_PFIFO_USERD_WRITEBACK_TIMESCALE_0             0x00000000 /* RWI-V */
+#define NV_PFIFO_USERD_WRITEBACK_TIMESCALE_SHORT         0x00000000 /*       */
+#define NV_PFIFO_USERD_WRITEBACK_TIMESCALE_100US         0x00000000 /*       */
+#define NV_PCCSR_CHANNEL_INST(i)                 (0x00800000+(i)*8) /* RW-4A */
+#define NV_PCCSR_CHANNEL_INST__SIZE_1         4096 /*       */
+#define NV_PCCSR_CHANNEL_INST_PTR                              27:0 /* RWXUF */
+#define NV_PCCSR_CHANNEL_INST_TARGET                          29:28 /* RWXVF */
+#define NV_PCCSR_CHANNEL_INST_TARGET_VID_MEM             0x00000000 /* RW--V */
+#define NV_PCCSR_CHANNEL_INST_TARGET_SYS_MEM_COHERENT    0x00000002 /* RW--V */
+#define NV_PCCSR_CHANNEL_INST_TARGET_SYS_MEM_NONCOHERENT 0x00000003 /* RW--V */
+#define NV_PCCSR_CHANNEL_INST_BIND                            31:31 /* RWIVF */
+#define NV_PCCSR_CHANNEL_INST_BIND_FALSE                 0x00000000 /* RWI-V */
+#define NV_PCCSR_CHANNEL_INST_BIND_TRUE                  0x00000001 /* RW--V */
+#define NV_PCCSR_CHANNEL_INST_PTR_ALIGN_SHIFT                    12 /*       */
+#define NV_PCCSR_CHANNEL(i)                      (0x00800004+(i)*8) /* RW-4A */
+#define NV_PCCSR_CHANNEL__SIZE_1              4096 /*       */
+#define NV_PCCSR_CHANNEL_ENABLE                                 0:0 /* R-IVF */
+#define NV_PCCSR_CHANNEL_ENABLE_NOT_IN_USE               0x00000000 /* R-I-V */
+#define NV_PCCSR_CHANNEL_ENABLE_IN_USE                   0x00000001 /* R---V */
+#define NV_PCCSR_CHANNEL_NEXT                                   1:1 /* RWIVF */
+#define NV_PCCSR_CHANNEL_NEXT_FALSE                      0x00000000 /* RWI-V */
+#define NV_PCCSR_CHANNEL_NEXT_TRUE                       0x00000001 /* RW--V */
+#define NV_PCCSR_CHANNEL_FORCE_CTX_RELOAD                       8:8 /* -W-VF */
+#define NV_PCCSR_CHANNEL_FORCE_CTX_RELOAD_FALSE          0x00000000 /* -W--V */
+#define NV_PCCSR_CHANNEL_FORCE_CTX_RELOAD_TRUE           0x00000001 /* -W--V */
+#define NV_PCCSR_CHANNEL_ENABLE_SET                           10:10 /* -W-VF */
+#define NV_PCCSR_CHANNEL_ENABLE_SET_TRUE                 0x00000001 /* -W--V */
+#define NV_PCCSR_CHANNEL_ENABLE_SET_FALSE                0x00000000 /* -W--V */
+#define NV_PCCSR_CHANNEL_ENABLE_CLR                           11:11 /* -W-VF */
+#define NV_PCCSR_CHANNEL_ENABLE_CLR_TRUE                 0x00000001 /* -W--V */
+#define NV_PCCSR_CHANNEL_ENABLE_CLR_FALSE                0x00000000 /* -W--V */
+#define NV_PCCSR_CHANNEL_FORCE_PBDMA_FAULTED                  20:20 /* -W-VF */
+#define NV_PCCSR_CHANNEL_FORCE_PBDMA_FAULTED_FALSE       0x00000000 /* -W--V */
+#define NV_PCCSR_CHANNEL_FORCE_PBDMA_FAULTED_TRUE        0x00000001 /* -W--V */
+#define NV_PCCSR_CHANNEL_FORCE_ENG_FAULTED                    21:21 /* -W-VF */
+#define NV_PCCSR_CHANNEL_FORCE_ENG_FAULTED_FALSE         0x00000000 /* -W--V */
+#define NV_PCCSR_CHANNEL_FORCE_ENG_FAULTED_TRUE          0x00000001 /* -W--V */
+#define NV_PCCSR_CHANNEL_PBDMA_FAULTED                        22:22 /* RWIVF */
+#define NV_PCCSR_CHANNEL_PBDMA_FAULTED_FALSE             0x00000000 /* R-I-V */
+#define NV_PCCSR_CHANNEL_PBDMA_FAULTED_TRUE              0x00000001 /* R---V */
+#define NV_PCCSR_CHANNEL_PBDMA_FAULTED_RESET             0x00000001 /* -W--T */
+#define NV_PCCSR_CHANNEL_ENG_FAULTED                          23:23 /* RWIVF */
+#define NV_PCCSR_CHANNEL_ENG_FAULTED_FALSE               0x00000000 /* R-I-V */
+#define NV_PCCSR_CHANNEL_ENG_FAULTED_TRUE                0x00000001 /* R---V */
+#define NV_PCCSR_CHANNEL_ENG_FAULTED_RESET               0x00000001 /* -W--T */
+#define NV_PCCSR_CHANNEL_STATUS                                    27:24 /* R-IVF */
+#define NV_PCCSR_CHANNEL_STATUS_IDLE                          0x00000000 /* R-I-V */
+#define NV_PCCSR_CHANNEL_STATUS_PENDING                       0x00000001 /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_PENDING_CTX_RELOAD            0x00000002 /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_PENDING_ACQUIRE               0x00000003 /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_PENDING_ACQ_CTX_RELOAD        0x00000004 /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_ON_PBDMA                      0x00000005 /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_ON_PBDMA_AND_ENG              0x00000006 /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_ON_ENG                        0x00000007 /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_ON_ENG_PENDING_ACQUIRE        0x00000008 /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_ON_ENG_PENDING                0x00000009 /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_ON_PBDMA_CTX_RELOAD           0x0000000A /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_ON_PBDMA_AND_ENG_CTX_RELOAD   0x0000000B /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_ON_ENG_CTX_RELOAD             0x0000000C /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_ON_ENG_PENDING_CTX_RELOAD     0x0000000D /* R---V */
+#define NV_PCCSR_CHANNEL_STATUS_ON_ENG_PENDING_ACQ_CTX_RELOAD 0x0000000E /* R---V */
+#define NV_PCCSR_CHANNEL_BUSY                                 28:28 /* R-IVF */
+#define NV_PCCSR_CHANNEL_BUSY_FALSE                      0x00000000 /* R-I-V */
+#define NV_PCCSR_CHANNEL_BUSY_TRUE                       0x00000001 /* R---V */
+#define NV_PFIFO_RUNLIST_BASE_LO(i)             (0x00002B00+(i)*16) /* RW-4A */
+#define NV_PFIFO_RUNLIST_BASE_LO__SIZE_1       11 /*       */
+#define NV_PFIFO_RUNLIST_BASE_LO_PTR_LO                       31:12 /* RWEUF */
+#define NV_PFIFO_RUNLIST_BASE_LO_PTR_LO_NULL             0x00000000 /* RWE-V */
+#define NV_PFIFO_RUNLIST_BASE_LO_TARGET                         1:0 /* RWEVF */
+#define NV_PFIFO_RUNLIST_BASE_LO_TARGET_VID_MEM                 0x0 /* RWE-V */
+#define NV_PFIFO_RUNLIST_BASE_LO_TARGET_SYS_MEM_COHERENT        0x2 /* RW--V */
+#define NV_PFIFO_RUNLIST_BASE_LO_TARGET_SYS_MEM_NONCOHERENT     0x3 /* RW--V */
+#define NV_PFIFO_RUNLIST_BASE_PTR_ALIGN_SHIFT                    12 /*       */
+#define NV_PFIFO_RUNLIST_BASE_HI(i)             (0x00002B04+(i)*16) /* RW-4A */
+#define NV_PFIFO_RUNLIST_BASE_HI__SIZE_1       11 /*       */
+#define NV_PFIFO_RUNLIST_BASE_HI_PTR_HI                         7:0 /* RWEUF */
+#define NV_PFIFO_RUNLIST_BASE_HI_PTR_HI_NULL             0x00000000 /* RWE-V */
+#define NV_PFIFO_RUNLIST_SUBMIT(i)             (0x00002B08+(i)*16) /* RW-4A */
+#define NV_PFIFO_RUNLIST_SUBMIT__SIZE_1       11 /*       */
+#define NV_PFIFO_RUNLIST_SUBMIT_LENGTH                        15:0 /* RWEUF */
+#define NV_PFIFO_RUNLIST_SUBMIT_LENGTH_ZERO             0x00000000 /* RWE-V */
+#define NV_PFIFO_RUNLIST_SUBMIT_LENGTH_MAX              0x0000ffff /* RW--V */
+#define NV_PFIFO_RUNLIST_SUBMIT_OFFSET                       31:16 /* RWEVF */
+#define NV_PFIFO_RUNLIST_SUBMIT_OFFSET_ZERO             0x00000000 /* RWE-V */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO(i)                   (0x00002B0C+(i)*16) /* R--4A */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO__SIZE_1             11 /*       */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PREEMPTED_TSGID                     13:0 /*       */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PREEMPTED_TSGID_HW    11:0 /* R-EUF */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PREEMPTED_TSGID_HW_DEFAULT    0x00000000 /* R-E-V */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PREEMPTED_TSGID_VALID              14:14 /* R-EUF */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PREEMPTED_TSGID_VALID_FALSE   0x00000000 /* R-E-V */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PREEMPTED_TSGID_VALID_TRUE    0x00000001 /* R---V */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PENDING                            15:15 /* R-EVF */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PENDING_FALSE                 0x00000000 /* R-E-V */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PENDING_TRUE                  0x00000001 /* R---V */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PREEMPTED_OFFSET                   31:16 /* R-EVF */
+#define NV_PFIFO_RUNLIST_SUBMIT_INFO_PREEMPTED_OFFSET_ZERO         0x00000000 /* R-E-V */
+#define NV_PFIFO_PBDMA_MAP(i)                    (0x00002390+(i)*4) /* R--4A */
+#define NV_PFIFO_PBDMA_MAP__SIZE_1                12 /*       */
+#define NV_PFIFO_PBDMA_MAP_RUNLISTS                            15:0 /* R-XVF */
+#define NV_PFIFO_LB_ENTRY_SIZE                                  128 /*       */
+#define NV_PFIFO_LB_GPBUF_CONTROL(i)             (0x000023E0+(i)*8) /* R--4A */
+#define NV_PFIFO_LB_GPBUF_CONTROL__SIZE_1       12     /*       */
+#define NV_PFIFO_LB_GPBUF_CONTROL_SIZE                        31:24 /* R-XUF */
+#define NV_PFIFO_LB_GPBUF_CONTROL_SIZE_128B              0x00000001 /* R---V */
+#define NV_PFIFO_LB_PBBUF_CONTROL(i)             (0x000023E4+(i)*8) /* R--4A */
+#define NV_PFIFO_LB_PBBUF_CONTROL__SIZE_1       12     /*       */
+#define NV_PFIFO_LB_PBBUF_CONTROL_SIZE                        31:23 /* R-XUF */
+#define NV_PFIFO_LB_PBBUF_CONTROL_SIZE_128B              0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0                                  0x00002100 /* RW-4R */
+#define NV_PFIFO_INTR_0_BIND_ERROR                              0:0 /* RWEVF */
+#define NV_PFIFO_INTR_0_BIND_ERROR_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_0_BIND_ERROR_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_BIND_ERROR_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_0_CTXSW_TIMEOUT                           1:1 /* R-XVF */
+#define NV_PFIFO_INTR_0_CTXSW_TIMEOUT_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PFIFO_INTR_0_CTXSW_TIMEOUT_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_RUNLIST_IDLE                            4:4 /* R-XVF */
+#define NV_PFIFO_INTR_0_RUNLIST_IDLE_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PFIFO_INTR_0_RUNLIST_IDLE_PENDING             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_RUNLIST_AND_ENG_IDLE                    5:5 /* R-XVF */
+#define NV_PFIFO_INTR_0_RUNLIST_AND_ENG_IDLE_NOT_PENDING 0x00000000 /* R---V */
+#define NV_PFIFO_INTR_0_RUNLIST_AND_ENG_IDLE_PENDING     0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_RUNLIST_ACQUIRE                         6:6 /* R-XVF */
+#define NV_PFIFO_INTR_0_RUNLIST_ACQUIRE_NOT_PENDING      0x00000000 /* R---V */
+#define NV_PFIFO_INTR_0_RUNLIST_ACQUIRE_PENDING          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_RUNLIST_ACQUIRE_AND_ENG_IDLE                      7:7 /* R-XVF */
+#define NV_PFIFO_INTR_0_RUNLIST_ACQUIRE_AND_ENG_IDLE_NOT_PENDING   0x00000000 /* R---V */
+#define NV_PFIFO_INTR_0_RUNLIST_ACQUIRE_AND_ENG_IDLE_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_SCHED_ERROR                             8:8 /* RWEVF */
+#define NV_PFIFO_INTR_0_SCHED_ERROR_NOT_PENDING          0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_0_SCHED_ERROR_PENDING              0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_SCHED_ERROR_RESET                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_0_CHSW_ERROR                            16:16 /* RWEVF */
+#define NV_PFIFO_INTR_0_CHSW_ERROR_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_0_CHSW_ERROR_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_CHSW_ERROR_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_0_MEMOP_TIMEOUT                         23:23 /* RWIVF */
+#define NV_PFIFO_INTR_0_MEMOP_TIMEOUT_NOT_PENDING        0x00000000 /* R-I-V */
+#define NV_PFIFO_INTR_0_MEMOP_TIMEOUT_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_MEMOP_TIMEOUT_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_0_LB_ERROR                              24:24 /* RWEVF */
+#define NV_PFIFO_INTR_0_LB_ERROR_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_0_LB_ERROR_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_LB_ERROR_RESET                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_0_TSG_PREEMPT_COMPLETE                  28:28 /* RWEVF */
+#define NV_PFIFO_INTR_0_TSG_PREEMPT_COMPLETE_NOT_PENDING 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_0_TSG_PREEMPT_COMPLETE_PENDING     0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_TSG_PREEMPT_COMPLETE_RESET       0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_0_PBDMA_INTR                            29:29 /* R-XVF */
+#define NV_PFIFO_INTR_0_PBDMA_INTR_NOT_PENDING           0x00000000 /* R---V */
+#define NV_PFIFO_INTR_0_PBDMA_INTR_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_RUNLIST_EVENT                         30:30 /* R-EVF */
+#define NV_PFIFO_INTR_0_RUNLIST_EVENT_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_0_RUNLIST_EVENT_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_CHANNEL_INTR                          31:31 /* RWEVF */
+#define NV_PFIFO_INTR_0_CHANNEL_INTR_NOT_PENDING         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_0_CHANNEL_INTR_PENDING             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_0_CHANNEL_INTR_RESET               0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_0_MASK_SET                                   0x00002180 /* RW-4R */
+#define NV_PFIFO_INTR_0_MASK_SET_TSG_PREEMPT_COMPLETE                   28:28 /* RWIVF */
+#define NV_PFIFO_INTR_0_MASK_SET_TSG_PREEMPT_COMPLETE_DISABLED     0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_0_MASK_SET_TSG_PREEMPT_COMPLETE_ENABLED      0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_0_MASK_CLEAR                                 0x000021C0 /* RW-4R */
+#define NV_PFIFO_INTR_0_MASK_CLEAR_TSG_PREEMPT_COMPLETE                 28:28 /* RWIVF */
+#define NV_PFIFO_INTR_0_MASK_CLEAR_TSG_PREEMPT_COMPLETE_DISABLED   0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_0_MASK_CLEAR_TSG_PREEMPT_COMPLETE_ENABLED    0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0                                         0x00002140 /* RW-4R */
+#define NV_PFIFO_INTR_EN_0_BIND_ERROR                                     0:0 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_BIND_ERROR_DISABLED                     0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_BIND_ERROR_ENABLED                      0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_CTXSW_TIMEOUT                                  1:1 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_CTXSW_TIMEOUT_DISABLED                  0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_CTXSW_TIMEOUT_ENABLED                   0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_IDLE                                   4:4 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_IDLE_DISABLED                   0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_IDLE_ENABLED                    0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_AND_ENG_IDLE                           5:5 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_AND_ENG_IDLE_DISABLED           0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_AND_ENG_IDLE_ENABLED            0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_ACQUIRE                                6:6 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_ACQUIRE_DISABLED                0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_ACQUIRE_ENABLED                 0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_ACQUIRE_AND_ENG_IDLE                   7:7 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_ACQUIRE_AND_ENG_IDLE_DISABLED   0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_ACQUIRE_AND_ENG_IDLE_ENABLED    0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_SCHED_ERROR                                    8:8 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_SCHED_ERROR_DISABLED                    0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_SCHED_ERROR_ENABLED                     0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_CHSW_ERROR                                   16:16 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_CHSW_ERROR_DISABLED                     0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_CHSW_ERROR_ENABLED                      0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_MEMOP_TIMEOUT                                23:23 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_MEMOP_TIMEOUT_DISABLED                  0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_MEMOP_TIMEOUT_ENABLED                   0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_LB_ERROR                                     24:24 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_LB_ERROR_DISABLED                       0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_LB_ERROR_ENABLED                        0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_TSG_PREEMPT_COMPLETE                         28:28 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_TSG_PREEMPT_COMPLETE_DISABLED           0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_TSG_PREEMPT_COMPLETE_ENABLED            0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_PBDMA_INTR                                   29:29 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_PBDMA_INTR_DISABLED                     0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_PBDMA_INTR_ENABLED                      0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_EVENT                                30:30 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_EVENT_DISABLED                  0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_RUNLIST_EVENT_ENABLED                   0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_0_CHANNEL_INTR                                 31:31 /* RWIVF */
+#define NV_PFIFO_INTR_EN_0_CHANNEL_INTR_DISABLED                   0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_0_CHANNEL_INTR_ENABLED                    0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1                                         0x00002528 /* RW-4R */
+#define NV_PFIFO_INTR_EN_1_BIND_ERROR                                     0:0 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_BIND_ERROR_DISABLED                     0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_BIND_ERROR_ENABLED                      0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_CTXSW_TIMEOUT                                  1:1 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_CTXSW_TIMEOUT_DISABLED                  0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_CTXSW_TIMEOUT_ENABLED                   0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_IDLE                                   4:4 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_IDLE_DISABLED                   0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_IDLE_ENABLED                    0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_AND_ENG_IDLE                           5:5 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_AND_ENG_IDLE_DISABLED           0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_AND_ENG_IDLE_ENABLED            0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_ACQUIRE                                6:6 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_ACQUIRE_DISABLED                0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_ACQUIRE_ENABLED                 0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_ACQUIRE_AND_ENG_IDLE                   7:7 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_ACQUIRE_AND_ENG_IDLE_DISABLED   0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_ACQUIRE_AND_ENG_IDLE_ENABLED    0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_SCHED_ERROR                                    8:8 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_SCHED_ERROR_DISABLED                    0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_SCHED_ERROR_ENABLED                     0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_CHSW_ERROR                                   16:16 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_CHSW_ERROR_DISABLED                     0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_CHSW_ERROR_ENABLED                      0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_MEMOP_TIMEOUT                                23:23 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_MEMOP_TIMEOUT_DISABLED                  0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_MEMOP_TIMEOUT_ENABLED                   0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_LB_ERROR                                     24:24 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_LB_ERROR_DISABLED                       0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_LB_ERROR_ENABLED                        0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_TSG_PREEMPT_COMPLETE                         28:28 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_TSG_PREEMPT_COMPLETE_DISABLED           0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_TSG_PREEMPT_COMPLETE_ENABLED            0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_PBDMA_INTR                                   29:29 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_PBDMA_INTR_DISABLED                     0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_PBDMA_INTR_ENABLED                      0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_EVENT                                30:30 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_EVENT_DISABLED                  0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_RUNLIST_EVENT_ENABLED                   0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_EN_1_CHANNEL_INTR                                 31:31 /* RWIVF */
+#define NV_PFIFO_INTR_EN_1_CHANNEL_INTR_DISABLED                   0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_EN_1_CHANNEL_INTR_ENABLED                    0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_STALL                               0x00002530 /* RW-4R */
+#define NV_PFIFO_INTR_STALL_BIND_ERROR                           0:0 /* RWIVF */
+#define NV_PFIFO_INTR_STALL_BIND_ERROR_DISABLED           0x00000000 /* RW--V */
+#define NV_PFIFO_INTR_STALL_BIND_ERROR_ENABLED            0x00000001 /* RWI-V */
+#define NV_PFIFO_INTR_STALL_SCHED_ERROR                          8:8 /* RWIVF */
+#define NV_PFIFO_INTR_STALL_SCHED_ERROR_DISABLED          0x00000000 /* RW--V */
+#define NV_PFIFO_INTR_STALL_SCHED_ERROR_ENABLED           0x00000001 /* RWI-V */
+#define NV_PFIFO_INTR_STALL_CHSW_ERROR                         16:16 /* RWIVF */
+#define NV_PFIFO_INTR_STALL_CHSW_ERROR_DISABLED           0x00000000 /* RW--V */
+#define NV_PFIFO_INTR_STALL_CHSW_ERROR_ENABLED            0x00000001 /* RWI-V */
+#define NV_PFIFO_INTR_STALL_MEMOP_TIMEOUT                      23:23 /* RWIVF */
+#define NV_PFIFO_INTR_STALL_MEMOP_TIMEOUT_DISABLED        0x00000000 /* RW--V */
+#define NV_PFIFO_INTR_STALL_MEMOP_TIMEOUT_ENABLED         0x00000001 /* RWI-V */
+#define NV_PFIFO_INTR_STALL_LB_ERROR                           24:24 /* RWIVF */
+#define NV_PFIFO_INTR_STALL_LB_ERROR_DISABLED             0x00000000 /* RW--V */
+#define NV_PFIFO_INTR_STALL_LB_ERROR_ENABLED              0x00000001 /* RWI-V */
+#define NV_PFIFO_INTR_STALL_PBDMA_INTR                         29:29 /* RWIVF */
+#define NV_PFIFO_INTR_STALL_PBDMA_INTR_DISABLED           0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_STALL_PBDMA_INTR_ENABLED            0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_STALL_RUNLIST_EVENT                      30:30 /* RWIVF */
+#define NV_PFIFO_INTR_STALL_RUNLIST_EVENT_DISABLED        0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_STALL_RUNLIST_EVENT_ENABLED         0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_STALL_CHANNEL_INTR                       31:31 /* RWIVF */
+#define NV_PFIFO_INTR_STALL_CHANNEL_INTR_DISABLED         0x00000000 /* RWI-V */
+#define NV_PFIFO_INTR_STALL_CHANNEL_INTR_ENABLED          0x00000001 /* RW--V */
+#define NV_PFIFO_INTR_BIND_ERROR                         0x0000252C /* R--4R */
+#define NV_PFIFO_INTR_BIND_ERROR_CODE                           7:0 /* R-EVF */
+#define NV_PFIFO_INTR_BIND_ERROR_CODE_NO_ERROR           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_BIND_ERROR_CODE_BIND_NOT_UNBOUND   0x00000001 /* R---V */
+#define NV_PFIFO_INTR_BIND_ERROR_CODE_UNBIND_WHILE_RUNNING 0x00000003 /* R---V */
+#define NV_PFIFO_INTR_BIND_ERROR_CODE_INVALID_CTX_TGT      0x00000006 /* R---V */
+#define NV_PFIFO_INTR_BIND_ERROR_CODE_UNBIND_WHILE_PARKED  0x0000000B /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT                        0x00002A30 /* RW-4R */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE(i)                 (i):(i) /*       */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE__SIZE_1                 32 /*       */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_NOT_PENDING     0x00000000 /*       */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_PENDING         0x00000001 /*       */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_RESET           0x00000001 /*       */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_0                      0:0 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_0_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_0_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_0_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_1                      1:1 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_1_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_1_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_1_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_2                      2:2 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_2_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_2_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_2_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_3                      3:3 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_3_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_3_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_3_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_4                      4:4 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_4_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_4_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_4_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_5                      5:5 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_5_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_5_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_5_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_6                      6:6 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_6_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_6_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_6_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_7                      7:7 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_7_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_7_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_7_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_8                      8:8 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_8_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_8_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_8_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_9                      9:9 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_9_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_9_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_9_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_10                   10:10 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_10_NOT_PENDING  0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_10_PENDING      0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_10_RESET        0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_11                   11:11 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_11_NOT_PENDING  0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_11_PENDING      0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_11_RESET        0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_12                   12:12 /* RWEVF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_12_NOT_PENDING  0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_12_PENDING      0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_ENGINE_12_RESET        0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_RESERVED4              0x00002A34 /*       */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_RESERVED8              0x00002A38 /*       */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_RESERVEDC              0x00002A3C /*       */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO(i)              (0x00003200+(i)*4) /* R--4A */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO__SIZE_1        13 /*       */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_PREV_TSGID                    13:0 /* R-EUF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_PREV_TSGID_DEFAULT      0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_CTXSW_STATE                  15:14 /* R-EUF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_CTXSW_STATE_LOAD        0x00000001 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_CTXSW_STATE_SAVE        0x00000002 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_CTXSW_STATE_SWITCH      0x00000003 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_NEXT_TSGID                   29:16 /* R-EUF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_NEXT_TSGID_DEFAULT      0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_STATUS                       31:30 /* R-EUF */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_STATUS_AWAITING_ACK     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_STATUS_ENG_WAS_RESET    0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_STATUS_ACK_RECEIVED     0x00000002 /* R---V */
+#define NV_PFIFO_INTR_CTXSW_TIMEOUT_INFO_STATUS_DROPPED_TIMEOUT  0x00000003 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE                                 0x00002A40 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST(i)                         (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST__SIZE_1                         32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_NOT_PENDING             0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_PENDING                 0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_RESET                   0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_0                              0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_0_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_0_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_0_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_1                              1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_1_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_1_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_1_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_2                              2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_2_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_2_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_2_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_3                              3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_3_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_3_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_3_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_4                              4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_4_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_4_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_4_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_5                              5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_5_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_5_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_5_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_6                              6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_6_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_6_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_6_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_7                              7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_7_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_7_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_7_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_8                              8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_8_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_8_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_8_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_9                              9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_9_NOT_PENDING           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_9_PENDING               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_9_RESET                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_10                           10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_10_NOT_PENDING          0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_10_PENDING              0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_RUNLIST_10_RESET                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE                         0x00002A50 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST(i)                 (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST__SIZE_1                 32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_NOT_PENDING     0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_PENDING         0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_RESET           0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_0                      0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_0_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_0_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_0_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_1                      1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_1_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_1_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_1_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_2                      2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_2_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_2_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_2_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_3                      3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_3_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_3_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_3_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_4                      4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_4_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_4_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_4_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_5                      5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_5_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_5_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_5_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_6                      6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_6_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_6_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_6_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_7                      7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_7_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_7_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_7_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_8                      8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_8_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_8_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_8_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_9                      9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_9_NOT_PENDING   0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_9_PENDING       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_9_RESET         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_10                   10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_10_NOT_PENDING  0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_10_PENDING      0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_RUNLIST_10_RESET        0x00000001 /* -W--T */
+#define NV_PFIFO_RUNLIST_INFO(i)                                     (0x00003400+(i)*4) /* R--4A */
+#define NV_PFIFO_RUNLIST_INFO__SIZE_1                              11 /*       */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_IDLE_INTR_ARM                                 0:0 /* R-EUF */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_IDLE_INTR_ARM_UNARMED                  0x00000000 /* R-E-V */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_IDLE_INTR_ARM_ARMED                    0x00000001 /* R---V */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_ACQUIRE_INTR_ARM                              1:1 /* R-EUF */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_ACQUIRE_INTR_ARM_UNARMED               0x00000000 /* R-E-V */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_ACQUIRE_INTR_ARM_ARMED                 0x00000001 /* R---V */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_AND_ENG_IDLE_INTR_ARM                         4:4 /* R-EUF */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_AND_ENG_IDLE_INTR_ARM_UNARMED          0x00000000 /* R-E-V */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_AND_ENG_IDLE_INTR_ARM_ARMED            0x00000001 /* R---V */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_ACQUIRE_AND_ENG_IDLE_INTR_ARM                 5:5 /* R-EUF */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_ACQUIRE_AND_ENG_IDLE_INTR_ARM_UNARMED  0x00000000 /* R-E-V */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_ACQUIRE_AND_ENG_IDLE_INTR_ARM_ARMED    0x00000001 /* R---V */
+#define NV_PFIFO_RUNLIST_INFO_ENG_IDLE                                              8:8 /* R-EUF */
+#define NV_PFIFO_RUNLIST_INFO_ENG_IDLE_FALSE                                 0x00000000 /* R---V */
+#define NV_PFIFO_RUNLIST_INFO_ENG_IDLE_TRUE                                  0x00000001 /* R-E-V */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_IDLE                                          9:9 /* R-EUF */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_IDLE_FALSE                             0x00000000 /* R---V */
+#define NV_PFIFO_RUNLIST_INFO_RUNLIST_IDLE_TRUE                              0x00000001 /* R-E-V */
+#define NV_PFIFO_RUNLIST_INFO_ACQUIRE_STILL_PENDING                               12:12 /* R-EUF */
+#define NV_PFIFO_RUNLIST_INFO_ACQUIRE_STILL_PENDING_FALSE                    0x00000000 /* R-E-V */
+#define NV_PFIFO_RUNLIST_INFO_ACQUIRE_STILL_PENDING_TRUE                     0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE                              0x00002A60 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST(i)                      (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST__SIZE_1                      32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_NOT_PENDING          0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_PENDING              0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_RESET                0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_0                           0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_0_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_0_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_0_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_1                           1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_1_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_1_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_1_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_2                           2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_2_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_2_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_2_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_3                           3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_3_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_3_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_3_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_4                           4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_4_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_4_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_4_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_5                           5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_5_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_5_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_5_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_6                           6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_6_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_6_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_6_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_7                           7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_7_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_7_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_7_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_8                           8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_8_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_8_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_8_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_9                           9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_9_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_9_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_9_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_10                        10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_10_NOT_PENDING       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_10_PENDING           0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_RUNLIST_10_RESET             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE                           0x00002A70 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST(i)                   (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST__SIZE_1                   32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_NOT_PENDING       0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_PENDING           0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_RESET             0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_0                        0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_0_NOT_PENDING     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_0_PENDING         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_0_RESET           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_1                        1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_1_NOT_PENDING     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_1_PENDING         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_1_RESET           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_2                        2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_2_NOT_PENDING     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_2_PENDING         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_2_RESET           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_3                        3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_3_NOT_PENDING     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_3_PENDING         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_3_RESET           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_4                        4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_4_NOT_PENDING     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_4_PENDING         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_4_RESET           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_5                        5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_5_NOT_PENDING     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_5_PENDING         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_5_RESET           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_6                        6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_6_NOT_PENDING     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_6_PENDING         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_6_RESET           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_7                        7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_7_NOT_PENDING     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_7_PENDING         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_7_RESET           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_8                        8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_8_NOT_PENDING     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_8_PENDING         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_8_RESET           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_9                        9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_9_NOT_PENDING     0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_9_PENDING         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_9_RESET           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_10                     10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_10_NOT_PENDING    0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_10_PENDING        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_RUNLIST_10_RESET          0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET                                    0x00002A80 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST(i)                            (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST__SIZE_1                            32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_DISABLED                   0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_ENABLED                    0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_ENABLE                     0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_0                                 0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_0_DISABLED                 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_0_ENABLED                  0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_0_ENABLE                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_1                                 1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_1_DISABLED                 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_1_ENABLED                  0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_1_ENABLE                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_2                                 2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_2_DISABLED                 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_2_ENABLED                  0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_2_ENABLE                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_3                                 3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_3_DISABLED                 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_3_ENABLED                  0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_3_ENABLE                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_4                                 4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_4_DISABLED                 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_4_ENABLED                  0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_4_ENABLE                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_5                                 5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_5_DISABLED                 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_5_ENABLED                  0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_5_ENABLE                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_6                                 6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_6_DISABLED                 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_6_ENABLED                  0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_6_ENABLE                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_7                                 7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_7_DISABLED                 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_7_ENABLED                  0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_7_ENABLE                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_8                                 8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_8_DISABLED                 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_8_ENABLED                  0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_8_ENABLE                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_9                                 9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_9_DISABLED                 0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_9_ENABLED                  0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_9_ENABLE                   0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_10                              10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_10_DISABLED                0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_10_ENABLED                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_SET_RUNLIST_10_ENABLE                  0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR                                  0x00002A90 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST(i)                          (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST__SIZE_1                          32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_DISABLED                 0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_ENABLED                  0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_DISABLE                  0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_0                               0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_0_DISABLED               0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_0_ENABLED                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_0_ENABLE                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_1                               1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_1_DISABLED               0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_1_ENABLED                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_1_ENABLE                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_2                               2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_2_DISABLED               0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_2_ENABLED                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_2_ENABLE                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_3                               3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_3_DISABLED               0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_3_ENABLED                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_3_ENABLE                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_4                               4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_4_DISABLED               0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_4_ENABLED                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_4_ENABLE                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_5                               5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_5_DISABLED               0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_5_ENABLED                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_5_ENABLE                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_6                               6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_6_DISABLED               0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_6_ENABLED                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_6_ENABLE                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_7                               7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_7_DISABLED               0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_7_ENABLED                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_7_ENABLE                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_8                               8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_8_DISABLED               0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_8_ENABLED                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_8_ENABLE                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_9                               9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_9_DISABLED               0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_9_ENABLED                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_9_ENABLE                 0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_10                            10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_10_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_10_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_IDLE_EN_CLEAR_RUNLIST_10_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET                            0x00002AA0 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST(i)                    (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST__SIZE_1                    32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_DISABLED           0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_ENABLED            0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_ENABLE             0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_0                         0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_0_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_0_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_0_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_1                         1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_1_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_1_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_1_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_2                         2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_2_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_2_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_2_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_3                         3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_3_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_3_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_3_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_4                         4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_4_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_4_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_4_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_5                         5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_5_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_5_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_5_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_6                         6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_6_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_6_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_6_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_7                         7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_7_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_7_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_7_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_8                         8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_8_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_8_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_8_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_9                         9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_9_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_9_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_9_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_10                      10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_10_DISABLED        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_10_ENABLED         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_SET_RUNLIST_10_ENABLE          0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR                          0x00002AB0 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST(i)                  (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST__SIZE_1                  32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_DISABLED         0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_ENABLED          0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_DISABLE          0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_0                       0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_0_DISABLED       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_0_ENABLED        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_0_ENABLE         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_1                       1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_1_DISABLED       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_1_ENABLED        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_1_ENABLE         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_2                       2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_2_DISABLED       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_2_ENABLED        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_2_ENABLE         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_3                       3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_3_DISABLED       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_3_ENABLED        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_3_ENABLE         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_4                       4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_4_DISABLED       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_4_ENABLED        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_4_ENABLE         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_5                       5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_5_DISABLED       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_5_ENABLED        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_5_ENABLE         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_6                       6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_6_DISABLED       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_6_ENABLED        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_6_ENABLE         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_7                       7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_7_DISABLED       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_7_ENABLED        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_7_ENABLE         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_8                       8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_8_DISABLED       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_8_ENABLED        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_8_ENABLE         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_9                       9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_9_DISABLED       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_9_ENABLED        0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_9_ENABLE         0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_10                    10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_10_DISABLED      0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_10_ENABLED       0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_AND_ENG_IDLE_EN_CLEAR_RUNLIST_10_ENABLE        0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET                                 0x00002AC0 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST(i)                         (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST__SIZE_1                         32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_DISABLED                0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_ENABLED                 0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_ENABLE                  0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_0                              0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_0_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_0_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_0_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_1                              1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_1_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_1_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_1_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_2                              2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_2_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_2_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_2_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_3                              3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_3_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_3_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_3_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_4                              4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_4_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_4_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_4_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_5                              5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_5_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_5_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_5_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_6                              6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_6_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_6_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_6_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_7                              7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_7_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_7_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_7_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_8                              8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_8_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_8_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_8_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_9                              9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_9_DISABLED              0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_9_ENABLED               0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_9_ENABLE                0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_10                           10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_10_DISABLED             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_10_ENABLED              0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_SET_RUNLIST_10_ENABLE               0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR                               0x00002AD0 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST(i)                       (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST__SIZE_1                       32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_DISABLED              0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_ENABLED               0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_DISABLE               0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_0                            0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_0_DISABLED            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_0_ENABLED             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_0_ENABLE              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_1                            1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_1_DISABLED            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_1_ENABLED             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_1_ENABLE              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_2                            2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_2_DISABLED            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_2_ENABLED             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_2_ENABLE              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_3                            3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_3_DISABLED            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_3_ENABLED             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_3_ENABLE              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_4                            4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_4_DISABLED            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_4_ENABLED             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_4_ENABLE              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_5                            5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_5_DISABLED            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_5_ENABLED             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_5_ENABLE              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_6                            6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_6_DISABLED            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_6_ENABLED             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_6_ENABLE              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_7                            7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_7_DISABLED            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_7_ENABLED             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_7_ENABLE              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_8                            8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_8_DISABLED            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_8_ENABLED             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_8_ENABLE              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_9                            9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_9_DISABLED            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_9_ENABLED             0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_9_ENABLE              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_10                         10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_10_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_10_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_EN_CLEAR_RUNLIST_10_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET                              0x00002AE0 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST(i)                      (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST__SIZE_1                      32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_DISABLED             0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_ENABLED              0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_ENABLE               0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_0                           0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_0_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_0_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_0_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_1                           1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_1_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_1_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_1_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_2                           2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_2_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_2_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_2_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_3                           3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_3_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_3_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_3_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_4                           4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_4_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_4_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_4_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_5                           5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_5_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_5_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_5_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_6                           6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_6_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_6_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_6_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_7                           7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_7_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_7_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_7_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_8                           8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_8_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_8_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_8_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_9                           9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_9_DISABLED           0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_9_ENABLED            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_9_ENABLE             0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_10                        10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_10_DISABLED          0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_10_ENABLED           0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_SET_RUNLIST_10_ENABLE            0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR                            0x00002AF0 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST(i)                    (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST__SIZE_1                    32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_DISABLE            0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_ENABLED            0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_DISABLED           0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_0                         0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_0_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_0_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_0_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_1                         1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_1_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_1_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_1_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_2                         2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_2_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_2_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_2_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_3                         3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_3_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_3_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_3_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_4                         4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_4_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_4_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_4_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_5                         5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_5_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_5_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_5_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_6                         6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_6_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_6_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_6_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_7                         7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_7_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_7_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_7_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_8                         8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_8_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_8_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_8_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_9                         9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_9_DISABLED         0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_9_ENABLED          0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_9_ENABLE           0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_10                      10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_10_DISABLED        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_10_ENABLED         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_ACQUIRE_AND_ENG_IDLE_EN_CLEAR_RUNLIST_10_ENABLE          0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_SCHED_ERROR                        0x0000254C /* R--4R */
+#define NV_PFIFO_INTR_SCHED_ERROR_CODE                          7:0 /* R-EVF */
+#define NV_PFIFO_INTR_SCHED_ERROR_CODE_NO_ERROR          0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_SCHED_ERROR_CODE_RL_REQ_TIMEOUT    0x0000000c /* R---V */
+#define NV_PFIFO_INTR_SCHED_ERROR_CODE_RL_ACK_TIMEOUT    0x00000006 /* R---V */
+#define NV_PFIFO_INTR_SCHED_ERROR_CODE_RL_ACK_EXTRA      0x00000007 /* R---V */
+#define NV_PFIFO_INTR_SCHED_ERROR_CODE_RL_RDAT_TIMEOUT   0x00000008 /* R---V */
+#define NV_PFIFO_INTR_SCHED_ERROR_CODE_RL_RDAT_EXTRA     0x00000009 /* R---V */
+#define NV_PFIFO_INTR_SCHED_ERROR_CODE_BAD_TSG           0x00000020 /* R---V */
+#define NV_PFIFO_INTR_CHSW_ERROR                          0x0000256C /* R--4R */
+#define NV_PFIFO_INTR_CHSW_ERROR_CODE                            7:0 /* R-EVF */
+#define NV_PFIFO_INTR_CHSW_ERROR_CODE_NO_ERROR            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_CHSW_ERROR_CODE_REQ_TIMEOUT         0x00000001 /* R---V */
+#define NV_PFIFO_INTR_CHSW_ERROR_CODE_ACK_TIMEOUT         0x00000002 /* R---V */
+#define NV_PFIFO_INTR_CHSW_ERROR_CODE_ACK_EXTRA           0x00000003 /* R---V */
+#define NV_PFIFO_INTR_CHSW_ERROR_CODE_RDAT_TIMEOUT        0x00000004 /* R---V */
+#define NV_PFIFO_INTR_CHSW_ERROR_CODE_RDAT_EXTRA          0x00000005 /* R---V */
+#define NV_PFIFO_INTR_LB_ERROR                           0x0000258C /* R--4R */
+#define NV_PFIFO_INTR_LB_ERROR_CODE                             7:0 /* R-EVF */
+#define NV_PFIFO_INTR_LB_ERROR_CODE_NO_ERROR             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_LB_ERROR_CODE_REQ_TIMEOUT          0x00000002 /* R---V */
+#define NV_PFIFO_INTR_LB_ERROR_CODE_ACK_TIMEOUT          0x00000003 /* R---V */
+#define NV_PFIFO_INTR_LB_ERROR_CODE_ACK_EXTRA            0x00000004 /* R---V */
+#define NV_PFIFO_INTR_LB_ERROR_CODE_RDAT_TIMEOUT         0x00000005 /* R---V */
+#define NV_PFIFO_INTR_LB_ERROR_CODE_RDAT_EXTRA           0x00000006 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID                           0x000025A0 /* R--4R */
+#define NV_PFIFO_INTR_PBDMA_ID_0                                0:0 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_0_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_0_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_1                                1:1 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_1_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_1_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_2                                2:2 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_2_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_2_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_3                                3:3 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_3_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_3_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_4                                4:4 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_4_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_4_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_5                                5:5 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_5_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_5_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_6                                6:6 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_6_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_6_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_7                                7:7 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_7_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_7_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_8                                8:8 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_8_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_8_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_9                                9:9 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_9_NOT_PENDING             0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_9_PENDING                 0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_10                             10:10 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_10_NOT_PENDING            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_10_PENDING                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_11                             11:11 /* R-EVF */
+#define NV_PFIFO_INTR_PBDMA_ID_11_NOT_PENDING            0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_PBDMA_ID_11_PENDING                0x00000001 /* R---V */
+#define NV_PFIFO_INTR_PBDMA_ID_STATUS(i)                    (i):(i) /*       */
+#define NV_PFIFO_INTR_PBDMA_ID_STATUS__SIZE_1                      12 /*       */
+#define NV_PFIFO_INTR_PBDMA_ID_STATUS_NOT_PENDING        0x00000000 /*       */
+#define NV_PFIFO_INTR_PBDMA_ID_STATUS_PENDING            0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST                            0x00002A00 /* RW-4R */
+#define NV_PFIFO_INTR_RUNLIST_EVENT(i)                      (i):(i) /*       */
+#define NV_PFIFO_INTR_RUNLIST_EVENT__SIZE_1                      32 /*       */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_NOT_PENDING          0x00000000 /*       */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_PENDING              0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_RESET                0x00000001 /*       */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_0                           0:0 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_0_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_0_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_0_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_1                           1:1 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_1_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_1_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_1_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_2                           2:2 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_2_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_2_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_2_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_3                           3:3 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_3_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_3_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_3_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_4                           4:4 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_4_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_4_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_4_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_5                           5:5 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_5_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_5_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_5_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_6                           6:6 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_6_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_6_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_6_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_7                           7:7 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_7_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_7_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_7_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_8                           8:8 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_8_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_8_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_8_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_9                           9:9 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_9_NOT_PENDING        0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_9_PENDING            0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_9_RESET              0x00000001 /* -W--T */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_10                        10:10 /* RWEVF */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_10_NOT_PENDING       0x00000000 /* R-E-V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_10_PENDING           0x00000001 /* R---V */
+#define NV_PFIFO_INTR_RUNLIST_EVENT_10_RESET             0x00000001 /* -W--T */
+#define NV_PFIFO_ENG_CTXSW_TIMEOUT                       0x00002A0C /* RW-4R */
+#define NV_PFIFO_ENG_CTXSW_TIMEOUT_PERIOD                      30:0 /* RWIVF */
+#define NV_PFIFO_ENG_CTXSW_TIMEOUT_PERIOD_INIT           0x003fffff /* RWI-V */
+#define NV_PFIFO_ENG_CTXSW_TIMEOUT_PERIOD_MAX            0x7fffffff /* RW--V */
+#define NV_PFIFO_ENG_CTXSW_TIMEOUT_DETECTION                  31:31 /* RWIVF */
+#define NV_PFIFO_ENG_CTXSW_TIMEOUT_DETECTION_DISABLED    0x00000000 /* RW--V */
+#define NV_PFIFO_ENG_CTXSW_TIMEOUT_DETECTION_ENABLED     0x00000001 /* RWI-V */
+#define NV_PFIFO_CLEAR_FAULTED_TIMEOUT                    0x00002A14 /* RW-4R */
+#define NV_PFIFO_CLEAR_FAULTED_TIMEOUT_PERIOD                   29:0 /* RWIVF */
+#define NV_PFIFO_CLEAR_FAULTED_TIMEOUT_PERIOD_INIT        0x000003ff /* RWI-V */
+#define NV_PFIFO_CLEAR_FAULTED_TIMEOUT_PERIOD_MAX         0x3fffffff /* RW--V */
+#define NV_PFIFO_CLEAR_FAULTED_TIMEOUT_DETECTION               31:31 /* RWIVF */
+#define NV_PFIFO_CLEAR_FAULTED_TIMEOUT_DETECTION_DISABLED 0x00000000 /* RW--V */
+#define NV_PFIFO_CLEAR_FAULTED_TIMEOUT_DETECTION_ENABLED  0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG                                  0x000026E0 /* RW-4R */
+#define NV_PFIFO_BLKCG_IDLE_CG_DLY_CNT                         5:0 /* RWIVF */
+#define NV_PFIFO_BLKCG_IDLE_CG_DLY_CNT_INIT             0x00000000 /* RWI-V */
+#define NV_PFIFO_BLKCG_IDLE_CG_DLY_CNT__PROD            0x00000002 /* RW--V */
+#define NV_PFIFO_BLKCG_IDLE_CG_EN                              6:6 /* RWIVF */
+#define NV_PFIFO_BLKCG_IDLE_CG_EN_ENABLED               0x00000001 /* RW--V */
+#define NV_PFIFO_BLKCG_IDLE_CG_EN_DISABLED              0x00000000 /* RWI-V */
+#define NV_PFIFO_BLKCG_IDLE_CG_EN__PROD                 0x00000001 /* RW--V */
+#define NV_PFIFO_BLKCG_STALL_CG_EN                           14:14 /* RWIVF */
+#define NV_PFIFO_BLKCG_STALL_CG_EN_ENABLED              0x00000001 /* RW--V */
+#define NV_PFIFO_BLKCG_STALL_CG_EN_DISABLED             0x00000000 /* RWI-V */
+#define NV_PFIFO_BLKCG_STALL_CG_EN__PROD                0x00000001 /* RW--V */
+#define NV_PFIFO_BLKCG_WAKEUP_DLY_CNT                        19:16 /* RWIVF */
+#define NV_PFIFO_BLKCG_WAKEUP_DLY_CNT_INIT              0x00000000 /* RWI-V */
+#define NV_PFIFO_BLKCG_WAKEUP_DLY_CNT__PROD             0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1                                 0x000026EC /* RW-4R */
+#define NV_PFIFO_BLKCG1_MONITOR_CG_EN                          0:0 /* RWIVF */
+#define NV_PFIFO_BLKCG1_MONITOR_CG_EN_ENABLED           0x00000001 /* RW--V */
+#define NV_PFIFO_BLKCG1_MONITOR_CG_EN_DISABLED          0x00000000 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG                                  16:1 /*       */
+#define NV_PFIFO_BLKCG1_SLCG_ENABLED                    0x00000000 /*       */
+#define NV_PFIFO_BLKCG1_SLCG_DISABLED                   0x0000FFFF /*       */
+#define NV_PFIFO_BLKCG1_SLCG__PROD                      0x00000000 /*       */
+#define NV_PFIFO_BLKCG1_SLCG_RLP                               1:1 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_RLP_ENABLED                0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_RLP_DISABLED               0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_RLP__PROD                  0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_CPUQ_RSP                          2:2 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_CPUQ_RSP_ENABLED           0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_CPUQ_RSP_DISABLED          0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_CPUQ_RSP__PROD             0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_EVH                               3:3 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_EVH_ENABLED                0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_EVH_DISABLED               0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_EVH__PROD                  0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PMC                               4:4 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_PMC_ENABLED                0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PMC_DISABLED               0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_PMC__PROD                  0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PRIV_RING                         6:6 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_PRIV_RING_ENABLED          0x00000000 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_PRIV_RING_DISABLED         0x00000001 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PRIV_RING__PROD            0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_EISM                              7:7 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_EISM_ENABLED               0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_EISM_DISABLED              0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_EISM__PROD                 0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_LB                                8:8 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_LB_ENABLED                 0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_LB_DISABLED                0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_LB__PROD                   0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_CTL                         9:9 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_CTL_ENABLED          0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_CTL_DISABLED         0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_CTL__PROD            0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_GP                        10:10 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_GP_ENABLED           0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_GP_DISABLED          0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_GP__PROD             0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_PB                        11:11 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_PB_ENABLED           0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_PB_DISABLED          0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_PBDMA_PB__PROD             0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_TMR                             12:12 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_TMR_ENABLED                0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_TMR_DISABLED               0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_TMR__PROD                  0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PRI                             13:13 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_PRI_ENABLED                0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_PRI_DISABLED               0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_PRI__PROD                  0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_CHSW                            14:14 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_CHSW_ENABLED               0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_CHSW_DISABLED              0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_CHSW__PROD                 0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_XBAR                            15:15 /* RWIVF */
+#define NV_PFIFO_BLKCG1_SLCG_XBAR_ENABLED               0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_XBAR_DISABLED              0x00000001 /* RWI-V */
+#define NV_PFIFO_BLKCG1_SLCG_XBAR__PROD                 0x00000000 /* RW--V */
+#define NV_PFIFO_BLKCG1_SLCG_UNUSED                           16:16 /*      */
+#define NV_PFIFO_BLKCG1_SLCG_UNUSED_ENABLED              0x00000000 /*      */
+#define NV_PFIFO_BLKCG1_SLCG_UNUSED_DISABLED             0x00000001 /*      */
+#define NV_PFIFO_BLKCG1_SLCG_UNUSED__PROD                0x00000000 /*      */
+#define NV_PFIFO_SCHED_DISABLE                                     0x00002630 /* RW-4R */
+#define NV_PFIFO_SCHED_DISABLE_RUNLIST(i)                             (i):(i) /*       */
+#define NV_PFIFO_SCHED_DISABLE_RUNLIST__SIZE_1           11 /*       */
+#define NV_PFIFO_SCHED_DISABLE_FALSE                               0x00000000 /*       */
+#define NV_PFIFO_SCHED_DISABLE_TRUE                                0x00000001 /*       */
+#define NV_PFIFO_SCHED_DISABLE_RUNLIST_MASK         10:0 /* RWEVF */
+#define NV_PFIFO_SCHED_DISABLE_RUNLIST_MASK_INIT                            0 /* RWE-V */
+#define NV_PFIFO_PREEMPT                                 0x00002634 /* RW-4R */
+#define NV_PFIFO_PREEMPT_ID                                    11:0 /*       */
+#define NV_PFIFO_PREEMPT_ID_NULL                         0x00000000 /*       */
+#define NV_PFIFO_PREEMPT_ID_HW                   11:0 /* RWEUF */
+#define NV_PFIFO_PREEMPT_ID_HW_NULL                      0x00000000 /* RWE-V */
+#define NV_PFIFO_PREEMPT_PENDING                              20:20 /* R-EVF */
+#define NV_PFIFO_PREEMPT_PENDING_FALSE                   0x00000000 /* R-E-V */
+#define NV_PFIFO_PREEMPT_PENDING_TRUE                    0x00000001 /* R---V */
+#define NV_PFIFO_PREEMPT_TYPE                                 25:24 /* RWEVF */
+#define NV_PFIFO_PREEMPT_TYPE_CHANNEL                    0x00000000 /* RWE-V */
+#define NV_PFIFO_PREEMPT_TYPE_TSG                        0x00000001 /* RW--V */
+#define NV_PFIFO_RUNLIST_PREEMPT                           0x00002638 /* RW-4R */
+#define NV_PFIFO_RUNLIST_PREEMPT_RUNLIST(i)                   (i):(i) /*       */
+#define NV_PFIFO_RUNLIST_PREEMPT_RUNLIST__SIZE_1                   32 /*       */
+#define NV_PFIFO_RUNLIST_PREEMPT_PENDING                   0x00000001 /*       */
+#define NV_PFIFO_RUNLIST_PREEMPT_DONE                      0x00000000 /*       */
+#define NV_PFIFO_RUNLIST_PREEMPT_RUNLISTS  11-1:0 /* RWEUF */
+#define NV_PFIFO_RUNLIST_PREEMPT_RUNLISTS_INIT           0x00000000 /* RWE-V */
+#define NV_PFIFO_SCHED_STATUS                            0x0000263C /* R--4R */
+#define NV_PFIFO_SCHED_STATUS_CHSW                              1:1 /* R-EVF */
+#define NV_PFIFO_SCHED_STATUS_CHSW_NOT_IN_PROGRESS       0x00000000 /* R-E-V */
+#define NV_PFIFO_SCHED_STATUS_CHSW_IN_PROGRESS           0x00000001 /* R---V */
+#define NV_PFIFO_SCHED_STATUS_RUNLIST_FETCH                     2:2 /* R-EVF */
+#define NV_PFIFO_SCHED_STATUS_RUNLIST_FETCH_IDLE         0x00000000 /* R-E-V */
+#define NV_PFIFO_SCHED_STATUS_RUNLIST_FETCH_BUSY         0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS(i)                (0x00002640+(i)*8) /* R--4A */
+#define NV_PFIFO_ENGINE_STATUS__SIZE_1          13 /*       */
+#define NV_PFIFO_ENGINE_STATUS_ID                              11:0 /*       */
+#define NV_PFIFO_ENGINE_STATUS_ID_ZERO                   0x00000000 /*       */
+#define NV_PFIFO_ENGINE_STATUS_ID_HW             11:0 /* R-XUF */
+#define NV_PFIFO_ENGINE_STATUS_ID_HW_ZERO                0x00000000 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_ID_TYPE                        12:12 /* R-XVF */
+#define NV_PFIFO_ENGINE_STATUS_ID_TYPE_CHID              0x00000000 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_ID_TYPE_TSGID             0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_CTX_STATUS                     15:13 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_CTX_STATUS_INVALID        0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_CTX_STATUS_VALID          0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_CTX_STATUS_CTXSW_LOAD     0x00000005 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_CTX_STATUS_CTXSW_SAVE     0x00000006 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_CTX_STATUS_CTXSW_SWITCH   0x00000007 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_ID                        27:16 /*       */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_ID_ZERO              0x00000000 /*       */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_ID_HW                     27:16 /* R-XUF */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_ID_HW_ZERO           0x00000000 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_ID_TYPE                   28:28 /* R-XVF */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_ID_TYPE_CHID         0x00000000 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_ID_TYPE_TSGID        0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_ENG_RELOAD                     29:29 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_ENG_RELOAD_FALSE          0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_ENG_RELOAD_TRUE           0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_FAULTED                        30:30 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_FAULTED_FALSE             0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_FAULTED_TRUE              0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_ENGINE                         31:31 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_ENGINE_IDLE               0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_ENGINE_BUSY               0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_CTXSW                          15:15 /*       */
+#define NV_PFIFO_ENGINE_STATUS_CTXSW_NOT_IN_PROGRESS     0x00000000 /*       */
+#define NV_PFIFO_ENGINE_STATUS_CTXSW_IN_PROGRESS         0x00000001 /*       */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG(i)              (0x00002644+(i)*8) /* R--4A */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG__SIZE_1        13 /*       */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_IF_EN                          0:0 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_IF_EN_DISABLED          0x00000000 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_IF_EN_ENABLED           0x00000001 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_INTR                           4:4 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_INTR_FALSE              0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_INTR_TRUE               0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE0_NO_CREDITS               8:8 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE0_NO_CREDITS_FALSE  0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE0_NO_CREDITS_TRUE   0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE0_WFI                    12:12 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE0_WFI_FALSE         0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE0_WFI_TRUE          0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE1_NO_CREDITS             16:16 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE1_NO_CREDITS_FALSE  0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE1_NO_CREDITS_TRUE   0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE1_WFI                    20:20 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE1_WFI_FALSE         0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_DEBUG_PIPE1_WFI_TRUE          0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_INST(i)                 (0x00003100+(i)*4) /* R--4A */
+#define NV_PFIFO_ENGINE_STATUS_INST__SIZE_1           13 /*       */
+#define NV_PFIFO_ENGINE_STATUS_INST_PTR                              27:0 /* R-XUF */
+#define NV_PFIFO_ENGINE_STATUS_INST_PTR_ZERO                   0x00000000 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_INST_TARGET                          29:28 /* R-XUF */
+#define NV_PFIFO_ENGINE_STATUS_INST_TARGET_VID_MEM             0x00000000 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_INST_TARGET_SYS_MEM_COHERENT    0x00000002 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_INST_TARGET_SYS_MEM_NONCOHERENT 0x00000003 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_INST_VALID                           31:31 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_INST_VALID_FALSE                0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_INST_VALID_TRUE                 0x00000001 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST(i)                 (0x00003000+(i)*4) /* R--4A */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST__SIZE_1           13 /*       */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST_PTR                              27:0 /* R-XUF */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST_PTR_ZERO                   0x00000000 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST_TARGET                          29:28 /* R-XUF */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST_TARGET_VID_MEM             0x00000000 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST_TARGET_SYS_MEM_COHERENT    0x00000002 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST_TARGET_SYS_MEM_NONCOHERENT 0x00000003 /* R---V */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST_VALID                           31:31 /* R-EVF */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST_VALID_FALSE                0x00000000 /* R-E-V */
+#define NV_PFIFO_ENGINE_STATUS_NEXT_INST_VALID_TRUE                 0x00000001 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS(i)                 (0x00003080+(i)*4) /* R--4A */
+#define NV_PFIFO_PBDMA_STATUS__SIZE_1             12 /*       */
+#define NV_PFIFO_PBDMA_STATUS_ID                               11:0 /*       */
+#define NV_PFIFO_PBDMA_STATUS_ID_ZERO                    0x00000000 /*       */
+#define NV_PFIFO_PBDMA_STATUS_ID_HW              11:0 /* R-XUF */
+#define NV_PFIFO_PBDMA_STATUS_ID_HW_ZERO                 0x00000000 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_ID_TYPE                         12:12 /* R-XVF */
+#define NV_PFIFO_PBDMA_STATUS_ID_TYPE_CHID               0x00000000 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_ID_TYPE_TSGID              0x00000001 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_CHAN_STATUS                     15:13 /* R-EVF */
+#define NV_PFIFO_PBDMA_STATUS_CHAN_STATUS_INVALID        0x00000000 /* R-E-V */
+#define NV_PFIFO_PBDMA_STATUS_CHAN_STATUS_VALID          0x00000001 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_CHAN_STATUS_CHSW_LOAD      0x00000005 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_CHAN_STATUS_CHSW_SAVE      0x00000006 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_CHAN_STATUS_CHSW_SWITCH    0x00000007 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_NEXT_ID                         27:16 /*       */
+#define NV_PFIFO_PBDMA_STATUS_NEXT_ID_ZERO               0x00000000 /*       */
+#define NV_PFIFO_PBDMA_STATUS_NEXT_ID_HW                      27:16 /* R-XUF */
+#define NV_PFIFO_PBDMA_STATUS_NEXT_ID_HW_ZERO            0x00000000 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_NEXT_ID_TYPE                    28:28 /* R-XVF */
+#define NV_PFIFO_PBDMA_STATUS_NEXT_ID_TYPE_CHID          0x00000000 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_NEXT_ID_TYPE_TSGID         0x00000001 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_CHSW                            15:15 /*       */
+#define NV_PFIFO_PBDMA_STATUS_CHSW_NOT_IN_PROGRESS       0x00000000 /*       */
+#define NV_PFIFO_PBDMA_STATUS_CHSW_IN_PROGRESS           0x00000001 /*       */
+#define NV_PFIFO_PBDMA_STATUS_INST(i)                 (0x00002790+(i)*4) /* R--4A */
+#define NV_PFIFO_PBDMA_STATUS_INST__SIZE_1             12 /*       */
+#define NV_PFIFO_PBDMA_STATUS_INST_PTR                              27:0 /* R-XUF */
+#define NV_PFIFO_PBDMA_STATUS_INST_PTR_ZERO                   0x00000000 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_INST_TARGET                          29:28 /* R-XUF */
+#define NV_PFIFO_PBDMA_STATUS_INST_TARGET_VID_MEM             0x00000000 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_INST_TARGET_SYS_MEM_COHERENT    0x00000002 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_INST_TARGET_SYS_MEM_NONCOHERENT 0x00000003 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_INST_VALID                           31:31 /* R-EVF */
+#define NV_PFIFO_PBDMA_STATUS_INST_VALID_FALSE                0x00000000 /* R-E-V */
+#define NV_PFIFO_PBDMA_STATUS_INST_VALID_TRUE                 0x00000001 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_USERD(i)                       (0x00002800+(i)*4) /* R--4A */
+#define NV_PFIFO_PBDMA_STATUS_USERD__SIZE_1                   12 /*       */
+#define NV_PFIFO_PBDMA_STATUS_USERD_TARGET                                  1:0 /* R--UF */
+#define NV_PFIFO_PBDMA_STATUS_USERD_TARGET_VID_MEM                   0x00000000 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_USERD_TARGET_VID_MEM_NVLINK_COHERENT   0x00000001 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_USERD_TARGET_SYS_MEM_COHERENT          0x00000002 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_USERD_TARGET_SYS_MEM_NONCOHERENT       0x00000003 /* R---V */
+#define NV_PFIFO_PBDMA_STATUS_USERD_ADDR                                   31:8 /* R--UF */
+#define NV_PFIFO_PBDMA_STATUS_USERD_HI(i)        (0x00002880+(i)*4) /* R--4A */
+#define NV_PFIFO_PBDMA_STATUS_USERD_HI__SIZE_1    12 /*       */
+#define NV_PFIFO_PBDMA_STATUS_USERD_HI_ADDR                     7:0 /* R--UF */
+
+Channel Teardown Sequence
+===============================================================================
+
+     This section describes the sequence software (specifically RM) can use to
+tear down a channel for robust channels (RC) recovery or in the case of a fault.
+
+     In the case of a fault, Host does not guarantee that a PBDMA has saved out
+prior to RM receiving notification of the fault.  RM must determine which
+context has faulted by processing the fault buffer as described in the
+NV_PFB_PRI_MMU_FAULT_BUFFER_* register documentation in pri_mmu_hub.ref and in
+the fault buffer NV_MMU_FAULT_BUF_ENTRY documentation in dev_mmu_fault.ref.
+This context can then be torn down using the following procedure.
+     Note when a PBDMA fault or CE fault occurs, the PBDMA will save out
+automatically.  The TSG related to the context in which the fault occurred will
+not be scheduled again until the fault is handled.
+     In the case of some other issue requiring the engine to be reset, the TSG
+will need to be manually preempted.
+     In all cases, a PBDMA interrupt may occur prior to the PBDMA being able to
+switch out.  SW must handle these interrupts according to the relevant handling
+procedure before the PBDMA preempt can complete.
+
+Context TSG tear-down procedure:
+
+  1. Disable scheduling for the engine's runlist via NV_PFIFO_SCHED_DISABLE.
+     This enables SW to determine whether a context has hung later in the
+     process: otherwise, ongoing work on the runlist may keep ENG_STATUS from
+     reaching a steady state.
+
+  2. Disable all channels in the TSG being torn down or submit a new runlist
+     that does not contain the TSG.  This is to prevent the TSG from being
+     rescheduled once scheduling is re-enabled in step 6.
+
+  3. Initiate a preempt of the engine by writing the bit associated with its
+     runlist to NV_PFIFO_RUNLIST_PREEMPT.  This allows us to begin the preempt
+     process prior to doing the slow register reads needed to determine whether
+     the context has hit any interrupts or is hung.  Do not poll
+     NV_PFIFO_RUNLIST_PREEMPT for the preempt to complete.
+
+  4. Check for interrupts or hangs while waiting for the preempt to complete.
+     During the below polling, any stalling interrupts relating to the runlist
+     must be detected and handled in order for the preemption to complete.  SW
+     may opt to simply reset the engine immediately, or perform the following
+     sub-steps to more cleanly tear down the context:
+
+    a. Wait for PBDMA preempt completion: For each PBDMA which serves the
+       runlist, poll NV_PFIFO_PBDMA_STATUS(pbdma_id) to reach CHAN_STATUS
+       INVALID, indicating the no further work will run on the PBDMA during the
+       tear-down sequence.  Interleaved with the polling, PBDMA interrupts must
+       be serviced as they arise: such an interrupt can prevent the PBDMA from
+       completing its channel save.
+
+    b. Wait for engine context preempt completion: For each engine served by the
+       runlist, read NV_PFIFO_ENGINE_STATUS(engine_id) to verify the channel/TSG
+       has saved off the engine, or tell if the CTXSW is hung, via the
+       CTX_STATUS, ID, and NEXT_ID fields.  Take action based on the following
+       values for the CTX_STATUS field:
+
+      i. CTX_STATUS_SWITCH: Engine save hasn't started yet, continue to poll
+         (repeat step 4b).
+
+      ii. CTX_STATUS_INVALID: The engine context has switched off.  The
+         preemption step for this engine is complete.
+
+      iii. CTX_STATUS_VALID or CTX_STATUS_CTXSW_SAVE: check the ID field:
+        * If ID matches the TSG for the context being torn down, the engine
+          reset procedure can be performed (see step 5), or SW can continue
+          waiting by repeating step 4b.
+        * If ID does NOT match, then skip engine reset (skip step 5) for this
+          engine.  The context isn't running on the engine.
+
+      iv. CTX_STATUS_LOAD: check the NEXT_ID field:
+        * If NEXT_ID matches the TSG of the context being torn down, the engine
+          is loading the context and reset (see step 5) can be performed
+          immediately or after a delay to allow the context a chance to load and
+          be saved off.
+        * If NEXT_ID does not match the TSG ID or CHID then the context is no
+          longer on the engine.  Skip engine reset (skip step 5) for this
+          engine.
+
+       SW may alternatively wait for the CTX_STATUS to reach INVALID, but this
+       may take longer if an unrelated context is currently on the engine or
+       being switched to.
+
+  5. If a reset is needed as determined by step 4:
+
+    a. Halt the memory interface for the engine (as per the relevant engine
+       procedure).
+
+    b. Reset the engine via NV_PMC_ENABLE.
+
+    c. Take the engine out of reset and re-init the engine (as per the relevant
+       engine procedure)
+
+  6. Re-enable scheduling for the engine's runlist via NV_PFIFO_SCHED_ENABLE.
+
+After this sequence, resources for the channels in the TSG may be reclaimed.
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:

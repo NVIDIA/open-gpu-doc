@@ -1,0 +1,405 @@
+Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_MEMORY                             0xFFFFFFFF:0x00000000 /* RW--D */
+#define NV_IO                                 0xFFFFFFFF:0x00000000 /* RW--D */
+#define NV_EXPROM                             0x0007FFFF:0x00000000 /* R---D */
+#define NV_SPACE                              0x01FFFFFF:0x00000000 /* RW--D */
+#define NV_RSPACE                             0x00FFFFFF:0x00000000 /* RW--D */
+#define NV_MSPACE                             0x1FFFFFFF:0x00000000 /* RW--D */
+#define NV_ISPACE                             0x01FFFFFF:0x00000000 /* RW--D */
+#define NV_IOBAR                              0x0000007F:0x00000000 /* RW--D */
+#define NV_IFB                                0x00060FFF:0x00060000 /* RW--D */
+#define NV_PRMIO                              0x00007FFF:0x00007000 /* RW--D */
+#define NV_PBUS                               0x00001FFF:0x00001000 /* RW--D */
+#define NV_PBUS_SW_SCRATCH(i)                     (0x00001400+(i)*4) /* RW-4A */
+#define NV_PBUS_SW_SCRATCH__SIZE_1                                64 /*       */
+#define NV_PBUS_SW_SCRATCH_FIELD                                31:0 /* RWIVF */
+#define NV_PBUS_SW_SCRATCH_FIELD_INIT                     0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_0                                   0x00001100 /* RW-4R */
+#define NV_PBUS_INTR_0_PRI_SQUASH                               1:1 /* RWIVF */
+#define NV_PBUS_INTR_0_PRI_SQUASH_NOT_PENDING            0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_PRI_SQUASH_PENDING                0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_PRI_SQUASH_RESET                  0x00000001 /* -W--C */
+#define NV_PBUS_INTR_0_PRI_FECSERR                              2:2 /* RWIVF */
+#define NV_PBUS_INTR_0_PRI_FECSERR_NOT_PENDING           0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_PRI_FECSERR_PENDING               0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_PRI_FECSERR_RESET                 0x00000001 /* -W--C */
+#define NV_PBUS_INTR_0_PRI_TIMEOUT                              3:3 /* RWIVF */
+#define NV_PBUS_INTR_0_PRI_TIMEOUT_NOT_PENDING           0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_PRI_TIMEOUT_PENDING               0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_PRI_TIMEOUT_RESET                 0x00000001 /* -W--C */
+#define NV_PBUS_INTR_0_FB_REQ_TIMEOUT                           4:4 /* RWIVF */
+#define NV_PBUS_INTR_0_FB_REQ_TIMEOUT_NOT_PENDING        0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_FB_REQ_TIMEOUT_PENDING            0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_FB_REQ_TIMEOUT_RESET              0x00000001 /* -W--C */
+#define NV_PBUS_INTR_0_FB_ACK_TIMEOUT                           5:5 /* RWIVF */
+#define NV_PBUS_INTR_0_FB_ACK_TIMEOUT_NOT_PENDING        0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_FB_ACK_TIMEOUT_PENDING            0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_FB_ACK_TIMEOUT_RESET              0x00000001 /* -W--C */
+#define NV_PBUS_INTR_0_FB_ACK_EXTRA                             6:6 /* RWIVF */
+#define NV_PBUS_INTR_0_FB_ACK_EXTRA_NOT_PENDING          0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_FB_ACK_EXTRA_PENDING              0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_FB_ACK_EXTRA_RESET                0x00000001 /* -W--C */
+#define NV_PBUS_INTR_0_FB_RDATA_TIMEOUT                         7:7 /* RWIVF */
+#define NV_PBUS_INTR_0_FB_RDATA_TIMEOUT_NOT_PENDING      0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_FB_RDATA_TIMEOUT_PENDING          0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_FB_RDATA_TIMEOUT_RESET            0x00000001 /* -W--C */
+#define NV_PBUS_INTR_0_FB_RDATA_EXTRA                           8:8 /* RWIVF */
+#define NV_PBUS_INTR_0_FB_RDATA_EXTRA_NOT_PENDING        0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_FB_RDATA_EXTRA_PENDING            0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_FB_RDATA_EXTRA_RESET              0x00000001 /* -W--C */
+#define NV_PBUS_INTR_0_SW                                     26:26 /* RWIVF */
+#define NV_PBUS_INTR_0_SW_NOT_PENDING                    0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_SW_PENDING                        0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_SW_RESET                          0x00000001 /* -W--C */
+#define NV_PBUS_INTR_0_POSTED_DEADLOCK_TIMEOUT                  27:27 /* RWIVF */
+#define NV_PBUS_INTR_0_POSTED_DEADLOCK_TIMEOUT_NOT_PENDING 0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_POSTED_DEADLOCK_TIMEOUT_PENDING     0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_POSTED_DEADLOCK_TIMEOUT_RESET       0x00000001 /* -W--C */
+#define NV_PBUS_INTR_0_ACCESS_TIMEOUT                         31:31 /* RWIVF */
+#define NV_PBUS_INTR_0_ACCESS_TIMEOUT_NOT_PENDING        0x00000000 /* R-I-V */
+#define NV_PBUS_INTR_0_ACCESS_TIMEOUT_PENDING            0x00000001 /* R---V */
+#define NV_PBUS_INTR_0_ACCESS_TIMEOUT_RESET              0x00000001 /* -W--C */
+#define NV_PBUS_INTR_EN_0                                0x00001140 /* RW-4R */
+#define NV_PBUS_INTR_EN_0_PRI_SQUASH                            1:1 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_PRI_SQUASH_DISABLED            0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_PRI_SQUASH_ENABLED             0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_0_PRI_FECSERR                           2:2 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_PRI_FECSERR_DISABLED           0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_PRI_FECSERR_ENABLED            0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_0_PRI_TIMEOUT                           3:3 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_PRI_TIMEOUT_DISABLED           0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_PRI_TIMEOUT_ENABLED            0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_0_FB_REQ_TIMEOUT                        4:4 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_FB_REQ_TIMEOUT_DISABLED        0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_FB_REQ_TIMEOUT_ENABLED         0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_0_FB_ACK_TIMEOUT                        5:5 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_FB_ACK_TIMEOUT_DISABLED        0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_FB_ACK_TIMEOUT_ENABLED         0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_0_FB_ACK_EXTRA                          6:6 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_FB_ACK_EXTRA_DISABLED          0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_FB_ACK_EXTRA_ENABLED           0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_0_FB_RDATA_TIMEOUT                      7:7 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_FB_RDATA_TIMEOUT_DISABLED      0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_FB_RDATA_TIMEOUT_ENABLED       0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_0_FB_RDATA_EXTRA                        8:8 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_FB_RDATA_EXTRA_DISABLED        0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_FB_RDATA_EXTRA_ENABLED         0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_0_SW                                  26:26 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_SW_DISABLED                    0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_SW_ENABLED                     0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_0_POSTED_DEADLOCK_TIMEOUT                27:27 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_POSTED_DEADLOCK_TIMEOUT_DISABLED  0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_POSTED_DEADLOCK_TIMEOUT_ENABLED   0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_0_ACCESS_TIMEOUT                      31:31 /* RWIVF */
+#define NV_PBUS_INTR_EN_0_ACCESS_TIMEOUT_DISABLED        0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_0_ACCESS_TIMEOUT_ENABLED         0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1                                0x00001144 /* RW-4R */
+#define NV_PBUS_INTR_EN_1_PRI_SQUASH                            1:1 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_PRI_SQUASH_DISABLED            0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_PRI_SQUASH_ENABLED             0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1_PRI_FECSERR                           2:2 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_PRI_FECSERR_DISABLED           0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_PRI_FECSERR_ENABLED            0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1_PRI_TIMEOUT                           3:3 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_PRI_TIMEOUT_DISABLED           0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_PRI_TIMEOUT_ENABLED            0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1_FB_REQ_TIMEOUT                        4:4 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_FB_REQ_TIMEOUT_DISABLED        0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_FB_REQ_TIMEOUT_ENABLED         0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1_FB_ACK_TIMEOUT                        5:5 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_FB_ACK_TIMEOUT_DISABLED        0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_FB_ACK_TIMEOUT_ENABLED         0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1_FB_ACK_EXTRA                          6:6 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_FB_ACK_EXTRA_DISABLED          0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_FB_ACK_EXTRA_ENABLED           0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1_FB_RDATA_TIMEOUT                      7:7 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_FB_RDATA_TIMEOUT_DISABLED      0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_FB_RDATA_TIMEOUT_ENABLED       0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1_FB_RDATA_EXTRA                        8:8 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_FB_RDATA_EXTRA_DISABLED        0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_FB_RDATA_EXTRA_ENABLED         0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1_SW                                  26:26 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_SW_DISABLED                    0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_SW_ENABLED                     0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1_POSTED_DEADLOCK_TIMEOUT                27:27 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_POSTED_DEADLOCK_TIMEOUT_DISABLED  0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_POSTED_DEADLOCK_TIMEOUT_ENABLED   0x00000001 /* RW--V */
+#define NV_PBUS_INTR_EN_1_ACCESS_TIMEOUT                      31:31 /* RWIVF */
+#define NV_PBUS_INTR_EN_1_ACCESS_TIMEOUT_DISABLED        0x00000000 /* RWI-V */
+#define NV_PBUS_INTR_EN_1_ACCESS_TIMEOUT_ENABLED         0x00000001 /* RW--V */
+#define NV_PBUS_SW_INTR_0                                0x00001150 /* -W-4R */
+#define NV_PBUS_SW_INTR_0_SET                                   0:0 /* -W-VF */
+#define NV_PBUS_SW_INTR_0_SET_PENDING                    0x00000001 /* -W--V */
+#define NV_PBUS_SW_INTR_1                                0x00001154 /* RW-4R */
+#define NV_PBUS_SW_INTR_1_SCRATCH                              31:0 /* RWIVF */
+#define NV_PBUS_SW_INTR_1_SCRATCH_DATA                   0x00000000 /* RWI-V */
+#define NV_PBUS_SW_INTR_2                                0x00001158 /* RW-4R */
+#define NV_PBUS_SW_INTR_2_SCRATCH                              31:0 /* RWIVF */
+#define NV_PBUS_SW_INTR_2_SCRATCH_DATA                   0x00000000 /* RWI-V */
+#define NV_PBUS_SW_INTR_3                                0x0000115C /* RW-4R */
+#define NV_PBUS_SW_INTR_3_SCRATCH                              31:0 /* RWIVF */
+#define NV_PBUS_SW_INTR_3_SCRATCH_FLAG                   0x00000000 /* RWI-V */
+#define NV_PBUS_SW_INTR_4                                0x00001160 /* RW-4R */
+#define NV_PBUS_SW_INTR_4_SCRATCH                              31:0 /* RWIVF */
+#define NV_PBUS_SW_INTR_4_SCRATCH_FLAG                   0x00000000 /* RWI-V */
+#define NV_PBUS_BAR0_WINDOW                              0x00001700 /* RW-4R */
+#define NV_PBUS_BAR0_WINDOW_BASE                               23:0 /* RWIUF */
+#define NV_PBUS_BAR0_WINDOW_BASE_0                       0x00000000 /* RWI-V */
+#define NV_PBUS_BAR0_WINDOW_TARGET                            25:24 /* RWIUF */
+#define NV_PBUS_BAR0_WINDOW_TARGET_VID_MEM               0x00000000 /* RWI-V */
+#define NV_PBUS_BAR0_WINDOW_TARGET_SYS_MEM_COHERENT      0x00000002 /* RW--V */
+#define NV_PBUS_BAR0_WINDOW_TARGET_SYS_MEM_NONCOHERENT   0x00000003 /* RW--V */
+#define NV_PBUS_BAR0_WINDOW_BASE_SHIFT                           16 /*       */
+#define NV_PBUS_BAR1_BLOCK                               0x00001704 /* RW-4R */
+#define NV_PBUS_BAR1_BLOCK_MAP                                 29:0 /*       */
+#define NV_PBUS_BAR1_BLOCK_PTR                                 27:0 /* RWIUF */
+#define NV_PBUS_BAR1_BLOCK_PTR_0                         0x00000000 /* RWI-V */
+#define NV_PBUS_BAR1_BLOCK_TARGET                             29:28 /* RWIUF */
+#define NV_PBUS_BAR1_BLOCK_TARGET_VID_MEM                0x00000000 /* RWI-V */
+#define NV_PBUS_BAR1_BLOCK_TARGET_SYS_MEM_COHERENT       0x00000002 /* RW--V */
+#define NV_PBUS_BAR1_BLOCK_TARGET_SYS_MEM_NONCOHERENT    0x00000003 /* RW--V */
+#define NV_PBUS_BAR1_BLOCK_MODE                               31:31 /* RWIUF */
+#define NV_PBUS_BAR1_BLOCK_MODE_PHYSICAL                 0x00000000 /* RWI-V */
+#define NV_PBUS_BAR1_BLOCK_MODE_VIRTUAL                  0x00000001 /* RW--V */
+#define NV_PBUS_BAR1_BLOCK_PTR_SHIFT                             12 /*       */
+#define NV_PBUS_BIND_STATUS                              0x00001710 /* R--4R */
+#define NV_PBUS_BIND_STATUS_BAR1_PENDING                        0:0 /* R-IUF */
+#define NV_PBUS_BIND_STATUS_BAR1_PENDING_EMPTY           0x00000000 /* R-I-V */
+#define NV_PBUS_BIND_STATUS_BAR1_PENDING_BUSY            0x00000001 /* R---V */
+#define NV_PBUS_BIND_STATUS_BAR1_OUTSTANDING                    1:1 /* R-IUF */
+#define NV_PBUS_BIND_STATUS_BAR1_OUTSTANDING_FALSE       0x00000000 /* R-I-V */
+#define NV_PBUS_BIND_STATUS_BAR1_OUTSTANDING_TRUE        0x00000001 /* R---V */
+#define NV_PBUS_BIND_STATUS_BAR2_PENDING                        2:2 /* R-IUF */
+#define NV_PBUS_BIND_STATUS_BAR2_PENDING_EMPTY           0x00000000 /* R-I-V */
+#define NV_PBUS_BIND_STATUS_BAR2_PENDING_BUSY            0x00000001 /* R---V */
+#define NV_PBUS_BIND_STATUS_BAR2_OUTSTANDING                    3:3 /* R-IUF */
+#define NV_PBUS_BIND_STATUS_BAR2_OUTSTANDING_FALSE       0x00000000 /* R-I-V */
+#define NV_PBUS_BIND_STATUS_BAR2_OUTSTANDING_TRUE        0x00000001 /* R---V */
+#define NV_PBUS_BAR2_BLOCK                               0x00001714 /* RW-4R */
+#define NV_PBUS_BAR2_BLOCK_MAP                                 29:0 /*       */
+#define NV_PBUS_BAR2_BLOCK_PTR                                 27:0 /* RWIUF */
+#define NV_PBUS_BAR2_BLOCK_PTR_0                         0x00000000 /* RWI-V */
+#define NV_PBUS_BAR2_BLOCK_TARGET                             29:28 /* RWIUF */
+#define NV_PBUS_BAR2_BLOCK_TARGET_VID_MEM                0x00000000 /* RWI-V */
+#define NV_PBUS_BAR2_BLOCK_TARGET_SYS_MEM_COHERENT       0x00000002 /* RW--V */
+#define NV_PBUS_BAR2_BLOCK_TARGET_SYS_MEM_NONCOHERENT    0x00000003 /* RW--V */
+#define NV_PBUS_BAR2_BLOCK_MODE                               31:31 /* RWIUF */
+#define NV_PBUS_BAR2_BLOCK_MODE_PHYSICAL                 0x00000000 /* RWI-V */
+#define NV_PBUS_BAR2_BLOCK_MODE_VIRTUAL                  0x00000001 /* RW--V */
+#define NV_PBUS_BAR2_BLOCK_PTR_SHIFT                             12 /*       */
+#define NV_PBUS_BAR2_BLOCK_RESERVED                                  30:30 /*       */
+#define NV_PBUS_BAR2_BLOCK_RESERVED_DEFAULT                          0x00000001 /*       */
+#define NV_PBUS_EXT_CG                          0x00001C00 /* RW-4R */
+#define NV_PBUS_EXT_CG_IDLE_CG_DLY_CNT                 5:0 /* RWIVF */
+#define NV_PBUS_EXT_CG_IDLE_CG_DLY_CNT_HWINIT   0x00000000 /* RWI-V */
+#define NV_PBUS_EXT_CG_IDLE_CG_DLY_CNT__PROD    0x00000002 /* RW--V */
+#define NV_PBUS_EXT_CG_IDLE_CG_EN                      6:6 /* RWIVF */
+#define NV_PBUS_EXT_CG_IDLE_CG_EN_ENABLED       0x00000001 /* RW--V */
+#define NV_PBUS_EXT_CG_IDLE_CG_EN_DISABLED      0x00000000 /* RWI-V */
+#define NV_PBUS_EXT_CG_IDLE_CG_EN__PROD         0x00000001 /* RW--V */
+#define NV_PBUS_EXT_CG_STALL_CG_EN                   14:14 /* RWIVF */
+#define NV_PBUS_EXT_CG_STALL_CG_EN_ENABLED      0x00000001 /* RW--V */
+#define NV_PBUS_EXT_CG_STALL_CG_EN_DISABLED     0x00000000 /* RWI-V */
+#define NV_PBUS_EXT_CG_STALL_CG_EN__PROD        0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG_WAKEUP_DLY_CNT                19:16 /* RWIVF */
+#define NV_PBUS_EXT_CG_WAKEUP_DLY_CNT_HWINIT    0x00000000 /* RWI-V */
+#define NV_PBUS_EXT_CG_WAKEUP_DLY_CNT__PROD     0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1                               0x00001C04 /* RW-4R */
+#define NV_PBUS_EXT_CG1_MONITOR_CG_EN              0:0 /* RWIVF */
+#define NV_PBUS_EXT_CG1_MONITOR_CG_EN_ENABLED       0x00000001 /* RW--V */
+#define NV_PBUS_EXT_CG1_MONITOR_CG_EN_DISABLED      0x00000000 /* RWI-V */
+#define NV_PBUS_EXT_CG1_MONITOR_CG_EN__PROD         0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG                                   9:1 /*       */
+#define NV_PBUS_EXT_CG1_SLCG_ENABLED                    0x00000000 /*       */
+#define NV_PBUS_EXT_CG1_SLCG_DISABLED                   0x000001ff /*       */
+#define NV_PBUS_EXT_CG1_SLCG__PROD                      0x00000000 /*       */
+#define NV_PBUS_EXT_CG1_SLCG_BL                               1:1 /* RWIVF */
+#define NV_PBUS_EXT_CG1_SLCG_BL_ENABLED                0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_BL_DISABLED               0x00000001 /* RWI-V */
+#define NV_PBUS_EXT_CG1_SLCG_BL__PROD                  0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_C11                              2:2 /* RWIVF */
+#define NV_PBUS_EXT_CG1_SLCG_C11_ENABLED               0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_C11_DISABLED              0x00000001 /* RWI-V */
+#define NV_PBUS_EXT_CG1_SLCG_C11__PROD                 0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_MAP                              3:3 /* RWIVF */
+#define NV_PBUS_EXT_CG1_SLCG_MAP_ENABLED               0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_MAP_DISABLED              0x00000001 /* RWI-V */
+#define NV_PBUS_EXT_CG1_SLCG_MAP__PROD                 0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_PRI                              4:4 /* RWIVF */
+#define NV_PBUS_EXT_CG1_SLCG_PRI_ENABLED               0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_PRI_DISABLED              0x00000001 /* RWI-V */
+#define NV_PBUS_EXT_CG1_SLCG_PRI__PROD                 0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_UNROLL                           5:5 /* RWIVF */
+#define NV_PBUS_EXT_CG1_SLCG_UNROLL_ENABLED            0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_UNROLL_DISABLED           0x00000001 /* RWI-V */
+#define NV_PBUS_EXT_CG1_SLCG_UNROLL__PROD              0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_ASMBL                             6:6 /* RWIVF */
+#define NV_PBUS_EXT_CG1_SLCG_ASMBL_ENABLED               0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_ASMBL_DISABLED              0x00000001 /* RWI-V */
+#define NV_PBUS_EXT_CG1_SLCG_ASMBL__PROD                 0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_ROLL                             7:7 /* RWIVF */
+#define NV_PBUS_EXT_CG1_SLCG_ROLL_ENABLED               0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_ROLL_DISABLED              0x00000001 /* RWI-V */
+#define NV_PBUS_EXT_CG1_SLCG_ROLL__PROD                 0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_IFR                               8:8 /* RWIVF */
+#define NV_PBUS_EXT_CG1_SLCG_IFR_ENABLED                0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_IFR_DISABLED               0x00000001 /* RWI-V */
+#define NV_PBUS_EXT_CG1_SLCG_IFR__PROD                  0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_PM                                9:9 /* RWIVF */
+#define NV_PBUS_EXT_CG1_SLCG_PM_ENABLED                 0x00000000 /* RW--V */
+#define NV_PBUS_EXT_CG1_SLCG_PM_DISABLED                0x00000001 /* RWI-V */
+#define NV_PBUS_EXT_CG1_SLCG_PM__PROD                   0x00000000 /* RW--V */
+#define NV_PBUS_IFR_STATUS1                            0x00001724 /* R--4R */
+#define NV_PBUS_IFR_STATUS1_BAR0ADDR                         23:0 /* R-IVF */
+#define NV_PBUS_IFR_STATUS1_BAR0ADDR_INIT              0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_STATUS1_IFF_DONE                        27:27 /* R-IVF */
+#define NV_PBUS_IFR_STATUS1_IFF_DONE_TRUE              0x00000001 /* R---V */
+#define NV_PBUS_IFR_STATUS1_IFF_DONE_FALSE             0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_STATUS1_IDLE                            29:29 /* R-IVF */
+#define NV_PBUS_IFR_STATUS1_IDLE_TRUE                  0x00000001 /* R---V */
+#define NV_PBUS_IFR_STATUS1_IDLE_FALSE                 0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_STATUS1_LASTEXEC                        30:30 /* R-IVF */
+#define NV_PBUS_IFR_STATUS1_LASTEXEC_TRUE              0x00000001 /* R---V */
+#define NV_PBUS_IFR_STATUS1_LASTEXEC_FALSE             0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_STATUS1_READINRMW                       31:31 /* R-IVF */
+#define NV_PBUS_IFR_STATUS1_READINRMW_TRUE             0x00000001 /* R---V */
+#define NV_PBUS_IFR_STATUS1_READINRMW_FALSE            0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR                              0x00001728 /* R--4R */
+#define NV_PBUS_IFR_ERROR_BADSIG                              0:0 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_BADSIG_TRUE                  0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_BADSIG_FALSE                 0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_FAILSAFE_TIMEOUT                    1:1 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_FAILSAFE_TIMEOUT_TRUE        0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_FAILSAFE_TIMEOUT_FALSE       0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_BADPARITY                           8:8 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_BADPARITY_TRUE               0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_BADPARITY_FALSE              0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_BADROMLEN                         12:12 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_BADROMLEN_TRUE               0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_BADROMLEN_FALSE              0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_BADCHECKSUM                       16:16 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_BADCHECKSUM_TRUE             0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_BADCHECKSUM_FALSE            0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_BADFORMAT                         20:20 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_BADFORMAT_TRUE               0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_BADFORMAT_FALSE              0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_PRI_ERROR                         21:21 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_PRI_ERROR_TRUE               0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_PRI_ERROR_FALSE              0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_IFF_RESENSE_TIMEOUT               23:23 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_IFF_RESENSE_TIMEOUT_TRUE     0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_IFF_RESENSE_TIMEOUT_FALSE    0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_IFF_BADFIELDSPEC                  24:24 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_IFF_BADFIELDSPEC_TRUE        0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_IFF_BADFIELDSPEC_FALSE       0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_IFF_BADSPACEID                    25:25 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_IFF_BADSPACEID_TRUE          0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_IFF_BADSPACEID_FALSE         0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_IFF_BADFUSELEN                    26:26 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_IFF_BADFUSELEN_TRUE          0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_IFF_BADFUSELEN_FALSE         0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_IFF_BADCMDOP                      27:27 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_IFF_BADCMDOP_TRUE            0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_IFF_BADCMDOP_FALSE           0x00000000 /* R-I-V */
+#define NV_PBUS_IFR_ERROR_IFF_PRI_ERROR                     29:29 /* R-IVF */
+#define NV_PBUS_IFR_ERROR_IFF_PRI_ERROR_TRUE           0x00000001 /* R---V */
+#define NV_PBUS_IFR_ERROR_IFF_PRI_ERROR_FALSE          0x00000000 /* R-I-V */
+#define NV_PBUS_LVDS_USER                                 0x00001800 /* RW-4R */
+#define NV_PBUS_LVDS_USER_VALUE                                  3:0 /* RWIVF */
+#define NV_PBUS_LVDS_USER_VALUE_INIT                      0x0000000F /* RWI-V */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
