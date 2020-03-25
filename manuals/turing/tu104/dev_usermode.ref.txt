@@ -1,0 +1,270 @@
+Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+CONTENTS
+
+    Introduction
+
+    Identification and Capabilities Registers
+
+    PTIMER Current Time Registers
+
+    Channel Work Submission Registers
+
+    Key
+
+INTRODUCTION
+===============================================================================
+
+     This manual describes the USERMODE device.  USERMODE is a mappable range of
+registers for use by usermode drivers.  The range is 64KB aligned and 64KB in
+size to match the maximum page size of systems supported by NVIDIA hardware.
+
+     Note that accesses to undefined registers in this device range do not cause
+PRI_TIMEOUT interrupts to be raised.  This is different from other PRI devices.
+Writes to undefined registers are silently thrown away.  Reads from undefined
+registers return 0.
+
+Mnemonic  Description      Size  Interface
+--------  -----------      ----  ---------
+USERMODE  Usermode region   64K  HOST
+
+#define NV_USERMODE                           0x0081FFFF:0x00810000 /* RW--D */
+
+
+
+IDENTIFICATION AND CAPABILITIES REGISTERS
+===============================================================================
+
+     The first 128 bytes of the NV_USERMODE device are reserved for up to 32
+configuration and capabilities registers.
+
+
+CFG0 - Config register 0: Class ID for the NV_USERMODE class
+
+     The USERMODE_CLASS_ID field of the CFG0 register contains the class ID for
+the class corresponding to the NV_USERMODE device.  In gv100, this is the class
+volta_usermode_a.
+
+
+#define  NV_USERMODE_CFG0                                 0x00810000 /* R--4R */
+#define  NV_USERMODE_CFG0_USERMODE_CLASS_ID                     15:0 /* R-IUF */
+#define  NV_USERMODE_CFG0_USERMODE_CLASS_ID_VALUE             50273 /* R-I-V */
+
+// Note: addresses up to 0x810080 are reserved for CGF and capabilities registers
+
+
+PTIMER CURRENT TIME REGISTERS
+===============================================================================
+
+     The TIME registers contain the current time as kept by the PTIMER; see
+dev_timer.ref.  The current time is expressed in elapsed nanoseconds since the
+UNIX epoch, 00:00 GMT, January 1, 1970 (zero hour).  It generally has a
+resolution of 32 nanoseconds.
+
+     Note: To query the current time, read TIME_1, then TIME_0, and then TIME_1
+again.  If the two readings of TIME_1 do not match, repeat the procedure.  This
+avoids incorrectly retrieving an incorrect time referring to a point up to 4
+seconds in the future: if one were to simply read TIME_0 and then TIME_1, TIME_0
+may overflow between the two reads.
+
+     TIME_0 contains the low 32 bits of the timer. The least significant 5 bits
+are always zero.  The NSEC field contains the low order bits in 32ns
+granularity.
+
+     TIME_1 contains the high order bits.  The NSEC field contains the upper 29
+bits of the timer.
+
+
+TIME_0 Register - Timer Low Bits
+
+
+#define NV_USERMODE_TIME_0                                0x00810080 /* R--4R */
+#define NV_USERMODE_TIME_0_NSEC                                 31:5 /* R-XUF */
+
+
+TIME_1 Register - Timer High Bits
+
+
+#define NV_USERMODE_TIME_1                                0x00810084 /* R--4R */
+#define NV_USERMODE_TIME_1_NSEC                                 28:0 /* R-XUF */
+
+// Note: addresses 0x810088 and 0x81008c are reserved for future TIME registers
+
+
+
+CHANNEL WORK SUBMISSION REGISTERS
+===============================================================================
+
+NOTIFY_CHANNEL_PENDING - Notify Host that a channel has new work available
+
+     NOTIFY_CHANNEL_PENDING is known as the channel doorbell register.  Writing
+a channel's opaque handle to the NOTIFY_CHANNEL_PENDING register (sometimes
+referred to as "ringing the doorbell") tells Host that new work is available to
+run on that channel.
+
+     The CHID and RUNLIST_ID fields of the handle are for hardware and RM use
+only.  They indicate, respectively, the ID of the channel to which new work has
+been submitted and the ID of the runlist to rescan for the channel's new work.
+If RUNLIST_ID_ALL is specified, Host will rescan every runlist in an attempt to
+find the given CHID; this behavior is provided as a CYA.  SW should only use the
+HANDLE field when writing the handle to the NOTIFY_CHANNEL_PENDING register.
+While in Turing the handle consists of a channel ID and a runlist ID, the format
+of the NOTIFY_CHANNEL_PENDING handle is subject to change in future chips.  Thus
+the handle to write to the NOTIFY_CHANNEL_PENDING register is expected to be
+opaque from the point of view of the usermode SW and must be queried from the
+RM.
+
+     Warning: While the NOTIFY_CHANNEL_PENDING register's fields match the
+format of those in the NV_UDMA_CLEAR_FAULTED method data (described in
+dev_pbdma.ref) and the VF_DOORBELL register (described in dev_ctrl.ref), SW must
+not assume each respective handle has the same format or may be interchangeable,
+because the format of each of these types of handles is subject to change in
+future chips.  Instead, SW must request a different type of handle from RM
+depending on the use for the handle.
+
+     A write of a channel's handle to this register causes the channel's state
+in the STATUS field of the channel's NV_PCCSR_CHANNEL register to be PENDING.
+When a channel's status is set to pending, this causes Host to schedule the
+channel the next time it comes up in the runlist.  Once the channel is
+scheduled, the PBDMA will read GP_PUT from USERD to determine whether any work
+is actually available for the channel.
+
+     Submitting new work to a channel involves the following steps:
+
+     1. Write methods to a pushbuffer segment
+     2. Construct a new GP entry pointing to that pushbuffer segment
+     3. Update GP_PUT in USERD to indicate the new GP entry is ready
+     4. Request the doorbell handle from RM, given the channel ID
+     5. Write the channel's handle to the NOTIFY_CHANNEL_PENDING register
+
+     USERD is described in dev_ram.ref.  The formatting of the contents of a
+pushbuffer segment is described in dev_ram.ref.  The formatting of a GP entry
+and how it affects the processing of a pushbuffer segment is described in
+dev_pbdma.ref.
+
+     Note that if the written value is not a valid handle, the write will be
+ignored. The following types of handles are invalid:
+     * A handle whose CHID field does not contain a valid channel ID
+     * A handle whose RUNLIST_ID field does not contain either RUNLIST_ID_ALL or
+       a valid runlist ID
+     * A handle in which any bit is set that is not in either the RUNLIST_ID
+       field or the CHID field
+Moreover, if the CHID field of the written handle exceeds the maximum supported
+channel ID (which is NV_CHIP_HOST_CHANNELS - 1), or if the RUNLIST_ID field of
+the written handle exceeds the maximum supported runlist ID (which is
+NV_HOST_NUM_RUNLISTS - 1), then the write will have no effect (neither field
+will overflow, causing some other channel to go pending or some other runlist to
+be rescanned for new work).
+
+     Formatting the handle correctly and giving SW a valid handle when requested
+is the responsibility of RM.
+
+     Note that if the written value is the handle of a channel for which
+GP_PUT == GP_GET, Host will still schedule the channel in order to determine the
+current status of its GP_PUT, at which point it will discover there is no new
+work and move on to the next channel.
+
+
+#define NV_USERMODE_NOTIFY_CHANNEL_PENDING                0x00810090 /* -W-4R */
+// SW should fill in this ID using the channel handle provided by RM
+#define NV_USERMODE_NOTIFY_CHANNEL_PENDING_HANDLE               31:0 /*       */
+// These fields are use by hardware only and must match those in NV_UDMA_CLEAR_FAULTED.
+#define NV_USERMODE_NOTIFY_CHANNEL_PENDING_CHID                 11:0 /* -W-UF */
+#define NV_USERMODE_NOTIFY_CHANNEL_PENDING_RUNLIST_ID          22:16 /* -W-UF */
+#define NV_USERMODE_NOTIFY_CHANNEL_PENDING_RUNLIST_ID_ALL  15 /* -W--V */
+
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
