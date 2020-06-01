@@ -1,4 +1,4 @@
-Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -80,6 +80,63 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_ADDR                                      31:4 /* RWEVF */
 #define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_ADDR_INIT                           0x00000000 /* RWE-V */
 #define NV_PFB_HSMMU_PRI_MMU_DEBUG_RD_ADDR_ALIGNMENT                      0x0000000c /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG                          0x001FACB0 /* RW-4R */
+#define NV_PFB_HSMMU_PRI_MMU_CG_IDLE_CG_DLY_CNT                 5:0 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CG_IDLE_CG_DLY_CNT_HWINIT   0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CG_IDLE_CG_DLY_CNT__PROD    0x00000002 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CG_IDLE_CG_EN                      6:6 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CG_IDLE_CG_EN_ENABLED       0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CG_IDLE_CG_EN_DISABLED      0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CG_IDLE_CG_EN__PROD         0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STATE_CG_EN                     7:7 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STATE_CG_EN_ENABLED      0x00000001 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STATE_CG_EN_DISABLED     0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STATE_CG_EN__PROD        0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STALL_CG_DLY_CNT               13:8 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STALL_CG_DLY_CNT_HWINIT  0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STALL_CG_DLY_CNT__PROD   0x00000002 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STALL_CG_EN                   14:14 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STALL_CG_EN_ENABLED      0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STALL_CG_EN_DISABLED     0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CG_STALL_CG_EN__PROD        0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CG_QUIESCENT_CG_EN               15:15 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_QUIESCENT_CG_EN_ENABLED  0x00000001 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_QUIESCENT_CG_EN_DISABLED 0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_QUIESCENT_CG_EN__PROD    0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_WAKEUP_DLY_CNT                19:16 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CG_WAKEUP_DLY_CNT_HWINIT    0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CG_WAKEUP_DLY_CNT__PROD     0x00000000 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_CNT                 23:20 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_CNT_FULLSPEED  0x0000000f /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_CNT__PROD      0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_DI_DT_SKEW_VAL                27:24 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_DI_DT_SKEW_VAL_HWINIT    0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_DI_DT_SKEW_VAL__PROD     0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_EN                  28:28 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_EN_ENABLED     0x00000001 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_EN_DISABLED    0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_EN__PROD       0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_SW_OVER             29:29 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_SW_OVER_EN     0x00000001 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_SW_OVER_DIS    0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_THROT_CLK_SW_OVER__PROD  0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_PAUSE_CG_EN                   30:30 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_PAUSE_CG_EN_ENABLED      0x00000001 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_PAUSE_CG_EN_DISABLED     0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_PAUSE_CG_EN__PROD        0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_HALT_CG_EN                    31:31 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_HALT_CG_EN_ENABLED       0x00000001 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_HALT_CG_EN_DISABLED      0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG_HALT_CG_EN__PROD         0x00000000 /*       */
+#define NV_PFB_HSMMU_PRI_MMU_CG1                               0x001FACB4 /* RW-4R */
+#define NV_PFB_HSMMU_PRI_MMU_CG1_MONITOR_CG_EN                      0:0 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CG1_MONITOR_CG_EN_ENABLED       0x00000001 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CG1_MONITOR_CG_EN_DISABLED      0x00000000 /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CG1_MONITOR_CG_EN__PROD         0x00000000 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CG1_SLCG                            8:1 /* RWEVF */
+#define NV_PFB_HSMMU_PRI_MMU_CG1_SLCG_ENABLED                0x00000000 /* RW--V */
+#define NV_PFB_HSMMU_PRI_MMU_CG1_SLCG_DISABLED               0x000000FF /* RWE-V */
+#define NV_PFB_HSMMU_PRI_MMU_CG1_SLCG__PROD                  0x00000000 /* RW--V */
 
 --------------------------------------------------------------------------------
                          KEY LEGEND
