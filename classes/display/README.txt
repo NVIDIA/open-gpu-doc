@@ -188,3 +188,12 @@ Window Channel:             clc37e.h
 GPUs:                       gv100
 __________________________________________________________________________
 
+Class Name:                 NVD_30
+Software Class Number:      C570
+Cursor Channel:             clc57a.h
+Window Immediate Channel:   clc57b.h
+Core Channel:               clc57d.h
+Window Channel:             clc57e.h
+GPUs:                       tu102, tu104, tu106, tu116, tu117
+__________________________________________________________________________
+
