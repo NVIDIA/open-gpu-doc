@@ -29,48 +29,6 @@
 
 #define NV50_MEMORY_TO_MEMORY_FORMAT    0x5039
 
-typedef volatile struct _cl5039_tag0 {
-    NvU32 SetObject;
-    NvU32 Reserved_0x04[0x3F];
-    NvU32 NoOperation;
-    NvU32 Notify;
-    NvU32 Reserved_0x108[0x2];
-    NvU32 WaitForIdle;
-    NvU32 Reserved_0x114[0xB];
-    NvU32 PmTrigger;
-    NvU32 Reserved_0x144[0xF];
-    NvU32 SetContextDmaNotify;
-    NvU32 SetContextDmaBufferIn;
-    NvU32 SetContextDmaBufferOut;
-    NvU32 Reserved_0x18C[0x1D];
-    NvU32 SetSrcMemoryLayout;
-    NvU32 SetSrcBlockSize;
-    NvU32 SetSrcWidth;
-    NvU32 SetSrcHeight;
-    NvU32 SetSrcDepth;
-    NvU32 SetSrcLayer;
-    NvU32 SetSrcOrigin;
-    NvU32 SetDstMemoryLayout;
-    NvU32 SetDstBlockSize;
-    NvU32 SetDstWidth;
-    NvU32 SetDstHeight;
-    NvU32 SetDstDepth;
-    NvU32 SetDstLayer;
-    NvU32 SetDstOrigin;
-    NvU32 OffsetInUpper;
-    NvU32 OffsetOutUpper;
-    NvU32 Reserved_0x240[0x33];
-    NvU32 OffsetIn;
-    NvU32 OffsetOut;
-    NvU32 PitchIn;
-    NvU32 PitchOut;
-    NvU32 LineLengthIn;
-    NvU32 LineCount;
-    NvU32 Format;
-    NvU32 BufferNotify;
-} nv50_memory_to_memory_format_t;
-
-
 #define NV5039_SET_OBJECT                                                                                  0x0000
 #define NV5039_SET_OBJECT_POINTER                                                                            15:0
 
