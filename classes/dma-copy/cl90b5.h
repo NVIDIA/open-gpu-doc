@@ -32,57 +32,6 @@ extern "C" {
 
 #define GF100_DMA_COPY                                                            (0x000090B5)
 
-typedef volatile struct _cl90b5_tag0 {
-    NvV32 LL_CMD1;                                                              // 0x00000000 - 0x00000003
-    NvV32 Reserved00[0x3F];
-    NvV32 Nop;                                                                  // 0x00000100 - 0x00000103
-    NvV32 Reserved01[0xF];
-    NvV32 PmTrigger;                                                            // 0x00000140 - 0x00000143
-    NvV32 Reserved02[0x2F];
-    NvV32 SetApplicationID;                                                     // 0x00000200 - 0x00000203
-    NvV32 SetWatchdogTimer;                                                     // 0x00000204 - 0x00000207
-    NvV32 Reserved03[0xE];
-    NvV32 SetSemaphoreA;                                                        // 0x00000240 - 0x00000243
-    NvV32 SetSemaphoreB;                                                        // 0x00000244 - 0x00000247
-    NvV32 SetSemaphorePayload;                                                  // 0x00000248 - 0x0000024B
-    NvV32 Reserved04[0x1];
-    NvV32 AddressingMode;                                                       // 0x00000250 - 0x00000253
-    NvV32 SetRenderEnableA;                                                     // 0x00000254 - 0x00000257
-    NvV32 SetRenderEnableB;                                                     // 0x00000258 - 0x0000025B
-    NvV32 SetRenderEnableC;                                                     // 0x0000025C - 0x0000025F
-    NvV32 Reserved05[0x28];
-    NvV32 LaunchDma;                                                            // 0x00000300 - 0x00000303
-    NvV32 Reserved06[0x3F];
-    NvV32 OffsetInUpper;                                                        // 0x00000400 - 0x00000403
-    NvV32 OffsetInLower;                                                        // 0x00000404 - 0x00000407
-    NvV32 OffsetOutUpper;                                                       // 0x00000408 - 0x0000040B
-    NvV32 OffsetOutLower;                                                       // 0x0000040C - 0x0000040F
-    NvV32 PitchIn;                                                              // 0x00000410 - 0x00000413
-    NvV32 PitchOut;                                                             // 0x00000414 - 0x00000417
-    NvV32 LineLengthIn;                                                         // 0x00000418 - 0x0000041B
-    NvV32 LineCount;                                                            // 0x0000041C - 0x0000041F
-    NvV32 Reserved07[0xB8];
-    NvV32 SetRemapConstA;                                                       // 0x00000700 - 0x00000703
-    NvV32 SetRemapConstB;                                                       // 0x00000704 - 0x00000707
-    NvV32 SetRemapComponents;                                                   // 0x00000708 - 0x0000070B
-    NvV32 SetDstBlockSize;                                                      // 0x0000070C - 0x0000070F
-    NvV32 SetDstWidth;                                                          // 0x00000710 - 0x00000713
-    NvV32 SetDstHeight;                                                         // 0x00000714 - 0x00000717
-    NvV32 SetDstDepth;                                                          // 0x00000718 - 0x0000071B
-    NvV32 SetDstLayer;                                                          // 0x0000071C - 0x0000071F
-    NvV32 SetDstOrigin;                                                         // 0x00000720 - 0x00000723
-    NvV32 Reserved08[0x1];
-    NvV32 SetSrcBlockSize;                                                      // 0x00000728 - 0x0000072B
-    NvV32 SetSrcWidth;                                                          // 0x0000072C - 0x0000072F
-    NvV32 SetSrcHeight;                                                         // 0x00000730 - 0x00000733
-    NvV32 SetSrcDepth;                                                          // 0x00000734 - 0x00000737
-    NvV32 SetSrcLayer;                                                          // 0x00000738 - 0x0000073B
-    NvV32 SetSrcOrigin;                                                         // 0x0000073C - 0x0000073F
-    NvV32 Reserved09[0x275];
-    NvV32 PmTriggerEnd;                                                         // 0x00001114 - 0x00001117
-    NvV32 Reserved10[0x3BA];
-} GF100dma_copyControlPio;
-
 #define NV90B5_LL_CMD1                                                          (0x00000000)
 #define NV90B5_LL_CMD1_SRC_MAX_GOBLINE_PAD_POLICY                               1:0
 #define NV90B5_LL_CMD1_DST_MAX_GOBLINE_PAD_POLICY                               3:2
