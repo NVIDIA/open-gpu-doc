@@ -87,6 +87,8 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PMC_BOOT_1_VGPU16_VIRTUAL                     0x00000001 /*       */
 #define NV_PMC_BOOT_1_VGPU                                    17:16 /* C--VF */
 #define NV_PMC_BOOT_1_VGPU_REAL                          0x00000000 /* C---V */
+#define NV_PMC_BOOT_1_VGPU_PV                            0x00000001 /* ----V */
+#define NV_PMC_BOOT_1_VGPU_VF                            0x00000002 /* ----V */
 #define NV_PMC_BOOT_2                                    0x00000008 /* R--4R */
 #define NV_PMC_BOOT_2_MINOR_EXTENDED_REVISION                   3:0 /* R-XVF */
 #define NV_PMC_BOOT_2_MINOR_EXTENDED_REVISION_0          0x00000000 /* R---V */

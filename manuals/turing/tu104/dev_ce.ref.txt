@@ -1,4 +1,4 @@
-Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -22,6 +22,63 @@ DEALINGS IN THE SOFTWARE.
 #define NV_CE                                            0x105fff:0x104000 /* RW--D */
 #define NV_CE_PCE_MAP                                           0x00104028 /* R--4R */
 #define NV_CE_PCE_MAP_VALUE                                           15:0 /* R-XVF */
+#define NV_CE_PRI_CE_FE_CG                          0x00104200 /* RW-4R */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_DLY_CNT                 5:0 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_DLY_CNT_HWINIT   0x00000000 /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_DLY_CNT__PROD    0x00000002 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_EN                      6:6 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_EN_ENABLED       0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_EN_DISABLED      0x00000000 /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_EN__PROD         0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_STATE_CG_EN                     7:7 /*       */
+#define NV_CE_PRI_CE_FE_CG_STATE_CG_EN_ENABLED      0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_STATE_CG_EN_DISABLED     0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_STATE_CG_EN__PROD        0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_DLY_CNT               13:8 /*       */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_DLY_CNT_HWINIT  0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_DLY_CNT__PROD   0x00000002 /*       */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_EN                   14:14 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_EN_ENABLED      0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_EN_DISABLED     0x00000000 /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_EN__PROD        0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_QUIESCENT_CG_EN               15:15 /*       */
+#define NV_CE_PRI_CE_FE_CG_QUIESCENT_CG_EN_ENABLED  0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_QUIESCENT_CG_EN_DISABLED 0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_QUIESCENT_CG_EN__PROD    0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_WAKEUP_DLY_CNT                19:16 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG_WAKEUP_DLY_CNT_HWINIT    0x00000000 /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG_WAKEUP_DLY_CNT__PROD     0x00000000 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_CNT                 23:20 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_CNT_FULLSPEED  0x0000000f /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_CNT__PROD      0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_DI_DT_SKEW_VAL                27:24 /*       */
+#define NV_CE_PRI_CE_FE_CG_DI_DT_SKEW_VAL_HWINIT    0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_DI_DT_SKEW_VAL__PROD     0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_EN                  28:28 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_EN_ENABLED     0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_EN_DISABLED    0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_EN__PROD       0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_SW_OVER             29:29 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_SW_OVER_EN     0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_SW_OVER_DIS    0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_SW_OVER__PROD  0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_PAUSE_CG_EN                   30:30 /*       */
+#define NV_CE_PRI_CE_FE_CG_PAUSE_CG_EN_ENABLED      0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_PAUSE_CG_EN_DISABLED     0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_PAUSE_CG_EN__PROD        0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_HALT_CG_EN                    31:31 /*       */
+#define NV_CE_PRI_CE_FE_CG_HALT_CG_EN_ENABLED       0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_HALT_CG_EN_DISABLED      0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_HALT_CG_EN__PROD         0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG1                               0x00104204 /* RW-4R */
+#define NV_CE_PRI_CE_FE_CG1_MONITOR_CG_EN                      0:0 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG1_MONITOR_CG_EN_ENABLED       0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG1_MONITOR_CG_EN_DISABLED      0x00000000 /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG1_MONITOR_CG_EN__PROD         0x00000000 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG1_SLCG                            10:1 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG1_SLCG_ENABLED                0x00000000 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG1_SLCG_DISABLED               0x000003FF /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG1_SLCG__PROD                  0x00000020 /* RW--V */
 #define NV_CE_LCE_STATUS(i)                          (0x00104400+(i)*0x80) /* R--4A */
 #define NV_CE_LCE_STATUS__SIZE_1                5 /*       */
 #define NV_CE_LCE_STATUS_TOP                                           0:0 /* R-IVF */

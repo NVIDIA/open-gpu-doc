@@ -1365,30 +1365,6 @@ register runs on Host's internal domain clock.
 
 
 
-RUNTIME - Active run time on Host
-
-     The NV_PPBDMA_RUNTIME register contains the amount of time a GPU context
-has been actively running within Host.  This is not the amount of time that the
-GPU context has been actively running on an engine.  The amount of time is
-measured in 1024 ns ticks from the PTIMER.  Software may set this value to 0 and
-can later read the value to see whether the GPU context ran.
-     This register is part of a GPU context's state.  On a switch, the value of
-this register is saved to, and restored from, the NV_RAMFC_RUNTIME entry of the
-RAMFC part of the GPU context's GPU-instance block.
-     This information is maintained by hardware.  Software may read this
-register at any time.  Software should write this register only if the GPU
-context is assigned to a PBDMA unit and that PBDMA unit is stalled.  While a GPU
-context's Host state is not contained within a PBDMA unit, software should use
-NV_RAMFC_RUNTIME to access this information.
-     One of these registers exists for each of Host's PBDMA units.  This
-register runs on Host's internal domain clock.
-
-
-#define NV_PPBDMA_RUNTIME(i)                  (0x0004002c+(i)*8192) /* RW-4A */
-#define NV_PPBDMA_RUNTIME__SIZE_1                 12 /*       */
-
-#define NV_PPBDMA_RUNTIME_VALUE                                31:0 /* RWXUF */
-#define NV_PPBDMA_RUNTIME_VALUE_ZERO                     0x00000000 /* RW--V */
 
 
 SEM_ADDR_LO [register] - Semaphore Address Low Backing Register
