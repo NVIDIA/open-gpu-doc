@@ -1217,6 +1217,30 @@ extern "C" {
 #define NV987D_HEAD_SET_CONVERSION_BLU(a)                                       (0x000004EC + (a)*0x00000300)
 #define NV987D_HEAD_SET_CONVERSION_BLU_GAIN                                     15:0
 #define NV987D_HEAD_SET_CONVERSION_BLU_OFS                                      31:16
+#define NV987D_HEAD_SET_CSC_RED2RED(a)                                          (0x000004F0 + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_RED2RED_COEFF                                       18:0
+#define NV987D_HEAD_SET_CSC_GRN2RED(a)                                          (0x000004F4 + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_GRN2RED_COEFF                                       18:0
+#define NV987D_HEAD_SET_CSC_BLU2RED(a)                                          (0x000004F8 + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_BLU2RED_COEFF                                       18:0
+#define NV987D_HEAD_SET_CSC_CONSTANT2RED(a)                                     (0x000004FC + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_CONSTANT2RED_COEFF                                  18:0
+#define NV987D_HEAD_SET_CSC_RED2GRN(a)                                          (0x00000500 + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_RED2GRN_COEFF                                       18:0
+#define NV987D_HEAD_SET_CSC_GRN2GRN(a)                                          (0x00000504 + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_GRN2GRN_COEFF                                       18:0
+#define NV987D_HEAD_SET_CSC_BLU2GRN(a)                                          (0x00000508 + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_BLU2GRN_COEFF                                       18:0
+#define NV987D_HEAD_SET_CSC_CONSTANT2GRN(a)                                     (0x0000050C + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_CONSTANT2GRN_COEFF                                  18:0
+#define NV987D_HEAD_SET_CSC_RED2BLU(a)                                          (0x00000510 + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_RED2BLU_COEFF                                       18:0
+#define NV987D_HEAD_SET_CSC_GRN2BLU(a)                                          (0x00000514 + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_GRN2BLU_COEFF                                       18:0
+#define NV987D_HEAD_SET_CSC_BLU2BLU(a)                                          (0x00000518 + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_BLU2BLU_COEFF                                       18:0
+#define NV987D_HEAD_SET_CSC_CONSTANT2BLU(a)                                     (0x0000051C + (a)*0x00000300)
+#define NV987D_HEAD_SET_CSC_CONSTANT2BLU_COEFF                                  18:0
 #define NV987D_HEAD_SET_HDMI_CTRL(a)                                            (0x00000520 + (a)*0x00000300)
 #define NV987D_HEAD_SET_HDMI_CTRL_VIDEO_FORMAT                                  2:0
 #define NV987D_HEAD_SET_HDMI_CTRL_VIDEO_FORMAT_NORMAL                           (0x00000000)
