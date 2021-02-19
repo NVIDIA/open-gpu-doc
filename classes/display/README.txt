@@ -197,3 +197,12 @@ Window Channel:             clc57e.h
 GPUs:                       tu102, tu104, tu106, tu116, tu117
 __________________________________________________________________________
 
+Class Name:                 NVD_40
+Software Class Number:      C670
+Cursor Channel:             clc67a.h
+Window Immediate Channel:   clc67b.h
+Core Channel:               clc67d.h
+Window Channel:             clc67e.h
+GPUs:                       ga102,ga103,ga104,ga106,ga107
+__________________________________________________________________________
+
