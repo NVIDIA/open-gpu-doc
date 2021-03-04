@@ -1,0 +1,1644 @@
+Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_PDISP_POSTCOMP_HEAD_LOADV_COUNTER(i)                    (0x0000611C+(i)*2048) /* RW-4A */
+#define NV_PDISP_POSTCOMP_HEAD_LOADV_COUNTER__SIZE_1                                   8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_LOADV_COUNTER_VALUE                                  31:0 /* RWIUF */
+#define NV_PDISP_POSTCOMP_HEAD_LOADV_COUNTER_VALUE_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_POSTCOMP_HEAD_LOADV_COUNTER_VALUE_ZERO                       0x00000000 /* RW--V */
+#define NV_PDISP_POSTCOMP_HEAD_LOADV_COUNTER_VALUE_HW                         0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_LOADV_COUNTER_VALUE_SW                         0x00000000 /* -W--V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA(i)                                    (0x00006140+(i)*2048) /* R--4A */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA__SIZE_1                                                   8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_FULL_WIDTH                                              4:0 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_UNIT_WIDTH                                              9:5 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OCSC0_PRESENT                                         16:16 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OCSC0_PRESENT_TRUE                               0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OCSC0_PRESENT_FALSE                              0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OCSC1_PRESENT                                         17:17 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OCSC1_PRESENT_TRUE                               0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OCSC1_PRESENT_FALSE                              0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_SCLR_PRESENT                                          18:18 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_SCLR_PRESENT_TRUE                                0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_SCLR_PRESENT_FALSE                               0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OLPF_PRESENT                                          19:19 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OLPF_PRESENT_TRUE                                0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OLPF_PRESENT_FALSE                               0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_DTH_PRESENT                                           20:20 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_DTH_PRESENT_TRUE                                 0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_DTH_PRESENT_FALSE                                0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OSCAN_PRESENT                                         21:21 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OSCAN_PRESENT_TRUE                               0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_OSCAN_PRESENT_FALSE                              0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_DSC_PRESENT                                           22:22 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_DSC_PRESENT_TRUE                                 0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPA_DSC_PRESENT_FALSE                                0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB(i)                                    (0x00006144+(i)*2048) /* R--4A */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB__SIZE_1                                                   8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_VGA                                                     0:0 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_VGA_TRUE                                         0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_VGA_FALSE                                        0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_OLUT_LOGSZ                                              9:6 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_OLUT_LOGNR                                            12:10 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_OLUT_SFCLOAD                                          14:14 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_OLUT_SFCLOAD_TRUE                                0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_OLUT_SFCLOAD_FALSE                               0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_OLUT_DIRECT                                           15:15 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_OLUT_DIRECT_TRUE                                 0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPB_OLUT_DIRECT_FALSE                                0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC(i)                                    (0x00006148+(i)*2048) /* R--4A */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC__SIZE_1                                                   8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_OCSC0_PRECISION                                         4:0 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_OCSC0_UNITY_CLAMP                                       5:5 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_OCSC0_UNITY_CLAMP_TRUE                           0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_OCSC0_UNITY_CLAMP_FALSE                          0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_OCSC1_PRECISION                                        12:8 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_OCSC1_UNITY_CLAMP                                     13:13 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_OCSC1_UNITY_CLAMP_TRUE                           0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_OCSC1_UNITY_CLAMP_FALSE                          0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_SF_PRECISION                                     20:16 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_CI_PRECISION                                     24:21 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_VS_EXT_RGB                                       25:25 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_VS_EXT_RGB_TRUE                             0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_VS_EXT_RGB_FALSE                            0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_VS_MAX_SCALE_FACTOR                              28:28 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_VS_MAX_SCALE_FACTOR_2X                      0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_VS_MAX_SCALE_FACTOR_4X                      0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_HS_MAX_SCALE_FACTOR                              30:30 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_HS_MAX_SCALE_FACTOR_2X                      0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPC_SCLR_HS_MAX_SCALE_FACTOR_4X                      0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPD(i)                                    (0x0000614C+(i)*2048) /* R--4A */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPD__SIZE_1                                                   8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPD_VSCLR_MAX_PIXELS_2TAP                                  15:0 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPD_VSCLR_MAX_PIXELS_5TAP                                 31:16 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE(i)                                    (0x00006150+(i)*2048) /* R--4A */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE__SIZE_1                                                   8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE_DSC_RATEBUFSIZE                                         3:0 /* R-IUF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE_DSC_RATEBUFSIZE_INIT                             0x00000006 /* R-I-V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE_DSC_LINEBUFSIZE                                        13:8 /* R-IUF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE_DSC_LINEBUFSIZE_INIT                             0x00000005 /* R-I-V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE_DSC_NATIVE422                                         16:16 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE_DSC_NATIVE422_TRUE                               0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE_DSC_NATIVE422_FALSE                              0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE_DSC_NATIVE420                                         17:17 /* R--VF */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE_DSC_NATIVE420_TRUE                               0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_HDR_CAPE_DSC_NATIVE420_FALSE                              0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_DITHER(i)                                      (0x00006154+(i)*2048) /* R--4A */
+#define NV_PDISP_POSTCOMP_HEAD_DITHER__SIZE_1                                                     8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_DITHER_PHASE                                                     1:0 /* R-IVF */
+#define NV_PDISP_POSTCOMP_HEAD_DITHER_PHASE_INIT                                         0x00000000 /* R-I-V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG(i)                                   (0x00006158+(i)*2048) /* RW-4A */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG__SIZE_1                                                  8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_SIZE_OVERFLOW                                     0:0 /* RWIVF */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_SIZE_OVERFLOW_INIT                         0x00000000 /* R-I-V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_SIZE_OVERFLOW_NOT_DETECTED                 0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_SIZE_OVERFLOW_DETECTED                     0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_SIZE_OVERFLOW_CLR                          0x00000001 /* -W--V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_MISSING_SAMPLES                                   1:1 /* RWIVF */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_MISSING_SAMPLES_INIT                       0x00000000 /* R-I-V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_MISSING_SAMPLES_NOT_DETECTED               0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_MISSING_SAMPLES_DETECTED                   0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_MISSING_SAMPLES_CLR                        0x00000001 /* -W--V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_EXCESS_SAMPLES                                    2:2 /* RWIVF */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_EXCESS_SAMPLES_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_EXCESS_SAMPLES_NOT_DETECTED                0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_EXCESS_SAMPLES_DETECTED                    0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_EXCESS_SAMPLES_CLR                         0x00000001 /* -W--V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_BAD_SEGMENT_SIZE                                  3:3 /* RWIVF */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_BAD_SEGMENT_SIZE_INIT                      0x00000000 /* R-I-V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_BAD_SEGMENT_SIZE_NOT_DETECTED              0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_BAD_SEGMENT_SIZE_DETECTED                  0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_LUT_DEBUG_OLUT_BAD_SEGMENT_SIZE_CLR                       0x00000001 /* -W--V */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL(i)                                 (0x0000615c+(i)*2048) /* RW-4A */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL__SIZE_1                                                8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL_RED_CR                                               9:0 /* RWIVF */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL_RED_CR_INIT                                   0x00000000 /* RWI-V */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL_GRE_Y                                              19:10 /* RWIVF */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL_GRE_Y_INIT                                    0x00000000 /* RWI-V */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL_BLU_CB                                             29:20 /* RWIVF */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL_BLU_CB_INIT                                   0x00000000 /* RWI-V */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL_ENABLE                                             31:31 /* RWIVF */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL_ENABLE_INIT                                   0x00000000 /* RWI-V */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL_ENABLE_TRUE                                   0x00000001 /* RW--V */
+#define NV_PDISP_POSTCOMP_HEAD_FORCE_PIXEL_ENABLE_FALSE                                  0x00000000 /* RW--V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_CTRL(i)                           (0x000061C0+(i)*2048) /* RW-4A */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_CTRL__SIZE_1                                          8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_CTRL_SOFT_RESET                                     0:0 /* RWIVF */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_CTRL_SOFT_RESET_INIT                         0x00000000 /* R-I-V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_CTRL_SOFT_RESET_DONE                         0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_CTRL_SOFT_RESET_PENDING                      0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_CTRL_SOFT_RESET_TRIGGER                      0x00000001 /* -W--V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE(i)                           (0x000061C4+(i)*2048) /* RW-4A */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE__SIZE_1                                          8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_BYPASS_SLCG                                    0:0 /* RWIUF */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_BYPASS_SLCG_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_BYPASS_SLCG_TRUE                        0x00000001 /* RW--V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_BYPASS_SLCG_FALSE                       0x00000000 /* RW--V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_DISABLE_MMAP                                   1:1 /* RWIUF */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_DISABLE_MMAP_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_DISABLE_MMAP_TRUE                       0x00000001 /* RW--V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_DISABLE_MMAP_FALSE                      0x00000000 /* RW--V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_DISABLE_ICH                                    2:2 /* RWIUF */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_DISABLE_ICH_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_DISABLE_ICH_TRUE                        0x00000001 /* RW--V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_FORCE_DISABLE_ICH_FALSE                       0x00000000 /* RW--V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_STATUS(i)                         (0x000061C8+(i)*2048) /* R--4A */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_STATUS__SIZE_1                                        8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_STATUS_HINDEX                                      12:0 /* R--UF */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_STATUS_VINDEX                                     28:16 /* R--UF */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_STATUS_BUSY                                       31:31 /* R--UF */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_STATUS_BUSY_TRUE                             0x00000001 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_STATUS_BUSY_FALSE                            0x00000000 /* R---V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_SPARE(i)             (0x000061CC+(i)*2048) /* RWI4A */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_SPARE__SIZE_1                            8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_SPARE_ECO                             31:0 /* RWIVF */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_SPARE_ECO_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_DBG0(i)                         (0x000061D0+(i)*2048) /* R--4A */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_DBG0__SIZE_1                                        8 /*       */
+#define NV_PDISP_POSTCOMP_HEAD_DSC_DBG0_VAL                                         31:0 /* R--UF */
+#define NV_PDISP_RG_HEAD_CAPA(i)                                      (0x00006300+(i)*2048) /* R--4A */
+#define NV_PDISP_RG_HEAD_CAPA__SIZE_1                                                     8 /*       */
+#define NV_PDISP_RG_HEAD_CAPA_REORDER_BANK_WIDTH_SIZE_MAX                              13:0 /* R--UF */
+#define NV_PDISP_RG_HEAD_CAPA_SUPPORT_DSC                                             16:16 /* R--UF */
+#define NV_PDISP_RG_HEAD_CAPA_SUPPORT_DSC_TRUE                                   0x00000001 /* R---V */
+#define NV_PDISP_RG_HEAD_CAPA_SUPPORT_DSC_FALSE                                  0x00000000 /* R---V */
+#define NV_PDISP_RG_SWAP_LOCKOUT(i)                                (0x00006304+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_SWAP_LOCKOUT__SIZE_1                                               8 /*       */
+#define NV_PDISP_RG_SWAP_LOCKOUT_START                                              15:0 /* RWIUF */
+#define NV_PDISP_RG_SWAP_LOCKOUT_START_INIT                                   0x00000004 /* RWI-V */
+#define NV_PDISP_RG_ELV(i)                                         (0x00006308+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_ELV__SIZE_1                                                        8 /*       */
+#define NV_PDISP_RG_ELV_START                                                       14:0 /* RWIUF */
+#define NV_PDISP_RG_ELV_START_INIT                                            0x00000001 /* RWI-V */
+#define NV_PDISP_RG_UNDERFLOW(i)                                  (0x0000630C+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_UNDERFLOW__SIZE_1                                                 8 /*       */
+#define NV_PDISP_RG_UNDERFLOW_ENABLE                                                0:0 /* RWIVF */
+#define NV_PDISP_RG_UNDERFLOW_ENABLE_INIT                                    0x00000000 /* RWI-V */
+#define NV_PDISP_RG_UNDERFLOW_ENABLE_ENABLE                                  0x00000001 /* RW--V */
+#define NV_PDISP_RG_UNDERFLOW_ENABLE_DISABLE                                 0x00000000 /* RW--V */
+#define NV_PDISP_RG_UNDERFLOW_UNDERFLOWED                                           4:4 /* RWIVF */
+#define NV_PDISP_RG_UNDERFLOW_UNDERFLOWED_INIT                               0x00000000 /* RWI-V */
+#define NV_PDISP_RG_UNDERFLOW_UNDERFLOWED_CLR                                0x00000001 /* -W--V */
+#define NV_PDISP_RG_UNDERFLOW_UNDERFLOWED_YES                                0x00000001 /* R---V */
+#define NV_PDISP_RG_UNDERFLOW_UNDERFLOWED_NO                                 0x00000000 /* R---V */
+#define NV_PDISP_RG_UNDERFLOW_LOADV_UNDERFLOWED                                     5:5 /* RWIVF */
+#define NV_PDISP_RG_UNDERFLOW_LOADV_UNDERFLOWED_INIT                         0x00000000 /* RWI-V */
+#define NV_PDISP_RG_UNDERFLOW_LOADV_UNDERFLOWED_CLR                          0x00000001 /* -W--V */
+#define NV_PDISP_RG_UNDERFLOW_LOADV_UNDERFLOWED_YES                          0x00000001 /* R---V */
+#define NV_PDISP_RG_UNDERFLOW_LOADV_UNDERFLOWED_NO                           0x00000000 /* R---V */
+#define NV_PDISP_RG_UNDERFLOW_MODE                                                  8:8 /* RWIVF */
+#define NV_PDISP_RG_UNDERFLOW_MODE_INIT                                      0x00000000 /* RWI-V */
+#define NV_PDISP_RG_UNDERFLOW_MODE_REPEAT                                    0x00000000 /* RW--V */
+#define NV_PDISP_RG_UNDERFLOW_MODE_RED                                       0x00000001 /* RW--V */
+#define NV_PDISP_RG_UNDERFLOW_FRAMES_UFLOWED                                      23:16 /* R-IVF */
+#define NV_PDISP_RG_UNDERFLOW_FRAMES_UFLOWED_INIT                            0x00000000 /* R-I-V */
+#define NV_PDISP_RG_UNDERFLOW_FRAMES_UFLOWED_RST                                  24:24 /* RWIVF */
+#define NV_PDISP_RG_UNDERFLOW_FRAMES_UFLOWED_RST_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_RG_UNDERFLOW_FRAMES_UFLOWED_RST_RST_DONE                    0x00000000 /* R---V */
+#define NV_PDISP_RG_UNDERFLOW_FRAMES_UFLOWED_RST_RST_PENDING                 0x00000001 /* R---V */
+#define NV_PDISP_RG_UNDERFLOW_FRAMES_UFLOWED_RST_RST_TRIGGER                 0x00000001 /* -W--V */
+#define NV_PDISP_RG_UNDERFLOW_PIXEL__SIZE_1                                           8 /*       */
+#define NV_PDISP_RG_UNDERFLOW_PIXEL_CNT                                             31:0 /* RWIVF */
+#define NV_PDISP_RG_UNDERFLOW_PIXEL_CNT_INIT                                  0x00000000 /* R-I-V */
+#define NV_PDISP_RG_UNDERFLOW_PIXEL_CNT_CLR                                   0x00000000 /* -W--V */
+#define NV_PDISP_RG_STATUS(i)                                     (0x00006314+(i)*2048) /* R--4A */
+#define NV_PDISP_RG_STATUS__SIZE_1                                                    8 /*       */
+#define NV_PDISP_RG_STATUS_STALLED                                                  3:3 /* R--VF */
+#define NV_PDISP_RG_STATUS_STALLED_NO                                        0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_STALLED_YES                                       0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_EXTERNAL_UNSTALL_EVENT_CNT                               8:5 /* R-IVF */
+#define NV_PDISP_RG_STATUS_EXTERNAL_UNSTALL_EVENT_CNT_INIT                   0x00000000 /* R-I-V */
+#define NV_PDISP_RG_STATUS_RG_UNSTALL_CNT                                          12:9 /* R-IVF */
+#define NV_PDISP_RG_STATUS_RG_UNSTALL_CNT_INIT                               0x00000000 /* R-I-V */
+#define NV_PDISP_RG_STATUS_ACT_HEAD_OPMODE                                        15:14 /* R--VF */
+#define NV_PDISP_RG_STATUS_ACT_HEAD_OPMODE_SLEEP                             0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_ACT_HEAD_OPMODE_SNOOZE                            0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_ACT_HEAD_OPMODE_AWAKE                             0x00000002 /* R---V */
+#define NV_PDISP_RG_STATUS_HSYNC                                                  16:16 /* R--VF */
+#define NV_PDISP_RG_STATUS_HSYNC_INACTIVE                                    0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_HSYNC_ACTIVE                                      0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_HBLNK                                                  17:17 /* R--VF */
+#define NV_PDISP_RG_STATUS_HBLNK_INACTIVE                                    0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_HBLNK_ACTIVE                                      0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_VSYNC                                                  20:20 /* R--VF */
+#define NV_PDISP_RG_STATUS_VSYNC_INACTIVE                                    0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_VSYNC_ACTIVE                                      0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_VBLNK                                                  21:21 /* R--VF */
+#define NV_PDISP_RG_STATUS_VBLNK_INACTIVE                                    0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_VBLNK_ACTIVE                                      0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_FID                                                    22:22 /* R--UF */
+#define NV_PDISP_RG_STATUS_FID_FLD0                                          0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_FID_FLD1                                          0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_BLNK                                                   24:24 /* R--VF */
+#define NV_PDISP_RG_STATUS_BLNK_INACTIVE                                     0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_BLNK_ACTIVE                                       0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_VACT_SPACE                                             25:25 /* R--VF */
+#define NV_PDISP_RG_STATUS_VACT_SPACE_INACTIVE                               0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_VACT_SPACE_ACTIVE                                 0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_STEREO                                                 27:27 /* R--VF */
+#define NV_PDISP_RG_STATUS_STEREO_RIGHT                                      0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_STEREO_LEFT                                       0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_VIEWPORT                                               28:28 /* R--VF */
+#define NV_PDISP_RG_STATUS_VIEWPORT_INACTIVE                                 0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_VIEWPORT_ACTIVE                                   0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_BORDER                                                 29:29 /* R--VF */
+#define NV_PDISP_RG_STATUS_BORDER_INACTIVE                                   0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_BORDER_ACTIVE                                     0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_LOCKED                                                 30:30 /* R--VF */
+#define NV_PDISP_RG_STATUS_LOCKED_FALSE                                      0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_LOCKED_TRUE                                       0x00000001 /* R---V */
+#define NV_PDISP_RG_STATUS_FLIPLOCKED                                             31:31 /* R--VF */
+#define NV_PDISP_RG_STATUS_FLIPLOCKED_FALSE                                  0x00000000 /* R---V */
+#define NV_PDISP_RG_STATUS_FLIPLOCKED_TRUE                                   0x00000001 /* R---V */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP(i)                            (0x00006318+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP__SIZE_1                                           8 /*       */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_VALUE                                          19:0 /* RWIUF */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_VALUE_INIT                               0x00000000 /* RWI-V */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_WRITE_MODE                                    28:28 /* RWIUF */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_WRITE_MODE_ACTIVE                        0x00000000 /* RW--V */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_WRITE_MODE_ASSEMBLY                      0x00000001 /* RW--V */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_WRITE_MODE_INIT                          0x00000000 /* RWI-V */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_UPDATE                                        29:29 /* RWIUF */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_UPDATE_IMMEDIATE                         0x00000000 /* RW--V */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_UPDATE_CORE                              0x00000001 /* RW--V */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_UPDATE_INIT                              0x00000000 /* RWI-V */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_STATUS                                        31:30 /* R--UF */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_STATUS_ACTIVE                            0x00000000 /* R---V */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_STATUS_ARMED                             0x00000001 /* R---V */
+#define NV_PDISP_RG_UNSTALL_SPOOLUP_STATUS_ASSEMBLY                          0x00000002 /* R---V */
+#define NV_PDISP_RG_IN_LOADV_COUNTER(i)                            (0x00006320+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_IN_LOADV_COUNTER__SIZE_1                                           8 /*       */
+#define NV_PDISP_RG_IN_LOADV_COUNTER_VALUE                                          31:0 /* RWIUF */
+#define NV_PDISP_RG_IN_LOADV_COUNTER_VALUE_INIT                               0x00000000 /* RWI-V */
+#define NV_PDISP_RG_IN_LOADV_COUNTER_VALUE_ZERO                               0x00000000 /* RW--V */
+#define NV_PDISP_RG_DPCA(i)                                       (0x00006330+(i)*2048) /* R--4A */
+#define NV_PDISP_RG_DPCA__SIZE_1                                                      8 /*       */
+#define NV_PDISP_RG_DPCA_LINE_CNT                                                  15:0 /* R--UF */
+#define NV_PDISP_RG_DPCA_FRM_CNT                                                  31:16 /* R--UF */
+#define NV_PDISP_RG_DPCB(i)                                       (0x00006334+(i)*2048) /* R--4A */
+#define NV_PDISP_RG_DPCB__SIZE_1                                                      8 /*       */
+#define NV_PDISP_RG_DPCB_PIXEL_CNT                                                 15:0 /* R--UF */
+#define NV_PDISP_RG_LINE_A_INTR(i)                                  (0x00006348+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_LINE_A_INTR__SIZE_1                                                 8 /*       */
+#define NV_PDISP_RG_LINE_A_INTR_LINE_CNT                                             15:0 /* RWIUF */
+#define NV_PDISP_RG_LINE_A_INTR_LINE_CNT_INIT                                  0x0000FFFF /* RWI-V */
+#define NV_PDISP_RG_LINE_A_INTR_ENABLE                                              31:31 /* RWIUF */
+#define NV_PDISP_RG_LINE_A_INTR_ENABLE_INIT                                    0x00000000 /* RWI-V */
+#define NV_PDISP_RG_LINE_A_INTR_ENABLE_NO                                      0x00000000 /* RW--V */
+#define NV_PDISP_RG_LINE_A_INTR_ENABLE_YES                                     0x00000001 /* RW--V */
+#define NV_PDISP_RG_LINE_B_INTR(i)                              (0x0000634C+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_LINE_B_INTR__SIZE_1                                             8 /*       */
+#define NV_PDISP_RG_LINE_B_INTR_LINE_CNT                                         15:0 /* RWIUF */
+#define NV_PDISP_RG_LINE_B_INTR_LINE_CNT_INIT                              0x0000FFFF /* RWI-V */
+#define NV_PDISP_RG_LINE_B_INTR_ENABLE                                          31:31 /* RWIUF */
+#define NV_PDISP_RG_LINE_B_INTR_ENABLE_INIT                                0x00000000 /* RWI-V */
+#define NV_PDISP_RG_LINE_B_INTR_ENABLE_NO                                  0x00000000 /* RW--V */
+#define NV_PDISP_RG_LINE_B_INTR_ENABLE_YES                                 0x00000001 /* RW--V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH(i)                  (0x00006360+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH__SIZE_1                                8 /*       */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_EXTEND_HEIGHT                        13:0 /* R-IUF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_EXTEND_HEIGHT_INIT             0x00000000 /* R-I-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_EXTEND_ENABLE                       14:14 /* R-IVF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_EXTEND_ENABLE_INIT             0x00000000 /* R-I-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_EXTEND_ENABLE_NO               0x00000000 /* R---V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_EXTEND_ENABLE_YES              0x00000001 /* R---V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_SET_HEIGHT                          29:16 /* RWIUF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_SET_HEIGHT_INIT                0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_SET_ENABLE                          30:30 /* RWIVF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_SET_ENABLE_INIT                0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_SET_ENABLE_NO                  0x00000000 /* RW--V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_SET_ENABLE_YES                 0x00000001 /* RW--V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_UPDATE                              31:31 /* RWIVF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_UPDATE_INIT                    0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_UPDATE_DONE                    0x00000000 /* R---V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_UPDATE_PENDING                 0x00000001 /* R---V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_BACK_PORCH_UPDATE_TRIGGER                 0x00000001 /* -W--V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH(i)                 (0x00006364+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH__SIZE_1                                8 /*       */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_EXTEND_HEIGHT                       13:0 /* R-IUF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_EXTEND_HEIGHT_INIT            0x00000000 /* R-I-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_EXTEND_ENABLE                      14:14 /* R-IVF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_EXTEND_ENABLE_INIT            0x00000000 /* R-I-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_EXTEND_ENABLE_NO              0x00000000 /* R---V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_EXTEND_ENABLE_YES             0x00000001 /* R---V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_SET_HEIGHT                         29:16 /* RWIUF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_SET_HEIGHT_INIT               0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_SET_ENABLE                         30:30 /* RWIVF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_SET_ENABLE_INIT               0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_SET_ENABLE_NO                 0x00000000 /* RW--V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_SET_ENABLE_YES                0x00000001 /* RW--V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_UPDATE                             31:31 /* RWIVF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_UPDATE_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_UPDATE_DONE                   0x00000000 /* R---V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_UPDATE_PENDING                0x00000001 /* R---V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_FRONT_PORCH_UPDATE_TRIGGER                0x00000001 /* -W--V */
+#define NV_PDISP_RG_RASTER_EXTEND(i)                              (0x00006368+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_RASTER_EXTEND__SIZE_1                                             8 /*       */
+#define NV_PDISP_RG_RASTER_EXTEND_EXTEND_WIDTH                                     13:0 /* R-IUF */
+#define NV_PDISP_RG_RASTER_EXTEND_EXTEND_WIDTH_INIT                          0x00000000 /* R-I-V */
+#define NV_PDISP_RG_RASTER_EXTEND_EXTEND_ENABLE                                   14:14 /* R-IVF */
+#define NV_PDISP_RG_RASTER_EXTEND_EXTEND_ENABLE_INIT                         0x00000000 /* R-I-V */
+#define NV_PDISP_RG_RASTER_EXTEND_EXTEND_ENABLE_NO                           0x00000000 /* R---V */
+#define NV_PDISP_RG_RASTER_EXTEND_EXTEND_ENABLE_YES                          0x00000001 /* R---V */
+#define NV_PDISP_RG_RASTER_EXTEND_SET_WIDTH                                       29:16 /* RWIUF */
+#define NV_PDISP_RG_RASTER_EXTEND_SET_WIDTH_INIT                             0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_EXTEND_SET_ENABLE                                      30:30 /* RWIVF */
+#define NV_PDISP_RG_RASTER_EXTEND_SET_ENABLE_INIT                            0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_EXTEND_SET_ENABLE_NO                              0x00000000 /* RW--V */
+#define NV_PDISP_RG_RASTER_EXTEND_SET_ENABLE_YES                             0x00000001 /* RW--V */
+#define NV_PDISP_RG_RASTER_EXTEND_UPDATE                                          31:31 /* RWIVF */
+#define NV_PDISP_RG_RASTER_EXTEND_UPDATE_INIT                                0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_EXTEND_UPDATE_DONE                                0x00000000 /* R---V */
+#define NV_PDISP_RG_RASTER_EXTEND_UPDATE_PENDING                             0x00000001 /* R---V */
+#define NV_PDISP_RG_RASTER_EXTEND_UPDATE_TRIGGER                             0x00000001 /* -W--V */
+#define NV_PDISP_RG_HEAD_CLK_CAP(i)                                        (0x000063C0+(i)*2048) /* R--4A */
+#define NV_PDISP_RG_HEAD_CLK_CAP__SIZE_1                                                       8 /*       */
+#define NV_PDISP_RG_HEAD_CLK_CAP_PCLK_MAX                                                    7:0 /* R--UF */
+#define NV_PDISP_RG_MISC_CTL(i)                                     (0x000063C4+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_MISC_CTL__SIZE_1                                                    8 /*       */
+#define NV_PDISP_RG_MISC_CTL_FORCE_UNSTALL                                            4:4 /* RWIVF */
+#define NV_PDISP_RG_MISC_CTL_FORCE_UNSTALL_INIT                                0x00000000 /* R-I-V */
+#define NV_PDISP_RG_MISC_CTL_FORCE_UNSTALL_DONE                                0x00000000 /* R---V */
+#define NV_PDISP_RG_MISC_CTL_FORCE_UNSTALL_PENDING                             0x00000001 /* R---V */
+#define NV_PDISP_RG_MISC_CTL_FORCE_UNSTALL_TRIGGER                             0x00000001 /* -W--V */
+#define NV_PDISP_RG_MISC_CTL_UNSTALL_CNT_RST                                        13:13 /* RWIVF */
+#define NV_PDISP_RG_MISC_CTL_UNSTALL_CNT_RST_INIT                              0x00000000 /* R-I-V */
+#define NV_PDISP_RG_MISC_CTL_UNSTALL_CNT_RST_DONE                              0x00000000 /* R---V */
+#define NV_PDISP_RG_MISC_CTL_UNSTALL_CNT_RST_PENDING                           0x00000001 /* R---V */
+#define NV_PDISP_RG_MISC_CTL_UNSTALL_CNT_RST_TRIGGER                           0x00000001 /* -W--V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_MULTIPLY(i)                     (0x000063C8+(i)*2048) /* RW-4A */
+#define NV_PDISP_RG_RASTER_V_EXTEND_MULTIPLY__SIZE_1                                    8 /*       */
+#define NV_PDISP_RG_RASTER_V_EXTEND_MULTIPLY_BACK_PORCH                               3:0 /* RWIUF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_MULTIPLY_BACK_PORCH_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_MULTIPLY_BACK_PORCH_TWO                     0x00000001/* RW--V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_MULTIPLY_BACK_PORCH_NONE                   0x00000000 /* RW--V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_MULTIPLY_FRONT_PORCH                               7:4 /* RWIUF */
+#define NV_PDISP_RG_RASTER_V_EXTEND_MULTIPLY_FRONT_PORCH_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_MULTIPLY_FRONT_PORCH_TWO                    0x00000001 /* RW--V */
+#define NV_PDISP_RG_RASTER_V_EXTEND_MULTIPLY_FRONT_PORCH_NONE                   0x00000000 /* RW--V */
+#define NV_PDISP_CURSOR_PIPE_METER(i)                               (0x00006208+(i)*2048) /* RW-4A */
+#define NV_PDISP_CURSOR_PIPE_METER__SIZE_1                                              8 /*       */
+#define NV_PDISP_CURSOR_PIPE_METER_VAL                                               15:0 /* RWIUF */
+#define NV_PDISP_CURSOR_PIPE_METER_VAL_INIT                                    0x00000000 /* RWI-V */
+#define NV_PDISP_CURSOR_PIPE_METER_RATIO                                            15:14 /* RWIUF */
+#define NV_PDISP_CURSOR_PIPE_METER_RATIO_INIT                                  0x00000000 /* RWI-V */
+#define NV_PDISP_CURSOR_PIPE_METER_RATIO_DIVIDE_BY_1                     0x00000000 /* RW--V */
+#define NV_PDISP_CURSOR_PIPE_METER_RATIO_DIVIDE_BY_2                     0x00000001 /* RW--V */
+#define NV_PDISP_CURSOR_PIPE_METER_RATIO_DIVIDE_BY_4                     0x00000002 /* RW--V */
+#define NV_PDISP_CURSOR_PIPE_METER_RATIO_DIVIDE_BY_8                     0x00000003 /* RW--V */
+#define NV_PDISP_CURSOR_PIPE_METER_PXVAL                                             13:0 /* RWIUF */
+#define NV_PDISP_CURSOR_PIPE_METER_PXVAL_INIT                                  0x00000000 /* RWI-V */
+#define NV_PDISP_CURSOR_PIPE_METER_WRITE_MODE                                       28:28 /* RWIVF */
+#define NV_PDISP_CURSOR_PIPE_METER_WRITE_MODE_ACTIVE                           0x00000000 /* RW--V */
+#define NV_PDISP_CURSOR_PIPE_METER_WRITE_MODE_INIT                             0x00000000 /* RWI-V */
+#define NV_PDISP_CURSOR_PIPE_METER_WRITE_MODE_ASSEMBLY                         0x00000001 /* RW--V */
+#define NV_PDISP_CURSOR_PIPE_METER_UPDATE                                           29:29 /* RWIVF */
+#define NV_PDISP_CURSOR_PIPE_METER_UPDATE_IMMEDIATE                            0x00000000 /* RW--V */
+#define NV_PDISP_CURSOR_PIPE_METER_UPDATE_INIT                                 0x00000000 /* RWI-V */
+#define NV_PDISP_CURSOR_PIPE_METER_UPDATE_CORE                                 0x00000001 /* RW--V */
+#define NV_PDISP_CURSOR_PIPE_METER_STATUS                                           31:30 /* R--VF */
+#define NV_PDISP_CURSOR_PIPE_METER_STATUS_ACTIVE                               0x00000000 /* R---V */
+#define NV_PDISP_CURSOR_PIPE_METER_STATUS_ARMED                                0x00000001 /* R---V */
+#define NV_PDISP_CURSOR_PIPE_METER_STATUS_ASSEMBLY                             0x00000002 /* R---V */
+#define NV_PDISP_SF_TEST(i)                                       (0x0000650C+(i)*2048) /* R--4A */
+#define NV_PDISP_SF_TEST__SIZE_1                                                      8 /*       */
+#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE                                           9:8 /* R--UF */
+#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_SLEEP                              0x00000000 /* R---V */
+#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_SNOOZE                             0x00000001 /* R---V */
+#define NV_PDISP_SF_TEST_ACT_HEAD_OPMODE_AWAKE                              0x00000002 /* R---V */
+#define NV_PDISP_SF_TEST_OWNER_MASK                                             13:10 /* R--UF */
+#define NV_PDISP_SF_TEST_OWNER_MASK_HEAD0                                  0x00000001 /* R---V */
+#define NV_PDISP_SF_TEST_OWNER_MASK_HEAD1                                  0x00000002 /* R---V */
+#define NV_PDISP_SF_TEST_OWNER_MASK_HEAD2                                  0x00000004 /* R---V */
+#define NV_PDISP_SF_TEST_OWNER_MASK_HEAD3                                  0x00000008 /* R---V */
+#define NV_PDISP_SF_TEST_OWNER_MASK_NONE                                   0x00000000 /* R---V */
+#define NV_PDISP_SF_AUDIO_CNTRL0(i)                               (0x00006528+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_AUDIO_CNTRL0__SIZE_1                                              8 /*       */
+#define NV_PDISP_SF_AUDIO_CNTRL0_DEVICE_ENTRY                                       6:4 /* RWIVF */
+#define NV_PDISP_SF_AUDIO_CNTRL0_DEVICE_ENTRY_INIT                           0x00000007 /* RWI-V */
+#define NV_PDISP_SF_AUDIO_CNTRL0_DEVICE_ENTRY_NONE                           0x00000007 /* RW--V */
+#define NV_PDISP_SF_AUDIO_CNTRL0_DEVICE_ENTRY_ZERO                           0x00000000 /* RW--V */
+#define NV_PDISP_SF_AUDIO_CNTRL0_DEVICE_ENTRY_ONE                            0x00000001 /* RW--V */
+#define NV_PDISP_SF_AUDIO_CNTRL0_DEVICE_ENTRY_TWO                            0x00000002 /* RW--V */
+#define NV_PDISP_SF_AUDIO_CNTRL0_DEVICE_ENTRY_THREE                          0x00000003 /* RW--V */
+#define NV_PDISP_SF_AUDIO_CNTRL0_AFIFO_FLUSH                                      12:12 /* RWIVF */
+#define NV_PDISP_SF_AUDIO_CNTRL0_AFIFO_FLUSH_INIT                            0x00000001 /* RWI-V */
+#define NV_PDISP_SF_AUDIO_CNTRL0_AFIFO_FLUSH_ENABLED                         0x00000001 /* RW--V */
+#define NV_PDISP_SF_AUDIO_CNTRL0_AFIFO_FLUSH_DISABLED                        0x00000000 /* RW--V */
+#define NV_PDISP_SF_SPARE0(i)                                     (0x00006530+(i)*2048) /* RWI4A */
+#define NV_PDISP_SF_SPARE0__SIZE_1                                                    8 /*       */
+#define NV_PDISP_SF_SPARE0_DP_VERSION                                               0:0 /* RWIVF */
+#define NV_PDISP_SF_SPARE0_DP_VERSION_INIT                                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_SPARE0_DP_VERSION_11                                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_SPARE0_DP_VERSION_12                                     0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL(i)                                 (0x00006540+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_DP_LINKCTL__SIZE_1                                                8 /*       */
+#define NV_PDISP_SF_DP_LINKCTL_ENABLE                                               0:0 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_ENABLE_INIT                                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_ENABLE_YES                                    0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_ENABLE_NO                                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_TUSIZE                                               8:2 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_TUSIZE_INIT                                   0x00000040 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_SYNCMODE                                           10:10 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_SYNCMODE_INIT                                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_SYNCMODE_ENABLE                               0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_SYNCMODE_DISABLE                              0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_TRIGGER_SELECT                                     11:11 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_TRIGGER_SELECT_INIT                           0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_TRIGGER_SELECT_PRIMARY                        0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_TRIGGER_SELECT_SECONDARY                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_TRIGGER_RESERVED                                   13:12 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_TRIGGER_RESERVED_INIT                         0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_ENHANCEDFRAME                                      14:14 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_ENHANCEDFRAME_INIT                            0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_ENHANCEDFRAME_DISABLE                         0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_ENHANCEDFRAME_ENABLE                          0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_TRIGGER_ALL                                        15:15 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_TRIGGER_ALL_INIT                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_TRIGGER_ALL_NO                                0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_TRIGGER_ALL_YES                               0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_LANECOUNT                                          23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_LANECOUNT_INIT                                0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_LANECOUNT_ZERO                                0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_LANECOUNT_ONE                                 0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_LANECOUNT_TWO                                 0x00000003 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_LANECOUNT_FOUR                                0x0000000F /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_LANECOUNT_EIGHT                               0x000000FF /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_ENABLE                           24:24 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_ENABLE_INIT                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_ENABLE_NO                   0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_ENABLE_YES                  0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN                                  26:26 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_DONE                        0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_PENDING                     0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_TRIGGER                     0x00000001 /* -W--T */
+#define NV_PDISP_SF_DP_LINKCTL_SINGLE_HEAD_MST                                    27:27 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_SINGLE_HEAD_MST_INIT                          0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_SINGLE_HEAD_MST_DISABLE                       0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_SINGLE_HEAD_MST_ENABLE                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_MODE                             29:28 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_MODE_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_MODE_LOADV                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_MODE_IMMEDIATE              0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_FORCE_RATE_GOVERN_MODE_VACTIVE                0x00000003 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_FORMAT_MODE                                        30:30 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_FORMAT_MODE_INIT                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_FORMAT_MODE_SINGLE_STREAM                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_FORMAT_MODE_MULTI_STREAM                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_AUDIO_OVER_RIGHT_PANEL_ENABLE                      31:31 /* RWIVF */
+#define NV_PDISP_SF_DP_LINKCTL_AUDIO_OVER_RIGHT_PANEL_ENABLE_INIT            0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_LINKCTL_AUDIO_OVER_RIGHT_PANEL_ENABLE_NO              0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_LINKCTL_AUDIO_OVER_RIGHT_PANEL_ENABLE_YES             0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_MN(i)                                      (0x0000654C+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_DP_MN__SIZE_1                                                     8 /*       */
+#define NV_PDISP_SF_DP_MN_N_VAL                                                    23:0 /* RWIVF */
+#define NV_PDISP_SF_DP_MN_N_VAL_INIT                                         0x00008000 /* RWI-V */
+#define NV_PDISP_SF_DP_MN_M_DELTA                                                 27:24 /* RWIVF */
+#define NV_PDISP_SF_DP_MN_M_DELTA_INIT                                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_MN_SECONDARY_OVERRIDE                                      28:28 /* RWIVF */
+#define NV_PDISP_SF_DP_MN_SECONDARY_OVERRIDE_INIT                            0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_MN_SECONDARY_OVERRIDE_DISABLE                         0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_MN_SECONDARY_OVERRIDE_ENABLE                          0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_MN_M_MOD                                                   31:30 /* RWIVF */
+#define NV_PDISP_SF_DP_MN_M_MOD_INIT                                         0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_MN_M_MOD_NONE                                         0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_MN_M_MOD_INC                                          0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_MN_M_MOD_DEC                                          0x00000002 /* RW--V */
+#define NV_PDISP_SF_DP_CONFIG(i)                                  (0x00006550+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_DP_CONFIG__SIZE_1                                                 8 /*       */
+#define NV_PDISP_SF_DP_CONFIG_WATERMARK                                             5:0 /* RWIVF */
+#define NV_PDISP_SF_DP_CONFIG_WATERMARK_INIT                                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_COUNT                                      14:8 /* RWIVF */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_COUNT_INIT                           0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_FRAC                                      19:16 /* RWIVF */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_FRAC_INIT                            0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_POLARITY                                  24:24 /* RWIVF */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_POLARITY_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_POLARITY_NEGATIVE                    0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_POLARITY_POSITIVE                    0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_CNTL_MODE                                 27:26 /* RWIVF */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_CNTL_MODE_INIT                       0x00000002 /* RWI-V */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_CNTL_MODE_DISABLE                    0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_CNTL_MODE_LEGACY                     0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_CONFIG_ACTIVESYM_CNTL_MODE_AUTO                       0x00000002 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL(i)                              (0x00006560+(i)*2048) /* RWI4A */
+#define NV_PDISP_SF_DP_AUDIO_CTRL__SIZE_1                                             8 /*       */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_ENABLE                                            0:0 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_ENABLE_INIT                                0x00000001 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_ENABLE_NO                                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_ENABLE_YES                                 0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_MUTE                                              3:2 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_MUTE_INIT                                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_MUTE_AUTO                                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_MUTE_DISABLE                               0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_MUTE_ENABLE                                0x00000002 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_PACKETID                                         15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_PACKETID_INIT                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_MUTE_STATUS                                     21:21 /* R-IVF */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_MUTE_STATUS_INIT                           0x00000001 /* R-I-V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_MUTE_STATUS_ENABLE                         0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_MUTE_STATUS_DISABLE                        0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_NEW_SETTINGS                                    31:31 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_NEW_SETTINGS_INIT                          0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_NEW_SETTINGS_DONE                          0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_NEW_SETTINGS_PENDING                       0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_AUDIO_CTRL_NEW_SETTINGS_TRIGGER                       0x00000001 /* -W--T */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS(i)                    (0x00006568+(i)*2048) /* RWI4A */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS__SIZE_1                                   8 /*       */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_VALUE                                  16:0 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_VALUE_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_WRITE_MODE                            28:28 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_WRITE_MODE_ACTIVE                0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_WRITE_MODE_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_WRITE_MODE_ASSEMBLY              0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_UPDATE                                29:29 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_UPDATE_IMMEDIATE                 0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_UPDATE_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_UPDATE_CORE                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_STATUS                                31:30 /* R-IVF */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_STATUS_ACTIVE                    0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_STATUS_ARMED                     0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_AUDIO_HBLANK_SYMBOLS_STATUS_ASSEMBLY                  0x00000002 /* R---V */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS(i)                    (0x0000656C+(i)*2048) /* RWI4A */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS__SIZE_1                                   8 /*       */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_VALUE                                  20:0 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_VALUE_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_WRITE_MODE                            28:28 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_WRITE_MODE_ACTIVE                0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_WRITE_MODE_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_WRITE_MODE_ASSEMBLY              0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_UPDATE                                29:29 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_UPDATE_IMMEDIATE                 0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_UPDATE_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_UPDATE_CORE                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_STATUS                                31:30 /* R-IVF */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_STATUS_ACTIVE                    0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_STATUS_ARMED                     0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_AUDIO_VBLANK_SYMBOLS_STATUS_ASSEMBLY                  0x00000002 /* R---V */
+#define NV_PDISP_SF_DP_STREAM_CTL(i)                              (0x00006578+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_DP_STREAM_CTL__SIZE_1                                             8 /*       */
+#define NV_PDISP_SF_DP_STREAM_CTL_START                                             5:0 /* RWIVF */
+#define NV_PDISP_SF_DP_STREAM_CTL_START_INIT                                 0x00000001 /* RWI-V */
+#define NV_PDISP_SF_DP_STREAM_CTL_LENGTH                                           13:8 /* RWIVF */
+#define NV_PDISP_SF_DP_STREAM_CTL_LENGTH_INIT                                0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_STREAM_CTL_START_ACTIVE                                    21:16 /* R-IVF */
+#define NV_PDISP_SF_DP_STREAM_CTL_START_ACTIVE_INIT                          0x00000001 /* R-I-V */
+#define NV_PDISP_SF_DP_STREAM_CTL_LENGTH_ACTIVE                                   29:24 /* R-IVF */
+#define NV_PDISP_SF_DP_STREAM_CTL_LENGTH_ACTIVE_INIT                         0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_STREAM_BW(i)                               (0x0000657C+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_DP_STREAM_BW__SIZE_1                                              8 /*       */
+#define NV_PDISP_SF_DP_STREAM_BW_ALLOCATED                                         15:0 /* RWIVF */
+#define NV_PDISP_SF_DP_STREAM_BW_ALLOCATED_INIT                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_STREAM_BW_TIMESLICE                                        31:16 /* RWIVF */
+#define NV_PDISP_SF_DP_STREAM_BW_TIMESLICE_INIT                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_STREAM_CTL_RESERVED__SIZE_1                                    8 /*       */
+#define NV_PDISP_SF_DP_STREAM_CTL_RESERVED__SIZE_2                                    6 /*       */
+#define NV_PDISP_SF_DP_STREAM_CTL_RESERVED_VALUE                                   31:0 /* RWIVF */
+#define NV_PDISP_SF_DP_STREAM_CTL_RESERVED_VALUE_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_STREAM_BW_RESERVED__SIZE_1                                     8 /*       */
+#define NV_PDISP_SF_DP_STREAM_BW_RESERVED__SIZE_2                                     6 /*       */
+#define NV_PDISP_SF_DP_STREAM_BW_RESERVED_VALUE                                    31:0 /* RWIVF */
+#define NV_PDISP_SF_DP_STREAM_BW_RESERVED_VALUE_INIT                         0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_STREAM_CTL_ARRAY(i,j) (((j)==0)?(0x00006578+(i)*2048):(0x00006584+(i)*2048)+((j)-1)*8) /*       */
+#define NV_PDISP_SF_DP_STREAM_CTL_ARRAY__SIZE_1                                                                               8 /*       */
+#define NV_PDISP_SF_DP_STREAM_CTL_ARRAY__SIZE_2                                                                               2 /*       */
+#define NV_PDISP_SF_DP_STREAM_BW_ARRAY(i,j)    (((j)==0)?(0x0000657C+(i)*2048):(0x00006588+(i)*2048)+((j)-1)*8) /*       */
+#define NV_PDISP_SF_DP_STREAM_BW_ARRAY__SIZE_1                                                                                8 /*       */
+#define NV_PDISP_SF_DP_STREAM_BW_ARRAY__SIZE_2                                                                                2 /*       */
+#define NV_PDISP_SF_HDMI_CTRL(i)                                  (0x000065C0+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_HDMI_CTRL__SIZE_1                                                 8 /*       */
+#define NV_PDISP_SF_HDMI_CTRL_REKEY                                                 6:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_CTRL_REKEY_INIT                                     0x00000038 /* RWI-V */
+#define NV_PDISP_SF_HDMI_CTRL_AUDIO_LAYOUT                                          8:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_CTRL_AUDIO_LAYOUT_2CH                               0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_CTRL_AUDIO_LAYOUT_8CH                               0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_CTRL_AUDIO_LAYOUT_SELECT                                 10:10 /* RWIVF */
+#define NV_PDISP_SF_HDMI_CTRL_AUDIO_LAYOUT_SELECT_HW_BASED                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_CTRL_AUDIO_LAYOUT_SELECT_SW_BASED                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_CTRL_SAMPLE_FLAT                                         12:12 /* RWIVF */
+#define NV_PDISP_SF_HDMI_CTRL_SAMPLE_FLAT_CLR                                0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_CTRL_SAMPLE_FLAT_SET                                0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_CTRL_MAX_AC_PACKET                                       20:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_CTRL_MAX_AC_PACKET_INIT                             0x00000002 /* RWI-V */
+#define NV_PDISP_SF_HDMI_CTRL_AUDIO                                               24:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_CTRL_AUDIO_DIS                                      0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_CTRL_AUDIO_EN                                       0x00000001 /* RWI-V */
+#define NV_PDISP_SF_HDMI_CTRL_ENABLE                                              30:30 /* RWIVF */
+#define NV_PDISP_SF_HDMI_CTRL_ENABLE_NO                                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_CTRL_ENABLE_YES                                     0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_CTRL_ENABLE_DIS                                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_CTRL_ENABLE_EN                                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW(i)                          (0x000065C8+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW__SIZE_1                                         8 /*       */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW_END                                           9:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW_END_INIT                               0x00000210 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW_START                                       25:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW_START_INIT                             0x00000200 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW_ENABLE                                      31:31 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW_ENABLE_NO                              0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW_ENABLE_YES                             0x00000001 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW_ENABLE_DIS                             0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSYNC_WINDOW_ENABLE_EN                              0x00000001 /* RW--V */
+#define NV_PDISP_SF_DSC_STREAM_CRC_CTRL(i)                                (0x00006658+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_DSC_STREAM_CRC_CTRL__SIZE_1                                               8 /*       */
+#define NV_PDISP_SF_DSC_STREAM_CRC_CTRL_ENABLE                                              0:0 /* RWIVF */
+#define NV_PDISP_SF_DSC_STREAM_CRC_CTRL_ENABLE_INIT                                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DSC_STREAM_CRC_CTRL_ENABLE_NO                                    0x00000000 /* RW--V */
+#define NV_PDISP_SF_DSC_STREAM_CRC_CTRL_ENABLE_YES                                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_DSC_STREAM_CRCA(i)                                   (0x0000665C+(i)*2048) /* R--4A */
+#define NV_PDISP_SF_DSC_STREAM_CRCA__SIZE_1                                                  8 /*       */
+#define NV_PDISP_SF_DSC_STREAM_CRCA_COUNT                                                  3:0 /* R--UF */
+#define NV_PDISP_SF_DSC_STREAM_CRCA_CRC0                                                 31:16 /* R--UF */
+#define NV_PDISP_SF_DSC_STREAM_CRCB(i)                                   (0x00006660+(i)*2048) /* R--4A */
+#define NV_PDISP_SF_DSC_STREAM_CRCB__SIZE_1                                                  8 /*       */
+#define NV_PDISP_SF_DSC_STREAM_CRCB_CRC1                                                  15:0 /* R--UF */
+#define NV_PDISP_SF_DSC_STREAM_CRCB_CRC2                                                 31:16 /* R--UF */
+#define NV_PDISP_SF_DP_IRQ(i)                          (0x00006664+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_DP_IRQ__SIZE_1                                                  8 /*       */
+#define NV_PDISP_SF_DP_IRQ_LANE0_PIXPACK_OVERFLOW0                                 0:0 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE0_PIXPACK_OVERFLOW0_INIT                     0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_PIXPACK_OVERFLOW0_NO                       0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_PIXPACK_OVERFLOW0_YES                      0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_PIXPACK_OVERFLOW0_RESET                    0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE1_PIXPACK_OVERFLOW0                                 1:1 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE1_PIXPACK_OVERFLOW0_INIT                     0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_PIXPACK_OVERFLOW0_NO                       0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_PIXPACK_OVERFLOW0_YES                      0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_PIXPACK_OVERFLOW0_RESET                    0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE2_PIXPACK_OVERFLOW0                                 2:2 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE2_PIXPACK_OVERFLOW0_INIT                     0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_PIXPACK_OVERFLOW0_NO                       0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_PIXPACK_OVERFLOW0_YES                      0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_PIXPACK_OVERFLOW0_RESET                    0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE3_PIXPACK_OVERFLOW0                                 3:3 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE3_PIXPACK_OVERFLOW0_INIT                     0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_PIXPACK_OVERFLOW0_NO                       0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_PIXPACK_OVERFLOW0_YES                      0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_PIXPACK_OVERFLOW0_RESET                    0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE0_PIXPACK_OVERFLOW1                                 4:4 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE0_PIXPACK_OVERFLOW1_INIT                     0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_PIXPACK_OVERFLOW1_NO                       0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_PIXPACK_OVERFLOW1_YES                      0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_PIXPACK_OVERFLOW1_RESET                    0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE1_PIXPACK_OVERFLOW1                                 5:5 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE1_PIXPACK_OVERFLOW1_INIT                     0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_PIXPACK_OVERFLOW1_NO                       0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_PIXPACK_OVERFLOW1_YES                      0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_PIXPACK_OVERFLOW1_RESET                    0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE2_PIXPACK_OVERFLOW1                                 6:6 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE2_PIXPACK_OVERFLOW1_INIT                     0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_PIXPACK_OVERFLOW1_NO                       0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_PIXPACK_OVERFLOW1_YES                      0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_PIXPACK_OVERFLOW1_RESET                    0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE3_PIXPACK_OVERFLOW1                                 7:7 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE3_PIXPACK_OVERFLOW1_INIT                     0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_PIXPACK_OVERFLOW1_NO                       0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_PIXPACK_OVERFLOW1_YES                      0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_PIXPACK_OVERFLOW1_RESET                    0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE0_STEER_ERROR0                                      8:8 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE0_STEER_ERROR0_INIT                          0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_STEER_ERROR0_NO                            0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_STEER_ERROR0_YES                           0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_STEER_ERROR0_RESET                         0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE1_STEER_ERROR0                                      9:9 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE1_STEER_ERROR0_INIT                          0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_STEER_ERROR0_NO                            0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_STEER_ERROR0_YES                           0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_STEER_ERROR0_RESET                         0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE2_STEER_ERROR0                                    10:10 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE2_STEER_ERROR0_INIT                          0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_STEER_ERROR0_NO                            0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_STEER_ERROR0_YES                           0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_STEER_ERROR0_RESET                         0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE3_STEER_ERROR0                                    11:11 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE3_STEER_ERROR0_INIT                          0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_STEER_ERROR0_NO                            0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_STEER_ERROR0_YES                           0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_STEER_ERROR0_RESET                         0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE0_STEER_ERROR1                                    12:12 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE0_STEER_ERROR1_INIT                          0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_STEER_ERROR1_NO                            0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_STEER_ERROR1_YES                           0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_STEER_ERROR1_RESET                         0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE1_STEER_ERROR1                                    13:13 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE1_STEER_ERROR1_INIT                          0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_STEER_ERROR1_NO                            0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_STEER_ERROR1_YES                           0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_STEER_ERROR1_RESET                         0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE2_STEER_ERROR1                                    14:14 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE2_STEER_ERROR1_INIT                          0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_STEER_ERROR1_NO                            0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_STEER_ERROR1_YES                           0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_STEER_ERROR1_RESET                         0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE3_STEER_ERROR1                                    15:15 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE3_STEER_ERROR1_INIT                          0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_STEER_ERROR1_NO                            0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_STEER_ERROR1_YES                           0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_STEER_ERROR1_RESET                         0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE0_FIFO_OVERFLOW0                                  16:16 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE0_FIFO_OVERFLOW0_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_FIFO_OVERFLOW0_NO                          0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_FIFO_OVERFLOW0_YES                         0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_FIFO_OVERFLOW0_RESET                       0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE1_FIFO_OVERFLOW0                                  17:17 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE1_FIFO_OVERFLOW0_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_FIFO_OVERFLOW0_NO                          0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_FIFO_OVERFLOW0_YES                         0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_FIFO_OVERFLOW0_RESET                       0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE2_FIFO_OVERFLOW0                                  18:18 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE2_FIFO_OVERFLOW0_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_FIFO_OVERFLOW0_NO                          0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_FIFO_OVERFLOW0_YES                         0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_FIFO_OVERFLOW0_RESET                       0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE3_FIFO_OVERFLOW0                                  19:19 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE3_FIFO_OVERFLOW0_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_FIFO_OVERFLOW0_NO                          0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_FIFO_OVERFLOW0_YES                         0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_FIFO_OVERFLOW0_RESET                       0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE0_FIFO_OVERFLOW1                                  20:20 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE0_FIFO_OVERFLOW1_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_FIFO_OVERFLOW1_NO                          0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_FIFO_OVERFLOW1_YES                         0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE0_FIFO_OVERFLOW1_RESET                       0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE1_FIFO_OVERFLOW1                                  21:21 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE1_FIFO_OVERFLOW1_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_FIFO_OVERFLOW1_NO                          0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_FIFO_OVERFLOW1_YES                         0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE1_FIFO_OVERFLOW1_RESET                       0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE2_FIFO_OVERFLOW1                                  22:22 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE2_FIFO_OVERFLOW1_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_FIFO_OVERFLOW1_NO                          0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_FIFO_OVERFLOW1_YES                         0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE2_FIFO_OVERFLOW1_RESET                       0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_LANE3_FIFO_OVERFLOW1                                  23:23 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_LANE3_FIFO_OVERFLOW1_INIT                        0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_FIFO_OVERFLOW1_NO                          0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_FIFO_OVERFLOW1_YES                         0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_LANE3_FIFO_OVERFLOW1_RESET                       0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_SPKT_OVERRUN0                                         24:24 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_SPKT_OVERRUN0_INIT                               0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_SPKT_OVERRUN0_NO                                 0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_SPKT_OVERRUN0_YES                                0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_SPKT_OVERRUN0_RESET                              0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_SPKT_OVERRUN1                                         25:25 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_SPKT_OVERRUN1_INIT                               0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_SPKT_OVERRUN1_NO                                 0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_SPKT_OVERRUN1_YES                                0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_SPKT_OVERRUN1_RESET                              0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_8LANE_SKEW0_GT64                                      26:26 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_8LANE_SKEW0_GT64_INIT                            0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_8LANE_SKEW0_GT64_NO                              0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_8LANE_SKEW0_GT64_YES                             0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_8LANE_SKEW0_GT64_RESET                           0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_8LANE_SKEW1_GT64                                      27:27 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_8LANE_SKEW1_GT64_INIT                            0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_8LANE_SKEW1_GT64_NO                              0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_8LANE_SKEW1_GT64_YES                             0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_8LANE_SKEW1_GT64_RESET                           0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_IN_FIFO0_OVERFLOW                                     28:28 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_IN_FIFO0_OVERFLOW_INIT                           0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_IN_FIFO0_OVERFLOW_NO                             0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_IN_FIFO0_OVERFLOW_YES                            0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_IN_FIFO0_OVERFLOW_RESET                          0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_IN_FIFO1_OVERFLOW                                     29:29 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_IN_FIFO1_OVERFLOW_INIT                           0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_IN_FIFO1_OVERFLOW_NO                             0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_IN_FIFO1_OVERFLOW_YES                            0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_IN_FIFO1_OVERFLOW_RESET                          0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_DSC_BUF_OVERFLOW                                      30:30 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_DSC_BUF_OVERFLOW_INIT                            0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_DSC_BUF_OVERFLOW_NO                              0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_DSC_BUF_OVERFLOW_YES                             0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_DSC_BUF_OVERFLOW_RESET                           0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_DSC_DPB_DETECT                                        31:31 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_DSC_DPB_DETECT_INIT                              0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_IRQ_DSC_DPB_DETECT_NO                                0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_DSC_DPB_DETECT_YES                               0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_IRQ_DSC_DPB_DETECT_RESET                             0x00000001 /* -W--C */
+#define NV_PDISP_SF_DP_IRQ_MASK(i)                          (0x00006668+(i)*2048) /* RWI4A */
+#define NV_PDISP_SF_DP_IRQ_MASK__SIZE_1                                                  8 /*       */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_PIXPACK_OVERFLOW0                                 0:0 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_PIXPACK_OVERFLOW0_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_PIXPACK_OVERFLOW0_DISABLE                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_PIXPACK_OVERFLOW0_ENABLE                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_PIXPACK_OVERFLOW0                                 1:1 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_PIXPACK_OVERFLOW0_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_PIXPACK_OVERFLOW0_DISABLE                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_PIXPACK_OVERFLOW0_ENABLE                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_PIXPACK_OVERFLOW0                                 2:2 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_PIXPACK_OVERFLOW0_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_PIXPACK_OVERFLOW0_DISABLE                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_PIXPACK_OVERFLOW0_ENABLE                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_PIXPACK_OVERFLOW0                                 3:3 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_PIXPACK_OVERFLOW0_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_PIXPACK_OVERFLOW0_DISABLE                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_PIXPACK_OVERFLOW0_ENABLE                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_PIXPACK_OVERFLOW1                                 4:4 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_PIXPACK_OVERFLOW1_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_PIXPACK_OVERFLOW1_DISABLE                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_PIXPACK_OVERFLOW1_ENABLE                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_PIXPACK_OVERFLOW1                                 5:5 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_PIXPACK_OVERFLOW1_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_PIXPACK_OVERFLOW1_DISABLE                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_PIXPACK_OVERFLOW1_ENABLE                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_PIXPACK_OVERFLOW1                                 6:6 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_PIXPACK_OVERFLOW1_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_PIXPACK_OVERFLOW1_DISABLE                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_PIXPACK_OVERFLOW1_ENABLE                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_PIXPACK_OVERFLOW1                                 7:7 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_PIXPACK_OVERFLOW1_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_PIXPACK_OVERFLOW1_DISABLE                  0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_PIXPACK_OVERFLOW1_ENABLE                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_STEER_ERROR0                                      8:8 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_STEER_ERROR0_INIT                          0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_STEER_ERROR0_DISABLE                       0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_STEER_ERROR0_ENABLE                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_STEER_ERROR0                                      9:9 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_STEER_ERROR0_INIT                          0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_STEER_ERROR0_DISABLE                       0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_STEER_ERROR0_ENABLE                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_STEER_ERROR0                                    10:10 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_STEER_ERROR0_INIT                          0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_STEER_ERROR0_DISABLE                       0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_STEER_ERROR0_ENABLE                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_STEER_ERROR0                                    11:11 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_STEER_ERROR0_INIT                          0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_STEER_ERROR0_DISABLE                       0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_STEER_ERROR0_ENABLE                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_STEER_ERROR1                                    12:12 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_STEER_ERROR1_INIT                          0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_STEER_ERROR1_DISABLE                       0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_STEER_ERROR1_ENABLE                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_STEER_ERROR1                                    13:13 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_STEER_ERROR1_INIT                          0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_STEER_ERROR1_DISABLE                       0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_STEER_ERROR1_ENABLE                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_STEER_ERROR1                                    14:14 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_STEER_ERROR1_INIT                          0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_STEER_ERROR1_DISABLE                       0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_STEER_ERROR1_ENABLE                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_STEER_ERROR1                                    15:15 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_STEER_ERROR1_INIT                          0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_STEER_ERROR1_DISABLE                       0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_STEER_ERROR1_ENABLE                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_FIFO_OVERFLOW0                                  16:16 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_FIFO_OVERFLOW0_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_FIFO_OVERFLOW0_DISABLE                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_FIFO_OVERFLOW0_ENABLE                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_FIFO_OVERFLOW0                                  17:17 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_FIFO_OVERFLOW0_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_FIFO_OVERFLOW0_DISABLE                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_FIFO_OVERFLOW0_ENABLE                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_FIFO_OVERFLOW0                                  18:18 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_FIFO_OVERFLOW0_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_FIFO_OVERFLOW0_DISABLE                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_FIFO_OVERFLOW0_ENABLE                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_FIFO_OVERFLOW0                                  19:19 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_FIFO_OVERFLOW0_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_FIFO_OVERFLOW0_DISABLE                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_FIFO_OVERFLOW0_ENABLE                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_FIFO_OVERFLOW1                                  20:20 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_FIFO_OVERFLOW1_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_FIFO_OVERFLOW1_DISABLE                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE0_FIFO_OVERFLOW1_ENABLE                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_FIFO_OVERFLOW1                                  21:21 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_FIFO_OVERFLOW1_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_FIFO_OVERFLOW1_DISABLE                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE1_FIFO_OVERFLOW1_ENABLE                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_FIFO_OVERFLOW1                                  22:22 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_FIFO_OVERFLOW1_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_FIFO_OVERFLOW1_DISABLE                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE2_FIFO_OVERFLOW1_ENABLE                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_FIFO_OVERFLOW1                                  23:23 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_FIFO_OVERFLOW1_INIT                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_FIFO_OVERFLOW1_DISABLE                     0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_LANE3_FIFO_OVERFLOW1_ENABLE                      0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_SPKT_OVERRUN0                                         24:24 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_SPKT_OVERRUN0_INIT                               0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_SPKT_OVERRUN0_DISABLE                            0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_SPKT_OVERRUN0_ENABLE                             0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_SPKT_OVERRUN1                                         25:25 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_SPKT_OVERRUN1_INIT                               0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_SPKT_OVERRUN1_DISABLE                            0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_SPKT_OVERRUN1_ENABLE                             0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_8LANE_SKEW0_GT64                                      26:26 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_8LANE_SKEW0_GT64_INIT                            0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_8LANE_SKEW0_GT64_DISABLE                         0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_8LANE_SKEW0_GT64_ENABLE                          0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_8LANE_SKEW1_GT64                                      27:27 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_8LANE_SKEW1_GT64_INIT                            0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_8LANE_SKEW1_GT64_DISABLE                         0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_8LANE_SKEW1_GT64_ENABLE                          0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_IN_FIFO0_OVERFLOW                                     28:28 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_IN_FIFO0_OVERFLOW_INIT                           0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_IN_FIFO0_OVERFLOW_DISABLE                        0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_IN_FIFO0_OVERFLOW_ENABLE                         0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_IN_FIFO1_OVERFLOW                                     29:29 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_IN_FIFO1_OVERFLOW_INIT                           0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_IN_FIFO1_OVERFLOW_DISABLE                        0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_IN_FIFO1_OVERFLOW_ENABLE                         0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_DSC_BUF_OVERFLOW                                      30:30 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_DSC_BUF_OVERFLOW_INIT                            0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_DSC_BUF_OVERFLOW_DISABLE                         0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_DSC_BUF_OVERFLOW_ENABLE                          0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_DSC_DPB_DETECT                                        31:31 /* RWIVF */
+#define NV_PDISP_SF_DP_IRQ_MASK_DSC_DPB_DETECT_INIT                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_IRQ_MASK_DSC_DPB_DETECT_DISABLE                           0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_IRQ_MASK_DSC_DPB_DETECT_ENABLE                            0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_MSA0_DEBUG_MAUD(i)                          (0x0000666C+(i)*2048) /* R--4A */
+#define NV_PDISP_SF_DP_MSA0_DEBUG_MAUD__SIZE_1                                         8 /*       */
+#define NV_PDISP_SF_DP_MSA0_DEBUG_MAUD_VALUE                                        23:0 /* R--UF */
+#define NV_PDISP_SF_DP_MSA1_DEBUG_MAUD(i)                          (0x00006670+(i)*2048) /* R--4A */
+#define NV_PDISP_SF_DP_MSA1_DEBUG_MAUD__SIZE_1                                         8 /*       */
+#define NV_PDISP_SF_DP_MSA1_DEBUG_MAUD_VALUE                                        23:0 /* R--UF */
+#define NV_PDISP_SF_DP_MSA0_DEBUG_NAUD(i)                          (0x00006674+(i)*2048) /* R--4A */
+#define NV_PDISP_SF_DP_MSA0_DEBUG_NAUD__SIZE_1                                         8 /*       */
+#define NV_PDISP_SF_DP_MSA0_DEBUG_NAUD_VALUE                                        23:0 /* R--UF */
+#define NV_PDISP_SF_DP_MSA1_DEBUG_NAUD(i)                          (0x00006678+(i)*2048) /* R--4A */
+#define NV_PDISP_SF_DP_MSA1_DEBUG_NAUD__SIZE_1                                         8 /*       */
+#define NV_PDISP_SF_DP_MSA1_DEBUG_NAUD_VALUE                                        23:0 /* R--UF */
+#define NV_PDISP_SF_HDMI_ACR_DEBUG_CTS(i)                          (0x0000667C+(i)*2048) /* R--4A */
+#define NV_PDISP_SF_HDMI_ACR_DEBUG_CTS__SIZE_1                                         8 /*       */
+#define NV_PDISP_SF_HDMI_ACR_DEBUG_CTS_VALUE                                        19:0 /* R--UF */
+#define NV_PDISP_SF_DP_DEBUG2(i)                          (0x00006680+(i)*2048) /* RW-4A */
+#define NV_PDISP_SF_DP_DEBUG2__SIZE_1                                         8 /*       */
+#define NV_PDISP_SF_DP_DEBUG2_BS_WATERMARK                                  0:0 /* RWIVF */
+#define NV_PDISP_SF_DP_DEBUG2_BS_WATERMARK_INIT                      0x00000001 /* RWI-V */
+#define NV_PDISP_SF_DP_DEBUG2_BS_WATERMARK_DISABLE                   0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_DEBUG2_BS_WATERMARK_ENABLE                    0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_DEBUG2_LANE_FIFO_FLUSH_MODE                          1:1 /* RWIVF */
+#define NV_PDISP_SF_DP_DEBUG2_LANE_FIFO_FLUSH_MODE_INIT              0x00000001 /* RWI-V */
+#define NV_PDISP_SF_DP_DEBUG2_LANE_FIFO_FLUSH_MODE_NONE              0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_DEBUG2_LANE_FIFO_FLUSH_MODE_ASAP              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL(i)                    (0x000E0000+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL__SIZE_1                                   8 /*       */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE                                  0:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE_NO                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE_YES                       0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE_DIS                       0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE_EN                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_OTHER                                   4:4 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_OTHER_DIS                        0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_OTHER_EN                         0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_SINGLE                                  8:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_SINGLE_DIS                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_SINGLE_EN                        0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_CHKSUM_HW                               9:9 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_CHKSUM_HW_ENABLE                 0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_CHKSUM_HW_DISABLE                0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_CHKSUM_HW_INIT                   0x00000001 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_STATUS(i)                  (0x000E0004+(i)*1024) /* R--4A */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_STATUS__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_STATUS_SENT                                  0:0 /* R-IVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_STATUS_SENT_DONE                      0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_STATUS_SENT_WAITING                   0x00000000 /* R---V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_STATUS_SENT_INIT                      0x00000000 /* R-I-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_HEADER(i)                  (0x000E0008+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_HEADER__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_HEADER_HB0                                   7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_HEADER_HB0_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_HEADER_HB1                                  15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_HEADER_HB1_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_HEADER_HB2                                 23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_HEADER_HB2_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_LOW(i)            (0x000E000C+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_LOW__SIZE_1                           8 /*       */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_LOW_PB0                             7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_LOW_PB0_INIT                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_LOW_PB1                            15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_LOW_PB1_INIT                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_LOW_PB2                           23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_LOW_PB2_INIT                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_LOW_PB3                           31:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_LOW_PB3_INIT                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_HIGH(i)           (0x000E0010+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_HIGH__SIZE_1                          8 /*       */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_HIGH_PB4                            7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_HIGH_PB4_INIT                0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_HIGH_PB5                           15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_HIGH_PB5_INIT                0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_HIGH_PB6                          23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK0_HIGH_PB6_INIT                0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_LOW(i)            (0x000E0014+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_LOW__SIZE_1                           8 /*       */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_LOW_PB7                             7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_LOW_PB7_INIT                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_LOW_PB8                            15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_LOW_PB8_INIT                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_LOW_PB9                           23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_LOW_PB9_INIT                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_LOW_PB10                          31:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_LOW_PB10_INIT                0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_HIGH(i)           (0x000E0018+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_HIGH__SIZE_1                          8 /*       */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_HIGH_PB11                           7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_HIGH_PB11_INIT               0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_HIGH_PB12                          15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_HIGH_PB12_INIT               0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_HIGH_PB13                         23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_AVI_INFOFRAME_SUBPACK1_HIGH_PB13_INIT               0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL(i)                          (0x000E0040+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL__SIZE_1                                         8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_ENABLE                                        0:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_ENABLE_NO                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_ENABLE_YES                             0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_ENABLE_DIS                             0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_ENABLE_EN                              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_OTHER                                         4:4 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_OTHER_DIS                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_OTHER_EN                               0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_SINGLE                                        8:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_SINGLE_DIS                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_SINGLE_EN                              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_HBLANK                                      12:12 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_HBLANK_DIS                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_CTRL_HBLANK_EN                              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_GENERIC_STATUS(i)                        (0x000E0044+(i)*1024) /* R--4A */
+#define NV_PDISP_SF_HDMI_GENERIC_STATUS__SIZE_1                                       8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_STATUS_SENT                                        0:0 /* R-IVF */
+#define NV_PDISP_SF_HDMI_GENERIC_STATUS_SENT_DONE                            0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_GENERIC_STATUS_SENT_WAITING                         0x00000000 /* R---V */
+#define NV_PDISP_SF_HDMI_GENERIC_STATUS_SENT_INIT                            0x00000000 /* R-I-V */
+#define NV_PDISP_SF_HDMI_GENERIC_HEADER(i)                        (0x000E0048+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GENERIC_HEADER__SIZE_1                                       8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_HEADER_HB0                                         7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_HEADER_HB0_INIT                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_HEADER_HB1                                        15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_HEADER_HB1_INIT                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_HEADER_HB2                                       23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_HEADER_HB2_INIT                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_LOW(i)                  (0x000E004C+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_LOW__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_LOW_PB0                                   7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_LOW_PB0_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_LOW_PB1                                  15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_LOW_PB1_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_LOW_PB2                                 23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_LOW_PB2_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_LOW_PB3                                 31:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_LOW_PB3_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_HIGH(i)                 (0x000E0050+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_HIGH__SIZE_1                                8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_HIGH_PB4                                  7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_HIGH_PB4_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_HIGH_PB5                                 15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_HIGH_PB5_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_HIGH_PB6                                23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK0_HIGH_PB6_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_LOW(i)                  (0x000E0054+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_LOW__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_LOW_PB7                                   7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_LOW_PB7_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_LOW_PB8                                  15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_LOW_PB8_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_LOW_PB9                                 23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_LOW_PB9_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_LOW_PB10                                31:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_LOW_PB10_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_HIGH(i)                 (0x000E0058+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_HIGH__SIZE_1                                8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_HIGH_PB11                                 7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_HIGH_PB11_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_HIGH_PB12                                15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_HIGH_PB12_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_HIGH_PB13                               23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK1_HIGH_PB13_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_LOW(i)                  (0x000E005C+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_LOW__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_LOW_PB14                                  7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_LOW_PB14_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_LOW_PB15                                 15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_LOW_PB15_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_LOW_PB16                                23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_LOW_PB16_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_LOW_PB17                                31:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_LOW_PB17_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_HIGH(i)                 (0x000E0060+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_HIGH__SIZE_1                                8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_HIGH_PB18                                 7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_HIGH_PB18_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_HIGH_PB19                                15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_HIGH_PB19_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_HIGH_PB20                               23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK2_HIGH_PB20_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_LOW(i)                  (0x000E0064+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_LOW__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_LOW_PB21                                  7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_LOW_PB21_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_LOW_PB22                                 15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_LOW_PB22_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_LOW_PB23                                23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_LOW_PB23_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_LOW_PB24                                31:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_LOW_PB24_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_HIGH(i)                 (0x000E0068+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_HIGH__SIZE_1                                8 /*       */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_HIGH_PB25                                 7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_HIGH_PB25_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_HIGH_PB26                                15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_HIGH_PB26_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_HIGH_PB27                               23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GENERIC_SUBPACK3_HIGH_PB27_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL(i)                              (0x000E0080+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_ACR_CTRL__SIZE_1                                             8 /*       */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_PACKET_ENABLE                                     0:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_PACKET_ENABLE_NO                           0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_PACKET_ENABLE_YES                          0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_PACKET_ENABLE_DIS                          0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_PACKET_ENABLE_EN                           0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_ENABLE                                    16:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_ENABLE_NO                            0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_ENABLE_YES                           0x00000001 /* RWI-V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_ENABLE_DIS                           0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_ENABLE_EN                            0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_PRIORITY                                        20:20 /* RWIVF */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_PRIORITY_INIT                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_PRIORITY_HIGH                              0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_PRIORITY_LOW                               0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS                                           27:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_INIT                                 0x00000002 /* RWI-V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_32KHZ                                0x00000003 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_44_1KHZ                              0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_48KHZ                                0x00000002 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_88_2KHZ                              0x00000008 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_96KHZ                                0x0000000A /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_176_4KHZ                             0x0000000C /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_FREQS_192KHZ                               0x0000000E /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_CTS_SOURCE                                      31:31 /* RWIVF */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_CTS_SOURCE_INIT                            0x00000001 /* RWI-V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_CTS_SOURCE_HW                              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_ACR_CTRL_CTS_SOURCE_SW                              0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_GCP_CTRL(i)                              (0x000E00C0+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GCP_CTRL__SIZE_1                                             8 /*       */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_ENABLE                                            0:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_ENABLE_NO                                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_ENABLE_YES                                 0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_ENABLE_DIS                                 0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_ENABLE_EN                                  0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_OTHER                                             4:4 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_OTHER_DIS                                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_OTHER_EN                                   0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_SINGLE                                            8:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_SINGLE_DIS                                 0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GCP_CTRL_SINGLE_EN                                  0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS(i)                            (0x000E00C4+(i)*1024) /* R--4A */
+#define NV_PDISP_SF_HDMI_GCP_STATUS__SIZE_1                                           8 /*       */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_SENT                                            0:0 /* R-IVF */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_SENT_DONE                                0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_SENT_WAITING                             0x00000000 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_SENT_INIT                                0x00000000 /* R-I-V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_ACTIVE_START_PP                                 6:4 /* R--VF */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_ACTIVE_START_PP_0                        0x00000004 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_ACTIVE_START_PP_1                        0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_ACTIVE_START_PP_2                        0x00000002 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_ACTIVE_START_PP_3                        0x00000003 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_ACTIVE_END_PP                                  10:8 /* R--VF */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_ACTIVE_END_PP_0                          0x00000004 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_ACTIVE_END_PP_1                          0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_ACTIVE_END_PP_2                          0x00000002 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_ACTIVE_END_PP_3                          0x00000003 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_VSYNC_START_PP                                14:12 /* R--VF */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_VSYNC_START_PP_0                         0x00000004 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_VSYNC_START_PP_1                         0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_VSYNC_START_PP_2                         0x00000002 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_VSYNC_START_PP_3                         0x00000003 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_VSYNC_END_PP                                  18:16 /* R--VF */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_VSYNC_END_PP_0                           0x00000004 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_VSYNC_END_PP_1                           0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_VSYNC_END_PP_2                           0x00000002 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_VSYNC_END_PP_3                           0x00000003 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_HSYNC_START_PP                                22:20 /* R--VF */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_HSYNC_START_PP_0                         0x00000004 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_HSYNC_START_PP_1                         0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_HSYNC_START_PP_2                         0x00000002 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_HSYNC_START_PP_3                         0x00000003 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_HSYNC_END_PP                                  26:24 /* R--VF */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_HSYNC_END_PP_0                           0x00000004 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_HSYNC_END_PP_1                           0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_HSYNC_END_PP_2                           0x00000002 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_STATUS_HSYNC_END_PP_3                           0x00000003 /* R---V */
+#define NV_PDISP_SF_HDMI_GCP_SUBPACK(i)                           (0x000E00CC+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_GCP_SUBPACK__SIZE_1                                          8 /*       */
+#define NV_PDISP_SF_HDMI_GCP_SUBPACK_SB0                                            7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GCP_SUBPACK_SB0_INIT                                0x00000001 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GCP_SUBPACK_SB0_SET_AVMUTE                          0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_GCP_SUBPACK_SB0_CLR_AVMUTE                          0x00000010 /* RW--V */
+#define NV_PDISP_SF_HDMI_GCP_SUBPACK_SB1                                           15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GCP_SUBPACK_SB1_INIT                                0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_GCP_SUBPACK_SB2                                          23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_GCP_SUBPACK_SB2_INIT                                0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL(i)                          (0x000E0100+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSI_CTRL__SIZE_1                                         8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_ENABLE                                        0:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_ENABLE_NO                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_ENABLE_YES                             0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_ENABLE_DIS                             0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_ENABLE_EN                              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_OTHER                                         4:4 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_OTHER_DIS                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_OTHER_EN                               0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_SINGLE                                        8:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_SINGLE_DIS                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_SINGLE_EN                              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_CHKSUM_HW                                     9:9 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_CHKSUM_HW_ENABLE                       0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_CHKSUM_HW_EN                           0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_CHKSUM_HW_DISABLE                      0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_CHKSUM_HW_DIS                          0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_CHKSUM_HW_INIT                         0x00000001 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_VIDEO_FMT                                   16:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_VIDEO_FMT_SW_CONTROLLED                0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_VIDEO_FMT_HW_CONTROLLED                0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_VSI_CTRL_VIDEO_FMT_INIT                         0x00000001 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_STATUS(i)                        (0x000E0104+(i)*1024) /* R--4A */
+#define NV_PDISP_SF_HDMI_VSI_STATUS__SIZE_1                                       8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_STATUS_SENT                                        0:0 /* R-IVF */
+#define NV_PDISP_SF_HDMI_VSI_STATUS_SENT_DONE                            0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_VSI_STATUS_SENT_WAITING                         0x00000000 /* R---V */
+#define NV_PDISP_SF_HDMI_VSI_STATUS_SENT_INIT                            0x00000000 /* R-I-V */
+#define NV_PDISP_SF_HDMI_VSI_HEADER(i)                        (0x000E0108+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSI_HEADER__SIZE_1                                       8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_HEADER_HB0                                         7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_HEADER_HB0_INIT                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_HEADER_HB1                                        15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_HEADER_HB1_INIT                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_HEADER_HB2                                       23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_HEADER_HB2_INIT                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_LOW(i)                  (0x000E010C+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_LOW__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_LOW_PB0                                   7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_LOW_PB0_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_LOW_PB1                                  15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_LOW_PB1_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_LOW_PB2                                 23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_LOW_PB2_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_LOW_PB3                                 31:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_LOW_PB3_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_HIGH(i)                 (0x000E0110+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_HIGH__SIZE_1                                8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_HIGH_PB4                                  7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_HIGH_PB4_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_HIGH_PB5                                 15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_HIGH_PB5_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_HIGH_PB6                                23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK0_HIGH_PB6_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_LOW(i)                  (0x000E0114+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_LOW__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_LOW_PB7                                   7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_LOW_PB7_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_LOW_PB8                                  15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_LOW_PB8_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_LOW_PB9                                 23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_LOW_PB9_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_LOW_PB10                                31:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_LOW_PB10_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_HIGH(i)                 (0x000E0118+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_HIGH__SIZE_1                                8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_HIGH_PB11                                 7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_HIGH_PB11_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_HIGH_PB12                                15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_HIGH_PB12_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_HIGH_PB13                               23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK1_HIGH_PB13_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_LOW(i)                  (0x000E011C+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_LOW__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_LOW_PB14                                  7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_LOW_PB14_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_LOW_PB15                                 15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_LOW_PB15_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_LOW_PB16                                23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_LOW_PB16_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_LOW_PB17                                31:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_LOW_PB17_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_HIGH(i)                 (0x000E0120+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_HIGH__SIZE_1                                8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_HIGH_PB18                                 7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_HIGH_PB18_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_HIGH_PB19                                15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_HIGH_PB19_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_HIGH_PB20                               23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK2_HIGH_PB20_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_LOW(i)                  (0x000E0124+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_LOW__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_LOW_PB21                                  7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_LOW_PB21_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_LOW_PB22                                 15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_LOW_PB22_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_LOW_PB23                                23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_LOW_PB23_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_LOW_PB24                                31:24 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_LOW_PB24_INIT                      0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_HIGH(i)                 (0x000E0128+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_HIGH__SIZE_1                                8 /*       */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_HIGH_PB25                                 7:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_HIGH_PB25_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_HIGH_PB26                                15:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_HIGH_PB26_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_HIGH_PB27                               23:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_VSI_SUBPACK3_HIGH_PB27_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL(i)                  (0x000E0300+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_ENABLE                                0:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_ENABLE_YES                     0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_ENABLE_NO                      0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_ENABLE_INIT                    0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_IMMEDIATE                             1:1 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_IMMEDIATE_INIT                 0x00000000 /* R-I-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_IMMEDIATE_DONE                 0x00000000 /* R---V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_IMMEDIATE_PENDING              0x00000001 /* R---V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_IMMEDIATE_TRIGGER              0x00000001 /* -W--T */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_MSA_STEREO_OVERRIDE                   2:2 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_MSA_STEREO_OVERRIDE_YES        0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_MSA_STEREO_OVERRIDE_NO         0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_CTRL_MSA_STEREO_OVERRIDE_INIT       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_HEADER(i)                (0x000E0304+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_HEADER__SIZE_1                               8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_HEADER_HB0                                 7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_HEADER_HB0_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_HEADER_HB1                                15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_HEADER_HB1_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_HEADER_HB2                               23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_HEADER_HB2_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_HEADER_HB3                               31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_HEADER_HB3_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK0(i)              (0x000E0308+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK0__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK0_DB0                               7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK0_DB0_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK0_DB1                              15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK0_DB1_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK0_DB2                             23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK0_DB2_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK0_DB3                             31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK0_DB3_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK1(i)              (0x000E030c+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK1__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK1_DB4                               7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK1_DB4_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK1_DB5                              15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK1_DB5_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK1_DB6                             23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK1_DB6_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK1_DB7                             31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK1_DB7_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK2(i)              (0x000E0310+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK2__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK2_DB8                               7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK2_DB8_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK2_DB9                              15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK2_DB9_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK2_DB10                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK2_DB10_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK2_DB11                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK2_DB11_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK3(i)              (0x000E0314+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK3__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK3_DB12                              7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK3_DB12_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK3_DB13                             15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK3_DB13_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK3_DB14                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK3_DB14_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK3_DB15                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK3_DB15_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK4(i)              (0x000E0318+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK4__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK4_DB16                              7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK4_DB16_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK4_DB17                             15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK4_DB17_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK4_DB18                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK4_DB18_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK4_DB19                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK4_DB19_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK5(i)              (0x000E031c+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK5__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK5_DB20                              7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK5_DB20_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK5_DB21                             15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK5_DB21_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK5_DB22                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK5_DB22_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK5_DB23                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK5_DB23_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK6(i)              (0x000E0320+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK6__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK6_DB24                              7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK6_DB24_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK6_DB25                             15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK6_DB25_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK6_DB26                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK6_DB26_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK6_DB27                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK6_DB27_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK7(i)              (0x000E0324+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK7__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK7_DB28                              7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK7_DB28_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK7_DB29                             15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK7_DB29_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK7_DB30                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK7_DB30_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK7_DB31                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME_SUBPACK7_DB31_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_CTRL(i)                     (0x000E0330+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_CTRL__SIZE_1                                    8 /*       */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_CTRL_HEADER_OVERRIDE                          4:4 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_CTRL_HEADER_OVERRIDE_ENABLE            0x00000001 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_CTRL_HEADER_OVERRIDE_DISABLE           0x00000000 /* RW--V */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_CTRL_HEADER_OVERRIDE_INIT              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_HEADER(i)                  (0x000E0334+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_HEADER__SIZE_1                                 8 /*       */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_HEADER_HB0                                   7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_HEADER_HB0_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_HEADER_HB1                                  15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_HEADER_HB1_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_HEADER_HB2                                 23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_HEADER_HB2_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_HEADER_HB3                                 31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_AUDIO_INFOFRAME_HEADER_HB3_INIT                       0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_HEADER(i)                (0x000E0344+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_HEADER__SIZE_1                               8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_HEADER_HB0                                 7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_HEADER_HB0_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_HEADER_HB1                                15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_HEADER_HB1_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_HEADER_HB2                               23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_HEADER_HB2_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_HEADER_HB3                               31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_HEADER_HB3_INIT                     0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK0(i)              (0x000E0348+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK0__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK0_DB0                               7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK0_DB0_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK0_DB1                              15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK0_DB1_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK0_DB2                             23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK0_DB2_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK0_DB3                             31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK0_DB3_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK1(i)              (0x000E034c+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK1__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK1_DB4                               7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK1_DB4_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK1_DB5                              15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK1_DB5_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK1_DB6                             23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK1_DB6_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK1_DB7                             31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK1_DB7_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK2(i)              (0x000E0350+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK2__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK2_DB8                               7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK2_DB8_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK2_DB9                              15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK2_DB9_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK2_DB10                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK2_DB10_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK2_DB11                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK2_DB11_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK3(i)              (0x000E0354+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK3__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK3_DB12                              7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK3_DB12_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK3_DB13                             15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK3_DB13_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK3_DB14                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK3_DB14_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK3_DB15                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK3_DB15_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK4(i)              (0x000E0358+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK4__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK4_DB16                              7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK4_DB16_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK4_DB17                             15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK4_DB17_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK4_DB18                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK4_DB18_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK4_DB19                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK4_DB19_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK5(i)              (0x000E035c+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK5__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK5_DB20                              7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK5_DB20_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK5_DB21                             15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK5_DB21_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK5_DB22                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK5_DB22_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK5_DB23                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK5_DB23_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK6(i)              (0x000E0360+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK6__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK6_DB24                              7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK6_DB24_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK6_DB25                             15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK6_DB25_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK6_DB26                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK6_DB26_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK6_DB27                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK6_DB27_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK7(i)              (0x000E0364+(i)*1024) /* RW-4A */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK7__SIZE_1                             8 /*       */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK7_DB28                              7:0 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK7_DB28_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK7_DB29                             15:8 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK7_DB29_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK7_DB30                            23:16 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK7_DB30_INIT                  0x00000000 /* RWI-V */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK7_DB31                            31:24 /* RWIVF */
+#define NV_PDISP_SF_DP_GENERIC_INFOFRAME1_SUBPACK7_DB31_INIT                  0x00000000 /* RWI-V */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
