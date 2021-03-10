@@ -1,0 +1,957 @@
+Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_HDACODEC 0x0010efff:0x0010ec00 /* RW--D */
+#define NV_HDACODEC_NUM_CW                                  4 /*       */
+#define NV_HDACODEC_NUM_PW                                  4 /*       */
+#define NV_HDACODEC_NUM_DE                                  4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW0_DE(i) (0x0010ec00+(i)*4) /* RWI4A */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW0_DE__SIZE_1            4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW0_DE_INDEX                                    15:8 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW0_DE_INDEX_INIT                         0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW0_DE_DATABYTE                                  7:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW0_DE_DATABYTE_INIT                      0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW1_DE(i) (0x0010ec30+(i)*4) /* RWI4A */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW1_DE__SIZE_1            4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW1_DE_INDEX                                    15:8 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW1_DE_INDEX_INIT                         0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW1_DE_DATABYTE                                  7:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW1_DE_DATABYTE_INIT                      0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW2_DE(i) (0x0010ec60+(i)*4) /* RWI4A */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW2_DE__SIZE_1            4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW2_DE_INDEX                                    15:8 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW2_DE_INDEX_INIT                         0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW2_DE_DATABYTE                                  7:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW2_DE_DATABYTE_INIT                      0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW3_DE(i) (0x0010ec90+(i)*4) /* RWI4A */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW3_DE__SIZE_1            4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW3_DE_INDEX                                    15:8 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW3_DE_INDEX_INIT                         0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW3_DE_DATABYTE                                  7:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW3_DE_DATABYTE_INIT                      0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW_DE(i,j) (0x0010ec00+((i)*48)+((j)*4)) /* RWI4A */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW_DE__SIZE_1             4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW_DE__SIZE_2             4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW_DE_INDEX                                     15:8 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW_DE_INDEX_INIT                          0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW_DE_DATABYTE                                   7:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_ELD_BUFWR_PW_DE_DATABYTE_INIT                       0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE(i) (0x0010ec10+(i)*4) /* RWI4A */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE__SIZE_1             4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_ELDV                                       1:1 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_ELDV_INIT                           0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_ELDV_VALID                          0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_ELDV_INVALID                        0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_PD                                         0:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_PD_INIT                             0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_PD_PRESENT                          0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_PD_NOT_PRESENT                      0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_IA                                         2:2 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_IA_INIT                             0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_IA_ASRTD                            0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_IA_DEASRTD                          0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_CP_READY                                 27:27 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_CP_READY_INIT                       0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_CP_READY_PENDING                    0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_CP_READY_READY                      0x00000001 /* -W--T */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RQSTD_CP_STATE_VALID                     30:30 /* R-IVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RQSTD_CP_STATE_VALID_INIT           0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RQSTD_CP_STATE_VALID_VLD            0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RQSTD_CP_STATE_VALID_INVLD          0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RQSTD_CP_STATE                           29:28 /* R-IVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RQSTD_CP_STATE_INIT                 0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RQSTD_CP_STATE_DONT_CARE            0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RQSTD_CP_STATE_RESERVED             0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RQSTD_CP_STATE_PROTECTION_OFF       0x00000002 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RQSTD_CP_STATE_PROTECTION_ON        0x00000003 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RESEND                                   31:31 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RESEND_INIT                         0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RESEND_TRIGGER                      0x00000001 /* -W--T */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RESEND_PENDING                      0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW0_DE_RESEND_DONE                         0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE(i) (0x0010ec40+(i)*4) /* RWI4A */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE__SIZE_1             4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_ELDV                                       1:1 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_ELDV_INIT                           0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_ELDV_VALID                          0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_ELDV_INVALID                        0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_PD                                         0:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_PD_INIT                             0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_PD_PRESENT                          0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_PD_NOT_PRESENT                      0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_IA                                         2:2 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_IA_INIT                             0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_IA_ASRTD                            0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_IA_DEASRTD                          0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_CP_READY                                 27:27 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_CP_READY_INIT                       0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_CP_READY_PENDING                    0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_CP_READY_READY                      0x00000001 /* -W--T */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RQSTD_CP_STATE_VALID                     30:30 /* R-IVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RQSTD_CP_STATE_VALID_INIT           0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RQSTD_CP_STATE_VALID_VLD            0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RQSTD_CP_STATE_VALID_INVLD          0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RQSTD_CP_STATE                           29:28 /* R-IVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RQSTD_CP_STATE_INIT                 0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RQSTD_CP_STATE_DONT_CARE            0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RQSTD_CP_STATE_RESERVED             0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RQSTD_CP_STATE_PROTECTION_OFF       0x00000002 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RQSTD_CP_STATE_PROTECTION_ON        0x00000003 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RESEND                                   31:31 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RESEND_INIT                         0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RESEND_TRIGGER                      0x00000001 /* -W--T */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RESEND_PENDING                      0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW1_DE_RESEND_DONE                         0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE(i) (0x0010ec70+(i)*4) /* RWI4A */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE__SIZE_1             4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_ELDV                                       1:1 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_ELDV_INIT                           0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_ELDV_VALID                          0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_ELDV_INVALID                        0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_PD                                         0:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_PD_INIT                             0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_PD_PRESENT                          0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_PD_NOT_PRESENT                      0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_IA                                         2:2 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_IA_INIT                             0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_IA_ASRTD                            0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_IA_DEASRTD                          0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_CP_READY                                 27:27 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_CP_READY_INIT                       0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_CP_READY_PENDING                    0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_CP_READY_READY                      0x00000001 /* -W--T */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RQSTD_CP_STATE_VALID                     30:30 /* R-IVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RQSTD_CP_STATE_VALID_INIT           0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RQSTD_CP_STATE_VALID_VLD            0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RQSTD_CP_STATE_VALID_INVLD          0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RQSTD_CP_STATE                           29:28 /* R-IVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RQSTD_CP_STATE_INIT                 0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RQSTD_CP_STATE_DONT_CARE            0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RQSTD_CP_STATE_RESERVED             0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RQSTD_CP_STATE_PROTECTION_OFF       0x00000002 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RQSTD_CP_STATE_PROTECTION_ON        0x00000003 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RESEND                                   31:31 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RESEND_INIT                         0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RESEND_TRIGGER                      0x00000001 /* -W--T */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RESEND_PENDING                      0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW2_DE_RESEND_DONE                         0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE(i) (0x0010eca0+(i)*4) /* RWI4A */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE__SIZE_1             4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_ELDV                                       1:1 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_ELDV_INIT                           0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_ELDV_VALID                          0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_ELDV_INVALID                        0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_PD                                         0:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_PD_INIT                             0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_PD_PRESENT                          0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_PD_NOT_PRESENT                      0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_IA                                         2:2 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_IA_INIT                             0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_IA_ASRTD                            0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_IA_DEASRTD                          0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_CP_READY                                 27:27 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_CP_READY_INIT                       0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_CP_READY_PENDING                    0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_CP_READY_READY                      0x00000001 /* -W--T */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RQSTD_CP_STATE_VALID                     30:30 /* R-IVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RQSTD_CP_STATE_VALID_INIT           0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RQSTD_CP_STATE_VALID_VLD            0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RQSTD_CP_STATE_VALID_INVLD          0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RQSTD_CP_STATE                           29:28 /* R-IVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RQSTD_CP_STATE_INIT                 0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RQSTD_CP_STATE_DONT_CARE            0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RQSTD_CP_STATE_RESERVED             0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RQSTD_CP_STATE_PROTECTION_OFF       0x00000002 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RQSTD_CP_STATE_PROTECTION_ON        0x00000003 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RESEND                                   31:31 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RESEND_INIT                         0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RESEND_TRIGGER                      0x00000001 /* -W--T */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RESEND_PENDING                      0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW3_DE_RESEND_DONE                         0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE(i,j) (0x0010ec10+((i)*48)+((j)*4)) /* RWI4A */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE__SIZE_1              4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE__SIZE_2              4 /*       */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_ELDV                                        1:1 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_ELDV_INIT                            0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_ELDV_VALID                           0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_ELDV_INVALID                         0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_PD                                          0:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_PD_INIT                              0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_PD_PRESENT                           0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_PD_NOT_PRESENT                       0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_IA                                          2:2 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_IA_INIT                              0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_IA_ASRTD                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_IA_DEASRTD                           0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_CP_READY                                  27:27 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_CP_READY_INIT                        0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_CP_READY_READY                       0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_CP_READY_NOT_READY                   0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RQSTD_CP_STATE_VALID                      30:30 /* R-IVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RQSTD_CP_STATE_VALID_INIT            0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RQSTD_CP_STATE_VALID_VLD             0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RQSTD_CP_STATE_VALID_INVLD           0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RQSTD_CP_STATE                            29:28 /* R-IVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RQSTD_CP_STATE_INIT                  0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RQSTD_CP_STATE_DONT_CARE             0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RQSTD_CP_STATE_RESERVED              0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RQSTD_CP_STATE_PROTECTION_OFF        0x00000002 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RQSTD_CP_STATE_PROTECTION_ON         0x00000003 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RESEND                                    31:31 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RESEND_INIT                          0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RESEND_TRIGGER                       0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RESEND_PENDING                       0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_HDA_PRESENCE_PW_DE_RESEND_DONE                          0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN 0x0010ecc0 /* RWI4R */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW0                                               0:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW0_INIT                                   0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW0_ENABLE                                 0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW0_DISABLE                                0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW1                                               1:1 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW1_INIT                                   0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW1_ENABLE                                 0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW1_DISABLE                                0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW2                                               2:2 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW2_INIT                                   0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW2_ENABLE                                 0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW2_DISABLE                                0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW3                                               3:3 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW3_INIT                                   0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW3_ENABLE                                 0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW3_DISABLE                                0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW(i)                                 (0+(i)):(0+(i)) /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW__SIZE_1                 4 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW_INIT                                    0x00000000 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW_ENABLE                                  0x00000001 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_CW_DISABLE                                 0x00000000 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE0                                           8:8 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE0_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE0_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE0_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE1                                           9:9 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE1_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE1_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE1_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE2                                         10:10 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE2_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE2_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE2_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE3                                         11:11 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE3_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE3_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW0_DE3_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE0                                         12:12 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE0_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE0_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE0_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE1                                         13:13 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE1_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE1_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE1_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE2                                         14:14 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE2_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE2_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE2_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE3                                         15:15 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE3_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE3_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW1_DE3_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE0                                         16:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE0_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE0_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE0_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE1                                         17:17 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE1_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE1_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE1_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE2                                         18:18 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE2_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE2_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE2_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE3                                         19:19 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE3_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE3_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW2_DE3_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE0                                         20:20 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE0_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE0_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE0_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE1                                         21:21 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE1_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE1_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE1_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE2                                         22:22 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE2_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE2_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE2_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE3                                         23:23 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE3_INIT                               0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE3_ENABLE                             0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW3_DE3_DISABLE                            0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW_DE(i,j)                (8+(i)*4+(j)):(8+(i)*4+(j)) /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW_DE__SIZE_1              4 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW_DE__SIZE_2              4 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW_DE_INIT                                 0x00000000 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW_DE_ENABLE                               0x00000001 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_EN_PW_DE_DISABLE                              0x00000000 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS 0x0010ecc4 /* RWI4R */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW0                                              0:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW0_INIT                                  0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW0_PENDING                               0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW0_NOT_PENDING                           0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW0_RESET                                 0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW1                                              1:1 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW1_INIT                                  0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW1_PENDING                               0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW1_NOT_PENDING                           0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW1_RESET                                 0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW2                                              2:2 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW2_INIT                                  0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW2_PENDING                               0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW2_NOT_PENDING                           0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW2_RESET                                 0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW3                                              3:3 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW3_INIT                                  0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW3_PENDING                               0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW3_NOT_PENDING                           0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW3_RESET                                 0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW(i)                                (0+(i)):(0+(i)) /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW__SIZE_1                4 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW_INIT                                   0x00000000 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW_PENDING                                0x00000001 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW_NOT_PENDING                            0x00000000 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_CW_RESET                                  0x00000001 /*       */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE0                                          8:8 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE0_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE0_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE0_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE0_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE1                                          9:9 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE1_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE1_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE1_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE1_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE2                                        10:10 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE2_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE2_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE2_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE2_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE3                                        11:11 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE3_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE3_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE3_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW0_DE3_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE0                                        12:12 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE0_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE0_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE0_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE0_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE1                                        13:13 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE1_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE1_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE1_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE1_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE2                                        14:14 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE2_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE2_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE2_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE2_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE3                                        15:15 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE3_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE3_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE3_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW1_DE3_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE0                                        16:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE0_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE0_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE0_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE0_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE1                                        17:17 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE1_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE1_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE1_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE1_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE2                                        18:18 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE2_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE2_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE2_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE2_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE3                                        19:19 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE3_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE3_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE3_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW2_DE3_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE0                                        20:20 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE0_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE0_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE0_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE0_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE1                                        21:21 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE1_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE1_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE1_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE1_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE2                                        22:22 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE2_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE2_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE2_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE2_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE3                                        23:23 /* RWIVF */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE3_INIT                              0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE3_PENDING                           0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE3_NOT_PENDING                       0x00000000 /* R---V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW3_DE3_RESET                             0x00000001 /* -W--V */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW_DE(i,j)             (8+(i)*4+(j)):(8+(i)*4+(j)) /*        */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW_DE__SIZE_1           4 /*        */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW_DE__SIZE_2           4 /*        */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW_DE_INIT                              0x00000000 /*        */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW_DE_PENDING                           0x00000001 /*        */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW_DE_NOT_PENDING                       0x00000000 /*        */
+#define NV_HDACODEC_AUDIO_INTERRUPT_STS_PW_DE_RESET                             0x00000001 /*        */
+#define NV_HDACODEC_DISP_TO_AUDIO_HDA_SCRATCH_CW(i) (0x0010ecd0+(i)*8) /* RW-4A */
+#define NV_HDACODEC_DISP_TO_AUDIO_HDA_SCRATCH_CW__SIZE_1          4 /*       */
+#define NV_HDACODEC_DISP_TO_AUDIO_HDA_SCRATCH_CW_RESERVED                               31:0 /* RWIVF */
+#define NV_HDACODEC_DISP_TO_AUDIO_HDA_SCRATCH_CW_RESERVED_INIT                    0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TO_DISP_HDA_CODEC_SCRATCH_CW(i) (0x0010ecd4+(i)*8) /* R-I4A */
+#define NV_HDACODEC_AUDIO_TO_DISP_HDA_CODEC_SCRATCH_CW__SIZE_1    4 /*       */
+#define NV_HDACODEC_AUDIO_TO_DISP_HDA_CODEC_SCRATCH_CW_DATA                             31:0 /* R-IVF */
+#define NV_HDACODEC_AUDIO_TO_DISP_HDA_CODEC_SCRATCH_CW_DATA_INIT                  0x00000000 /* R-I-V */
+#define NV_HDACODEC_DP_MN_PW(i) (0x0010ecf0+(i)*4) /* RW-4A */
+#define NV_HDACODEC_DP_MN_PW__SIZE_1                              4 /*       */
+#define NV_HDACODEC_DP_MN_PW_N_VAL                                                      23:0 /* RWIVF */
+#define NV_HDACODEC_DP_MN_PW_N_VAL_INIT                                           0x00008000 /* RWI-V */
+#define NV_HDACODEC_DP_MN_PW_M_DELTA                                                   27:24 /* RWIVF */
+#define NV_HDACODEC_DP_MN_PW_M_DELTA_INIT                                         0x00000000 /* RWI-V */
+#define NV_HDACODEC_DP_MN_PW_M_MOD                                                     31:30 /* RWIVF */
+#define NV_HDACODEC_DP_MN_PW_M_MOD_INIT                                           0x00000000 /* RWI-V */
+#define NV_HDACODEC_DP_MN_PW_M_MOD_NONE                                           0x00000000 /* RW--V */
+#define NV_HDACODEC_DP_MN_PW_M_MOD_INC                                            0x00000001 /* RW--V */
+#define NV_HDACODEC_DP_MN_PW_M_MOD_DEC                                            0x00000002 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0320 0x0010ed00 /* RWI4R */
+#define NV_HDACODEC_AUDIO_AVAL_0320_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_AVAL_0320_VALUE_INIT                                    0x0000D2F0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_AVAL_0320_VALUE_54M                                     0x0000D2F0 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0320_VALUE_24M                                     0x00005DC0 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0320_VALUE_27M                                     0x00006978 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0441 0x0010ed04 /* RWI4R */
+#define NV_HDACODEC_AUDIO_AVAL_0441_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_AVAL_0441_VALUE_INIT                                    0x0000EA60 /* RWI-V */
+#define NV_HDACODEC_AUDIO_AVAL_0441_VALUE_54M                                     0x0000EA60 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0441_VALUE_27M                                     0x00007530 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0882 0x0010ed08 /* RWI4R */
+#define NV_HDACODEC_AUDIO_AVAL_0882_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_AVAL_0882_VALUE_INIT                                    0x0000EA60 /* RWI-V */
+#define NV_HDACODEC_AUDIO_AVAL_0882_VALUE_54M                                     0x0000EA60 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0882_VALUE_27M                                     0x00007530 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_1764 0x0010ed0c /* RWI4R */
+#define NV_HDACODEC_AUDIO_AVAL_1764_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_AVAL_1764_VALUE_INIT                                    0x0000EA60 /* RWI-V */
+#define NV_HDACODEC_AUDIO_AVAL_1764_VALUE_54M                                     0x0000EA60 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_1764_VALUE_27M                                     0x00007530 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0480 0x0010ed10 /* RWI4R */
+#define NV_HDACODEC_AUDIO_AVAL_0480_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_AVAL_0480_VALUE_INIT                                    0x0000D2F0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_AVAL_0480_VALUE_54M                                     0x0000D2F0 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0480_VALUE_24M                                     0x00005DC0 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0480_VALUE_27M                                     0x00006978 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0960 0x0010ed14 /* RWI4R */
+#define NV_HDACODEC_AUDIO_AVAL_0960_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_AVAL_0960_VALUE_INIT                                    0x0000D2F0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_AVAL_0960_VALUE_54M                                     0x0000D2F0 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0960_VALUE_24M                                     0x00005DC0 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_0960_VALUE_27M                                     0x00006978 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_1920 0x0010ed18 /* RWI4R */
+#define NV_HDACODEC_AUDIO_AVAL_1920_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_AVAL_1920_VALUE_INIT                                    0x0000D2F0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_AVAL_1920_VALUE_54M                                     0x0000D2F0 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_1920_VALUE_24M                                     0x00005DC0 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_1920_VALUE_27M                                     0x00006978 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_DEFAULT 0x0010ed1c /* RWI4R */
+#define NV_HDACODEC_AUDIO_AVAL_DEFAULT_VALUE                                            19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_AVAL_DEFAULT_VALUE_INIT                                 0x0000D2F0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_AVAL_DEFAULT_VALUE_54M                                  0x0000D2F0 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_DEFAULT_VALUE_24M                                  0x00005DC0 /* RW--V */
+#define NV_HDACODEC_AUDIO_AVAL_DEFAULT_VALUE_27M                                  0x00006978 /* RW--V */
+#define NV_HDACODEC_AUDIO_NVAL_0320 0x0010ed20 /* RWI4R */
+#define NV_HDACODEC_AUDIO_NVAL_0320_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_NVAL_0320_VALUE_INIT                                    0x00001000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_NVAL_0441 0x0010ed24 /* RWI4R */
+#define NV_HDACODEC_AUDIO_NVAL_0441_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_NVAL_0441_VALUE_INIT                                    0x00001880 /* RWI-V */
+#define NV_HDACODEC_AUDIO_NVAL_0882 0x0010ed28 /* RWI4R */
+#define NV_HDACODEC_AUDIO_NVAL_0882_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_NVAL_0882_VALUE_INIT                                    0x00003100 /* RWI-V */
+#define NV_HDACODEC_AUDIO_NVAL_1764 0x0010ed2c /* RWI4R */
+#define NV_HDACODEC_AUDIO_NVAL_1764_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_NVAL_1764_VALUE_INIT                                    0x00006200 /* RWI-V */
+#define NV_HDACODEC_AUDIO_NVAL_0480 0x0010ed30 /* RWI4R */
+#define NV_HDACODEC_AUDIO_NVAL_0480_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_NVAL_0480_VALUE_INIT                                    0x00001800 /* RWI-V */
+#define NV_HDACODEC_AUDIO_NVAL_0960 0x0010ed34 /* RWI4R */
+#define NV_HDACODEC_AUDIO_NVAL_0960_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_NVAL_0960_VALUE_INIT                                    0x00003000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_NVAL_1920 0x0010ed38 /* RWI4R */
+#define NV_HDACODEC_AUDIO_NVAL_1920_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_NVAL_1920_VALUE_INIT                                    0x00006000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_NVAL_DEFAULT 0x0010ed3c /* RWI4R */
+#define NV_HDACODEC_AUDIO_NVAL_DEFAULT_VALUE                                            19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_NVAL_DEFAULT_VALUE_INIT                                 0x00001800 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT 0x0010ef1c /* RWI4R */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE0              1:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE0_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE0_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE0_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE0_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE1              3:2 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE1_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE1_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE1_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE1_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE2              5:4 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE2_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE2_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE2_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE2_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE3              7:6 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE3_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE3_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE3_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW0_DE3_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE0              9:8 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE0_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE0_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE0_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE0_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE1            11:10 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE1_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE1_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE1_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE1_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE2            13:12 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE2_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE2_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE2_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE2_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE3            15:14 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE3_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE3_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE3_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW1_DE3_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE0            17:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE0_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE0_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE0_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE0_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE1            19:18 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE1_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE1_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE1_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE1_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE2            21:20 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE2_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE2_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE2_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE2_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE3            23:22 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE3_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE3_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE3_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW2_DE3_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE0            25:24 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE0_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE0_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE0_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE0_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE1            27:26 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE1_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE1_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE1_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE1_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE2            29:28 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE2_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE2_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE2_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE2_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE3            31:30 /* RWIVF */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE3_INIT           0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE3_ALL            0 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE3_HDMI           1 /* RW--V */
+#define NV_HDACODEC_AUDIO_HDMI_OR_DP_MODE_SELECT_PW3_DE3_DP             2 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0320 0x0010ef20 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0320_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0320_VALUE_INIT                                    0x00008CA0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0320_VALUE_54M                                     0x00008CA0 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0320_VALUE_24M                                     0x00003E80 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0320_VALUE_27M                                     0x00004650 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0441 0x0010ef24 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0441_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0441_VALUE_INIT                                    0x00009C40 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0441_VALUE_54M                                     0x00009C40 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0441_VALUE_27M                                     0x00004E20 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0882 0x0010ef28 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0882_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0882_VALUE_INIT                                    0x00009C40 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0882_VALUE_54M                                     0x00009C40 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0882_VALUE_27M                                     0x00004E20 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1764 0x0010ef2c /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1764_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1764_VALUE_INIT                                    0x00009C40 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1764_VALUE_54M                                     0x00009C40 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1764_VALUE_27M                                     0x00004E20 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0480 0x0010ef30 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0480_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0480_VALUE_INIT                                    0x00008CA0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0480_VALUE_54M                                     0x00008CA0 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0480_VALUE_24M                                     0x00003E80 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0480_VALUE_27M                                     0x00004650 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0960 0x0010ef34 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0960_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0960_VALUE_INIT                                    0x00008CA0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0960_VALUE_54M                                     0x00008CA0 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0960_VALUE_24M                                     0x00003E80 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_0960_VALUE_27M                                     0x00004650 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1920 0x0010ef38 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1920_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1920_VALUE_INIT                                    0x00008CA0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1920_VALUE_54M                                     0x00008CA0 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1920_VALUE_24M                                     0x00003E80 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_1920_VALUE_27M                                     0x00004650 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_DEFAULT 0x0010ef3c /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_DEFAULT_VALUE                                            19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_DEFAULT_VALUE_INIT                                 0x00008CA0 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_DEFAULT_VALUE_54M                                  0x00008CA0 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_DEFAULT_VALUE_24M                                  0x00003E80 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_AVAL_DEFAULT_VALUE_27M                                  0x00004650 /* RW--V */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0320 0x0010ef40 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0320_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0320_VALUE_INIT                                    0x00001000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0441 0x0010ef44 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0441_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0441_VALUE_INIT                                    0x00001880 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0882 0x0010ef48 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0882_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0882_VALUE_INIT                                    0x00003100 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_1764 0x0010ef4c /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_1764_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_1764_VALUE_INIT                                    0x00006200 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0480 0x0010ef50 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0480_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0480_VALUE_INIT                                    0x00001800 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0960 0x0010ef54 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0960_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_0960_VALUE_INIT                                    0x00003000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_1920 0x0010ef58 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_1920_VALUE                                               19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_1920_VALUE_INIT                                    0x00006000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_DEFAULT 0x0010ef5c /* RWI4R */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_DEFAULT_VALUE                                            19:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FRL_NVAL_DEFAULT_VALUE_INIT                                 0x00001800 /* RWI-V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0480 0x0010ef60 /* RWI4R */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0480_VALUE                                               12:0 /* RWIVF */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0480_VALUE_INIT                                    0x00000000 /* RWI-V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0960 0x0010ef64 /* RWI4R */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0960_VALUE                                               12:0 /* RWIVF */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0960_VALUE_INIT                                    0x00000232 /* RWI-V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0960_VALUE_54M                                     0x00000232 /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0960_VALUE_24M                                     0x000000FA /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0960_VALUE_27M                                     0x00000119 /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1920 0x0010ef68 /* RWI4R */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1920_VALUE                                               12:0 /* RWIVF */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1920_VALUE_INIT                                    0x00000119 /* RWI-V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1920_VALUE_54M                                     0x00000119 /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1920_VALUE_24M                                     0x0000007D /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1920_VALUE_27M                                     0x0000008D /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0882 0x0010ef6c /* RWI4R */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0882_VALUE                                               12:0 /* RWIVF */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0882_VALUE_INIT                                    0x00000264 /* RWI-V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0882_VALUE_54M                                     0x00000264 /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0882_VALUE_24M                                     0x00000110 /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_0882_VALUE_27M                                     0x00000132 /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1764 0x0010ef70 /* RWI4R */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1764_VALUE                                               12:0 /* RWIVF */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1764_VALUE_INIT                                    0x00000132 /* RWI-V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1764_VALUE_54M                                     0x00000132 /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1764_VALUE_24M                                     0x00000088 /* RW--V */
+#define NV_HDACODEC_COUNTER_VALUE_FOR_CTS_1764_VALUE_27M                                     0x00000099 /* RW--V */
+#define NV_HDACODEC_DIP_DATA_RESEND_PKT_NUMBER 0x0010ef74 /* RWI4R */
+#define NV_HDACODEC_DIP_DATA_RESEND_PKT_NUMBER_VALUE                                                2:0 /* RWIVF */
+#define NV_HDACODEC_DIP_DATA_RESEND_PKT_NUMBER_VALUE_INIT                                    0x00000004 /* RWI-V */
+#define NV_HDACODEC_DIP_DATA_RESEND_PKT_NUMBER_VALUE_HDMI                                    0x00000004 /* RW--V */
+#define NV_HDACODEC_DIP_DATA_RESEND_PKT_NUMBER_VALUE_DP                                      0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_FORMAT_BITS_CHNG_DETECT_CYA 0x0010ef78 /* RWI4R */
+#define NV_HDACODEC_AUDIO_FORMAT_BITS_CHNG_DETECT_CYA_DISABLE                                            0:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_FORMAT_BITS_CHNG_DETECT_CYA_DISABLE_INIT                                0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320 0x0010ed40 /* RWI4R */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_D_N                                            15:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_D_N_INIT                                 0x00003DEB /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_D_N_270M                                 0x00003DEB /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_D_N_216M                                 0x00000C2F /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_D_N_432M                                 0x00000CAF /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_D_N_120M                                 0x00000653 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_D_N_108M                                 0x00000B2F /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_N                                             31:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_N_INIT                                   0x00000400 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_N_270M                                   0x00000400 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_N_216M                                   0x00000100 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_N_432M                                   0x00000080 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_N_120M                                   0x00000100 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0320_N_108M                                   0x00000200 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441 0x0010ed44 /* RWI4R */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_D_N                                            15:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_D_N_INIT                                 0x00009703 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_D_N_270M                                 0x00009703 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_D_N_216M                                 0x0000068F /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_D_N_432M                                 0x000006F1 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_D_N_120M                                 0x000009E9 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_D_N_108M                                 0x000005CB /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_N                                             31:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_N_INIT                                   0x00000DC8 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_N_270M                                   0x00000DC8 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_N_216M                                   0x000000C4 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_N_432M                                   0x00000062 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_N_120M                                   0x0000024C /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0441_N_108M                                   0x00000188 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882 0x0010ed48 /* RWI4R */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_D_N                                            15:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_D_N_INIT                                 0x0000893B /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_D_N_270M                                 0x0000893B /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_D_N_216M                                 0x000005CB /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_D_N_432M                                 0x0000068F /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_D_N_120M                                 0x0000079D /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_D_N_108M                                 0x00000443 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_N                                             31:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_N_INIT                                   0x00001B90 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_N_270M                                   0x00001B90 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_N_216M                                   0x00000188 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_N_432M                                   0x000000C4 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_N_120M                                   0x00000498 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0882_N_108M                                   0x00000310 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764 0x0010ed4c /* RWI4R */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_D_N                                            15:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_D_N_INIT                                 0x00006DAB /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_D_N_270M                                 0x00006DAB /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_D_N_216M                                 0x00000443 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_D_N_432M                                 0x000005CB /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_D_N_120M                                 0x00000305 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_D_N_108M                                 0x00000133 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_N                                             31:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_N_INIT                                   0x00003720 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_N_270M                                   0x00003720 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_N_216M                                   0x00000310 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_N_432M                                   0x00000188 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_N_120M                                   0x00000930 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1764_N_108M                                   0x00000620 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480 0x0010ed50 /* RWI4R */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_D_N                                            15:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_D_N_INIT                                 0x00003BEB /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_D_N_270M                                 0x00003BEB /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_D_N_216M                                 0x000003E5 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_D_N_432M                                 0x00000425 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_D_N_120M                                 0x000001F1 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_D_N_108M                                 0x00000365 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_N                                             31:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_N_INIT                                   0x00000600 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_N_270M                                   0x00000600 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_N_216M                                   0x00000080 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_N_432M                                   0x00000040 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_N_120M                                   0x00000080 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0480_N_108M                                   0x00000100 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960 0x0010ed54 /* RWI4R */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_D_N                                            15:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_D_N_INIT                                 0x000035EB /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_D_N_270M                                 0x000035EB /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_D_N_216M                                 0x00000365 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_D_N_432M                                 0x000003E5 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_D_N_120M                                 0x00000171 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_D_N_108M                                 0x00000265 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_N                                             31:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_N_INIT                                   0x00000C00 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_N_270M                                   0x00000C00 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_N_216M                                   0x00000100 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_N_432M                                   0x00000080 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_N_120M                                   0x00000100 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_0960_N_108M                                   0x00000200 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920 0x0010ed58 /* RWI4R */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_D_N                                            15:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_D_N_INIT                                 0x000029EB /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_D_N_270M                                 0x000029EB /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_D_N_216M                                 0x00000265 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_D_N_432M                                 0x00000365 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_D_N_120M                                 0x00000071 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_D_N_108M                                 0x00000065 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_N                                             31:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_N_INIT                                   0x00001800 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_N_270M                                   0x00001800 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_N_216M                                   0x00000200 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_N_432M                                   0x00000100 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_N_120M                                   0x00000200 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_1920_N_108M                                   0x00000400 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840 0x0010ed5c /* RWI4R */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840_D_N                                            15:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840_D_N_INIT                                 0x000011EB /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840_D_N_270M                                 0x000011EB /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840_D_N_216M                                 0x00000065 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840_D_N_432M                                 0x00000265 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840_N                                             31:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840_N_INIT                                   0x00003000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840_N_270M                                   0x00003000 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840_N_216M                                   0x00000400 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_3840_N_432M                                   0x00000200 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680 0x0010ed60 /* RWI4R */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680_D_N                                            15:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680_D_N_INIT                                 0x000011EB /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680_D_N_270M                                 0x000011EB /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680_D_N_216M                                 0x00000065 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680_D_N_432M                                 0x00000065 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680_N                                             31:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680_N_INIT                                   0x00003000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680_N_270M                                   0x00003000 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680_N_216M                                   0x00000400 /* RW--V */
+#define NV_HDACODEC_AUDIO_TIMESTAMP_7680_N_432M                                   0x00000400 /* RW--V */
+#define NV_HDACODEC_AUDIO_GEN_CTL 0x0010ed6c /* RWI4R */
+#define NV_HDACODEC_AUDIO_GEN_CTL_CTS_RESET_VAL                                          2:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_GEN_CTL_CTS_RESET_VAL_INIT                              0x00000001 /* RWI-V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_CHSTS_FS_3840                                          7:4 /* RWIVF */
+#define NV_HDACODEC_AUDIO_GEN_CTL_CHSTS_FS_3840_INIT                              0x00000005 /* RWI-V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_COPY_POLARITY                                          8:8 /* RWIVF */
+#define NV_HDACODEC_AUDIO_GEN_CTL_COPY_POLARITY_INIT                              0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_COPY_POLARITY_OLD                               0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_COPY_POLARITY_NEW                               0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW0                                16:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW0_INIT                      0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW0_ERROR                     0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW0_RESET                     0x00000001 /* -W--C */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW1                                17:17 /* RWIVF */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW1_INIT                      0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW1_ERROR                     0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW1_RESET                     0x00000001 /* -W--C */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW2                                18:18 /* RWIVF */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW2_INIT                      0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW2_ERROR                     0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW2_RESET                     0x00000001 /* -W--C */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW3                                19:19 /* RWIVF */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW3_INIT                      0x00000000 /* R-I-V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW3_ERROR                     0x00000001 /* R---V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW3_RESET                     0x00000001 /* -W--C */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW(i)                  (16+(i)):(16+(i)) /*       */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW__SIZE_1    4 /*       */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW_INIT                       0x00000000 /*       */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW_ERROR                      0x00000001 /*       */
+#define NV_HDACODEC_AUDIO_GEN_CTL_ASMPL_FIFO_OVFLOW_CW_RESET                      0x00000001 /*       */
+#define NV_HDACODEC_AUDIO_GEN_CTL_KEEP_ALIVE                                           30:30 /* RWIVF */
+#define NV_HDACODEC_AUDIO_GEN_CTL_KEEP_ALIVE_ENABLE                               0x00000001 /* RWI-V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_KEEP_ALIVE_DISABLE                              0x00000000 /* RW--V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_INJECT_NULLSMPL                                      31:31 /* RWIVF */
+#define NV_HDACODEC_AUDIO_GEN_CTL_INJECT_NULLSMPL_ENABLE                          0x00000001 /* RW--V */
+#define NV_HDACODEC_AUDIO_GEN_CTL_INJECT_NULLSMPL_DISABLE                         0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_CTRL 0x0010ed78 /* RWI4R */
+#define NV_HDACODEC_AUDIO_CTRL_DEV_ID                                                  31:16 /* RWIVF */
+#define NV_HDACODEC_AUDIO_CTRL_DEV_ID_INIT                                        0x00000000 /* RWI-V */
+#define NV_HDACODEC_AUDIO_CTRL_REV_ID                                                    7:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_CTRL_REV_ID_INIT                                        0x00000001 /* RWI-V */
+#define NV_HDACODEC_IP_VER 0x0010ed7c /* RW-4R */
+#define NV_HDACODEC_IP_VER_DEV                                                     7:0 /* R-IVF */
+#define NV_HDACODEC_IP_VER_DEV_INIT                                         0x00000000 /* R-I-V */
+#define NV_HDACODEC_IP_VER_ECO                                                    15:8 /* RWIVF */
+#define NV_HDACODEC_IP_VER_ECO_INIT                                         0x00000000 /* RWI-V */
+#define NV_HDACODEC_IP_VER_MINOR                                                 23:16 /* R-IVF */
+#define NV_HDACODEC_IP_VER_MINOR_INIT                                       0x00000000 /* R-I-V */
+#define NV_HDACODEC_IP_VER_MAJOR                                                 31:24 /* R-IVF */
+#define NV_HDACODEC_IP_VER_MAJOR_INIT                                       0x00000003 /* R-I-V */
+#define NV_HDACODEC_AUDIO_SPARE 0x0010ed70 /* RWI4R */
+#define NV_HDACODEC_AUDIO_SPARE_RESERVED                                                31:0 /* RWIVF */
+#define NV_HDACODEC_AUDIO_SPARE_RESERVED_INIT                                     0x00000000 /* RWI-V */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
