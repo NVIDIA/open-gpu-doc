@@ -3424,6 +3424,7 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_FE_FLIPLOCK_LSR_MIN_TIME                                           23:0 /* RWIVF */
 #define NV_PDISP_FE_FLIPLOCK_LSR_MIN_TIME_INIT                                0x00000080 /* RWI-V */
 #define NV_PDISP_FE_FLIPLOCK_LSR_MIN_TIME_32NS                                0x00000020 /* RW--V */
+#define NV_PDISP_FE_SW                                             0x00640FFF:0x00640000 /* RW--D */
 #define NV_PDISP_FE_SW_SYS_CAP                                                0x00640000 /* RW-4R */
 #define NV_PDISP_FE_SW_SYS_CAP_HEAD0_EXISTS                                          0:0 /* RWIVF */
 #define NV_PDISP_FE_SW_SYS_CAP_HEAD0_EXISTS_INIT                              0x00000000 /* RWI-V */
@@ -4167,6 +4168,7 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_PRECOMP_WIN_PIPE_CAPF__SIZE_1                                              32 /*       */
 #define NV_PDISP_PRECOMP_WIN_PIPE_CAPF_MAX_PIXELS_1TAP422                                 15:0 /* R--VF */
 #define NV_PDISP_PRECOMP_WIN_PIPE_CAPF_MAX_PIXELS_1TAP444                                31:16 /* R--VF */
+#define NV_PDISP_SF_USER_0                                            0x006F03FF:0x006F0000 /* RW--D */
 #define NV_PDISP_POSTCOMP_HEAD_CAPA(i)                                (0x00616100+(i)*2048) /* R--4A */
 #define NV_PDISP_POSTCOMP_HEAD_CAPA__SIZE_1                                               8 /*       */
 #define NV_PDISP_POSTCOMP_HEAD_CAPA_SCALER                                              0:0 /* R--UF */
