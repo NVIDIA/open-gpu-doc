@@ -1,4 +1,4 @@
-Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
+Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -22,6 +22,26 @@ DEALINGS IN THE SOFTWARE.
 #define NV_CE                                            0x105fff:0x104000 /* RW--D */
 #define NV_CE_PCE_MAP                                           0x00104028 /* R--4R */
 #define NV_CE_PCE_MAP_VALUE                                           15:0 /* R-XVF */
+#define NV_CE_PCE2LCE_CONFIG(i)                       (0x00104040+(i)*0x4) /* RW-4A */
+#define NV_CE_PCE2LCE_CONFIG__SIZE_1                                     4 /*       */
+#define NV_CE_PCE2LCE_CONFIG_PCE_ASSIGNED_LCE                          3:0 /* RWIVF */
+#define NV_CE_PCE2LCE_CONFIG_PCE_ASSIGNED_LCE_NONE              0x0000000f /* RW--V */
+#define NV_CE_PCE2LCE_CONFIG_0_PCE_ASSIGNED_LCE_INIT            0x00000001 /* RWI-V */
+#define NV_CE_PCE2LCE_CONFIG_1_PCE_ASSIGNED_LCE_INIT            0x00000004 /* RWI-V */
+#define NV_CE_PCE2LCE_CONFIG_2_PCE_ASSIGNED_LCE_INIT            0x00000002 /* RWI-V */
+#define NV_CE_PCE2LCE_CONFIG_3_PCE_ASSIGNED_LCE_INIT            0x00000003 /* RWI-V */
+#define NV_CE_GRCE_CONFIG(i)                         (0x00104034+(i)*0x4) /* RW-4A */
+#define NV_CE_GRCE_CONFIG__SIZE_1                                       2 /*       */
+#define NV_CE_GRCE_CONFIG_SHARED_LCE                                  3:0 /* RWIVF */
+#define NV_CE_GRCE_CONFIG_SHARED_LCE_NONE                             0xf /* RW--V */
+#define NV_CE_GRCE_CONFIG_0_SHARED_LCE_INIT                    0x00000001 /* RWI-V */
+#define NV_CE_GRCE_CONFIG_1_SHARED_LCE_INIT                    0x0000000f /* RWI-V */
+#define NV_CE_GRCE_CONFIG_SHARED                                    30:30 /* RWIVF */
+#define NV_CE_GRCE_CONFIG_0_SHARED_INIT                        0x00000001 /* RWI-V */
+#define NV_CE_GRCE_CONFIG_1_SHARED_INIT                        0x00000000 /* RWI-V */
+#define NV_CE_GRCE_CONFIG_TIMESLICE                                 31:31 /* RWIVF */
+#define NV_CE_GRCE_CONFIG_TIMESLICE_SHORT                      0x00000000 /* RWI-V */
+#define NV_CE_GRCE_CONFIG_TIMESLICE_LONG                       0x00000001 /* RW--V */
 #define NV_CE_PRI_CE_FE_CG                          0x00104200 /* RW-4R */
 #define NV_CE_PRI_CE_FE_CG_IDLE_CG_DLY_CNT                 5:0 /* RWIVF */
 #define NV_CE_PRI_CE_FE_CG_IDLE_CG_DLY_CNT_HWINIT   0x00000000 /* RWI-V */

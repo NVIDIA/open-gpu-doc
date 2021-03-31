@@ -1,4 +1,4 @@
-Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
+Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -174,6 +174,7 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PMC_BOOT_42_ARCHITECTURE_GP100                0x00000013 /*       */
 #define NV_PMC_BOOT_42_ARCHITECTURE_GV100                0x00000014 /*       */
 #define NV_PMC_BOOT_42_ARCHITECTURE_GV110                0x00000015 /*       */
+#define NV_PMC_BOOT_42_ARCHITECTURE_TU100                0x00000016 /*       */
 #define NV_PMC_BOOT_42_CHIP_ID                                28:20 /* R-XVF */
 #define NV_PMC_BOOT_42_CHIP_ID_GP000                     0x00000131 /* R---V */
 #define NV_PMC_BOOT_42_CHIP_ID_GP100                     0x00000130 /* R---V */
