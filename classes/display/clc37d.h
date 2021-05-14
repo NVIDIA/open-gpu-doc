@@ -86,6 +86,43 @@ extern "C" {
 #define NVC37D_UPDATE_INHIBIT_INTERRUPTS                                        24:24
 #define NVC37D_UPDATE_INHIBIT_INTERRUPTS_FALSE                                  (0x00000000)
 #define NVC37D_UPDATE_INHIBIT_INTERRUPTS_TRUE                                   (0x00000001)
+#define NVC37D_UPDATE_RELEASE_ELV                                               0:0
+#define NVC37D_UPDATE_RELEASE_ELV_FALSE                                         (0x00000000)
+#define NVC37D_UPDATE_RELEASE_ELV_TRUE                                          (0x00000001)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN                                             8:4
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_NONE                               (0x00000000)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN(i)                                 (0x00000001 +(i))
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN__SIZE_1                            16
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_0                                  (0x00000001)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_1                                  (0x00000002)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_2                                  (0x00000003)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_3                                  (0x00000004)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_4                                  (0x00000005)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_5                                  (0x00000006)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_6                                  (0x00000007)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_7                                  (0x00000008)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_8                                  (0x00000009)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_9                                  (0x0000000A)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_A                                  (0x0000000B)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_B                                  (0x0000000C)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_C                                  (0x0000000D)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_D                                  (0x0000000E)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_E                                  (0x0000000F)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_LOCK_PIN_F                                  (0x00000010)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_FLIP_LOCK_0                        (0x00000014)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_FLIP_LOCK_1                        (0x00000015)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_FLIP_LOCK_2                        (0x00000016)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_FLIP_LOCK_3                        (0x00000017)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_SCAN_LOCK(i)                       (0x00000018 +(i))
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_SCAN_LOCK__SIZE_1                  8
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_SCAN_LOCK_0                        (0x00000018)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_SCAN_LOCK_1                        (0x00000019)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_SCAN_LOCK_2                        (0x0000001A)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_SCAN_LOCK_3                        (0x0000001B)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_SCAN_LOCK_4                        (0x0000001C)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_SCAN_LOCK_5                        (0x0000001D)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_SCAN_LOCK_6                        (0x0000001E)
+#define NVC37D_UPDATE_FLIP_LOCK_PIN_INTERNAL_SCAN_LOCK_7                        (0x0000001F)
 #define NVC37D_SET_CONTEXT_DMA_NOTIFIER                                         (0x00000208)
 #define NVC37D_SET_CONTEXT_DMA_NOTIFIER_HANDLE                                  31:0
 #define NVC37D_SET_NOTIFIER_CONTROL                                             (0x0000020C)
@@ -97,6 +134,22 @@ extern "C" {
 #define NVC37D_SET_NOTIFIER_CONTROL_NOTIFY_DISABLE                              (0x00000000)
 #define NVC37D_SET_NOTIFIER_CONTROL_NOTIFY_ENABLE                               (0x00000001)
 #define NVC37D_SET_CONTROL                                                      (0x00000210)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN(i)                                     ((i)+0):((i)+0)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN__SIZE_1                                4
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN_DISABLE                                (0x00000000)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN_ENABLE                                 (0x00000001)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN0                                       0:0
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN0_DISABLE                               (0x00000000)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN0_ENABLE                                (0x00000001)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN1                                       1:1
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN1_DISABLE                               (0x00000000)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN1_ENABLE                                (0x00000001)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN2                                       2:2
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN2_DISABLE                               (0x00000000)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN2_ENABLE                                (0x00000001)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN3                                       3:3
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN3_DISABLE                               (0x00000000)
+#define NVC37D_SET_CONTROL_FLIP_LOCK_PIN3_ENABLE                                (0x00000001)
 #define NVC37D_SET_INTERLOCK_FLAGS                                              (0x00000218)
 #define NVC37D_SET_INTERLOCK_FLAGS_INTERLOCK_WITH_CURSOR(i)                     ((i)+0):((i)+0)
 #define NVC37D_SET_INTERLOCK_FLAGS_INTERLOCK_WITH_CURSOR__SIZE_1                8
@@ -242,6 +295,34 @@ extern "C" {
 #define NVC37D_SET_GET_BLANKING_CTRL_UNBLANK                                    1:1
 #define NVC37D_SET_GET_BLANKING_CTRL_UNBLANK_NO_CHANGE                          (0x00000000)
 #define NVC37D_SET_GET_BLANKING_CTRL_UNBLANK_ENABLE                             (0x00000001)
+
+#define NVC37D_PIOR_SET_CONTROL(a)                                              (0x00000280 + (a)*0x00000020)
+#define NVC37D_PIOR_SET_CONTROL_OWNER_MASK                                      7:0
+#define NVC37D_PIOR_SET_CONTROL_OWNER_MASK_NONE                                 (0x00000000)
+#define NVC37D_PIOR_SET_CONTROL_OWNER_MASK_HEAD0                                (0x00000001)
+#define NVC37D_PIOR_SET_CONTROL_OWNER_MASK_HEAD1                                (0x00000002)
+#define NVC37D_PIOR_SET_CONTROL_OWNER_MASK_HEAD2                                (0x00000004)
+#define NVC37D_PIOR_SET_CONTROL_OWNER_MASK_HEAD3                                (0x00000008)
+#define NVC37D_PIOR_SET_CONTROL_OWNER_MASK_HEAD4                                (0x00000010)
+#define NVC37D_PIOR_SET_CONTROL_OWNER_MASK_HEAD5                                (0x00000020)
+#define NVC37D_PIOR_SET_CONTROL_OWNER_MASK_HEAD6                                (0x00000040)
+#define NVC37D_PIOR_SET_CONTROL_OWNER_MASK_HEAD7                                (0x00000080)
+#define NVC37D_PIOR_SET_CONTROL_PROTOCOL                                        11:8
+#define NVC37D_PIOR_SET_CONTROL_PROTOCOL_EXT_TMDS_ENC                           (0x00000000)
+#define NVC37D_PIOR_SET_CONTROL_PROTOCOL_EXT_SDI_SD_ENC                         (0x00000001)
+#define NVC37D_PIOR_SET_CONTROL_PROTOCOL_EXT_SDI_HD_ENC                         (0x00000002)
+#define NVC37D_PIOR_SET_CONTROL_PROTOCOL_DIST_RENDER_OUT                        (0x00000004)
+#define NVC37D_PIOR_SET_CONTROL_PROTOCOL_DIST_RENDER_IN                         (0x00000005)
+#define NVC37D_PIOR_SET_CONTROL_PROTOCOL_DIST_RENDER_INOUT                      (0x00000006)
+#define NVC37D_PIOR_SET_CONTROL_DE_SYNC_POLARITY                                16:16
+#define NVC37D_PIOR_SET_CONTROL_DE_SYNC_POLARITY_POSITIVE_TRUE                  (0x00000000)
+#define NVC37D_PIOR_SET_CONTROL_DE_SYNC_POLARITY_NEGATIVE_TRUE                  (0x00000001)
+#define NVC37D_PIOR_SET_CUSTOM_REASON(a)                                        (0x00000284 + (a)*0x00000020)
+#define NVC37D_PIOR_SET_CUSTOM_REASON_CODE                                      31:0
+#define NVC37D_PIOR_SET_SW_SPARE_A(a)                                           (0x00000288 + (a)*0x00000020)
+#define NVC37D_PIOR_SET_SW_SPARE_A_CODE                                         31:0
+#define NVC37D_PIOR_SET_SW_SPARE_B(a)                                           (0x0000028C + (a)*0x00000020)
+#define NVC37D_PIOR_SET_SW_SPARE_B_CODE                                         31:0
 
 #define NVC37D_SOR_SET_CONTROL(a)                                               (0x00000300 + (a)*0x00000020)
 #define NVC37D_SOR_SET_CONTROL_OWNER_MASK                                       7:0
@@ -456,11 +537,143 @@ extern "C" {
 #define NVC37D_HEAD_SET_CONTROL_OUTPUT_RESOURCE_COLOR_SPACE_OVERRIDE_DISABLE    (0x00000000)
 #define NVC37D_HEAD_SET_CONTROL_OUTPUT_RESOURCE_COLOR_SPACE_OVERRIDE_ENABLE     (0x00000001)
 #define NVC37D_HEAD_SET_CONTROL_OUTPUT_RESOURCE_COLOR_SPACE_FLAG                23:12
+#define NVC37D_HEAD_SET_CONTROL(a)                                              (0x00002008 + (a)*0x00000400)
+#define NVC37D_HEAD_SET_CONTROL_STRUCTURE                                       1:0
+#define NVC37D_HEAD_SET_CONTROL_STRUCTURE_PROGRESSIVE                           (0x00000000)
+#define NVC37D_HEAD_SET_CONTROL_STEREO3D_STRUCTURE                              2:2
+#define NVC37D_HEAD_SET_CONTROL_STEREO3D_STRUCTURE_NORMAL                       (0x00000000)
+#define NVC37D_HEAD_SET_CONTROL_STEREO3D_STRUCTURE_FRAME_PACKED                 (0x00000001)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_MODE                                 11:10
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_MODE_NO_LOCK                         (0x00000000)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_MODE_FRAME_LOCK                      (0x00000001)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_MODE_RASTER_LOCK                     (0x00000003)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN                                  8:4
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_NONE                    (0x00000000)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN(i)                      (0x00000001 +(i))
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN__SIZE_1                 16
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_0                       (0x00000001)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_1                       (0x00000002)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_2                       (0x00000003)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_3                       (0x00000004)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_4                       (0x00000005)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_5                       (0x00000006)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_6                       (0x00000007)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_7                       (0x00000008)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_8                       (0x00000009)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_9                       (0x0000000A)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_A                       (0x0000000B)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_B                       (0x0000000C)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_C                       (0x0000000D)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_D                       (0x0000000E)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_E                       (0x0000000F)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_LOCK_PIN_F                       (0x00000010)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_FLIP_LOCK_0             (0x00000014)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_FLIP_LOCK_1             (0x00000015)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_FLIP_LOCK_2             (0x00000016)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_FLIP_LOCK_3             (0x00000017)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_SCAN_LOCK(i)            (0x00000018 +(i))
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_SCAN_LOCK__SIZE_1       8
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_SCAN_LOCK_0             (0x00000018)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_SCAN_LOCK_1             (0x00000019)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_SCAN_LOCK_2             (0x0000001A)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_SCAN_LOCK_3             (0x0000001B)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_SCAN_LOCK_4             (0x0000001C)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_SCAN_LOCK_5             (0x0000001D)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_SCAN_LOCK_6             (0x0000001E)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCK_PIN_INTERNAL_SCAN_LOCK_7             (0x0000001F)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_LOCKOUT_WINDOW                            15:12
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_MODE                                23:22
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_MODE_NO_LOCK                        (0x00000000)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_MODE_FRAME_LOCK                     (0x00000001)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_MODE_RASTER_LOCK                    (0x00000003)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN                                 20:16
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_NONE                   (0x00000000)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN(i)                     (0x00000001 +(i))
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN__SIZE_1                16
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_0                      (0x00000001)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_1                      (0x00000002)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_2                      (0x00000003)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_3                      (0x00000004)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_4                      (0x00000005)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_5                      (0x00000006)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_6                      (0x00000007)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_7                      (0x00000008)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_8                      (0x00000009)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_9                      (0x0000000A)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_A                      (0x0000000B)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_B                      (0x0000000C)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_C                      (0x0000000D)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_D                      (0x0000000E)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_E                      (0x0000000F)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_LOCK_PIN_F                      (0x00000010)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_FLIP_LOCK_0            (0x00000014)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_FLIP_LOCK_1            (0x00000015)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_FLIP_LOCK_2            (0x00000016)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_FLIP_LOCK_3            (0x00000017)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_SCAN_LOCK(i)           (0x00000018 +(i))
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_SCAN_LOCK__SIZE_1      8
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_SCAN_LOCK_0            (0x00000018)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_SCAN_LOCK_1            (0x00000019)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_SCAN_LOCK_2            (0x0000001A)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_SCAN_LOCK_3            (0x0000001B)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_SCAN_LOCK_4            (0x0000001C)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_SCAN_LOCK_5            (0x0000001D)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_SCAN_LOCK_6            (0x0000001E)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_LOCK_PIN_INTERNAL_SCAN_LOCK_7            (0x0000001F)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN                                      28:24
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_NONE                        (0x00000000)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN(i)                          (0x00000001 +(i))
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN__SIZE_1                     16
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_0                           (0x00000001)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_1                           (0x00000002)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_2                           (0x00000003)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_3                           (0x00000004)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_4                           (0x00000005)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_5                           (0x00000006)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_6                           (0x00000007)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_7                           (0x00000008)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_8                           (0x00000009)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_9                           (0x0000000A)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_A                           (0x0000000B)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_B                           (0x0000000C)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_C                           (0x0000000D)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_D                           (0x0000000E)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_E                           (0x0000000F)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_LOCK_PIN_F                           (0x00000010)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_FLIP_LOCK_0                 (0x00000014)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_FLIP_LOCK_1                 (0x00000015)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_FLIP_LOCK_2                 (0x00000016)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_FLIP_LOCK_3                 (0x00000017)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_SCAN_LOCK(i)                (0x00000018 +(i))
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_SCAN_LOCK__SIZE_1           8
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_SCAN_LOCK_0                 (0x00000018)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_SCAN_LOCK_1                 (0x00000019)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_SCAN_LOCK_2                 (0x0000001A)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_SCAN_LOCK_3                 (0x0000001B)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_SCAN_LOCK_4                 (0x0000001C)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_SCAN_LOCK_5                 (0x0000001D)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_SCAN_LOCK_6                 (0x0000001E)
+#define NVC37D_HEAD_SET_CONTROL_STEREO_PIN_INTERNAL_SCAN_LOCK_7                 (0x0000001F)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_STEREO_LOCK_MODE                          30:30
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_STEREO_LOCK_MODE_DISABLE                  (0x00000000)
+#define NVC37D_HEAD_SET_CONTROL_SLAVE_STEREO_LOCK_MODE_ENABLE                   (0x00000001)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_STEREO_LOCK_MODE                         31:31
+#define NVC37D_HEAD_SET_CONTROL_MASTER_STEREO_LOCK_MODE_DISABLE                 (0x00000000)
+#define NVC37D_HEAD_SET_CONTROL_MASTER_STEREO_LOCK_MODE_ENABLE                  (0x00000001)
 #define NVC37D_HEAD_SET_PIXEL_CLOCK_FREQUENCY(a)                                (0x0000200C + (a)*0x00000400)
 #define NVC37D_HEAD_SET_PIXEL_CLOCK_FREQUENCY_HERTZ                             30:0
 #define NVC37D_HEAD_SET_PIXEL_CLOCK_FREQUENCY_ADJ1000DIV1001                    31:31
 #define NVC37D_HEAD_SET_PIXEL_CLOCK_FREQUENCY_ADJ1000DIV1001_FALSE              (0x00000000)
 #define NVC37D_HEAD_SET_PIXEL_CLOCK_FREQUENCY_ADJ1000DIV1001_TRUE               (0x00000001)
+#define NVC37D_HEAD_SET_PIXEL_REORDER_CONTROL(a)                                (0x00002010 + (a)*0x00000400)
+#define NVC37D_HEAD_SET_PIXEL_REORDER_CONTROL_BANK_WIDTH                        13:0
+#define NVC37D_HEAD_SET_CONTROL_OUTPUT_SCALER(a)                                (0x00002014 + (a)*0x00000400)
+#define NVC37D_HEAD_SET_CONTROL_OUTPUT_SCALER_VERTICAL_TAPS                     2:0
+#define NVC37D_HEAD_SET_CONTROL_OUTPUT_SCALER_VERTICAL_TAPS_TAPS_2              (0x00000001)
+#define NVC37D_HEAD_SET_CONTROL_OUTPUT_SCALER_VERTICAL_TAPS_TAPS_5              (0x00000004)
+#define NVC37D_HEAD_SET_CONTROL_OUTPUT_SCALER_HORIZONTAL_TAPS                   6:4
+#define NVC37D_HEAD_SET_CONTROL_OUTPUT_SCALER_HORIZONTAL_TAPS_TAPS_2            (0x00000001)
+#define NVC37D_HEAD_SET_CONTROL_OUTPUT_SCALER_HORIZONTAL_TAPS_TAPS_5            (0x00000004)
 #define NVC37D_HEAD_SET_DITHER_CONTROL(a)                                       (0x00002018 + (a)*0x00000400)
 #define NVC37D_HEAD_SET_DITHER_CONTROL_ENABLE                                   0:0
 #define NVC37D_HEAD_SET_DITHER_CONTROL_ENABLE_DISABLE                           (0x00000000)
@@ -514,6 +727,55 @@ extern "C" {
 #define NVC37D_HEAD_SET_HEAD_USAGE_BOUNDS_UPSCALING_ALLOWED                     8:8
 #define NVC37D_HEAD_SET_HEAD_USAGE_BOUNDS_UPSCALING_ALLOWED_FALSE               (0x00000000)
 #define NVC37D_HEAD_SET_HEAD_USAGE_BOUNDS_UPSCALING_ALLOWED_TRUE                (0x00000001)
+#define NVC37D_HEAD_SET_STALL_LOCK(a)                                           (0x00002034 + (a)*0x00000400)
+#define NVC37D_HEAD_SET_STALL_LOCK_ENABLE                                       0:0
+#define NVC37D_HEAD_SET_STALL_LOCK_ENABLE_FALSE                                 (0x00000000)
+#define NVC37D_HEAD_SET_STALL_LOCK_ENABLE_TRUE                                  (0x00000001)
+#define NVC37D_HEAD_SET_STALL_LOCK_MODE                                         2:2
+#define NVC37D_HEAD_SET_STALL_LOCK_MODE_CONTINUOUS                              (0x00000000)
+#define NVC37D_HEAD_SET_STALL_LOCK_MODE_ONE_SHOT                                (0x00000001)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN                                     8:4
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_NONE                       (0x00000000)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN(i)                         (0x00000001 +(i))
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN__SIZE_1                    16
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_0                          (0x00000001)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_1                          (0x00000002)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_2                          (0x00000003)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_3                          (0x00000004)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_4                          (0x00000005)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_5                          (0x00000006)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_6                          (0x00000007)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_7                          (0x00000008)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_8                          (0x00000009)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_9                          (0x0000000A)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_A                          (0x0000000B)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_B                          (0x0000000C)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_C                          (0x0000000D)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_D                          (0x0000000E)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_E                          (0x0000000F)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_LOCK_PIN_F                          (0x00000010)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_FLIP_LOCK_0                (0x00000014)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_FLIP_LOCK_1                (0x00000015)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_FLIP_LOCK_2                (0x00000016)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_FLIP_LOCK_3                (0x00000017)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_SCAN_LOCK(i)               (0x00000018 +(i))
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_SCAN_LOCK__SIZE_1          8
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_SCAN_LOCK_0                (0x00000018)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_SCAN_LOCK_1                (0x00000019)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_SCAN_LOCK_2                (0x0000001A)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_SCAN_LOCK_3                (0x0000001B)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_SCAN_LOCK_4                (0x0000001C)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_SCAN_LOCK_5                (0x0000001D)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_SCAN_LOCK_6                (0x0000001E)
+#define NVC37D_HEAD_SET_STALL_LOCK_LOCK_PIN_INTERNAL_SCAN_LOCK_7                (0x0000001F)
+#define NVC37D_HEAD_SET_STALL_LOCK_UNSTALL_MODE                                 12:12
+#define NVC37D_HEAD_SET_STALL_LOCK_UNSTALL_MODE_CRASH_LOCK                      (0x00000000)
+#define NVC37D_HEAD_SET_STALL_LOCK_UNSTALL_MODE_LINE_LOCK                       (0x00000001)
+#define NVC37D_HEAD_SET_STALL_LOCK_TEPOLARITY                                   14:14
+#define NVC37D_HEAD_SET_STALL_LOCK_TEPOLARITY_POSITIVE_TRUE                     (0x00000000)
+#define NVC37D_HEAD_SET_STALL_LOCK_TEPOLARITY_NEGATIVE_TRUE                     (0x00000001)
+#define NVC37D_HEAD_SET_LOCK_CHAIN(a)                                           (0x00002044 + (a)*0x00000400)
+#define NVC37D_HEAD_SET_LOCK_CHAIN_POSITION                                     3:0
 #define NVC37D_HEAD_SET_VIEWPORT_POINT_IN(a)                                    (0x00002048 + (a)*0x00000400)
 #define NVC37D_HEAD_SET_VIEWPORT_POINT_IN_X                                     14:0
 #define NVC37D_HEAD_SET_VIEWPORT_POINT_IN_Y                                     30:16
@@ -555,11 +817,16 @@ extern "C" {
 #define NVC37D_HEAD_SET_HDMI_CTRL_VIDEO_FORMAT                                  2:0
 #define NVC37D_HEAD_SET_HDMI_CTRL_VIDEO_FORMAT_NORMAL                           (0x00000000)
 #define NVC37D_HEAD_SET_HDMI_CTRL_VIDEO_FORMAT_EXTENDED                         (0x00000001)
+#define NVC37D_HEAD_SET_HDMI_CTRL_VIDEO_FORMAT_STEREO3D                         (0x00000002)
 #define NVC37D_HEAD_SET_HDMI_CTRL_HDMI_VIC                                      11:4
 #define NVC37D_HEAD_SET_CONTEXT_DMA_CURSOR(a,b)                                 (0x00002088 + (a)*0x00000400 + (b)*0x00000004)
 #define NVC37D_HEAD_SET_CONTEXT_DMA_CURSOR_HANDLE                               31:0
 #define NVC37D_HEAD_SET_OFFSET_CURSOR(a,b)                                      (0x00002090 + (a)*0x00000400 + (b)*0x00000004)
 #define NVC37D_HEAD_SET_OFFSET_CURSOR_ORIGIN                                    31:0
+#define NVC37D_HEAD_SET_PRESENT_CONTROL_CURSOR(a)                               (0x00002098 + (a)*0x00000400)
+#define NVC37D_HEAD_SET_PRESENT_CONTROL_CURSOR_MODE                             0:0
+#define NVC37D_HEAD_SET_PRESENT_CONTROL_CURSOR_MODE_MONO                        (0x00000000)
+#define NVC37D_HEAD_SET_PRESENT_CONTROL_CURSOR_MODE_STEREO                      (0x00000001)
 #define NVC37D_HEAD_SET_CONTROL_CURSOR(a)                                       (0x0000209C + (a)*0x00000400)
 #define NVC37D_HEAD_SET_CONTROL_CURSOR_ENABLE                                   31:31
 #define NVC37D_HEAD_SET_CONTROL_CURSOR_ENABLE_DISABLE                           (0x00000000)
@@ -667,6 +934,14 @@ extern "C" {
 #define NVC37D_HEAD_SET_SW_SPARE_C_CODE                                         31:0
 #define NVC37D_HEAD_SET_SW_SPARE_D(a)                                           (0x000021A0 + (a)*0x00000400)
 #define NVC37D_HEAD_SET_SW_SPARE_D_CODE                                         31:0
+#define NVC37D_HEAD_SET_DISPLAY_RATE(a)                                         (0x000021A8 + (a)*0x00000400)
+#define NVC37D_HEAD_SET_DISPLAY_RATE_RUN_MODE                                   0:0
+#define NVC37D_HEAD_SET_DISPLAY_RATE_RUN_MODE_CONTINUOUS                        (0x00000000)
+#define NVC37D_HEAD_SET_DISPLAY_RATE_RUN_MODE_ONE_SHOT                          (0x00000001)
+#define NVC37D_HEAD_SET_DISPLAY_RATE_MIN_REFRESH_INTERVAL                       25:4
+#define NVC37D_HEAD_SET_DISPLAY_RATE_MIN_REFRESH                                2:2
+#define NVC37D_HEAD_SET_DISPLAY_RATE_MIN_REFRESH_DISABLE                        (0x00000000)
+#define NVC37D_HEAD_SET_DISPLAY_RATE_MIN_REFRESH_ENABLE                         (0x00000001)
 #define NVC37D_HEAD_SET_MIN_FRAME_IDLE(a)                                       (0x00002218 + (a)*0x00000400)
 #define NVC37D_HEAD_SET_MIN_FRAME_IDLE_LEADING_RASTER_LINES                     14:0
 #define NVC37D_HEAD_SET_MIN_FRAME_IDLE_TRAILING_RASTER_LINES                    30:16

@@ -105,7 +105,14 @@ extern "C" {
 #define NV917E_SET_PRESENT_CONTROL_BEGIN_MODE                                   1:0
 #define NV917E_SET_PRESENT_CONTROL_BEGIN_MODE_ASAP                              (0x00000000)
 #define NV917E_SET_PRESENT_CONTROL_BEGIN_MODE_TIMESTAMP                         (0x00000003)
+#define NV917E_SET_PRESENT_CONTROL_STEREO_FLIP_MODE                             3:3
+#define NV917E_SET_PRESENT_CONTROL_STEREO_FLIP_MODE_PAIR_FLIP                   (0x00000000)
+#define NV917E_SET_PRESENT_CONTROL_STEREO_FLIP_MODE_AT_ANY_FRAME                (0x00000001)
 #define NV917E_SET_PRESENT_CONTROL_MIN_PRESENT_INTERVAL                         7:4
+#define NV917E_SET_PRESENT_CONTROL_MODE                                         11:10
+#define NV917E_SET_PRESENT_CONTROL_MODE_MONO                                    (0x00000000)
+#define NV917E_SET_PRESENT_CONTROL_MODE_STEREO                                  (0x00000001)
+#define NV917E_SET_PRESENT_CONTROL_MODE_SPEC_FLIP                               (0x00000002)
 #define NV917E_SET_SEMAPHORE_ACQUIRE                                            (0x00000088)
 #define NV917E_SET_SEMAPHORE_ACQUIRE_VALUE                                      31:0
 #define NV917E_SET_SEMAPHORE_RELEASE                                            (0x0000008C)
