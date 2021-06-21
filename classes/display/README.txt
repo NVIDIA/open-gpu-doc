@@ -116,6 +116,7 @@ Overlay Immediate Channel:  cl907b.h
 Base Channel:               cl907c.h
 Core Channel:               cl907d.h
 Overlay Channel:            cl907e.h
+CRC notifier definitions:   cl907dcrcnotif.h
 GPUs:                       gf119
 __________________________________________________________________________
 
@@ -126,6 +127,7 @@ Overlay Immediate Channel:  cl917b.h
 Base Channel:               cl917c.h
 Core Channel:               cl917d.h
 Overlay Channel:            cl917e.h
+CRC notifier definitions:   cl917dcrcnotif.h
 GPUs:                       gk104, gk106, gk107
 __________________________________________________________________________
 
@@ -136,6 +138,7 @@ Overlay Immediate Channel:  cl917b.h
 Base Channel:               cl927c.h
 Core Channel:               cl927d.h
 Overlay Channel:            cl917e.h
+CRC notifier definitions:   cl927dcrcnotif.h
 GPUs:                       gk110, gk208
 __________________________________________________________________________
 
@@ -146,6 +149,7 @@ Overlay Immediate Channel:  cl917b.h
 Base Channel:               cl927c.h
 Core Channel:               cl947d.h
 Overlay Channel:            cl917e.h
+CRC notifier definitions:   cl927dcrcnotif.h
 GPUs:                       gm107, gm108
 __________________________________________________________________________
 
@@ -156,6 +160,7 @@ Overlay Immediate Channel:  cl917b.h
 Base Channel:               cl927c.h
 Core Channel:               cl957d.h
 Overlay Channel:            cl917e.h
+CRC notifier definitions:   cl927dcrcnotif.h
 GPUs:                       gm200, gm204, gm206
 __________________________________________________________________________
 
@@ -166,6 +171,7 @@ Overlay Immediate Channel:  cl917b.h
 Base Channel:               cl927c.h
 Core Channel:               cl977d.h
 Overlay Channel:            cl917e.h
+CRC notifier definitions:   cl927dcrcnotif.h
 GPUs:                       gp100
 __________________________________________________________________________
 
@@ -176,6 +182,7 @@ Overlay Immediate Channel:  cl917b.h
 Base Channel:               cl927c.h
 Core Channel:               cl987d.h
 Overlay Channel:            cl917e.h
+CRC notifier definitions:   cl927dcrcnotif.h
 GPUs:                       gp102, gp104, gp106, gp107, gp108
 __________________________________________________________________________
 
@@ -185,6 +192,7 @@ Cursor Channel:             clc37a.h
 Window Immediate Channel:   clc37b.h
 Core Channel:               clc37d.h
 Window Channel:             clc37e.h
+CRC notifier definitions:   clc37dcrcnotif.h
 GPUs:                       gv100
 __________________________________________________________________________
 
@@ -194,6 +202,7 @@ Cursor Channel:             clc57a.h
 Window Immediate Channel:   clc57b.h
 Core Channel:               clc57d.h
 Window Channel:             clc57e.h
+CRC notifier definitions:   clc37dcrcnotif.h
 GPUs:                       tu102, tu104, tu106, tu116, tu117
 __________________________________________________________________________
 
@@ -203,6 +212,7 @@ Cursor Channel:             clc67a.h
 Window Immediate Channel:   clc67b.h
 Core Channel:               clc67d.h
 Window Channel:             clc67e.h
+CRC notifier definitions:   clc37dcrcnotif.h
 GPUs:                       ga102,ga103,ga104,ga106,ga107
 __________________________________________________________________________
 
