@@ -1,4 +1,4 @@
-Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -19,6 +19,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 --------------------------------------------------------------------------------
 
+#define NV_PDISP                                                                       0x0064FFFF:0x00610000 /* RW--D */
 #define NV_PDISP_FE                                                0x00615FFF:0x00610000 /* RW--D */
 #define NV_PDISP_HEADS                                                                 8 /*       */
 #define NV_PDISP_SORS                                                                  8 /*       */
@@ -3699,13 +3700,6 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_MAX_LINES_BUFFERED_FOUR               0x00000002 /* RW--V */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_MAX_LINES_BUFFERED_EIGHT              0x00000003 /* RW--V */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_MAX_LINES_BUFFERED_SIXTEEN            0x00000004 /* RW--V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE                10:8 /* RWIVF */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_INIT     0x00000000 /* RWI-V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_NONE     0x00000000 /* RW--V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_ONE      0x00000001 /* RW--V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_TWO      0x00000002 /* RW--V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_THREE    0x00000003 /* RW--V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_FOUR     0x00000004 /* RW--V */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPD                                       0x0064001C /* RW-4R */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPD_REORDER_BUFFER_DEPTH                        15:0 /* RWIUF */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPD_REORDER_BUFFER_DEPTH_INIT             0x00000000 /* RWI-V */
@@ -4168,7 +4162,7 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_PRECOMP_WIN_PIPE_CAPF__SIZE_1                                              32 /*       */
 #define NV_PDISP_PRECOMP_WIN_PIPE_CAPF_MAX_PIXELS_1TAP422                                 15:0 /* R--VF */
 #define NV_PDISP_PRECOMP_WIN_PIPE_CAPF_MAX_PIXELS_1TAP444                                31:16 /* R--VF */
-#define NV_PDISP_SF_USER_0                                            0x006F03FF:0x006F0000 /* RW--D */
+#define NV_PDISP_SF_USER_0                                                             0x006F03FF:0x006F0000 /* RW--D */
 #define NV_PDISP_POSTCOMP_HEAD_CAPA(i)                                (0x00616100+(i)*2048) /* R--4A */
 #define NV_PDISP_POSTCOMP_HEAD_CAPA__SIZE_1                                               8 /*       */
 #define NV_PDISP_POSTCOMP_HEAD_CAPA_SCALER                                              0:0 /* R--UF */

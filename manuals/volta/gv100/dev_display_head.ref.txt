@@ -19,6 +19,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 --------------------------------------------------------------------------------
 
+#define NV_PDISP_SF_USER_0                                                             0x000E03FF:0x000E0000 /* RW--D */
 #define NV_PDISP_POSTCOMP_HEAD_CAPA(i)                                (0x00006100+(i)*2048) /* R--4A */
 #define NV_PDISP_POSTCOMP_HEAD_CAPA__SIZE_1                                               8 /*       */
 #define NV_PDISP_POSTCOMP_HEAD_CAPA_SCALER                                              0:0 /* R--UF */

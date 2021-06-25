@@ -1,4 +1,4 @@
-Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -1397,6 +1397,8 @@ context's Host state is not contained within a PBDMA unit, software should use
 NV_RAMFC_RUNTIME to access this information.
      One of these registers exists for each of Host's PBDMA units.  This
 register runs on Host's internal domain clock.
+     However, due to hardware bug http://nvbugs/2840553 the register actually
+contains the amount of time a PBDMA has been halted.
 
 
 #define NV_PPBDMA_RUNTIME(i)                  (0x0004002c+(i)*8192) /* RW-4A */
