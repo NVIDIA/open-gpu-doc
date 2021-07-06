@@ -53,6 +53,10 @@ each channel.
 There are both a "class name" and a software class number that are
 used to describe the combination of channel versions used together.
 
+Also, many GPUs have a "DISP_SF_USER" class.  This software construct
+exposes a mappable region of the Serial Frontend (SF) registers which
+can be used to program infoframe data.
+
 The table below describes which class name is used with which GPU,
 and which channel header files are used with that class.
 
@@ -128,6 +132,7 @@ Base Channel:               cl917c.h
 Core Channel:               cl917d.h
 Overlay Channel:            cl917e.h
 CRC notifier definitions:   cl917dcrcnotif.h
+DISP_SF_USER:               cl9171.h
 GPUs:                       gk104, gk106, gk107
 __________________________________________________________________________
 
@@ -139,6 +144,7 @@ Base Channel:               cl927c.h
 Core Channel:               cl927d.h
 Overlay Channel:            cl917e.h
 CRC notifier definitions:   cl927dcrcnotif.h
+DISP_SF_USER:               cl9271.h
 GPUs:                       gk110, gk208
 __________________________________________________________________________
 
@@ -150,6 +156,7 @@ Base Channel:               cl927c.h
 Core Channel:               cl947d.h
 Overlay Channel:            cl917e.h
 CRC notifier definitions:   cl927dcrcnotif.h
+DISP_SF_USER:               cl9471.h
 GPUs:                       gm107, gm108
 __________________________________________________________________________
 
@@ -161,6 +168,7 @@ Base Channel:               cl927c.h
 Core Channel:               cl957d.h
 Overlay Channel:            cl917e.h
 CRC notifier definitions:   cl927dcrcnotif.h
+DISP_SF_USER:               cl9571.h
 GPUs:                       gm200, gm204, gm206
 __________________________________________________________________________
 
@@ -172,6 +180,7 @@ Base Channel:               cl927c.h
 Core Channel:               cl977d.h
 Overlay Channel:            cl917e.h
 CRC notifier definitions:   cl927dcrcnotif.h
+DISP_SF_USER:               cl9571.h
 GPUs:                       gp100
 __________________________________________________________________________
 
@@ -183,6 +192,7 @@ Base Channel:               cl927c.h
 Core Channel:               cl987d.h
 Overlay Channel:            cl917e.h
 CRC notifier definitions:   cl927dcrcnotif.h
+DISP_SF_USER:               cl9571.h
 GPUs:                       gp102, gp104, gp106, gp107, gp108
 __________________________________________________________________________
 
@@ -193,6 +203,7 @@ Window Immediate Channel:   clc37b.h
 Core Channel:               clc37d.h
 Window Channel:             clc37e.h
 CRC notifier definitions:   clc37dcrcnotif.h
+DISP_SF_USER:               clc371.h
 GPUs:                       gv100
 __________________________________________________________________________
 
@@ -203,6 +214,7 @@ Window Immediate Channel:   clc57b.h
 Core Channel:               clc57d.h
 Window Channel:             clc57e.h
 CRC notifier definitions:   clc37dcrcnotif.h
+DISP_SF_USER:               clc571.h
 GPUs:                       tu102, tu104, tu106, tu116, tu117
 __________________________________________________________________________
 
@@ -213,6 +225,7 @@ Window Immediate Channel:   clc67b.h
 Core Channel:               clc67d.h
 Window Channel:             clc67e.h
 CRC notifier definitions:   clc37dcrcnotif.h
+DISP_SF_USER:               clc671.h
 GPUs:                       ga102,ga103,ga104,ga106,ga107
 __________________________________________________________________________
 
