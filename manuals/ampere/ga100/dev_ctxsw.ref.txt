@@ -1,0 +1,339 @@
+Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_CTXSW                                    0x000FFFFF:0x00000000 /* RW--D */
+#define NV_CTXSW_CTXSW_HEADER                          0x00000000 /* RW-4R */
+#define NV_CTXSW_CTXSW_HEADER_SIZE_IN_BYTES                   512 /*       */
+#define NV_CTXSW_FECS_HEADER                           0x00000200 /* RW-4R */
+#define NV_CTXSW_FECS_HEADER_SIZE_IN_BYTES                    512 /*       */
+#define NV_CTXSW_GPCCS_HEADER(i)             (0x00000400+(i)*512) /* RW-4A */
+#define NV_CTXSW_GPCCS_HEADER__SIZE_1                           8 /*       */
+#define NV_CTXSW_GPCCS_HEADER__STRIDE                         512 /*       */
+#define NV_CTXSW_GPCCS_HEADER_SIZE_IN_BYTES                   512 /*       */
+#define NV_CTXSW_MAIN_IMAGE_POOL_PTR                   0x00000000 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_POOL_PTR_V                       31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_SIZE                       0x00000004 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_NUM_GPCS                   0x00000008 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_CTL                        0x0000000C /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_CTL_TYPE                          5:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CTL_TYPE_UNDEFINED                0x0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_CTL_TYPE_OPENGL                   0x8 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_CTL_TYPE_DX9                     0x10 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_CTL_TYPE_DX10                    0x11 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_CTL_TYPE_DX11                    0x12 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_CTL_TYPE_COMPUTE                 0x20 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_CTL_TYPE_PER_VEID_HEADER         0x21 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_CTL_INT_AFTER_RESTORE             9:8 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CTL_INT_AFTER_RESTORE_NEVER         0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_CTL_INT_AFTER_RESTORE_ONCE          1 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_CTL_INT_AFTER_RESTORE_ALWAYS        2 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_CTL_MAGIC_VALUE                 31:16 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CTL_MAGIC_VALUE_VALUE      0x0000cafe /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_PRI_PATCH_COUNT            0x00000010 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_PRI_PATCH_ADR_LO           0x00000014 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_PRI_PATCH_ADR_HI           0x00000018 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_ZCULL                      0x0000001c /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_ZCULL_MODE                        2:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_ZCULL_MODE_GLOBAL                   0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_ZCULL_MODE_NO_CTXSW                 1 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_ZCULL_MODE_SEPARATE_BUFFER          2 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_ZCULL_MODE_PART_OF_REGULAR_BUF      3 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_ZCULL_PTR                  0x00000020 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_ZCULL_PTR_V                      31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_PM                        0x00000028 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_PM_MODE                          2:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_PM_MODE_NO_CTXSW                   0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_PM_MODE_CTXSW                      1 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_PM_MODE_STREAM_OUT_CTXSW           2 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_PM_PTR                     0x0000002c /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_PM_PTR_V                         31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS                                       0x0000003c /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_SM_PRI_WAR                                   2:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_SM_PRI_WAR_DISABLED                            0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_SM_PRI_WAR_ENABLED                             1 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_VERIF_FEATURES                               3:3 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_VERIF_FEATURES_DISABLED                        0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_VERIF_FEATURES_ENABLED                         1 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_DYNAMIC_TPC_PG                               4:4 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_DYNAMIC_TPC_PG_DISABLED                        0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_DYNAMIC_TPC_PG_ENABLED                         1 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_LAUNCH_CHECKS                                5:5 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_LAUNCH_CHECKS_DISABLED                         0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_MISC_OPTIONS_LAUNCH_CHECKS_ENABLED                          1 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_ZCULL_PTR_HI                                       0x00000060 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_ZCULL_PTR_HI_V                                           16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_FULL_PREEMPTION_PTR_HI                             0x00000064 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_FULL_PREEMPTION_PTR_HI_V                                 16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_FULL_PREEMPTION_PTR                                0x00000068 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_FULL_PREEMPTION_PTR_V                                    31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_FULL_PREEMPTION_PTR_VEID0_HI                       0x00000070 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_FULL_PREEMPTION_PTR_VEID0_HI_V                           16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_FULL_PREEMPTION_PTR_VEID0                          0x00000074 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_FULL_PREEMPTION_PTR_VEID0_V                              31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_BUFFER_PTR_HI                             0x00000078 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_BUFFER_PTR_HI_V                                 16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_BUFFER_PTR                                0x0000007c /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_BUFFER_PTR_V                                    31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_GRAPHICS_PREEMPTION_OPTIONS                        0x00000080 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_GRAPHICS_PREEMPTION_OPTIONS_CONTROL                       1:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_GRAPHICS_PREEMPTION_OPTIONS_CONTROL_WFI                     0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_GRAPHICS_PREEMPTION_OPTIONS_CONTROL_GFXP                    1 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_COMPUTE_PREEMPTION_OPTIONS                         0x00000084 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_COMPUTE_PREEMPTION_OPTIONS_CONTROL                        1:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_COMPUTE_PREEMPTION_OPTIONS_CONTROL_WFI                      0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_COMPUTE_PREEMPTION_OPTIONS_CONTROL_CTA                      1 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_COMPUTE_PREEMPTION_OPTIONS_CONTROL_CILP                     2 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_PM_PTR_HI                                           0x00000094 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_PM_PTR_HI_V                                               16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_RTV_PTR                                      0x00000098 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_RTV_PTR_V                                          31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_RTV_PTR_HI                                   0x0000009c /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_RTV_PTR_HI_V                                       16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_PRIV_ACCESS_MAP_CONFIG                   0x000000a0 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_PRIV_ACCESS_MAP_CONFIG_MODE                     1:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_PRIV_ACCESS_MAP_CONFIG_MODE_ALLOW_ALL    0x00000000 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_PRIV_ACCESS_MAP_CONFIG_MODE_ALLOW_NONE   0x00000001 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_PRIV_ACCESS_MAP_CONFIG_MODE_USE_MAP      0x00000002 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_PRIV_ACCESS_MAP_ADDR_LO                  0x000000a4 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_PRIV_ACCESS_MAP_ADDR_LO_V                      31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_PRIV_ACCESS_MAP_ADDR_HI                  0x000000a8 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_PRIV_ACCESS_MAP_ADDR_HI_V                      16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_TIMESTAMP_BUFFER_CONTROL         0x000000ac /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_TIMESTAMP_BUFFER_CONTROL_NUM_RECORDS   15:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_TIMESTAMP_BUFFER_PTR_HI                    0x000000b0 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_TIMESTAMP_BUFFER_PTR_HI_V                        16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_TIMESTAMP_BUFFER_PTR                       0x000000b4 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_TIMESTAMP_BUFFER_PTR_V                           31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_CB_PTR                                      0x000000b8 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_CB_PTR_V                                          31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_CB_PTR_HI                                   0x000000bc /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_CB_PTR_HI_V                                       16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_PAGEPOOL_PTR                                0x000000c0 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_PAGEPOOL_PTR_V                                    31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_PAGEPOOL_PTR_HI                             0x000000c4 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_GLOBAL_PAGEPOOL_PTR_HI_V                                 16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CONTROL_BLOCK_PTR                                  0x000000c8 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_CONTROL_BLOCK_PTR_V                                      31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CONTROL_BLOCK_PTR_HI                                0x000000cc /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_CONTROL_BLOCK_PTR_HI_V                                    16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_NUM_WFI_SAVE_OPERATIONS                             0x000000d0 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_NUM_CTA_SAVE_OPERATIONS                             0x000000d4 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_NUM_GFXP_SAVE_OPERATIONS                            0x000000d8 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_NUM_CILP_SAVE_OPERATIONS                            0x000000dc /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_SMC_INFO                     0x000000e0 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_SMC_INFO_MODE                       0:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_SMC_INFO_MODE_LEGACY                0x0 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_SMC_INFO_MODE_SMC                   0x1 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_POOL_PTR_HI                  0x000000e8 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_POOL_PTR_HI_V                      16:0 /* RWXVF */
+#define NV_CTXSW_MAIN_EXTENDED_BUFFER_CTL                0x000000ec /* RW-4R */
+#define NV_CTXSW_MAIN_EXTENDED_BUFFER_CTL_OFFSET               15:0 /* RWXVF */
+#define NV_CTXSW_MAIN_EXTENDED_BUFFER_CTL_SIZE                23:16 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_CONTEXT_ID                 0x000000f0 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_NUM_SAVE_OPERATIONS        0x000000f4 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_NUM_RESTORE_OPERATIONS     0x000000f8 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_MAGIC_VALUE_1              0x000000fc /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_MAGIC_VALUE_1_V                  31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_MAGIC_VALUE_1_V_VALUE      0x600dc0de /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_MAGIC_VALUE_2              0x00000100 /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_MAGIC_VALUE_2_V                  31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_MAGIC_VALUE_2_V_VALUE      0xdeadce11 /* RW--V */
+#define NV_CTXSW_MAIN_IMAGE_MAGIC_VALUE_3              0x000001fc /* RW-4R */
+#define NV_CTXSW_MAIN_IMAGE_MAGIC_VALUE_3_V                  31:0 /* RWXVF */
+#define NV_CTXSW_MAIN_IMAGE_MAGIC_VALUE_3_V_VALUE      0xfaceb00c /* RW--V */
+#define NV_CTXSW_LOCAL_IMAGE_SIZE                      0x00000000 /* RW-4R */
+#define NV_CTXSW_LOCAL_IMAGE_CTL                       0x00000004 /* RW-4R */
+#define NV_CTXSW_LOCAL_IMAGE_CTL_NUM_RAMCHAINS                4:0 /* RWXVF */
+#define NV_CTXSW_LOCAL_IMAGE_CTL_GFXP_CTX                     5:5 /* RWXVF */
+#define NV_CTXSW_LOCAL_IMAGE_CTL_SKIP_SWDX_DIRECT_CTXSW       6:6 /* RWXVF */
+#define NV_CTXSW_LOCAL_IMAGE_CTL_MAGIC_VALUE                31:16 /* RWXVF */
+#define NV_CTXSW_LOCAL_IMAGE_CTL_MAGIC_VALUE_VALUE     0x0000ca11 /* RW--V */
+#define NV_CTXSW_LOCAL_PRIV_REGISTER_CTL               0x0000000c /* RW-4R */
+#define NV_CTXSW_LOCAL_PRIV_REGISTER_CTL_OFFSET              15:0 /* RWXVF */
+#define NV_CTXSW_LOCAL_PRIV_REGISTER_CTL_SIZE               23:16 /* RWXVF */
+#define NV_CTXSW_LOCAL_IMAGE_PPC_INFO                  0x000000f4 /* RW-4R */
+#define NV_CTXSW_LOCAL_IMAGE_PPC_INFO_NUM_PPCS               15:0 /* RWXVF */
+#define NV_CTXSW_LOCAL_IMAGE_PPC_INFO_PPC_MASK              31:16 /* RWXVF */
+#define NV_CTXSW_LOCAL_IMAGE_NUM_TPCS                  0x000000f8 /* RW-4R */
+#define NV_CTXSW_LOCAL_MAGIC_VALUE_1                   0x000000fc /* RW-4R */
+#define NV_CTXSW_LOCAL_MAGIC_VALUE_1_V                       31:0 /* RWXVF */
+#define NV_CTXSW_LOCAL_MAGIC_VALUE_1_V_VALUE           0xad0becab /* RW--V */
+#define NV_CTXSW_LOCAL_MAGIC_VALUE_2                   0x00000100 /* RW-4R */
+#define NV_CTXSW_LOCAL_MAGIC_VALUE_2_V                       31:0 /* RWXVF */
+#define NV_CTXSW_LOCAL_MAGIC_VALUE_2_V_VALUE           0x1ceb00da /* RW--V */
+#define NV_CTXSW_LOCAL_RAMCHAIN_CTL(i)         (0x00000104+(i)*8) /* RW-4A */
+#define NV_CTXSW_LOCAL_RAMCHAIN_CTL__SIZE_1                    31 /*       */
+#define NV_CTXSW_LOCAL_RAMCHAIN_CTL_OFFSET                   15:0 /* RWXVF */
+#define NV_CTXSW_LOCAL_RAMCHAIN_SAVE(i)        (0x00000108+(i)*8) /* RW-4A */
+#define NV_CTXSW_LOCAL_RAMCHAIN_SAVE__SIZE_1                   31 /*       */
+#define NV_CTXSW_LOCAL_RAMCHAIN_SAVE_WORDS                   23:0 /* RWXVF */
+#define NV_CTXSW_LOCAL_RAMCHAIN_SAVE_CLASS                  29:28 /* RWXVF */
+#define NV_CTXSW_LOCAL_MAGIC_VALUE_3                   0x000001fc /* RW-4R */
+#define NV_CTXSW_LOCAL_MAGIC_VALUE_3_V                       31:0 /* RWXVF */
+#define NV_CTXSW_LOCAL_MAGIC_VALUE_3_V_VALUE           0xf00dbeef /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_MAGIC_VALUE_LO                     0x00000000 /* RW-4R */
+#define NV_CTXSW_RECORD_TIMESTAMP_MAGIC_VALUE_LO_V                         31:0 /* RWXVF */
+#define NV_CTXSW_RECORD_TIMESTAMP_MAGIC_VALUE_LO_V_VALUE             0x00000000 /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_MAGIC_VALUE_HI                     0x00000004 /* RW-4R */
+#define NV_CTXSW_RECORD_TIMESTAMP_MAGIC_VALUE_HI_V                         31:0 /* RWXVF */
+#define NV_CTXSW_RECORD_TIMESTAMP_MAGIC_VALUE_HI_V_VALUE             0x600dbeef /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_LO                       0x00000018 /* RW-4R */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_LO_V                           31:0 /* RWXVF */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI                       0x0000001c /* RW-4R */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_V                           23:0 /* RWXVF */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG                        31:24 /* RWXVF */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG_CTXSW_REQ_BY_HOST        0x1 /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG_FE_ACK                   0x2 /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG_FE_ACK_WFI               0xa /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG_FE_ACK_GFXP              0xb /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG_FE_ACK_CTAP              0xc /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG_FE_ACK_CILP              0xd /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG_SAVE_END                 0x3 /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG_RESTORE_START            0x4 /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG_CONTEXT_START            0x5 /* RW--V */
+#define NV_CTXSW_RECORD_TIMESTAMP_TIMESTAMP_HI_TAG_INVALID_TIMESTAMP       0xff /* RW--V */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_PREEMPT_OFFSET                   0x00000000 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_PREEMPT_OFFSET_V                       31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SPILL_OFFSET                     0x00000004 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SPILL_OFFSET_V                         31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_CB_OFFSET                        0x00000008 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_CB_OFFSET_V                            31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_PAGEPOOL_OFFSET                  0x0000000c /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_PAGEPOOL_OFFSET_V                      31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SLICE_STRIDE                     0x00000010 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SLICE_STRIDE_V                         31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GLOBAL_BETA_SIZE                 0x00000014 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GLOBAL_BETA_SIZE_V                     31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GLOBAL_ALPHA_SIZE                0x00000018 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GLOBAL_ALPHA_SIZE_V                    31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GLOBAL_PAGEPOOL_SIZE             0x0000001c /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GLOBAL_PAGEPOOL_SIZE_V                 31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GFXP_BETA_SIZE                   0x00000020 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GFXP_BETA_SIZE_V                       31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GFXP_ALPHA_SIZE                  0x00000024 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GFXP_ALPHA_SIZE_V                      31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GFXP_PAGEPOOL_SIZE               0x00000028 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GFXP_PAGEPOOL_SIZE_V                   31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GFXP_SPILL_SIZE                  0x0000002c /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GFXP_SPILL_SIZE_V                      31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_NUM_SLICES                       0x00000030 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_NUM_SLICES_V                           31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SLICE_ARRAY1                     0x00000034 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SLICE_ARRAY1_V                         31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SLICE_ARRAY2                     0x00000038 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SLICE_ARRAY2_V                         31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SLICE_ARRAY3                     0x0000003c /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SLICE_ARRAY3_V                         31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SLICE_ARRAY4                     0x00000040 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SLICE_ARRAY4_V                         31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_RM_SLICE_ARRAY1                  0x00000044 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_RM_SLICE_ARRAY1_V                      31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_RM_SLICE_ARRAY2                  0x00000048 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_RM_SLICE_ARRAY2_V                      31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_RM_SLICE_ARRAY3                  0x0000004c /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_RM_SLICE_ARRAY3_V                      31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_RM_SLICE_ARRAY4                  0x00000050 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_RM_SLICE_ARRAY4_V                      31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_MAX_SLICES                       0x00000054 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_MAX_SLICES_V                           31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GFXP_RTV_SIZE                    0x00000058 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GFXP_RTV_SIZE_V                        31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GLOBAL_RTV_SIZE                  0x0000005c /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_GLOBAL_RTV_SIZE_V                      31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_RTV_OFFSET                       0x00000060 /* RW-4R */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_RTV_OFFSET_V                           31:0 /* RWXVF */
+#define NV_CTXSW_GFXP_POOL_CTRL_BLK_SIZE                             0x00000064 /* RW-4R */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
