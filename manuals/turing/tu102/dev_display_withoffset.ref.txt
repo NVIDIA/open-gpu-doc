@@ -1,4 +1,4 @@
-Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -19,6 +19,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 --------------------------------------------------------------------------------
 
+#define NV_PDISP                                                                       0x0064FFFF:0x00610000 /* RW--D */
 #define NV_PDISP_FE                                                0x00615FFF:0x00610000 /* RW--D */
 #define NV_PDISP_HEADS                                                                 8 /*       */
 #define NV_PDISP_SORS                                                                  8 /*       */
@@ -3643,6 +3644,7 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_FE_FLIPLOCK_LSR_MIN_TIME                                           23:0 /* RWIVF */
 #define NV_PDISP_FE_FLIPLOCK_LSR_MIN_TIME_INIT                                0x00000080 /* RWI-V */
 #define NV_PDISP_FE_FLIPLOCK_LSR_MIN_TIME_32NS                                0x00000020 /* RW--V */
+#define NV_PDISP_FE_SW                                             0x00640FFF:0x00640000 /* RW--D */
 #define NV_PDISP_FE_SW_SYS_CAP                                                0x00640000 /* RW-4R */
 #define NV_PDISP_FE_SW_SYS_CAP_HEAD0_EXISTS                                          0:0 /* RWIVF */
 #define NV_PDISP_FE_SW_SYS_CAP_HEAD0_EXISTS_INIT                              0x00000000 /* RWI-V */
@@ -3868,6 +3870,10 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPA_MEMPOOL_ENTRY_WIDTH_64B               0x00000001 /* RW--V */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPA_MEMPOOL_ENTRY_WIDTH_128B              0x00000002 /* RW--V */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPA_MEMPOOL_ENTRY_WIDTH_256B              0x00000003 /* RW--V */
+#define NV_PDISP_FE_SW_IHUB_COMMON_CAPA_SUPPORT_PLANAR                             19:19 /* RWIVF */
+#define NV_PDISP_FE_SW_IHUB_COMMON_CAPA_SUPPORT_PLANAR_INIT                   0x00000000 /* RWI-V */
+#define NV_PDISP_FE_SW_IHUB_COMMON_CAPA_SUPPORT_PLANAR_FALSE                  0x00000000 /* RW--V */
+#define NV_PDISP_FE_SW_IHUB_COMMON_CAPA_SUPPORT_PLANAR_TRUE                   0x00000001 /* RW--V */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPA_SUPPORT_VGA                                20:20 /* RWIVF */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPA_SUPPORT_VGA_INIT                      0x00000000 /* RWI-V */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPA_SUPPORT_VGA_FALSE                     0x00000000 /* RW--V */
@@ -3917,13 +3923,6 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_MAX_LINES_BUFFERED_FOUR               0x00000002 /* RW--V */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_MAX_LINES_BUFFERED_EIGHT              0x00000003 /* RW--V */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_MAX_LINES_BUFFERED_SIXTEEN            0x00000004 /* RW--V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE                10:8 /* RWIVF */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_INIT     0x00000000 /* RWI-V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_NONE     0x00000000 /* RW--V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_ONE      0x00000001 /* RW--V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_TWO      0x00000002 /* RW--V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_THREE    0x00000003 /* RW--V */
-#define NV_PDISP_FE_SW_IHUB_COMMON_CAPC_CLEAR_RECTANGLES_PER_SURFACE_FOUR     0x00000004 /* RW--V */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPD                                       0x0064001C /* RW-4R */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPD_REORDER_BUFFER_DEPTH                        15:0 /* RWIUF */
 #define NV_PDISP_FE_SW_IHUB_COMMON_CAPD_REORDER_BUFFER_DEPTH_INIT             0x00000000 /* RWI-V */
@@ -4295,6 +4294,9 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_IHUB_COMMON_CAPA_MEMPOOL_ENTRY_WIDTH_64B                       0x00000001 /* R---V */
 #define NV_PDISP_IHUB_COMMON_CAPA_MEMPOOL_ENTRY_WIDTH_128B                      0x00000002 /* R---V */
 #define NV_PDISP_IHUB_COMMON_CAPA_MEMPOOL_ENTRY_WIDTH_256B                      0x00000003 /* R---V */
+#define NV_PDISP_IHUB_COMMON_CAPA_SUPPORT_PLANAR                                     19:19 /* R--VF */
+#define NV_PDISP_IHUB_COMMON_CAPA_SUPPORT_PLANAR_FALSE                          0x00000000 /* R---V */
+#define NV_PDISP_IHUB_COMMON_CAPA_SUPPORT_PLANAR_TRUE                           0x00000001 /* R---V */
 #define NV_PDISP_IHUB_COMMON_CAPA_SUPPORT_VGA                                        20:20 /* R--VF */
 #define NV_PDISP_IHUB_COMMON_CAPA_SUPPORT_VGA_FALSE                             0x00000000 /* R---V */
 #define NV_PDISP_IHUB_COMMON_CAPA_SUPPORT_VGA_TRUE                              0x00000001 /* R---V */
@@ -4697,6 +4699,7 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_COMP_WIN_PIPE_CGCTL__SIZE_1                                                   32 /*       */
 #define NV_PDISP_COMP_WIN_PIPE_CGCTL_VAL                                                     31:0 /* RWIUF */
 #define NV_PDISP_COMP_WIN_PIPE_CGCTL_VAL_INIT                                          0x00000000 /* RWI-V */
+#define NV_PDISP_SF_USER_0                                                             0x006F03FF:0x006F0000 /* RW--D */
 #define NV_PDISP_POSTCOMP_HEAD_LOADV_COUNTER(i)                    (0x0061611C+(i)*2048) /* RW-4A */
 #define NV_PDISP_POSTCOMP_HEAD_LOADV_COUNTER__SIZE_1                                   8 /*       */
 #define NV_PDISP_POSTCOMP_HEAD_LOADV_COUNTER_VALUE                                  31:0 /* RWIUF */
@@ -5667,6 +5670,44 @@ DEALINGS IN THE SOFTWARE.
 #define NV_PDISP_SF_DP_DEBUG2_LANE_FIFO_FLUSH_MODE_INIT              0x00000001 /* RWI-V */
 #define NV_PDISP_SF_DP_DEBUG2_LANE_FIFO_FLUSH_MODE_NONE              0x00000000 /* RW--V */
 #define NV_PDISP_SF_DP_DEBUG2_LANE_FIFO_FLUSH_MODE_ASAP              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_IDX_AVI_INFOFRAME                             0x00000000 /*       */
+#define NV_PDISP_SF_HDMI_INFO_IDX_GENERIC_INFOFRAME                         0x00000001 /*       */
+#define NV_PDISP_SF_HDMI_INFO_IDX_ACR                                       0x00000002 /*       */
+#define NV_PDISP_SF_HDMI_INFO_IDX_GCP                                       0x00000003 /*       */
+#define NV_PDISP_SF_HDMI_INFO_IDX_VSI                                       0x00000004 /*       */
+#define NV_PDISP_SF_HDMI_INFO_CTRL(i,j)                 (0x006F0000+(i)*1024+(j)*64) /* RW-4A */
+#define NV_PDISP_SF_HDMI_INFO_CTRL__SIZE_1                                         4 /*       */
+#define NV_PDISP_SF_HDMI_INFO_CTRL__SIZE_2                                         5 /*       */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_ENABLE                                        0:0 /* RWIVF */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_ENABLE_NO                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_ENABLE_YES                             0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_ENABLE_DIS                             0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_ENABLE_EN                              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_OTHER                                         4:4 /* RWIVF */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_OTHER_DIS                              0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_OTHER_EN                               0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_SINGLE                                        8:8 /* RWIVF */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_SINGLE_DIS                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_SINGLE_EN                              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_CHKSUM_HW                                     9:9 /* RWIVF */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_CHKSUM_HW_ENABLE                       0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_CHKSUM_HW_EN                           0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_CHKSUM_HW_DISABLE                      0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_CHKSUM_HW_DIS                          0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_CHKSUM_HW_INIT                         0x00000001 /* RWI-V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_HBLANK                                      12:12 /* RWIVF */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_HBLANK_DIS                             0x00000000 /* RWI-V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_HBLANK_EN                              0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_VIDEO_FMT                                   16:16 /* RWIVF */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_VIDEO_FMT_SW_CONTROLLED                0x00000000 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_VIDEO_FMT_HW_CONTROLLED                0x00000001 /* RW--V */
+#define NV_PDISP_SF_HDMI_INFO_CTRL_VIDEO_FMT_INIT                         0x00000001 /* RWI-V */
+#define NV_PDISP_SF_HDMI_INFO_STATUS(i,j)               (0x006F0004+(i)*1024+(j)*64) /* R--4A */
+#define NV_PDISP_SF_HDMI_INFO_STATUS__SIZE_1                                       4 /*       */
+#define NV_PDISP_SF_HDMI_INFO_STATUS__SIZE_2                                       5 /*       */
+#define NV_PDISP_SF_HDMI_INFO_STATUS_SENT                                        0:0 /* R--VF */
+#define NV_PDISP_SF_HDMI_INFO_STATUS_SENT_DONE                            0x00000001 /* R---V */
+#define NV_PDISP_SF_HDMI_INFO_STATUS_SENT_WAITING                         0x00000000 /* R---V */
 #define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL(i)                    (0x006F0000+(i)*1024) /* RW-4A */
 #define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL__SIZE_1                                   8 /*       */
 #define NV_PDISP_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE                                  0:0 /* RWIVF */

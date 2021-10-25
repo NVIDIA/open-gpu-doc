@@ -1,0 +1,176 @@
+Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_PCFG1                             0x0008AFFF:0x0008A000 /* RW--D */
+#define NV_XVE1                              0x00000FFF:0x00000000 /* RW--D */
+#define NV_XVE1_LINK_CONTROL_STATUS                                                              0x00000088 /* RW-4R */
+#define NV_XVE1_LINK_CONTROL_STATUS_ACTIVE_STATE_LINK_PM_CONTROL                                        1:0 /* RWEVF */
+#define NV_XVE1_LINK_CONTROL_STATUS_ACTIVE_STATE_LINK_PM_CONTROL_INIT                            0x00000000 /* RWE-V */
+#define NV_XVE1_LINK_CONTROL_STATUS_ACTIVE_STATE_LINK_PM_CONTROL_L1_DISABLE_L0S_DISABLE          0x00000000 /* RW--V */
+#define NV_XVE1_LINK_CONTROL_STATUS_ACTIVE_STATE_LINK_PM_CONTROL_L1_DISABLE_L0S_ENABLE           0x00000001 /* RW--V */
+#define NV_XVE1_LINK_CONTROL_STATUS_ACTIVE_STATE_LINK_PM_CONTROL_L1_ENABLE_L0S_DISABLE           0x00000002 /* RW--V */
+#define NV_XVE1_LINK_CONTROL_STATUS_ACTIVE_STATE_LINK_PM_CONTROL_L1_ENABLE_L0S_ENABLE            0x00000003 /* RW--V */
+#define NV_XVE1_LINK_CONTROL_STATUS_READ_COMPLETION_BOUNDARY                                            3:3 /* RWEVF */
+#define NV_XVE1_LINK_CONTROL_STATUS_READ_COMPLETION_BOUNDARY_INIT                                0x00000000 /* RWE-V */
+#define NV_XVE1_LINK_CONTROL_STATUS_READ_COMPLETION_BOUNDARY_64B                                 0x00000000 /* RW--V */
+#define NV_XVE1_LINK_CONTROL_STATUS_READ_COMPLETION_BOUNDARY_128B                                0x00000001 /* RW--V */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_DISABLE                                                        4:4 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_DISABLE_INIT                                            0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_RETRAIN_LINK                                                        5:5 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_RETRAIN_LINK_INIT                                            0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_COMMON_CLOCK_CONFIGURATION                                          6:6 /* RWEVF */
+#define NV_XVE1_LINK_CONTROL_STATUS_COMMON_CLOCK_CONFIGURATION_INIT                              0x00000000 /* RWE-V */
+#define NV_XVE1_LINK_CONTROL_STATUS_EXTENDED_SYNCH                                                      7:7 /* RWEVF */
+#define NV_XVE1_LINK_CONTROL_STATUS_EXTENDED_SYNCH_INIT                                          0x00000000 /* RWE-V */
+#define NV_XVE1_LINK_CONTROL_STATUS_CLOCK_PM                                                            8:8 /* RWEVF */
+#define NV_XVE1_LINK_CONTROL_STATUS_CLOCK_PM_INIT                                                0x00000000 /* RWE-V */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_BANDWIDTH_MANAGEMENT_INTR_EN                                 10:10 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_BANDWIDTH_MANAGEMENT_INTR_EN_INIT                       0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_AUTO_BANDWIDTH_INTR_EN                                       11:11 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_AUTO_BANDWIDTH_INTR_EN_INIT                             0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_SPEED                                                        19:16 /* R--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_SPEED_2P5                                               0x00000001 /* R---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_SPEED_5P0                                               0x00000002 /* R---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_SPEED_8P0                                               0x00000003 /* R---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_NEGOTIATED_LINK_WIDTH                                             25:20 /* R--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_NEGOTIATED_LINK_WIDTH_X1                                     0x00000001 /* R---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_NEGOTIATED_LINK_WIDTH_X2                                     0x00000002 /* R---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_NEGOTIATED_LINK_WIDTH_X4                                     0x00000004 /* R---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_NEGOTIATED_LINK_WIDTH_X8                                     0x00000008 /* R---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_NEGOTIATED_LINK_WIDTH_X16                                    0x00000010 /* R---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_RSVD                                                              26:26 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_RSVD_INIT                                                     0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_TRAINING                                                     27:27 /* R-IVF */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_TRAINING_INIT                                           0x00000000 /* R-I-V */
+#define NV_XVE1_LINK_CONTROL_STATUS_SLOT_CLOCK_CONFIGURATON                                           28:28 /* R-EVF */
+#define NV_XVE1_LINK_CONTROL_STATUS_SLOT_CLOCK_CONFIGURATON_INIT                                 0x00000001 /* R-E-V */
+#define NV_XVE1_LINK_CONTROL_STATUS_DLL_ACTIVE                                                        29:29 /* R-IVF */
+#define NV_XVE1_LINK_CONTROL_STATUS_DLL_ACTIVE_INIT                                             0x00000000 /* R-I-V */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_BANDWIDTH_MANAGEMENT                                         30:30 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_BANDWIDTH_MANAGEMENT_INIT                             0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_AUTO_BANDWIDTH                                               31:31 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_LINK_AUTO_BANDWIDTH_INIT                                     0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2                                            0x000000A8 /* R--4R */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_TARGET_LINK_SPEED                                 3:0 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_TARGET_LINK_SPEED_GEN2_PROTO_DISABLED      0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_ENTER_COMPLIANCE                                  4:4 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_ENTER_COMPLIANCE_INIT                      0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_HW_AUTO_SPEED_DISABLE                             5:5 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_HW_AUTO_SPEED_DISABLE_INIT                 0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_RVSD                                              6:6 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_RVSD_0                                     0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_TRANSMIT_MARGIN                                   9:7 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_TRANSMIT_MARGIN_INIT                       0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_ENTER_MOD_COMPLIANCE                            10:10 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_ENTER_MOD_COMPLIANCE_INIT                  0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_COMPLIANCE_SOS                                  11:11 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_COMPLIANCE_SOS_INIT                        0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_COMPLIANCE_PRESET_DEEMPHASIS                    15:12 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_COMPLIANCE_PRESET_DEEMPHASIS_INIT          0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_CUR_DEEMPHASIS_LEVEL                            16:16 /* R--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_EQUALIZATION_COMPLETE                           17:17 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_EQUALIZATION_COMPLETE_INIT                 0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_EQUALIZATION_PHASE1_SUCCESSFUL                  18:18 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_EQUALIZATION_PHASE1_SUCCESSFUL_INIT        0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_EQUALIZATION_PHASE2_SUCCESSFUL                  19:19 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_EQUALIZATION_PHASE2_SUCCESSFUL_INIT        0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_EQUALIZATION_PHASE3_SUCCESSFUL                  20:20 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_EQUALIZATION_PHASE3_SUCCESSFUL_INIT        0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_EQUALIZATION_REQUEST                            21:21 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_EQUALIZATION_REQUEST_INIT                  0x00000000 /* C---V */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_BITS                                            31:22 /* C--VF */
+#define NV_XVE1_LINK_CONTROL_STATUS_2_BITS_0                                     0x00000000 /* C---V */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
