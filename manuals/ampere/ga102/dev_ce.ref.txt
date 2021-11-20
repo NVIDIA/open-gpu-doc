@@ -1,0 +1,338 @@
+Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_CE                                            0x105fff:0x104000 /* RW--D */
+#define NV_CE_PCE_MAP                                           0x00104028 /* R--4R */
+#define NV_CE_PCE_MAP_VALUE                                           23:0 /* R-XVF */
+#define NV_CE_HSH_PCE_MASK                                                  0x0010404c /* C--4R */
+#define NV_CE_HSH_PCE_MASK_VALUE                                                  23:0 /* C--VF */
+#define NV_CE_HSH_PCE_MASK_VALUE_INIT                                               15 /* C---V */
+#define NV_CE_PCE2LCE_CONFIG(i)                       (0x00104100+(i)*0x4) /* RW-4A */
+#define NV_CE_PCE2LCE_CONFIG__SIZE_1                                     6 /*       */
+#define NV_CE_PCE2LCE_CONFIG_PCE_ASSIGNED_LCE                          3:0 /* RWIVF */
+#define NV_CE_PCE2LCE_CONFIG_PCE_ASSIGNED_LCE_NONE              0x0000000f /* RW--V */
+#define NV_CE_PCE2LCE_CONFIG_0_PCE_ASSIGNED_LCE_INIT            0x0000000f /* RWI-V */
+#define NV_CE_PCE2LCE_CONFIG_1_PCE_ASSIGNED_LCE_INIT            0x0000000f /* RWI-V */
+#define NV_CE_PCE2LCE_CONFIG_2_PCE_ASSIGNED_LCE_INIT            0x0000000f /* RWI-V */
+#define NV_CE_PCE2LCE_CONFIG_3_PCE_ASSIGNED_LCE_INIT            0x0000000f /* RWI-V */
+#define NV_CE_PCE2LCE_CONFIG_4_PCE_ASSIGNED_LCE_INIT            0x00000002 /* RWI-V */
+#define NV_CE_PCE2LCE_CONFIG_5_PCE_ASSIGNED_LCE_INIT            0x00000003 /* RWI-V */
+#define NV_CE_GRCE_CONFIG(i)                         (0x001041c0+(i)*0x4) /* RW-4A */
+#define NV_CE_GRCE_CONFIG__SIZE_1                                       2 /*       */
+#define NV_CE_GRCE_CONFIG_SHARED_LCE                                  3:0 /* RWIVF */
+#define NV_CE_GRCE_CONFIG_SHARED_LCE_NONE                             0xf /* RW--V */
+#define NV_CE_GRCE_CONFIG_0_SHARED_LCE_INIT                    0x00000003 /* RWI-V */
+#define NV_CE_GRCE_CONFIG_1_SHARED_LCE_INIT                    0x00000002 /* RWI-V */
+#define NV_CE_GRCE_CONFIG_SHARED                                    30:30 /* RWIVF */
+#define NV_CE_GRCE_CONFIG_0_SHARED_INIT                        0x00000001 /* RWI-V */
+#define NV_CE_GRCE_CONFIG_1_SHARED_INIT                        0x00000001 /* RWI-V */
+#define NV_CE_GRCE_CONFIG_TIMESLICE                                 31:31 /* RWIVF */
+#define NV_CE_GRCE_CONFIG_TIMESLICE_SHORT                      0x00000000 /* RWI-V */
+#define NV_CE_GRCE_CONFIG_TIMESLICE_LONG                       0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG                          0x00104200 /* RWI4R */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_DLY_CNT                 5:0 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_DLY_CNT_HWINIT   0x00000000 /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_DLY_CNT__PROD    0x00000004 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_EN                      6:6 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_EN_ENABLED       0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_EN_DISABLED      0x00000000 /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG_IDLE_CG_EN__PROD         0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_STATE_CG_EN                     7:7 /*       */
+#define NV_CE_PRI_CE_FE_CG_STATE_CG_EN_ENABLED      0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_STATE_CG_EN_DISABLED     0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_STATE_CG_EN__PROD        0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_DLY_CNT               13:8 /*       */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_DLY_CNT_HWINIT  0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_DLY_CNT__PROD   0x00000002 /*       */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_EN                   14:14 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_EN_ENABLED      0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_EN_DISABLED     0x00000000 /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG_STALL_CG_EN__PROD        0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_QUIESCENT_CG_EN               15:15 /*       */
+#define NV_CE_PRI_CE_FE_CG_QUIESCENT_CG_EN_ENABLED  0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_QUIESCENT_CG_EN_DISABLED 0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_QUIESCENT_CG_EN__PROD    0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_WAKEUP_DLY_CNT                19:16 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG_WAKEUP_DLY_CNT_HWINIT    0x00000000 /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG_WAKEUP_DLY_CNT__PROD     0x00000000 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_CNT                 23:20 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_CNT_FULLSPEED  0x0000000f /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_CNT__PROD      0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_DI_DT_SKEW_VAL                27:24 /*       */
+#define NV_CE_PRI_CE_FE_CG_DI_DT_SKEW_VAL_HWINIT    0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_DI_DT_SKEW_VAL__PROD     0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_EN                  28:28 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_EN_ENABLED     0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_EN_DISABLED    0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_EN__PROD       0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_SW_OVER             29:29 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_SW_OVER_EN     0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_SW_OVER_DIS    0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_THROT_CLK_SW_OVER__PROD  0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_PAUSE_CG_EN                   30:30 /*       */
+#define NV_CE_PRI_CE_FE_CG_PAUSE_CG_EN_ENABLED      0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_PAUSE_CG_EN_DISABLED     0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_PAUSE_CG_EN__PROD        0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_HALT_CG_EN                    31:31 /*       */
+#define NV_CE_PRI_CE_FE_CG_HALT_CG_EN_ENABLED       0x00000001 /*       */
+#define NV_CE_PRI_CE_FE_CG_HALT_CG_EN_DISABLED      0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG_HALT_CG_EN__PROD         0x00000000 /*       */
+#define NV_CE_PRI_CE_FE_CG1                               0x00104204 /* RWI4R */
+#define NV_CE_PRI_CE_FE_CG1_MONITOR_CG_EN                      0:0 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG1_MONITOR_CG_EN_ENABLED       0x00000001 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG1_MONITOR_CG_EN_DISABLED      0x00000000 /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG1_MONITOR_CG_EN__PROD         0x00000000 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG1_SLCG                            10:1 /* RWIVF */
+#define NV_CE_PRI_CE_FE_CG1_SLCG_ENABLED                0x00000000 /* RW--V */
+#define NV_CE_PRI_CE_FE_CG1_SLCG_DISABLED               0x000003FF /* RWI-V */
+#define NV_CE_PRI_CE_FE_CG1_SLCG__PROD                  0x00000000 /* RW--V */
+#define NV_CE_LCE_STATUS(i)                          (0x00104400+(i)*0x80) /* R--4A */
+#define NV_CE_LCE_STATUS__SIZE_1                5 /*       */
+#define NV_CE_LCE_STATUS_TOP                                           0:0 /* R-IVF */
+#define NV_CE_LCE_STATUS_TOP_IDLE                               0x00000000 /* R-I-V */
+#define NV_CE_LCE_STATUS_TOP_NONIDLE                            0x00000001 /* R---V */
+#define NV_CE_LCE_BIND_STATUS(i)                     (0x00104404+(i)*0x80) /* R--4A */
+#define NV_CE_LCE_BIND_STATUS__SIZE_1           5 /*       */
+#define NV_CE_LCE_BIND_STATUS_BOUND                                    0:0 /* R-IVF */
+#define NV_CE_LCE_BIND_STATUS_BOUND_FALSE                       0x00000000 /* R-I-V */
+#define NV_CE_LCE_BIND_STATUS_BOUND_TRUE                        0x00000001 /* R---V */
+#define NV_CE_LCE_BIND_STATUS_CTX_PTR                                 28:1 /* R-IVF */
+#define NV_CE_LCE_BIND_STATUS_CTX_PTR_INIT                      0x01234567 /* R-I-V */
+#define NV_CE_LCE_BIND_STATUS_CTX_TARGET                             30:29 /* R-IVF */
+#define NV_CE_LCE_BIND_STATUS_CTX_TARGET_INIT                   0x00000000 /* R-I-V */
+#define NV_CE_LCE_INTR_EN(i)                         (0x0010440c+(i)*0x80) /* RW-4A */
+#define NV_CE_LCE_INTR_EN__SIZE_1               5 /*       */
+#define NV_CE_LCE_INTR_EN_BLOCKPIPE                                    0:0 /* RWEVF */
+#define NV_CE_LCE_INTR_EN_BLOCKPIPE_DISABLE                     0x00000000 /* RW--V */
+#define NV_CE_LCE_INTR_EN_BLOCKPIPE_ENABLE                      0x00000001 /* RWE-V */
+#define NV_CE_LCE_INTR_EN_NONBLOCKPIPE                                 1:1 /* RWEVF */
+#define NV_CE_LCE_INTR_EN_NONBLOCKPIPE_DISABLE                  0x00000000 /* RW--V */
+#define NV_CE_LCE_INTR_EN_NONBLOCKPIPE_ENABLE                   0x00000001 /* RWE-V */
+#define NV_CE_LCE_INTR_EN_LAUNCHERR                                    2:2 /* RWEVF */
+#define NV_CE_LCE_INTR_EN_LAUNCHERR_DISABLE                     0x00000000 /* RW--V */
+#define NV_CE_LCE_INTR_EN_LAUNCHERR_ENABLE                      0x00000001 /* RWE-V */
+#define NV_CE_LCE_INTR_EN_INVALID_CONFIG                               3:3 /* RWEVF */
+#define NV_CE_LCE_INTR_EN_INVALID_CONFIG_DISABLE                0x00000000 /* RW--V */
+#define NV_CE_LCE_INTR_EN_INVALID_CONFIG_ENABLE                 0x00000001 /* RWE-V */
+#define NV_CE_LCE_INTR_EN_MTHD_BUFFER_FAULT                            4:4 /* RWEVF */
+#define NV_CE_LCE_INTR_EN_MTHD_BUFFER_FAULT_DISABLE             0x00000000 /* RWE-V */
+#define NV_CE_LCE_INTR_EN_MTHD_BUFFER_FAULT_ENABLE              0x00000001 /* RW--V */
+#define NV_CE_LCE_INTR_EN_FBUF_CRC_FAIL                                5:5 /* RWEVF */
+#define NV_CE_LCE_INTR_EN_FBUF_CRC_FAIL_DISABLE                 0x00000000 /* RW--V */
+#define NV_CE_LCE_INTR_EN_FBUF_CRC_FAIL_ENABLE                  0x00000001 /* RWE-V */
+#define NV_CE_LCE_INTR_EN_FBUF_MAGIC_CHK_FAIL                          6:6 /* RWEVF */
+#define NV_CE_LCE_INTR_EN_FBUF_MAGIC_CHK_FAIL_DISABLE           0x00000000 /* RW--V */
+#define NV_CE_LCE_INTR_EN_FBUF_MAGIC_CHK_FAIL_ENABLE            0x00000001 /* RWE-V */
+#define NV_CE_LCE_INTR_EN_POISON_ERROR                                 7:7 /* RWEVF */
+#define NV_CE_LCE_INTR_EN_POISON_ERROR_DISABLE                  0x00000000 /* RW--V */
+#define NV_CE_LCE_INTR_EN_POISON_ERROR_ENABLE                   0x00000001 /* RWE-V */
+#define NV_CE_LCE_INTR_STATUS(i)                     (0x00104410+(i)*0x80) /* RW-4A */
+#define NV_CE_LCE_INTR_STATUS__SIZE_1           5 /*       */
+#define NV_CE_LCE_INTR_STATUS_BLOCKPIPE                                0:0 /* RWIVF */
+#define NV_CE_LCE_INTR_STATUS_BLOCKPIPE_NOT_PENDING             0x00000000 /* R-I-V */
+#define NV_CE_LCE_INTR_STATUS_BLOCKPIPE_PENDING                 0x00000001 /* R---V */
+#define NV_CE_LCE_INTR_STATUS_BLOCKPIPE_RESET                   0x00000001 /* -W--C */
+#define NV_CE_LCE_INTR_STATUS_NONBLOCKPIPE                             1:1 /*       */
+#define NV_CE_LCE_INTR_STATUS_NONBLOCKPIPE_NOT_PENDING          0x00000000 /*       */
+#define NV_CE_LCE_INTR_STATUS_NONBLOCKPIPE_PENDING              0x00000001 /*       */
+#define NV_CE_LCE_INTR_STATUS_NONBLOCKPIPE_RESET                0x00000001 /*       */
+#define NV_CE_LCE_INTR_STATUS_LAUNCHERR                                2:2 /* RWIVF */
+#define NV_CE_LCE_INTR_STATUS_LAUNCHERR_NOT_PENDING             0x00000000 /* R-I-V */
+#define NV_CE_LCE_INTR_STATUS_LAUNCHERR_PENDING                 0x00000001 /* R---V */
+#define NV_CE_LCE_INTR_STATUS_LAUNCHERR_RESET                   0x00000001 /* -W--C */
+#define NV_CE_LCE_INTR_STATUS_INVALID_CONFIG                           3:3 /* RWIVF */
+#define NV_CE_LCE_INTR_STATUS_INVALID_CONFIG_NOT_PENDING        0x00000000 /* R-I-V */
+#define NV_CE_LCE_INTR_STATUS_INVALID_CONFIG_PENDING            0x00000001 /* R---V */
+#define NV_CE_LCE_INTR_STATUS_INVALID_CONFIG_RESET              0x00000001 /* -W--C */
+#define NV_CE_LCE_INTR_STATUS_MTHD_BUFFER_FAULT                        4:4 /* RWIVF */
+#define NV_CE_LCE_INTR_STATUS_MTHD_BUFFER_FAULT_NOT_PENDING     0x00000000 /* R-I-V */
+#define NV_CE_LCE_INTR_STATUS_MTHD_BUFFER_FAULT_PENDING         0x00000001 /* R---V */
+#define NV_CE_LCE_INTR_STATUS_MTHD_BUFFER_FAULT_RESET           0x00000001 /* -W--C */
+#define NV_CE_LCE_INTR_STATUS_FBUF_CRC_FAIL                            5:5 /* RWIVF */
+#define NV_CE_LCE_INTR_STATUS_FBUF_CRC_FAIL_NOT_PENDING         0x00000000 /* R-I-V */
+#define NV_CE_LCE_INTR_STATUS_FBUF_CRC_FAIL_PENDING             0x00000001 /* R---V */
+#define NV_CE_LCE_INTR_STATUS_FBUF_CRC_FAIL_RESET               0x00000001 /* -W--C */
+#define NV_CE_LCE_INTR_STATUS_FBUF_MAGIC_CHK_FAIL                      6:6 /* RWIVF */
+#define NV_CE_LCE_INTR_STATUS_FBUF_MAGIC_CHK_FAIL_NOT_PENDING   0x00000000 /* R-I-V */
+#define NV_CE_LCE_INTR_STATUS_FBUF_MAGIC_CHK_FAIL_PENDING       0x00000001 /* R---V */
+#define NV_CE_LCE_INTR_STATUS_FBUF_MAGIC_CHK_FAIL_RESET         0x00000001 /* -W--C */
+#define NV_CE_LCE_INTR_STATUS_POISON_ERROR                             7:7 /* RWIVF */
+#define NV_CE_LCE_INTR_STATUS_POISON_ERROR_NOT_PENDING          0x00000000 /* R-I-V */
+#define NV_CE_LCE_INTR_STATUS_POISON_ERROR_PENDING              0x00000001 /* R---V */
+#define NV_CE_LCE_INTR_STATUS_POISON_ERROR_RESET                0x00000001 /* -W--C */
+#define NV_CE_LCE_OPT(i)                             (0x00104414+(i)*0x80) /* RW-4A */
+#define NV_CE_LCE_OPT__SIZE_1                   5 /*       */
+#define NV_CE_LCE_OPT_IRQ_FORCE_REPORT_STALL                           0:0 /* RWEVF */
+#define NV_CE_LCE_OPT_IRQ_FORCE_REPORT_STALL_FALSE              0x00000000 /* RWE-V */
+#define NV_CE_LCE_OPT_IRQ_FORCE_REPORT_STALL_TRUE               0x00000001 /* RW--V */
+#define NV_CE_LCE_OPT_RMW_OPT_ENABLE                                   1:1 /* RWEVF */
+#define NV_CE_LCE_OPT_RMW_OPT_ENABLE_TRUE                       0x00000001 /* RWE-V */
+#define NV_CE_LCE_OPT_RMW_OPT_ENABLE_FALSE                      0x00000000 /* RW--V */
+#define NV_CE_LCE_OPT_FORCE_FLUSH_SYS                                  2:2 /* RWEVF */
+#define NV_CE_LCE_OPT_FORCE_FLUSH_SYS_FALSE                     0x00000000 /* RWE-V */
+#define NV_CE_LCE_OPT_FORCE_FLUSH_SYS_TRUE                      0x00000001 /* RW--V */
+#define NV_CE_LCE_OPT_FORCE_BARRIERS_NPL                               3:3 /* RWEVF */
+#define NV_CE_LCE_OPT_FORCE_BARRIERS_NPL_FALSE                  0x00000000 /* RW--V */
+#define NV_CE_LCE_OPT_FORCE_BARRIERS_NPL_TRUE                   0x00000001 /* RWE-V */
+#define NV_CE_LCE_OPT_FORCE_BARRIERS_NPL__PROD                  0x00000001 /* RW--V */
+#define NV_CE_LCE_OPT_PIPELINED_FLUSH                                  4:4 /* RWEVF */
+#define NV_CE_LCE_OPT_PIPELINED_FLUSH_FALSE                     0x00000000 /* RWE-V */
+#define NV_CE_LCE_OPT_PIPELINED_FLUSH_TRUE                      0x00000001 /* RW--V */
+#define NV_CE_LCE_OPT_L2_CLASS                                         6:6 /* RWEVF */
+#define NV_CE_LCE_OPT_L2_CLASS_EVICT_FIRST                      0x00000000 /* RWE-V */
+#define NV_CE_LCE_OPT_L2_CLASS_EVICT_NORMAL                     0x00000001 /* RW--V */
+#define NV_CE_LCE_LAUNCHERR(i)                       (0x00104418+(i)*0x80) /* RW-4A */
+#define NV_CE_LCE_LAUNCHERR__SIZE_1             5 /*       */
+#define NV_CE_LCE_LAUNCHERR_REPORT                                     3:0 /* RWIVF */
+#define NV_CE_LCE_LAUNCHERR_REPORT_NO_ERR                       0x00000000 /* RWI-V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_2D_LAYER_EXCEEDS_DEPTH       0x00000001 /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_INVALID_ALIGNMENT            0x00000002 /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_MEM2MEM_RECT_OUT_OF_BOUNDS   0x00000003 /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_SRC_LINE_ECXEEDS_PITCH       0x00000004 /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_SRC_LINE_EXCEEDS_NEG_PITCH   0x00000005 /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_DST_LINE_ECXEEDS_PITCH       0x00000006 /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_DST_LINE_EXCEEDS_NEG_PITCH   0x00000007 /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_BAD_SRC_PIXEL_COMP_REF       0x00000008 /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_INVALID_VALUE                0x00000009 /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_INVALID_UNUSED_FIELD         0x0000000a /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_INVALID_OPERATION            0x0000000b /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_NO_RESOURCES                 0x0000000c /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_INVALID_CONFIG               0x0000000d /* R---V */
+#define NV_CE_LCE_LAUNCHERR_REPORT_METHOD_BUFFER_ACCESS_FAULT   0x0000000e /* R---V */
+#define NV_CE_LCE_ENGCTL(i)                          (0x0010441c+(i)*0x80) /* RW-4A */
+#define NV_CE_LCE_ENGCTL__SIZE_1                5 /*       */
+#define NV_CE_LCE_ENGCTL_STALLREQ                                      8:8 /* RWIVF */
+#define NV_CE_LCE_ENGCTL_STALLREQ_FALSE                         0x00000000 /* RWI-V */
+#define NV_CE_LCE_ENGCTL_STALLREQ_TRUE                          0x00000001 /* RW--V */
+#define NV_CE_LCE_ENGCTL_STALLACK                                      9:9 /* R-IVF */
+#define NV_CE_LCE_ENGCTL_STALLACK_FALSE                         0x00000000 /* R-I-V */
+#define NV_CE_LCE_ENGCTL_STALLACK_TRUE                          0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS(i)                      (0x00105058+(i)*0xc0) /* R--4A */
+#define NV_CE_PCE_PIPESTATUS__SIZE_1            6 /*       */
+#define NV_CE_PCE_PIPESTATUS_CTL                                       0:0 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_CTL_IDLE                           0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_CTL_NONIDLE                        0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS_GSTRIP                                    1:1 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_GSTRIP_IDLE                        0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_GSTRIP_NONIDLE                     0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS_RALIGN                                    2:2 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_RALIGN_IDLE                        0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_RALIGN_NONIDLE                     0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS_SWIZ                                      3:3 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_SWIZ_IDLE                          0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_SWIZ_NONIDLE                       0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS_WALIGN                                    4:4 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_WALIGN_IDLE                        0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_WALIGN_NONIDLE                     0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS_GPAD                                      5:5 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_GPAD_IDLE                          0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_GPAD_NONIDLE                       0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS_RDAT                                      6:6 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_RDAT_IDLE                          0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_RDAT_NONIDLE                       0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS_RDACK                                     7:7 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_RDACK_IDLE                         0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_RDACK_NONIDLE                      0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS_WRACK                                     8:8 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_WRACK_IDLE                         0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_WRACK_NONIDLE                      0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS_RCMD_STALL                              10:10 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_RCMD_STALL_NONACTIVE               0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_RCMD_STALL_ACTIVE                  0x00000001 /* R---V */
+#define NV_CE_PCE_PIPESTATUS_WCMD_STALL                              11:11 /* R-IVF */
+#define NV_CE_PCE_PIPESTATUS_WCMD_STALL_NONACTIVE               0x00000000 /* R-I-V */
+#define NV_CE_PCE_PIPESTATUS_WCMD_STALL_ACTIVE                  0x00000001 /* R---V */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
