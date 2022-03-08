@@ -332,6 +332,24 @@ extern "C" {
 #define NVC67D_SOR_SET_SW_SPARE_B(a)                                            (0x0000030C + (a)*0x00000020)
 #define NVC67D_SOR_SET_SW_SPARE_B_CODE                                          31:0
 
+#define NVC67D_DSI_SET_CONTROL(a)                                               (0x00000500 + (a)*0x00000020)
+#define NVC67D_DSI_SET_CONTROL_OWNER_MASK                                       7:0
+#define NVC67D_DSI_SET_CONTROL_OWNER_MASK_NONE                                  (0x00000000)
+#define NVC67D_DSI_SET_CONTROL_OWNER_MASK_HEAD0                                 (0x00000001)
+#define NVC67D_DSI_SET_CONTROL_OWNER_MASK_HEAD1                                 (0x00000002)
+#define NVC67D_DSI_SET_CONTROL_OWNER_MASK_HEAD2                                 (0x00000004)
+#define NVC67D_DSI_SET_CONTROL_OWNER_MASK_HEAD3                                 (0x00000008)
+#define NVC67D_DSI_SET_CONTROL_OWNER_MASK_HEAD4                                 (0x00000010)
+#define NVC67D_DSI_SET_CONTROL_OWNER_MASK_HEAD5                                 (0x00000020)
+#define NVC67D_DSI_SET_CONTROL_OWNER_MASK_HEAD6                                 (0x00000040)
+#define NVC67D_DSI_SET_CONTROL_OWNER_MASK_HEAD7                                 (0x00000080)
+#define NVC67D_DSI_SET_CUSTOM_REASON(a)                                         (0x00000504 + (a)*0x00000020)
+#define NVC67D_DSI_SET_CUSTOM_REASON_CODE                                       31:0
+#define NVC67D_DSI_SET_SW_SPARE_A(a)                                            (0x00000508 + (a)*0x00000020)
+#define NVC67D_DSI_SET_SW_SPARE_A_CODE                                          31:0
+#define NVC67D_DSI_SET_SW_SPARE_B(a)                                            (0x0000050C + (a)*0x00000020)
+#define NVC67D_DSI_SET_SW_SPARE_B_CODE                                          31:0
+
 #define NVC67D_WINDOW_SET_CONTROL(a)                                            (0x00001000 + (a)*0x00000080)
 #define NVC67D_WINDOW_SET_CONTROL_OWNER                                         3:0
 #define NVC67D_WINDOW_SET_CONTROL_OWNER_HEAD(i)                                 (0x00000000 +(i))

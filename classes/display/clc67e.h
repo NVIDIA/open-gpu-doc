@@ -305,6 +305,16 @@ extern "C" {
 #define NVC67E_SET_ACQ_SEMAPHORE_VALUE_VALUE                                    31:0
 #define NVC67E_SET_CONTEXT_DMA_ACQ_SEMAPHORE                                    (0x00000338)
 #define NVC67E_SET_CONTEXT_DMA_ACQ_SEMAPHORE_HANDLE                             31:0
+#define NVC67E_SET_SCAN_DIRECTION                                               (0x0000033C)
+#define NVC67E_SET_SCAN_DIRECTION_HORIZONTAL_DIRECTION                          0:0
+#define NVC67E_SET_SCAN_DIRECTION_HORIZONTAL_DIRECTION_FROM_LEFT                (0x00000000)
+#define NVC67E_SET_SCAN_DIRECTION_HORIZONTAL_DIRECTION_FROM_RIGHT               (0x00000001)
+#define NVC67E_SET_SCAN_DIRECTION_VERTICAL_DIRECTION                            1:1
+#define NVC67E_SET_SCAN_DIRECTION_VERTICAL_DIRECTION_FROM_TOP                   (0x00000000)
+#define NVC67E_SET_SCAN_DIRECTION_VERTICAL_DIRECTION_FROM_BOTTOM                (0x00000001)
+#define NVC67E_SET_SCAN_DIRECTION_COLUMN_ORDER                                  2:2
+#define NVC67E_SET_SCAN_DIRECTION_COLUMN_ORDER_FALSE                            (0x00000000)
+#define NVC67E_SET_SCAN_DIRECTION_COLUMN_ORDER_TRUE                             (0x00000001)
 #define NVC67E_SET_TIMESTAMP_ORIGIN_LO                                          (0x00000340)
 #define NVC67E_SET_TIMESTAMP_ORIGIN_LO_TIMESTAMP_LO                             31:0
 #define NVC67E_SET_TIMESTAMP_ORIGIN_HI                                          (0x00000344)

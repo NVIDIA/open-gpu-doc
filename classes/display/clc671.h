@@ -33,6 +33,12 @@ typedef volatile struct _clc671_tag0 {
     NvU32 dispSfUserOffset[0x400];
 } _NvC671DispSfUser, NvC671DispSfUserMap;
 
+#define NVC671_SF_HDMI_INFO_IDX_GENERIC_INFOFRAME                         0x00000001 /*       */
+#define NVC671_SF_HDMI_INFO_IDX_VSI                                       0x00000004 /*       */
+#define NVC671_SF_HDMI_INFO_CTRL(i,j)                 (0x000E0000-0x000E0000+(i)*1024+(j)*64) /* RW-4A */
+#define NVC671_SF_HDMI_INFO_CTRL__SIZE_1                                         4 /*       */
+#define NVC671_SF_HDMI_INFO_CTRL__SIZE_2                                         5 /*       */
+
 #ifdef __cplusplus
 };     /* extern "C" */
 #endif
