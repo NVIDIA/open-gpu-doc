@@ -100,3 +100,13 @@ Class Name:                 AMPERE_B
 GPUs:                       ga102, ga103, ga104, ga106, ga107, t234, t239
 __________________________________________________________________________
 
+Class Name:                 ADA_A
+3D Class Header:            clc997.h
+3D Class Texture Header:    clc997tex.h
+GPUs:                       ad102, ad103, ad104
+__________________________________________________________________________
+
+Class Name:                 HOPPER_A
+3D Class Header:            clcb97.h
+3D Class Texture Header:    clcb97tex.h
+GPUs:                       gh100
