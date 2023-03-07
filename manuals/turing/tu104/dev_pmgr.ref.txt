@@ -1,0 +1,1913 @@
+Copyright (c) 2023, NVIDIA CORPORATION. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+--------------------------------------------------------------------------------
+
+#define NV_PMGR                               0x0000E7FF:0x0000D000 /* RW--D */
+#define NV_PMGR_MUTEX                         0x0000DFDF:0x0000DF00 /* RW--D */
+#define NV_PMGR_IP_VER                                 0x0000E000 /* R--4R */
+#define NV_PMGR_IP_VER_DEV                                    7:0 /* R-IVF */
+#define NV_PMGR_IP_VER_DEV_INIT                        0x00000000 /* R-I-V */
+#define NV_PMGR_IP_VER_ECO                                   15:8 /* R-IVF */
+#define NV_PMGR_IP_VER_ECO_INIT                        0x00000000 /* R-I-V */
+#define NV_PMGR_IP_VER_MINOR                                23:16 /* R-IVF */
+#define NV_PMGR_IP_VER_MINOR_INIT                      0x00000002 /* R-I-V */
+#define NV_PMGR_IP_VER_MAJOR                                31:24 /* R-IVF */
+#define NV_PMGR_IP_VER_MAJOR_INIT                      0x00000003 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1                                   0x0000DC00 /* RW-4R */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO0_RISING                             0:0 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO0_RISING_INIT                 0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO0_RISING_NOT_PENDING          0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO0_RISING_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO0_RISING_RESET                0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO1_RISING                             1:1 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO1_RISING_INIT                 0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO1_RISING_NOT_PENDING          0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO1_RISING_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO1_RISING_RESET                0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO2_RISING                             2:2 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO2_RISING_INIT                 0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO2_RISING_NOT_PENDING          0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO2_RISING_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO2_RISING_RESET                0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO3_RISING                             3:3 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO3_RISING_INIT                 0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO3_RISING_NOT_PENDING          0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO3_RISING_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO3_RISING_RESET                0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO4_RISING                             4:4 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO4_RISING_INIT                 0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO4_RISING_NOT_PENDING          0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO4_RISING_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO4_RISING_RESET                0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO5_RISING                             5:5 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO5_RISING_INIT                 0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO5_RISING_NOT_PENDING          0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO5_RISING_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO5_RISING_RESET                0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO6_RISING                             6:6 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO6_RISING_INIT                 0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO6_RISING_NOT_PENDING          0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO6_RISING_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO6_RISING_RESET                0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO7_RISING                             7:7 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO7_RISING_INIT                 0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO7_RISING_NOT_PENDING          0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO7_RISING_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO7_RISING_RESET                0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO8_RISING                             8:8 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO8_RISING_INIT                 0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO8_RISING_NOT_PENDING          0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO8_RISING_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO8_RISING_RESET                0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO9_RISING                             9:9 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO9_RISING_INIT                 0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO9_RISING_NOT_PENDING          0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO9_RISING_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO9_RISING_RESET                0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO10_RISING                          10:10 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO10_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO10_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO10_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO10_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO11_RISING                          11:11 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO11_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO11_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO11_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO11_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO12_RISING                          12:12 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO12_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO12_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO12_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO12_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO13_RISING                          13:13 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO13_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO13_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO13_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO13_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO14_RISING                          14:14 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO14_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO14_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO14_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO14_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO15_RISING                          15:15 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO15_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO15_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO15_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO15_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO_RISING(i)                    (0+(i)):(0+(i)) /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO_RISING__SIZE_1                        16 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO_RISING_NOT_PENDING            0x00000000 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO_RISING_PENDING                0x00000001 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO_RISING_RESET                  0x00000001 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO0_FALLING                          16:16 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO0_FALLING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO0_FALLING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO0_FALLING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO0_FALLING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO1_FALLING                          17:17 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO1_FALLING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO1_FALLING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO1_FALLING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO1_FALLING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO2_FALLING                          18:18 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO2_FALLING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO2_FALLING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO2_FALLING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO2_FALLING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO3_FALLING                          19:19 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO3_FALLING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO3_FALLING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO3_FALLING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO3_FALLING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO4_FALLING                          20:20 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO4_FALLING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO4_FALLING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO4_FALLING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO4_FALLING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO5_FALLING                          21:21 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO5_FALLING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO5_FALLING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO5_FALLING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO5_FALLING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO6_FALLING                          22:22 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO6_FALLING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO6_FALLING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO6_FALLING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO6_FALLING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO7_FALLING                          23:23 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO7_FALLING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO7_FALLING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO7_FALLING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO7_FALLING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO8_FALLING                          24:24 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO8_FALLING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO8_FALLING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO8_FALLING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO8_FALLING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO9_FALLING                          25:25 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO9_FALLING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO9_FALLING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO9_FALLING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO9_FALLING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO10_FALLING                         26:26 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO10_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO10_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO10_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO10_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO11_FALLING                         27:27 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO11_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO11_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO11_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO11_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO12_FALLING                         28:28 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO12_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO12_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO12_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO12_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO13_FALLING                         29:29 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO13_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO13_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO13_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO13_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO14_FALLING                         30:30 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO14_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO14_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO14_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO14_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO15_FALLING                         31:31 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO15_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO15_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO15_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO15_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO_FALLING(i)                 (16+(i)):(16+(i)) /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO_FALLING__SIZE_1                       16 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO_FALLING_NOT_PENDING           0x00000000 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO_FALLING_PENDING               0x00000001 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_1_GPIO_FALLING_RESET                 0x00000001 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1                                 0x0000DC08 /* RWI4R */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO0_RISING                          0:0 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO0_RISING_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO0_RISING_DISABLED          0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO0_RISING_ENABLED           0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO1_RISING                          1:1 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO1_RISING_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO1_RISING_DISABLED          0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO1_RISING_ENABLED           0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO2_RISING                          2:2 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO2_RISING_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO2_RISING_DISABLED          0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO2_RISING_ENABLED           0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO3_RISING                          3:3 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO3_RISING_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO3_RISING_DISABLED          0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO3_RISING_ENABLED           0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO4_RISING                          4:4 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO4_RISING_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO4_RISING_DISABLED          0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO4_RISING_ENABLED           0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO5_RISING                          5:5 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO5_RISING_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO5_RISING_DISABLED          0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO5_RISING_ENABLED           0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO6_RISING                          6:6 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO6_RISING_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO6_RISING_DISABLED          0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO6_RISING_ENABLED           0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO7_RISING                          7:7 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO7_RISING_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO7_RISING_DISABLED          0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO7_RISING_ENABLED           0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO8_RISING                          8:8 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO8_RISING_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO8_RISING_DISABLED          0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO8_RISING_ENABLED           0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO9_RISING                          9:9 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO9_RISING_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO9_RISING_DISABLED          0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO9_RISING_ENABLED           0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO10_RISING                       10:10 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO10_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO10_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO10_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO11_RISING                       11:11 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO11_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO11_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO11_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO12_RISING                       12:12 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO12_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO12_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO12_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO13_RISING                       13:13 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO13_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO13_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO13_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO14_RISING                       14:14 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO14_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO14_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO14_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO15_RISING                       15:15 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO15_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO15_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO15_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO_RISING(i)                 (0+(i)):(0+(i)) /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO_RISING__SIZE_1                     16 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO_RISING_DISABLED            0x00000000 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO_RISING_ENABLED             0x00000001 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO0_FALLING                       16:16 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO0_FALLING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO0_FALLING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO0_FALLING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO1_FALLING                       17:17 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO1_FALLING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO1_FALLING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO1_FALLING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO2_FALLING                       18:18 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO2_FALLING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO2_FALLING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO2_FALLING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO3_FALLING                       19:19 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO3_FALLING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO3_FALLING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO3_FALLING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO4_FALLING                       20:20 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO4_FALLING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO4_FALLING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO4_FALLING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO5_FALLING                       21:21 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO5_FALLING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO5_FALLING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO5_FALLING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO6_FALLING                       22:22 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO6_FALLING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO6_FALLING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO6_FALLING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO7_FALLING                       23:23 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO7_FALLING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO7_FALLING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO7_FALLING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO8_FALLING                       24:24 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO8_FALLING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO8_FALLING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO8_FALLING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO9_FALLING                       25:25 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO9_FALLING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO9_FALLING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO9_FALLING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO10_FALLING                      26:26 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO10_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO10_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO10_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO11_FALLING                      27:27 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO11_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO11_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO11_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO12_FALLING                      28:28 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO12_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO12_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO12_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO13_FALLING                      29:29 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO13_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO13_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO13_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO14_FALLING                      30:30 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO14_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO14_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO14_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO15_FALLING                      31:31 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO15_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO15_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO15_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO_FALLING(i)              (16+(i)):(16+(i)) /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO_FALLING__SIZE_1                    16 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO_FALLING_DISABLED           0x00000000 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_1_GPIO_FALLING_ENABLED            0x00000001 /*       */
+#define NV_PMGR_RM_INTR_I2C                                   0x0000DC20 /* RW-4R */
+#define NV_PMGR_RM_INTR_I2C_I2C0                                     0:0 /* RWIVF */
+#define NV_PMGR_RM_INTR_I2C_I2C0_INIT                         0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_I2C_I2C0_NOT_PENDING                  0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C0_PENDING                      0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C0_RESET                        0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_I2C_I2C1                                     1:1 /* RWIVF */
+#define NV_PMGR_RM_INTR_I2C_I2C1_INIT                         0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_I2C_I2C1_NOT_PENDING                  0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C1_PENDING                      0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C1_RESET                        0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_I2C_I2C2                                     2:2 /* RWIVF */
+#define NV_PMGR_RM_INTR_I2C_I2C2_INIT                         0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_I2C_I2C2_NOT_PENDING                  0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C2_PENDING                      0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C2_RESET                        0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_I2C_I2C3                                     3:3 /* RWIVF */
+#define NV_PMGR_RM_INTR_I2C_I2C3_INIT                         0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_I2C_I2C3_NOT_PENDING                  0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C3_PENDING                      0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C3_RESET                        0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_I2C_I2C4                                     4:4 /* RWIVF */
+#define NV_PMGR_RM_INTR_I2C_I2C4_INIT                         0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_I2C_I2C4_NOT_PENDING                  0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C4_PENDING                      0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C4_RESET                        0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_I2C_I2C5                                     5:5 /* RWIVF */
+#define NV_PMGR_RM_INTR_I2C_I2C5_INIT                         0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_I2C_I2C5_NOT_PENDING                  0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C5_PENDING                      0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C5_RESET                        0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_I2C_I2C6                                     6:6 /* RWIVF */
+#define NV_PMGR_RM_INTR_I2C_I2C6_INIT                         0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_I2C_I2C6_NOT_PENDING                  0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C6_PENDING                      0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C6_RESET                        0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_I2C_I2C7                                     7:7 /* RWIVF */
+#define NV_PMGR_RM_INTR_I2C_I2C7_INIT                         0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_I2C_I2C7_NOT_PENDING                  0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C7_PENDING                      0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C7_RESET                        0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_I2C_I2C8                                     8:8 /* RWIVF */
+#define NV_PMGR_RM_INTR_I2C_I2C8_INIT                         0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_I2C_I2C8_NOT_PENDING                  0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C8_PENDING                      0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C8_RESET                        0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_I2C_I2C9                                     9:9 /* RWIVF */
+#define NV_PMGR_RM_INTR_I2C_I2C9_INIT                         0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_I2C_I2C9_NOT_PENDING                  0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C9_PENDING                      0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_I2C_I2C9_RESET                        0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_I2C_I2C(i)                           (0+(i)):(0+(i)) /*       */
+#define NV_PMGR_RM_INTR_I2C_I2C__SIZE_1                               10 /*       */
+#define NV_PMGR_RM_INTR_I2C_I2C_NOT_PENDING                   0x00000000 /*       */
+#define NV_PMGR_RM_INTR_I2C_I2C_PENDING                       0x00000001 /*       */
+#define NV_PMGR_RM_INTR_I2C_I2C_RESET                         0x00000001 /*       */
+#define NV_PMGR_RM_INTR_EN_I2C                              0x0000DC28 /* RW-4R */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C0                                0:0 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C0_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C0_DISABLED                0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C0_ENABLED                 0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C1                                1:1 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C1_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C1_DISABLED                0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C1_ENABLED                 0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C2                                2:2 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C2_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C2_DISABLED                0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C2_ENABLED                 0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C3                                3:3 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C3_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C3_DISABLED                0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C3_ENABLED                 0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C4                                4:4 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C4_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C4_DISABLED                0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C4_ENABLED                 0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C5                                5:5 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C5_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C5_DISABLED                0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C5_ENABLED                 0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C6                                6:6 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C6_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C6_DISABLED                0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C6_ENABLED                 0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C7                                7:7 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C7_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C7_DISABLED                0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C7_ENABLED                 0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C8                                8:8 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C8_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C8_DISABLED                0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C8_ENABLED                 0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C9                                9:9 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C9_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C9_DISABLED                0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C9_ENABLED                 0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C(i)                      (0+(i)):(0+(i)) /*       */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C__SIZE_1                          10 /*       */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C_DISABLED                 0x00000000 /*       */
+#define NV_PMGR_RM_INTR_EN_I2C_I2C_ENABLED                  0x00000001 /*       */
+#define NV_PMGR_RM_INTR_AUX                                  0x0000DC60 /* RW-4R */
+#define NV_PMGR_RM_INTR_AUX_AUX0_PLUG_EVENT                         0:0 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX0_PLUG_EVENT_INIT             0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_PLUG_EVENT_NOT_PENDING      0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_PLUG_EVENT_PENDING          0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_PLUG_EVENT_RESET            0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_UNPLUG_EVENT                       1:1 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX0_UNPLUG_EVENT_INIT           0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_UNPLUG_EVENT_NOT_PENDING    0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_UNPLUG_EVENT_PENDING        0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_UNPLUG_EVENT_RESET          0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_IRQ_EVENT                          2:2 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX0_IRQ_EVENT_INIT              0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_IRQ_EVENT_NOT_PENDING       0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_IRQ_EVENT_PENDING           0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_IRQ_EVENT_RESET             0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_AUX_DONE                           3:3 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX0_AUX_DONE_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_AUX_DONE_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_AUX_DONE_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX0_AUX_DONE_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_PLUG_EVENT                         4:4 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX1_PLUG_EVENT_INIT             0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_PLUG_EVENT_NOT_PENDING      0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_PLUG_EVENT_PENDING          0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_PLUG_EVENT_RESET            0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_UNPLUG_EVENT                       5:5 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX1_UNPLUG_EVENT_INIT           0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_UNPLUG_EVENT_NOT_PENDING    0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_UNPLUG_EVENT_PENDING        0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_UNPLUG_EVENT_RESET          0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_IRQ_EVENT                          6:6 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX1_IRQ_EVENT_INIT              0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_IRQ_EVENT_NOT_PENDING       0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_IRQ_EVENT_PENDING           0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_IRQ_EVENT_RESET             0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_AUX_DONE                           7:7 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX1_AUX_DONE_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_AUX_DONE_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_AUX_DONE_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX1_AUX_DONE_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_PLUG_EVENT                         8:8 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX2_PLUG_EVENT_INIT             0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_PLUG_EVENT_NOT_PENDING      0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_PLUG_EVENT_PENDING          0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_PLUG_EVENT_RESET            0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_UNPLUG_EVENT                       9:9 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX2_UNPLUG_EVENT_INIT           0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_UNPLUG_EVENT_NOT_PENDING    0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_UNPLUG_EVENT_PENDING        0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_UNPLUG_EVENT_RESET          0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_IRQ_EVENT                        10:10 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX2_IRQ_EVENT_INIT              0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_IRQ_EVENT_NOT_PENDING       0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_IRQ_EVENT_PENDING           0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_IRQ_EVENT_RESET             0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_AUX_DONE                         11:11 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX2_AUX_DONE_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_AUX_DONE_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_AUX_DONE_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX2_AUX_DONE_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_PLUG_EVENT                       12:12 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX3_PLUG_EVENT_INIT             0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_PLUG_EVENT_NOT_PENDING      0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_PLUG_EVENT_PENDING          0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_PLUG_EVENT_RESET            0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_UNPLUG_EVENT                     13:13 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX3_UNPLUG_EVENT_INIT           0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_UNPLUG_EVENT_NOT_PENDING    0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_UNPLUG_EVENT_PENDING        0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_UNPLUG_EVENT_RESET          0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_IRQ_EVENT                        14:14 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX3_IRQ_EVENT_INIT              0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_IRQ_EVENT_NOT_PENDING       0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_IRQ_EVENT_PENDING           0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_IRQ_EVENT_RESET             0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_AUX_DONE                         15:15 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX3_AUX_DONE_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_AUX_DONE_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_AUX_DONE_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX3_AUX_DONE_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_PLUG_EVENT                       16:16 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX4_PLUG_EVENT_INIT             0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_PLUG_EVENT_NOT_PENDING      0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_PLUG_EVENT_PENDING          0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_PLUG_EVENT_RESET            0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_UNPLUG_EVENT                     17:17 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX4_UNPLUG_EVENT_INIT           0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_UNPLUG_EVENT_NOT_PENDING    0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_UNPLUG_EVENT_PENDING        0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_UNPLUG_EVENT_RESET          0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_IRQ_EVENT                        18:18 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX4_IRQ_EVENT_INIT              0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_IRQ_EVENT_NOT_PENDING       0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_IRQ_EVENT_PENDING           0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_IRQ_EVENT_RESET             0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_AUX_DONE                         19:19 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX4_AUX_DONE_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_AUX_DONE_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_AUX_DONE_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX4_AUX_DONE_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_PLUG_EVENT                       20:20 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX5_PLUG_EVENT_INIT             0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_PLUG_EVENT_NOT_PENDING      0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_PLUG_EVENT_PENDING          0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_PLUG_EVENT_RESET            0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_UNPLUG_EVENT                     21:21 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX5_UNPLUG_EVENT_INIT           0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_UNPLUG_EVENT_NOT_PENDING    0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_UNPLUG_EVENT_PENDING        0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_UNPLUG_EVENT_RESET          0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_IRQ_EVENT                        22:22 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX5_IRQ_EVENT_INIT              0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_IRQ_EVENT_NOT_PENDING       0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_IRQ_EVENT_PENDING           0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_IRQ_EVENT_RESET             0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_AUX_DONE                         23:23 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX5_AUX_DONE_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_AUX_DONE_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_AUX_DONE_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX5_AUX_DONE_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_PLUG_EVENT                       24:24 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX6_PLUG_EVENT_INIT             0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_PLUG_EVENT_NOT_PENDING      0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_PLUG_EVENT_PENDING          0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_PLUG_EVENT_RESET            0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_UNPLUG_EVENT                     25:25 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX6_UNPLUG_EVENT_INIT           0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_UNPLUG_EVENT_NOT_PENDING    0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_UNPLUG_EVENT_PENDING        0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_UNPLUG_EVENT_RESET          0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_IRQ_EVENT                        26:26 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX6_IRQ_EVENT_INIT              0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_IRQ_EVENT_NOT_PENDING       0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_IRQ_EVENT_PENDING           0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_IRQ_EVENT_RESET             0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_AUX_DONE                         27:27 /* RWIVF */
+#define NV_PMGR_RM_INTR_AUX_AUX6_AUX_DONE_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_AUX_DONE_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_AUX_DONE_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_AUX_AUX6_AUX_DONE_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_AUX_AUX_PLUG_EVENT(i)           (0+(i)*4):(0+(i)*4) /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_PLUG_EVENT__SIZE_1                    7 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_PLUG_EVENT_NOT_PENDING       0x00000000 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_PLUG_EVENT_PENDING           0x00000001 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_PLUG_EVENT_RESET             0x00000001 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_UNPLUG_EVENT(i)         (1+(i)*4):(1+(i)*4) /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_UNPLUG_EVENT__SIZE_1                  7 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_UNPLUG_EVENT_NOT_PENDING     0x00000000 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_UNPLUG_EVENT_PENDING         0x00000001 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_UNPLUG_EVENT_RESET           0x00000001 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_IRQ_EVENT(i)            (2+(i)*4):(2+(i)*4) /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_IRQ_EVENT__SIZE_1                     7 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_IRQ_EVENT_NOT_PENDING        0x00000000 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_IRQ_EVENT_PENDING            0x00000001 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_IRQ_EVENT_RESET              0x00000001 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_AUX_DONE(i)             (3+(i)*4):(3+(i)*4) /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_AUX_DONE__SIZE_1                      7 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_AUX_DONE_NOT_PENDING         0x00000000 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_AUX_DONE_PENDING             0x00000001 /*       */
+#define NV_PMGR_RM_INTR_AUX_AUX_AUX_DONE_RESET               0x00000001 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX                                0x0000DC68 /* RW-4R */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_PLUG_EVENT                       0:0 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_PLUG_EVENT_INIT           0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_PLUG_EVENT_DISABLED       0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_PLUG_EVENT_ENABLED        0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_UNPLUG_EVENT                     1:1 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_UNPLUG_EVENT_INIT         0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_UNPLUG_EVENT_DISABLED     0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_UNPLUG_EVENT_ENABLED      0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_IRQ_EVENT                        2:2 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_IRQ_EVENT_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_IRQ_EVENT_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_IRQ_EVENT_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_AUX_DONE                         3:3 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_AUX_DONE_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_AUX_DONE_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX0_AUX_DONE_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_PLUG_EVENT                       4:4 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_PLUG_EVENT_INIT           0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_PLUG_EVENT_DISABLED       0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_PLUG_EVENT_ENABLED        0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_UNPLUG_EVENT                     5:5 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_UNPLUG_EVENT_INIT         0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_UNPLUG_EVENT_DISABLED     0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_UNPLUG_EVENT_ENABLED      0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_IRQ_EVENT                        6:6 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_IRQ_EVENT_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_IRQ_EVENT_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_IRQ_EVENT_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_AUX_DONE                         7:7 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_AUX_DONE_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_AUX_DONE_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX1_AUX_DONE_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_PLUG_EVENT                       8:8 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_PLUG_EVENT_INIT           0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_PLUG_EVENT_DISABLED       0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_PLUG_EVENT_ENABLED        0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_UNPLUG_EVENT                     9:9 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_UNPLUG_EVENT_INIT         0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_UNPLUG_EVENT_DISABLED     0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_UNPLUG_EVENT_ENABLED      0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_IRQ_EVENT                      10:10 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_IRQ_EVENT_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_IRQ_EVENT_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_IRQ_EVENT_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_AUX_DONE                       11:11 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_AUX_DONE_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_AUX_DONE_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX2_AUX_DONE_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_PLUG_EVENT                     12:12 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_PLUG_EVENT_INIT           0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_PLUG_EVENT_DISABLED       0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_PLUG_EVENT_ENABLED        0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_UNPLUG_EVENT                   13:13 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_UNPLUG_EVENT_INIT         0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_UNPLUG_EVENT_DISABLED     0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_UNPLUG_EVENT_ENABLED      0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_IRQ_EVENT                      14:14 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_IRQ_EVENT_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_IRQ_EVENT_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_IRQ_EVENT_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_AUX_DONE                       15:15 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_AUX_DONE_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_AUX_DONE_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX3_AUX_DONE_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_PLUG_EVENT                     16:16 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_PLUG_EVENT_INIT           0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_PLUG_EVENT_DISABLED       0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_PLUG_EVENT_ENABLED        0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_UNPLUG_EVENT                   17:17 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_UNPLUG_EVENT_INIT         0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_UNPLUG_EVENT_DISABLED     0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_UNPLUG_EVENT_ENABLED      0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_IRQ_EVENT                      18:18 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_IRQ_EVENT_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_IRQ_EVENT_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_IRQ_EVENT_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_AUX_DONE                       19:19 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_AUX_DONE_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_AUX_DONE_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX4_AUX_DONE_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_PLUG_EVENT                     20:20 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_PLUG_EVENT_INIT           0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_PLUG_EVENT_DISABLED       0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_PLUG_EVENT_ENABLED        0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_UNPLUG_EVENT                   21:21 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_UNPLUG_EVENT_INIT         0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_UNPLUG_EVENT_DISABLED     0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_UNPLUG_EVENT_ENABLED      0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_IRQ_EVENT                      22:22 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_IRQ_EVENT_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_IRQ_EVENT_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_IRQ_EVENT_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_AUX_DONE                       23:23 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_AUX_DONE_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_AUX_DONE_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX5_AUX_DONE_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_PLUG_EVENT                     24:24 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_PLUG_EVENT_INIT           0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_PLUG_EVENT_DISABLED       0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_PLUG_EVENT_ENABLED        0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_UNPLUG_EVENT                   25:25 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_UNPLUG_EVENT_INIT         0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_UNPLUG_EVENT_DISABLED     0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_UNPLUG_EVENT_ENABLED      0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_IRQ_EVENT                      26:26 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_IRQ_EVENT_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_IRQ_EVENT_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_IRQ_EVENT_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_AUX_DONE                       27:27 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_AUX_DONE_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_AUX_DONE_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX6_AUX_DONE_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_PLUG_EVENT(i)         (0+(i)*4):(0+(i)*4) /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_PLUG_EVENT__SIZE_1                  7 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_PLUG_EVENT_DISABLED        0x00000000 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_PLUG_EVENT_ENABLED         0x00000001 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_UNPLUG_EVENT(i)       (1+(i)*4):(1+(i)*4) /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_UNPLUG_EVENT__SIZE_1                7 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_UNPLUG_EVENT_DISABLED      0x00000000 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_UNPLUG_EVENT_ENABLED       0x00000001 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_IRQ_EVENT(i)          (2+(i)*4):(2+(i)*4) /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_IRQ_EVENT__SIZE_1                   7 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_IRQ_EVENT_DISABLED         0x00000000 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_IRQ_EVENT_ENABLED          0x00000001 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_AUX_DONE(i)           (3+(i)*4):(3+(i)*4) /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_AUX_DONE__SIZE_1                    7 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_AUX_DONE_DISABLED          0x00000000 /*       */
+#define NV_PMGR_RM_INTR_EN_AUX_AUX_AUX_DONE_ENABLED           0x00000001 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2                                    0x0000DC80 /* RW-4R */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO16_RISING                            0:0 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO16_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO16_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO16_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO16_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO17_RISING                            1:1 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO17_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO17_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO17_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO17_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO18_RISING                            2:2 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO18_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO18_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO18_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO18_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO19_RISING                            3:3 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO19_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO19_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO19_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO19_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO20_RISING                            4:4 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO20_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO20_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO20_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO20_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO21_RISING                            5:5 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO21_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO21_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO21_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO21_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO22_RISING                            6:6 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO22_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO22_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO22_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO22_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO23_RISING                            7:7 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO23_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO23_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO23_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO23_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO24_RISING                            8:8 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO24_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO24_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO24_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO24_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO25_RISING                            9:9 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO25_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO25_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO25_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO25_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO26_RISING                          10:10 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO26_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO26_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO26_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO26_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO27_RISING                          11:11 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO27_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO27_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO27_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO27_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO28_RISING                          12:12 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO28_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO28_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO28_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO28_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO29_RISING                          13:13 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO29_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO29_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO29_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO29_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO30_RISING                          14:14 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO30_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO30_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO30_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO30_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO31_RISING                          15:15 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO31_RISING_INIT                0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO31_RISING_NOT_PENDING         0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO31_RISING_PENDING             0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO31_RISING_RESET               0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO_RISING(i)              ((i)-16):((i)-16) /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO_RISING__SIZE_1                        16 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO_RISING_NOT_PENDING            0x00000000 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO_RISING_PENDING                0x00000001 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO_RISING_RESET                  0x00000001 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO16_FALLING                         16:16 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO16_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO16_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO16_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO16_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO17_FALLING                         17:17 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO17_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO17_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO17_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO17_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO18_FALLING                         18:18 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO18_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO18_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO18_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO18_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO19_FALLING                         19:19 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO19_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO19_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO19_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO19_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO20_FALLING                         20:20 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO20_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO20_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO20_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO20_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO21_FALLING                         21:21 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO21_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO21_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO21_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO21_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO22_FALLING                         22:22 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO22_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO22_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO22_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO22_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO23_FALLING                         23:23 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO23_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO23_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO23_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO23_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO24_FALLING                         24:24 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO24_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO24_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO24_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO24_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO25_FALLING                         25:25 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO25_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO25_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO25_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO25_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO26_FALLING                         26:26 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO26_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO26_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO26_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO26_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO27_FALLING                         27:27 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO27_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO27_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO27_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO27_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO28_FALLING                         28:28 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO28_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO28_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO28_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO28_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO29_FALLING                         29:29 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO29_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO29_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO29_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO29_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO30_FALLING                         30:30 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO30_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO30_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO30_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO30_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO31_FALLING                         31:31 /* RWIVF */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO31_FALLING_INIT               0x00000000 /* R-I-V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO31_FALLING_NOT_PENDING        0x00000000 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO31_FALLING_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO31_FALLING_RESET              0x00000001 /* -W--V */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO_FALLING(i)                   ((i)):((i)) /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO_FALLING__SIZE_1                       16 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO_FALLING_NOT_PENDING           0x00000000 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO_FALLING_PENDING               0x00000001 /*       */
+#define NV_PMGR_RM_INTR_GPIO_LIST_2_GPIO_FALLING_RESET                 0x00000001 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2                                0x0000DC88 /* RWI4R */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO16_RISING                         0:0 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO16_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO16_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO16_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO17_RISING                         1:1 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO17_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO17_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO17_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO18_RISING                         2:2 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO18_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO18_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO18_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO19_RISING                         3:3 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO19_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO19_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO19_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO20_RISING                         4:4 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO20_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO20_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO20_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO21_RISING                         5:5 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO21_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO21_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO21_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO22_RISING                         6:6 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO22_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO22_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO22_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO23_RISING                         7:7 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO23_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO23_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO23_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO24_RISING                         8:8 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO24_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO24_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO24_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO25_RISING                         9:9 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO25_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO25_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO25_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO26_RISING                       10:10 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO26_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO26_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO26_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO27_RISING                       11:11 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO27_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO27_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO27_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO28_RISING                       12:12 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO28_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO28_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO28_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO29_RISING                       13:13 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO29_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO29_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO29_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO30_RISING                       14:14 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO30_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO30_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO30_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO31_RISING                       15:15 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO31_RISING_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO31_RISING_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO31_RISING_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO_RISING(i)           ((i)-16):((i)-16) /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO_RISING__SIZE_1                     16 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO_RISING_DISABLED            0x00000000 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO_RISING_ENABLED             0x00000001 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO16_FALLING                      16:16 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO16_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO16_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO16_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO17_FALLING                      17:17 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO17_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO17_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO17_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO18_FALLING                      18:18 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO18_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO18_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO18_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO19_FALLING                      19:19 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO19_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO19_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO19_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO20_FALLING                      20:20 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO20_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO20_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO20_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO21_FALLING                      21:21 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO21_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO21_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO21_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO22_FALLING                      22:22 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO22_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO22_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO22_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO23_FALLING                      23:23 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO23_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO23_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO23_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO24_FALLING                      24:24 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO24_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO24_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO24_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO25_FALLING                      25:25 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO25_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO25_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO25_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO26_FALLING                      26:26 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO26_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO26_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO26_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO27_FALLING                      27:27 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO27_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO27_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO27_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO28_FALLING                      28:28 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO28_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO28_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO28_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO29_FALLING                      29:29 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO29_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO29_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO29_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO30_FALLING                      30:30 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO30_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO30_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO30_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO31_FALLING                      31:31 /* RWIVF */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO31_FALLING_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO31_FALLING_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO31_FALLING_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO_FALLING(i)                ((i)):((i)) /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO_FALLING__SIZE_1                    16 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO_FALLING_DISABLED           0x00000000 /*       */
+#define NV_PMGR_RM_INTR_EN_GPIO_LIST_2_GPIO_FALLING_ENABLED            0x00000001 /*       */
+#define NV_PMGR_POWERCTRL_2                              0x0000E1B4 /* RW-4R */
+#define NV_PMGR_POWERCTRL_2_ENGINESTATE_DISP                    1:0 /* RWIUF */
+#define NV_PMGR_POWERCTRL_2_ENGINESTATE_DISP_INIT        0x00000000 /* RWI-V */
+#define NV_PMGR_POWERCTRL_2_ENGINESTATE_DISP_FULLPOWER   0x00000000 /* RW--V */
+#define NV_PMGR_POWERCTRL_2_ENGINESTATE_DISP_AUTOMATIC   0x00000001 /* RW--V */
+#define NV_PMGR_POWERCTRL_2_ENGINESTATE_DISP_DISABLED    0x00000003 /* RW--V */
+#define NV_PMGR_POWERCTRL_2_ENGINESTATE_CAP                     3:2 /* RWIUF */
+#define NV_PMGR_POWERCTRL_2_ENGINESTATE_CAP_INIT         0x00000000 /* RWI-V */
+#define NV_PMGR_POWERCTRL_2_ENGINESTATE_CAP_FULLPOWER    0x00000000 /* RW--V */
+#define NV_PMGR_POWERCTRL_2_ENGINESTATE_CAP_AUTOMATIC    0x00000001 /* RW--V */
+#define NV_PMGR_POWERCTRL_2_ENGINESTATE_CAP_DISABLED     0x00000003 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL                                      0x0000E600 /* RW-4R */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_PULLDOWN                             4:0 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_PULLDOWN_INIT                 0x00000019 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_PULLDOWN_3V                   0x00000019 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_PULLDOWN_1X2XAGP2             0x0000001f /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_TERM                                 5:5 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_TERM_INIT                     0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_TERM_DISABLED                 0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_TERM_ENABLED                  0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_EPREAMP                              6:6 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_EPREAMP_INIT                  0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_EPREAMP_DISABLED              0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_EPREAMP_ENABLED               0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_ECTT                                 7:7 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_ECTT_INIT                     0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_ECTT_DISABLED                 0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_ECTT_ENABLED                  0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_PULLUP                              12:8 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_PULLUP_INIT                   0x0000000f /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_PULLUP_3V                     0x0000000f /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_PULLUP_1X2XAGP2               0x00000013 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_E33V                               13:13 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_E33V_INIT                     0x00000001 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_E33V_DISABLED                 0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_E33V_ENABLED                  0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_SEL_E33V                           14:14 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_SEL_E33V_INIT                 0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_SEL_E33V_STRAP                0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_SEL_E33V_SW                   0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_VREF                               15:15 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_VREF_INIT                     0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_VREF_DISABLED                 0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOA_VREF_ENABLED                  0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_PULLDOWN                           20:16 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_PULLDOWN_INIT                 0x00000019 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_PULLDOWN_3V                   0x00000019 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_PULLDOWN_1X2XAGP2             0x0000001f /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_TERM                               21:21 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_TERM_INIT                     0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_TERM_DISABLED                 0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_TERM_ENABLED                  0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_EPREAMP                            22:22 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_EPREAMP_INIT                  0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_EPREAMP_DISABLED              0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_EPREAMP_ENABLED               0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_ECTT                               23:23 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_ECTT_INIT                     0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_ECTT_DISABLED                 0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_ECTT_ENABLED                  0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_PULLUP                             28:24 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_PULLUP_INIT                   0x0000000f /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_PULLUP_3V                     0x0000000f /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_PULLUP_1X2XAGP2               0x00000013 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_E33V                               29:29 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_E33V_INIT                     0x00000001 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_E33V_DISABLED                 0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_E33V_ENABLED                  0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_SEL_E33V                           30:30 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_SEL_E33V_INIT                 0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_SEL_E33V_STRAP                0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_SEL_E33V_SW                   0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_VREF                               31:31 /* RWIVF */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_VREF_INIT                     0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_VREF_DISABLED                 0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_MIOB_VREF_ENABLED                  0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_PADCTL_PULLDOWN(i)                4+(16*(i)):0+(16*(i)) /*       */
+#define NV_PMGR_MIOIO_PADCTL_PULLDOWN__SIZE_1                           2 /*       */
+#define NV_PMGR_MIOIO_PADCTL_PULLDOWN_3V                       0x00000019 /*       */
+#define NV_PMGR_MIOIO_PADCTL_PULLDOWN_1X2XAGP2                 0x0000001f /*       */
+#define NV_PMGR_MIOIO_PADCTL_TERM(i)                    5+(16*(i)):5+(16*(i)) /*       */
+#define NV_PMGR_MIOIO_PADCTL_TERM__SIZE_1                               2 /*       */
+#define NV_PMGR_MIOIO_PADCTL_TERM_DISABLED                     0x00000000 /*       */
+#define NV_PMGR_MIOIO_PADCTL_TERM_ENABLED                      0x00000001 /*       */
+#define NV_PMGR_MIOIO_PADCTL_EPREAMP(i)                 6+(16*(i)):6+(16*(i)) /*       */
+#define NV_PMGR_MIOIO_PADCTL_EPREAMP__SIZE_1                            2 /*       */
+#define NV_PMGR_MIOIO_PADCTL_EPREAMP_DISABLED                  0x00000000 /*       */
+#define NV_PMGR_MIOIO_PADCTL_EPREAMP_ENABLED                   0x00000001 /*       */
+#define NV_PMGR_MIOIO_PADCTL_ECTT(i)                    7+(16*(i)):7+(16*(i)) /*       */
+#define NV_PMGR_MIOIO_PADCTL_ECTT__SIZE_1                               2 /*       */
+#define NV_PMGR_MIOIO_PADCTL_ECTT_DISABLED                     0x00000000 /*       */
+#define NV_PMGR_MIOIO_PADCTL_ECTT_ENABLED                      0x00000001 /*       */
+#define NV_PMGR_MIOIO_PADCTL_PULLUP(i)                 12+(16*(i)):8+(16*(i)) /*       */
+#define NV_PMGR_MIOIO_PADCTL_PULLUP__SIZE_1                             2 /*       */
+#define NV_PMGR_MIOIO_PADCTL_PULLUP_3V                         0x0000000f /*       */
+#define NV_PMGR_MIOIO_PADCTL_PULLUP_1X2XAGP2                   0x00000013 /*       */
+#define NV_PMGR_MIOIO_PADCTL_E33V(i)                  13+(16*(i)):13+(16*(i)) /*       */
+#define NV_PMGR_MIOIO_PADCTL_E33V__SIZE_1                               2 /*       */
+#define NV_PMGR_MIOIO_PADCTL_E33V_DISABLED                     0x00000000 /*       */
+#define NV_PMGR_MIOIO_PADCTL_E33V_ENABLED                      0x00000001 /*       */
+#define NV_PMGR_MIOIO_PADCTL_SEL_E33V(i)              14+(16*(i)):14+(16*(i)) /*       */
+#define NV_PMGR_MIOIO_PADCTL_SEL_E33V__SIZE_1                           2 /*       */
+#define NV_PMGR_MIOIO_PADCTL_SEL_E33V_STRAP                    0x00000000 /*       */
+#define NV_PMGR_MIOIO_PADCTL_SEL_E33V_SW                       0x00000001 /*       */
+#define NV_PMGR_MIOIO_PADCTL_VREF(i)                  15+(16*(i)):15+(16*(i)) /*       */
+#define NV_PMGR_MIOIO_PADCTL_VREF__SIZE_1                               2 /*       */
+#define NV_PMGR_MIOIO_PADCTL_VREF_DISABLED                     0x00000000 /*       */
+#define NV_PMGR_MIOIO_PADCTL_VREF_ENABLED                      0x00000001 /*       */
+#define NV_PMGR_MIOIO_B(i)                      (0x0000E610+(i)*12) /* RW-4A */
+#define NV_PMGR_MIOIO_B__SIZE_1                                   2 /*       */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD                           3:0 /* RWIVF */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_INIT               0x00000009 /* RWI-V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_0MS                0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_1MS                0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_2MS                0x00000002 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_4MS                0x00000003 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_8MS                0x00000004 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_16MS               0x00000005 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_32MS               0x00000006 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_64MS               0x00000007 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_128MS              0x00000008 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_256MS              0x00000009 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_512MS              0x0000000a /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_PERIOD_DISABLED           0x0000000f /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_FIXED_PD                         8:4 /* RWIVF */
+#define NV_PMGR_MIOIO_B_MIOCAL_FIXED_PD_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_B_MIOCAL_FIXED_PD_MIN              0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_FIXED_PD_MAX              0x0000001f /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_FIXED_PU                       14:10 /* RWIVF */
+#define NV_PMGR_MIOIO_B_MIOCAL_FIXED_PU_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_B_MIOCAL_FIXED_PU_MIN              0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_FIXED_PU_MAX              0x0000001f /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_USE_FIXED                      16:16 /* RWIVF */
+#define NV_PMGR_MIOIO_B_MIOCAL_USE_FIXED_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_B_MIOCAL_USE_FIXED_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_USE_FIXED_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_FORCE_BYP_OR_CAL               17:17 /* RWIVF */
+#define NV_PMGR_MIOIO_B_MIOCAL_FORCE_BYP_OR_CAL_INIT     0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_B_MIOCAL_FORCE_BYP_OR_CAL_DISABLED 0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_FORCE_BYP_OR_CAL_ENABLED  0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_ON_RESUME                      18:18 /* RWIVF */
+#define NV_PMGR_MIOIO_B_MIOCAL_ON_RESUME_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_B_MIOCAL_ON_RESUME_DISABLED        0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_ON_RESUME_ENABLED         0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_COMP                           19:19 /* RWIVF */
+#define NV_PMGR_MIOIO_B_MIOCAL_COMP_INIT                 0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_B_MIOCAL_COMP_INVALID              0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_COMP_VALID                0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_B_MIOCAL_COMPUTED_PD                    24:20 /* R--VF */
+#define NV_PMGR_MIOIO_B_MIOCAL_COMPUTED_PD_MIN           0x00000000 /* R---V */
+#define NV_PMGR_MIOIO_B_MIOCAL_COMPUTED_PD_MAX           0x0000001f /* R---V */
+#define NV_PMGR_MIOIO_B_MIOCAL_COMPUTED_PU                    30:26 /* R--VF */
+#define NV_PMGR_MIOIO_B_MIOCAL_COMPUTED_PU_MIN           0x00000000 /* R---V */
+#define NV_PMGR_MIOIO_B_MIOCAL_COMPUTED_PU_MAX           0x0000001f /* R---V */
+#define NV_PMGR_MIOIO_C(i)                      (0x0000E614+(i)*12) /* RW-4A */
+#define NV_PMGR_MIOIO_C__SIZE_1                                   2 /*       */
+#define NV_PMGR_MIOIO_C_MIOCAL_STRENGTH                         4:0 /* RWIVF */
+#define NV_PMGR_MIOIO_C_MIOCAL_STRENGTH_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_C_MIOCAL_STRENGTH_MIN              0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_STRENGTH_MAX              0x0000001f /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_TESTMODE                         8:8 /* RWIVF */
+#define NV_PMGR_MIOIO_C_MIOCAL_TESTMODE_INIT             0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_C_MIOCAL_TESTMODE_DISABLED         0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_TESTMODE_ENABLED          0x00000001 /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_PD_STATUS                      10:10 /* R--VF */
+#define NV_PMGR_MIOIO_C_MIOCAL_PD_STATUS_READY           0x00000000 /* R---V */
+#define NV_PMGR_MIOIO_C_MIOCAL_PD_STATUS_NOT_READY       0x00000001 /* R---V */
+#define NV_PMGR_MIOIO_C_MIOCAL_PU_STATUS                      11:11 /* R--VF */
+#define NV_PMGR_MIOIO_C_MIOCAL_PU_STATUS_NOT_READY       0x00000000 /* R---V */
+#define NV_PMGR_MIOIO_C_MIOCAL_PU_STATUS_READY           0x00000001 /* R---V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MINCAL_PD                      16:12 /* RWIVF */
+#define NV_PMGR_MIOIO_C_MIOCAL_MINCAL_PD_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MINCAL_PD_MIN             0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MINCAL_PD_MAX             0x0000001f /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MAXCAL_PD                      21:17 /* RWIVF */
+#define NV_PMGR_MIOIO_C_MIOCAL_MAXCAL_PD_INIT            0x0000001f /* RWI-V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MAXCAL_PD_MIN             0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MAXCAL_PD_MAX             0x0000001f /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MINCAL_PU                      26:22 /* RWIVF */
+#define NV_PMGR_MIOIO_C_MIOCAL_MINCAL_PU_INIT            0x00000000 /* RWI-V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MINCAL_PU_MIN             0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MINCAL_PU_MAX             0x0000001f /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MAXCAL_PU                      31:27 /* RWIVF */
+#define NV_PMGR_MIOIO_C_MIOCAL_MAXCAL_PU_INIT            0x0000001f /* RWI-V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MAXCAL_PU_MIN             0x00000000 /* RW--V */
+#define NV_PMGR_MIOIO_C_MIOCAL_MAXCAL_PU_MAX             0x0000001f /* RW--V */
+
+=============================================================================
+SPI Interface:
+=============================================================================
+
+The Serial Peripheral Interface (SPI) bus consists of two data signals and
+one clock signal in addition to a per-slave select signal named as follows:
+ MOSI- Master Output/ Slave Input
+ MISO- Master Input/ Slave Output
+ SCK - Serial Clock
+ CS  - Slave Select
+
+ There are 3 ways to access the SPI bus, do not use them at the same time:
+ 1, using NV_PMGR_ROM_SERIAL_BYPASS to control SPI bus directly.
+    it has the highest priority to access the SPI bus.
+ 2, using new SPI controller to issue SPI read/write command on the bus.
+    when its busy or multi-transfer(DSELECT=NO) has not finished, it occupies the SPI bus.
+ 3, using PROM priv access,lowest priority, it will trigger auto SPI read by legacy controller.
+
+ The new SPI controller primarily consists of a multi-port 256-byte data buffer,
+ a transmit shift register, a receive shift register, and a state machine. When an SPI
+ transfer is triggered, the controller will:
+  1. If CS is not asserted, assert CS
+  2. a. Set transmit pointer to 0
+     b. If transmit enabled,
+     then set receive pointer to 128,
+     else set receive pointer to 0
+  3. If transmit is enabled and transfer pointer is less than transmit size,
+     then load transmit shift register from data array at transmit pointer,
+     else load transmit shift register with 0
+  4. Increment transmit pointer
+  5. a. Shift contents of transmit shift register onto MOSI
+     b. Shift data from MISO into receive shift register
+  6. If receive is enabled,
+     then store receive shift register to receive pointer
+  7. Increment recieve pointer
+  8. If bytes transferred less than transfer size,
+     the goto (3)
+  9. a. If deselect enabled, then deassert CS
+     b. If interrupt enabled, then assert interrupt
+     c. Set transfer indicator to done
+
+
+
+  This array of 256 bytes is used as a send and/or receive buffer for the HW state machine.
+  When transmit the shift register always load the data start from byte offset 0.
+  When receive the shift register data will store start from byte offset 128 if TRANSMIT_SIZE!=0 & RECEIVE = YES
+  or store start from byte 0 offset if TRANSMIT_SIZE=0 & RECEIVE = YES.
+
+#define NV_PMGR_SPI_DATA_ARRAY(i)                             (0x0000E4A0+(i)*4) /* RW-4A */
+#define NV_PMGR_SPI_DATA_ARRAY__SIZE_1                                        64 /*       */
+#define NV_PMGR_SPI_DATA_ARRAY_BYTE_0                                        7:0 /* RW-VF */
+#define NV_PMGR_SPI_DATA_ARRAY_BYTE_1                                       15:8 /* RW-VF */
+#define NV_PMGR_SPI_DATA_ARRAY_BYTE_2                                      23:16 /* RW-VF */
+#define NV_PMGR_SPI_DATA_ARRAY_BYTE_3                                      31:24 /* RW-VF */
+
+TRANSMIT
+  This field controls whether values from the DATA array are shifted out on MOSI.  When
+  configured to NO, the transmit shift register will be loaded with 0.  When configured
+  to YES, the transmit shift register will load values from the DATA array starting at
+  byte offset 0.
+
+TRANSMIT_SIZE
+  This field controls which bytes from the DATA array are shifted out on MOSI.  When
+  Configured to O, there is no transmit transfer and 0 byte is loaded to transmit shift register.
+  When configured to YES, The transmit shift register will load values from the DATA array starting at
+  byte offset 0. SW only program TRANSMIT_SIZE bytes to data array before transmitting.
+
+RECEIVE
+  This field controls whether values shifted in from MISO are stored in the DATA array.
+  When configured to NO, the receive shift register contents will not be stored.  When
+  configured to YES and TRANSMIT configured to YES, the receive shift register contents
+  will be stored in the DATA array starting at byte offset 128, if TRANSMIT configured
+  to NO, stored starting at byte offset 0.
+
+TRANSFER_SIZE
+  This field specifies the number of bytes to clock when a transfer is triggered.
+
+TRANSFER
+  Setting this field to TRIGGER will initiate an SPI transfer.  While the HW state
+  machine is busy, this field will read PENDING.  When the HW state machine has
+  complete the transfer and is idle, this field will read DONE.
+
+CSID
+  Select which CS will be asserted for the transfer.
+  CS_0 is reserved for serial rom, always be routed to the dedicated ROM_CS_N pin of the chip
+  Others are routed to GPIO outputs, can be selected by NV_PMGR_GPIO_OUTPUT_CNTL_SEL.
+
+DESELECT
+  This field specifies whether CS should be deasserted at the end of the transfer.
+  When configured to NO, CS will remain asserted.  When configured to YES, CS will be
+  deasserted at the end of the transfer.
+  NOTE, if CSID changed and DESELECT of previous transfer was NO, previous CS will be deasserted.
+
+INTERRUPT
+  This field specifies whether an interrupt should be generated at the end of the
+  transfer. When configured to NO, no interrupt will be generated.  When configured to
+  YES, an interrupt will be generated at the end of the transfer.
+
+REVERSE
+  This field defines the order in which bytes should be transmitted and received.
+  When configured to NO:
+    Transmit: first = [0], last = [transmit_size-1]
+    Receive: first = [(TRANSMIT?128:0)], last = [(TRANSMIT?128:0)+transfer_size-1]
+  When configured to YES:
+    Transmit: first = [transmit_size-1], last = [0]
+    Receive: first = [(TRANSMIT?128:0)+transfer_size-1], last = [(TRANSMIT?128:0)]
+  This is useful for SPI ROMs for which the address is big-endian, but data is sent and received as little-endian.
+
+
+31            24 23           1615             8 7             0
+.-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-.
+| | | | | |0 0 0 0 0 0 0 0 0| | | | | | | | | | | | | | | | | | |NV_PMGR_SPI_CTRL
+`-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+#define NV_PMGR_SPI_CTRL                                              0x0000E5A0 /* RW-4R */
+
+#define NV_PMGR_SPI_CTRL_TRANSFER_SIZE                                       7:0 /* RWIVF */
+#define NV_PMGR_SPI_CTRL_TRANSFER_SIZE_1                              0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CTRL_TRANSFER_SIZE_256                            0x000000FF /* RW--V */
+
+#define NV_PMGR_SPI_CTRL_TRANSMIT_SIZE                                      15:8 /* RWIVF */
+#define NV_PMGR_SPI_CTRL_TRANSMIT_SIZE_1                              0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CTRL_TRANSMIT_SIZE_256                            0x000000FF /* RW--V */
+
+#define NV_PMGR_SPI_CTRL_TRANSMIT                                          16:16 /* RWIVF */
+#define NV_PMGR_SPI_CTRL_TRANSMIT_NO                                  0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CTRL_TRANSMIT_YES                                 0x00000001 /* RW--V */
+
+#define NV_PMGR_SPI_CTRL_RECEIVE                                           17:17 /* RWIVF */
+#define NV_PMGR_SPI_CTRL_RECEIVE_NO                                   0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CTRL_RECEIVE_YES                                  0x00000001 /* RW--V */
+
+#define NV_PMGR_SPI_CTRL_CSID                                              19:18 /* RWIVF */
+#define NV_PMGR_SPI_CTRL_CSID_0                                       0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CTRL_CSID_1                                       0x00000001 /* RW--V */
+#define NV_PMGR_SPI_CTRL_CSID_2                                       0x00000002 /* RW--V */
+#define NV_PMGR_SPI_CTRL_CSID_3                                       0x00000003 /* RW--V */
+
+#define NV_PMGR_SPI_CTRL_DESELECT                                          27:27 /* RWIVF */
+#define NV_PMGR_SPI_CTRL_DESELECT_NO                                  0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CTRL_DESELECT_YES                                 0x00000001 /* RW--V */
+
+#define NV_PMGR_SPI_CTRL_INTERRUPT                                         28:28 /* RWIVF */
+#define NV_PMGR_SPI_CTRL_INTERRUPT_NO                                 0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CTRL_INTERRUPT_YES                                0x00000001 /* RW--V */
+
+#define NV_PMGR_SPI_CTRL_REVERSE                                           29:29 /* RWIVF */
+#define NV_PMGR_SPI_CTRL_REVERSE_NO                                   0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CTRL_REVERSE_YES                                  0x00000001 /* RW--V */
+
+#define NV_PMGR_SPI_CTRL_TRANSFER                                          31:31 /* RWIVF */
+#define NV_PMGR_SPI_CTRL_TRANSFER_DONE                                0x00000000 /* R-I-V */
+#define NV_PMGR_SPI_CTRL_TRANSFER_PENDING                             0x00000001 /* R---V */
+#define NV_PMGR_SPI_CTRL_TRANSFER_TRIGGER                             0x00000001 /* -W--V */
+
+
+
+SPI CONFIG Register
+  (Do NOT modify this register when SPI is busy)
+
+CPOL
+  This field defines the polarity of SCK when CS inactive.
+  Note, this field must be 0 for PROM priv access, if it is 1, PROM read can't work.
+
+CPHA
+  This field defines the phase of SCK relative to data sampling and data transitions.
+  The enumerated values match conventional SPI nomenclature.  When set to FIRST (0), data
+  will be sampled on the first edge of SCK and every odd-numbered edge thereafter while
+  MOSI/MISO transitions will occur on the even-numbered SCK edges.  When set to SECOND
+  (1), data will be sampled on the second edge of SCK and every even-numbered edge
+  thereafter while MOSI/MISO transitions will occur on the odd-numbered SCK edges.
+  Note, this field does not impact PROM priv access.
+
+  Mode 0, CPOL=0, CPHA=0
+  Data toggled on falling edge, SCK idle low. PROM priv access only support this mode.
+
+  Mode 1, CPOL=0, CPHA=1
+  Data toggled on rising edge, SCK idle low
+
+  Mode 2, CPOL=1, CPHA=0
+  Data toggled on rising edge, SCK idle high
+
+  Mode 3, CPOL=1, CPHA=1
+  Data toggled on falling edge, SCK idle high
+
+              _|< setup >|                                         |< hold>|__
+  CSn          |___________________________________________________________|
+                          __    __    __    __    __    __    __    __
+  SCK, Mode 0 ___________|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |_______
+                       __    __    __    __    __    __    __    __
+  SCK, Mode 1 ________|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__________
+              ___________    __    __    __    __    __    __    __    _______
+  SCK, Mode 2            |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|
+              ________    __    __    __    __    __    __    __    __________
+  SCK, Mode 3         |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|
+                        _____ _____ _____ _____ _____ _____ _____ _____
+  MOSI/MISO            X_____X_____X_____X_____X_____X_____X_____X_____X
+
+REFCLK
+  Thie field implements a mux to select the source of SROM_REFCLK.
+  0: select PEX_CLK, 100MHz.
+  1: select XTAL, 27MHz.
+
+PERIOD
+  This field defines the period of SROM_REFCLK
+  SROM_REFCLK_frequency = (REFCLK == XTAL) ? 27MHz : (100MHz / (PERIOD + 1))
+
+READLATENCY
+  This field defines the compensation latency of the MISO signal. If the MISO
+  latency between chips is greater than one SCK cycle, this field should be
+  increased, unit is SROM_REFCLK cycles.
+
+SCKDIV
+  This field defines the period of SCK cycle time.
+  A SCK cycle contains 2 * (SCKDIV+1) SROM_REFCLK cycles.
+  SCK_frequency = SROM_REFCLK_frequency / (2 * (SCKDIV+1))
+  Note: this field does not impact PROM priv access, SCKDIV is fixed 0 in
+  PROM read case.
+
+CS_SETUP
+  This field defines the CS setup time, in SROM_REFCLK cycles,
+  from CS falling to the first SCK rising(mode 0/3) or falling(mode 1/2).
+  the minimum setup time is (SCKDIV+2) cycles.
+  0  means SCKDIV+2  cycles
+  15 means SCKDIV+17 cycles
+  Note: this field does not impact PROM priv access, setup time is fixed
+  8 cycles in PROM access.
+
+CS_HOLD
+  This field defines the CS hold time, in SROM_REFCLK cycles,
+  from the last SCK rising to the CS rising(mode 0/3) or falling(mode 1/2).
+  the minimum hold time is (SCKDIV+2) cycles.
+  0  means SCKDIV+2  cycles
+  15 means SCKDIV+17 cycles.
+  Note: this field does not impact PROM priv access, hold time is fixed
+  6 cycles in PROM access.
+
+
+31            24 23           16               8 7             0
+.-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-.
+|0 0 0 0 0 0 0 0|       |       |               | |     |   |   |NV_PMGR_SPI_CONFIG
+`-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-'
+#define NV_PMGR_SPI_CONFIG(i)                                 (0x0000E5A4+(i)*4) /* RW-4A */
+#define NV_PMGR_SPI_CONFIG__SIZE_1                                             4 /*       */
+
+#define NV_PMGR_SPI_CONFIG_CPOL                                              0:0 /* RWIVF */
+#define NV_PMGR_SPI_CONFIG_CPOL_ACTIVE_HIGH                           0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CONFIG_CPOL_ACTIVE_LOW                            0x00000001 /* RW--V */
+
+#define NV_PMGR_SPI_CONFIG_CPHA                                              1:1 /* RWIVF */
+#define NV_PMGR_SPI_CONFIG_CPHA_FIRST                                 0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CONFIG_CPHA_SECOND                                0x00000001 /* RW--V */
+
+#define NV_PMGR_SPI_CONFIG_PERIOD                                            3:2 /* RWIVF */
+#define NV_PMGR_SPI_CONFIG_PERIOD_INIT                                0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CONFIG_PERIOD_1X                                  0x00000000 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_PERIOD_2X                                  0x00000001 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_PERIOD_3X                                  0x00000002 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_PERIOD_4X                                  0x00000003 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_PERIOD_50P0MHZ                             0x00000000 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_PERIOD_25P0MHZ                             0x00000001 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_PERIOD_16P6MHZ                             0x00000002 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_PERIOD_12P5MHZ                             0x00000003 /* RW--V */
+
+#define NV_PMGR_SPI_CONFIG_READLATENCY                                       6:4 /* RWIVF */
+#define NV_PMGR_SPI_CONFIG_READLATENCY_INIT                           0x00000004 /* RWI-V */
+#define NV_PMGR_SPI_CONFIG_READLATENCY_DIS                            0x00000004 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_READLATENCY_0                              0x00000000 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_READLATENCY_1                              0x00000001 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_READLATENCY_2                              0x00000002 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_READLATENCY_3                              0x00000003 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_READLATENCY_4                              0x00000004 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_READLATENCY_5                              0x00000005 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_READLATENCY_6                              0x00000006 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_READLATENCY_7                              0x00000007 /* RW--V */
+
+#define NV_PMGR_SPI_CONFIG_REFCLK                                            7:7 /* RWIVF */
+#define NV_PMGR_SPI_CONFIG_REFCLK_INIT                                0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CONFIG_REFCLK_PEX_REFCLK                          0x00000000 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_REFCLK_XTAL4X                              0x00000000 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_REFCLK_XTAL                                0x00000001 /* RW--V */
+
+#define NV_PMGR_SPI_CONFIG_SCKDIV                                           15:8 /* RWIVF */
+#define NV_PMGR_SPI_CONFIG_SCKDIV_INIT                                0x00000000 /* RWI-V */
+#define NV_PMGR_SPI_CONFIG_SCKDIV_2                                   0x00000000 /* RW--V */
+#define NV_PMGR_SPI_CONFIG_SCKDIV_512                                 0x000000FF /* RW--V */
+
+#define NV_PMGR_SPI_CONFIG_CS_SETUP                                        19:16 /* RWIVF */
+#define NV_PMGR_SPI_CONFIG_CS_SETUP_INIT                              0x00000008 /* RWI-V */
+
+#define NV_PMGR_SPI_CONFIG_CS_HOLD                                         23:20 /* RWIVF */
+#define NV_PMGR_SPI_CONFIG_CS_HOLD_INIT                               0x00000008 /* RWI-V */
+
+
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR                                       0x0000E480  /* RW-4R */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_VALUE                                       11:0  /* RWIVF */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_VALUE_INIT                            0x00000000  /* RWI-V */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_INST                                       15:12  /* RWIVF */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_INST_ZERO                             0x00000000  /* RW--V */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_INST_ONE                              0x00000001  /* RWI-V */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_INST_TWO                              0x00000002  /* RW--V */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_INST_THREE                            0x00000003  /* RW--V */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_INST_ZERO_HDCP2_SEC                   0x00000004  /* RW--V */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_INST_ONE_HDCP2_SEC                    0x00000005  /* RW--V */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_INST_TWO_HDCP2_SEC                    0x00000006  /* RW--V */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_INST_THREE_HDCP2_SEC                  0x00000007  /* RW--V */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_MSB_VALUE                                  19:16  /* RWIVF */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_ADDR_MSB_VALUE_INIT                        0x00000000  /* RWI-V */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_DATA                                       0x0000E484   /* RW-4R */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_DATA_VALUE                                       31:0   /* RWIVF */
+#define NV_PMGR_NON_SILICON_VERIF_DP_BFM_DATA_VALUE_INIT                            0x00000000   /* RWI-V */
+#define NV_PMGR_DP_AUXDATA_WRITE_W0(i)           (0x0000D930+(i)*80) /* RW-4A */
+#define NV_PMGR_DP_AUXDATA_WRITE_W0__SIZE_1                        7 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W0_REG                         31:0 /* RWIUF */
+#define NV_PMGR_DP_AUXDATA_WRITE_W0_REG_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_DP_AUXDATA_WRITE_W0_BYTE0                        7:0 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W0_BYTE1                       15:8 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W0_BYTE2                      23:16 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W0_BYTE3                      31:24 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W0_BYTE(i)        (8*(i)+7):(8*(i)) /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W0_BYTE__SIZE_1                   4 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W1(i)           (0x0000D934+(i)*80) /* RW-4A */
+#define NV_PMGR_DP_AUXDATA_WRITE_W1__SIZE_1                        7 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W1_REG                         31:0 /* RWIUF */
+#define NV_PMGR_DP_AUXDATA_WRITE_W1_REG_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_DP_AUXDATA_WRITE_W1_BYTE0                        7:0 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W1_BYTE1                       15:8 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W1_BYTE2                      23:16 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W1_BYTE3                      31:24 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W1_BYTE(i)        (8*(i)+7):(8*(i)) /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W1_BYTE__SIZE_1                   4 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W2(i)           (0x0000D938+(i)*80) /* RW-4A */
+#define NV_PMGR_DP_AUXDATA_WRITE_W2__SIZE_1                        7 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W2_REG                         31:0 /* RWIUF */
+#define NV_PMGR_DP_AUXDATA_WRITE_W2_REG_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_DP_AUXDATA_WRITE_W2_BYTE0                        7:0 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W2_BYTE1                       15:8 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W2_BYTE2                      23:16 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W2_BYTE3                      31:24 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W2_BYTE(i)        (8*(i)+7):(8*(i)) /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W2_BYTE__SIZE_1                   4 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W3(i)           (0x0000D93C+(i)*80) /* RW-4A */
+#define NV_PMGR_DP_AUXDATA_WRITE_W3__SIZE_1                        7 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W3_REG                         31:0 /* RWIUF */
+#define NV_PMGR_DP_AUXDATA_WRITE_W3_REG_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_DP_AUXDATA_WRITE_W3_BYTE0                        7:0 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W3_BYTE1                       15:8 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W3_BYTE2                      23:16 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W3_BYTE3                      31:24 /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W3_BYTE(i)        (8*(i)+7):(8*(i)) /*       */
+#define NV_PMGR_DP_AUXDATA_WRITE_W3_BYTE__SIZE_1                   4 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W0(i)            (0x0000D940+(i)*80) /* R--4A */
+#define NV_PMGR_DP_AUXDATA_READ_W0__SIZE_1                         7 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W0_REG                          31:0 /* R--UF */
+#define NV_PMGR_DP_AUXDATA_READ_W0_BYTE0                         7:0 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W0_BYTE1                        15:8 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W0_BYTE2                       23:16 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W0_BYTE3                       31:24 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W0_BYTE(i)         (8*(i)+7):(8*(i)) /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W0_BYTE__SIZE_1                    4 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W1(i)            (0x0000D944+(i)*80) /* R--4A */
+#define NV_PMGR_DP_AUXDATA_READ_W1__SIZE_1                         7 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W1_REG                          31:0 /* R--UF */
+#define NV_PMGR_DP_AUXDATA_READ_W1_BYTE0                         7:0 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W1_BYTE1                        15:8 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W1_BYTE2                       23:16 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W1_BYTE3                       31:24 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W1_BYTE(i)         (8*(i)+7):(8*(i)) /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W1_BYTE__SIZE_1                    4 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W2(i)            (0x0000D948+(i)*80) /* R--4A */
+#define NV_PMGR_DP_AUXDATA_READ_W2__SIZE_1                         7 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W2_REG                          31:0 /* R--UF */
+#define NV_PMGR_DP_AUXDATA_READ_W2_BYTE0                         7:0 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W2_BYTE1                        15:8 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W2_BYTE2                       23:16 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W2_BYTE3                       31:24 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W2_BYTE(i)         (8*(i)+7):(8*(i)) /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W2_BYTE__SIZE_1                    4 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W3(i)            (0x0000D94C+(i)*80) /* R--4A */
+#define NV_PMGR_DP_AUXDATA_READ_W3__SIZE_1                         7 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W3_REG                          31:0 /* R--UF */
+#define NV_PMGR_DP_AUXDATA_READ_W3_BYTE0                         7:0 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W3_BYTE1                        15:8 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W3_BYTE2                       23:16 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W3_BYTE3                       31:24 /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W3_BYTE(i)         (8*(i)+7):(8*(i)) /*       */
+#define NV_PMGR_DP_AUXDATA_READ_W3_BYTE__SIZE_1                    4 /*       */
+#define NV_PMGR_DP_AUXADDR(i)                   (0x0000D950+(i)*80) /* RW-4A */
+#define NV_PMGR_DP_AUXADDR__SIZE_1                                7 /*       */
+#define NV_PMGR_DP_AUXADDR_REG                                 19:0 /* RWIVF */
+#define NV_PMGR_DP_AUXADDR_REG_INIT                      0x00000000 /* RWI-V */
+#define NV_PMGR_DP_AUXCTL(i)                    (0x0000D954+(i)*80) /* RW-4A */
+#define NV_PMGR_DP_AUXCTL__SIZE_1                                 7 /*       */
+#define NV_PMGR_DP_AUXCTL_CMDLEN                                7:0 /* RWIVF */
+#define NV_PMGR_DP_AUXCTL_CMDLEN_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_DP_AUXCTL_ADDRESS_ONLY                          8:8 /* RWIVF */
+#define NV_PMGR_DP_AUXCTL_ADDRESS_ONLY_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_DP_AUXCTL_ADDRESS_ONLY_NO                0x00000000 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_ADDRESS_ONLY_YES               0x00000001 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_CMD                                 15:12 /* RWIVF */
+#define NV_PMGR_DP_AUXCTL_CMD_INIT                       0x00000000 /* RWI-V */
+#define NV_PMGR_DP_AUXCTL_CMD_I2CWR                      0x00000000 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_CMD_I2CRD                      0x00000001 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_CMD_I2CREQWSTAT                0x00000002 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_CMD_MOTWR                      0x00000004 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_CMD_MOTRD                      0x00000005 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_CMD_MOTREQWSTAT                0x00000006 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_CMD_AUXWR                      0x00000008 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_CMD_AUXRD                      0x00000009 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_TRANSACTREQ                         16:16 /* RWIVF */
+#define NV_PMGR_DP_AUXCTL_TRANSACTREQ_DONE               0x00000000 /* R-I-V */
+#define NV_PMGR_DP_AUXCTL_TRANSACTREQ_PENDING            0x00000001 /* R---V */
+#define NV_PMGR_DP_AUXCTL_TRANSACTREQ_TRIGGER            0x00000001 /* -W--T */
+#define NV_PMGR_DP_AUXCTL_SEMA_REQUEST                        22:20 /* RWIVF */
+#define NV_PMGR_DP_AUXCTL_SEMA_REQUEST_INIT              0x00000000 /* RWI-V */
+#define NV_PMGR_DP_AUXCTL_SEMA_REQUEST_RELEASE           0x00000000 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_SEMA_REQUEST_RM                0x00000001 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_SEMA_REQUEST_VBIOS             0x00000002 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_SEMA_REQUEST_PMU               0x00000003 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_SEMA_REQUEST_GSP               0x00000004 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_SEMA_REQUEST_SEC2              0x00000005 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_SEMA_GRANT                          26:24 /* R--VF */
+#define NV_PMGR_DP_AUXCTL_SEMA_GRANT_INIT                0x00000000 /* R---V */
+#define NV_PMGR_DP_AUXCTL_SEMA_GRANT_NONE                0x00000000 /* R---V */
+#define NV_PMGR_DP_AUXCTL_SEMA_GRANT_RM                  0x00000001 /* R---V */
+#define NV_PMGR_DP_AUXCTL_SEMA_GRANT_VBIOS               0x00000002 /* R---V */
+#define NV_PMGR_DP_AUXCTL_SEMA_GRANT_PMU                 0x00000003 /* R---V */
+#define NV_PMGR_DP_AUXCTL_SEMA_GRANT_GSP                 0x00000004 /* R---V */
+#define NV_PMGR_DP_AUXCTL_SEMA_GRANT_SEC2                0x00000005 /* R---V */
+#define NV_PMGR_DP_AUXCTL_RESET                               31:31 /* RWIVF */
+#define NV_PMGR_DP_AUXCTL_RESET_INIT                     0x00000000 /* RWI-V */
+#define NV_PMGR_DP_AUXCTL_RESET_ASSERT                   0x00000001 /* RW--V */
+#define NV_PMGR_DP_AUXCTL_RESET_DEASSERT                 0x00000000 /* RW--V */
+#define NV_PMGR_DP_AUXSTAT(i)                   (0x0000D958+(i)*80) /* RW-4A */
+#define NV_PMGR_DP_AUXSTAT__SIZE_1                                7 /*       */
+#define NV_PMGR_DP_AUXSTAT_REPLY_M                              7:0 /* R--UF */
+#define NV_PMGR_DP_AUXSTAT_TIMEOUT                              8:8 /* RWIVF */
+#define NV_PMGR_DP_AUXSTAT_TIMEOUT_NOT_PENDING           0x00000000 /* R-I-V */
+#define NV_PMGR_DP_AUXSTAT_TIMEOUT_PENDING               0x00000001 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_TIMEOUT_RESET                 0x00000001 /* -W--C */
+#define NV_PMGR_DP_AUXSTAT_RX_ERROR                             9:9 /* RWIVF */
+#define NV_PMGR_DP_AUXSTAT_RX_ERROR_NOT_PENDING          0x00000000 /* R-I-V */
+#define NV_PMGR_DP_AUXSTAT_RX_ERROR_PENDING              0x00000001 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_RX_ERROR_RESET                0x00000001 /* -W--C */
+#define NV_PMGR_DP_AUXSTAT_SINKSTAT_ERROR                     10:10 /* RWIVF */
+#define NV_PMGR_DP_AUXSTAT_SINKSTAT_ERROR_NOT_PENDING    0x00000000 /* R-I-V */
+#define NV_PMGR_DP_AUXSTAT_SINKSTAT_ERROR_PENDING        0x00000001 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_SINKSTAT_ERROR_RESET          0x00000001 /* -W--C */
+#define NV_PMGR_DP_AUXSTAT_NO_STOP_ERROR                      11:11 /* RWIVF */
+#define NV_PMGR_DP_AUXSTAT_NO_STOP_ERROR_NOT_PENDING     0x00000000 /* R-I-V */
+#define NV_PMGR_DP_AUXSTAT_NO_STOP_ERROR_PENDING         0x00000001 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_NO_STOP_ERROR_RESET           0x00000001 /* -W--C */
+#define NV_PMGR_DP_AUXSTAT_REPLYTYPE                          19:16 /* R--VF */
+#define NV_PMGR_DP_AUXSTAT_REPLYTYPE_ACK                 0x00000000 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_REPLYTYPE_NACK                0x00000001 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_REPLYTYPE_DEFER               0x00000002 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_REPLYTYPE_I2CNACK             0x00000004 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_REPLYTYPE_I2CDEFER            0x00000008 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE                       23:20 /* R-IVF */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_INIT             0x00000000 /* R-I-V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_IDLE             0x00000000 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_SYNC             0x00000001 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_START1           0x00000002 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_COMMAND          0x00000003 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_ADDRESS          0x00000004 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_LENGTH           0x00000005 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_WRITE1           0x00000006 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_READ1            0x00000007 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_GET_M            0x00000008 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_STOP1            0x00000009 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_STOP2            0x0000000A /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_REPLY            0x0000000B /* R---V */
+#define NV_PMGR_DP_AUXSTAT_AUXCTL_STATE_CLEANUP          0x0000000C /* R---V */
+#define NV_PMGR_DP_AUXSTAT_HPD_STATUS                         28:28 /* R--VF */
+#define NV_PMGR_DP_AUXSTAT_HPD_STATUS_UNPLUG             0x00000000 /* R---V */
+#define NV_PMGR_DP_AUXSTAT_HPD_STATUS_PLUGGED            0x00000001 /* R---V */
+#define NV_PMGR_HPD_CONFIG(i)                   (0x0000D964+(i)*80) /* RW-4A */
+#define NV_PMGR_HPD_CONFIG__SIZE_1                                7 /*       */
+#define NV_PMGR_HPD_CONFIG_PLUG_MIN_TIME                       15:0 /* RWIVF */
+#define NV_PMGR_HPD_CONFIG_PLUG_MIN_TIME_INIT            0x000000FA /* RWI-V */
+#define NV_PMGR_HPD_CONFIG_UNPLUG_MIN_TIME                    31:16 /* RWIVF */
+#define NV_PMGR_HPD_CONFIG_UNPLUG_MIN_TIME_INIT          0x000007D0 /* RWI-V */
+#define NV_PMGR_HPD_IRQ_CONFIG(i)               (0x0000D968+(i)*80) /* RW-4A */
+#define NV_PMGR_HPD_IRQ_CONFIG__SIZE_1                            7 /*       */
+#define NV_PMGR_HPD_IRQ_CONFIG_MIN_LOW_TIME                    15:0 /* RWIVF */
+#define NV_PMGR_HPD_IRQ_CONFIG_MIN_LOW_TIME_INIT         0x000000FA /* RWI-V */
+#define NV_PMGR_HPD_IRQ_CONFIG_AUTO_DPCD_READ                 16:16 /* RWIVF */
+#define NV_PMGR_HPD_IRQ_CONFIG_AUTO_DPCD_READ_INIT       0x00000001 /* R-I-V */
+#define NV_PMGR_HPD_IRQ_CONFIG_AUTO_DPCD_READ_ENABLE     0x00000001 /* RW--V */
+#define NV_PMGR_HPD_IRQ_CONFIG_AUTO_DPCD_READ_DISABLE    0x00000000 /* RW--V */
+#define NV_PMGR_DP_AUX_CONFIG(i)                 (0x0000D96C+(i)*80) /* RW-4A */
+#define NV_PMGR_DP_AUX_CONFIG__SIZE_1                              7 /*       */
+#define NV_PMGR_DP_AUX_CONFIG_TIMEOUT                           15:0 /* RWIVF */
+#define NV_PMGR_DP_AUX_CONFIG_TIMEOUT_INIT                0x00000C80 /* RWI-V */
+#define NV_PMGR_HYBRID_PADCTL(i)                (0x0000D970+(i)*80) /* RW-4A */
+#define NV_PMGR_HYBRID_PADCTL__SIZE_1                             7 /*       */
+#define NV_PMGR_HYBRID_PADCTL_MODE                              0:0 /* RWIVF */
+#define NV_PMGR_HYBRID_PADCTL_MODE_INIT                  0x00000000 /* RWI-V */
+#define NV_PMGR_HYBRID_PADCTL_MODE_AUX                   0x00000000 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_MODE_I2C                   0x00000001 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_INPUT_RCV                     1:1 /* RWIVF */
+#define NV_PMGR_HYBRID_PADCTL_AUX_INPUT_RCV_INIT         0x00000001 /* RWI-V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_INPUT_RCV_ENABLE       0x00000001 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_INPUT_RCV_DISABLE      0x00000000 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVI                          7:2 /* RWIVF */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVI_INIT              0x00000028 /* RWI-V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVZ                         10:8 /* RWIVF */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVZ_INIT              0x00000003 /* RWI-V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVZ_78_OHM            0x00000000 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVZ_60_OHM            0x00000001 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVZ_54_OHM            0x00000002 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVZ_45_OHM            0x00000003 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVZ_50_OHM            0x00000004 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVZ_42_OHM            0x00000005 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVZ_39_OHM            0x00000006 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_DRVZ_34_OHM            0x00000007 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_CMH                         13:12 /* RWIVF */
+#define NV_PMGR_HYBRID_PADCTL_AUX_CMH_INIT               0x00000002 /* RWI-V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_CMH_0_60V              0x00000000 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_CMH_0_64V              0x00000001 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_CMH_0_70V              0x00000002 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_AUX_CMH_0_56V              0x00000003 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_I2C_SCL_INPUT_RCV               14:14 /* RWIVF */
+#define NV_PMGR_HYBRID_PADCTL_I2C_SCL_INPUT_RCV_INIT     0x00000000 /* RWI-V */
+#define NV_PMGR_HYBRID_PADCTL_I2C_SCL_INPUT_RCV_ENABLE   0x00000001 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_I2C_SCL_INPUT_RCV_DISABLE  0x00000000 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_I2C_SDA_INPUT_RCV               15:15 /* RWIVF */
+#define NV_PMGR_HYBRID_PADCTL_I2C_SDA_INPUT_RCV_INIT     0x00000000 /* RWI-V */
+#define NV_PMGR_HYBRID_PADCTL_I2C_SDA_INPUT_RCV_ENABLE   0x00000001 /* RW--V */
+#define NV_PMGR_HYBRID_PADCTL_I2C_SDA_INPUT_RCV_DISABLE  0x00000000 /* RW--V */
+#define NV_PMGR_HYBRID_SPARE(i)                 (0x0000D97C+(i)*80) /* RW-4A */
+#define NV_PMGR_HYBRID_SPARE__SIZE_1                              7 /*       */
+#define NV_PMGR_HYBRID_SPARE_PAD_PWR                            0:0 /* RWIVF */
+#define NV_PMGR_HYBRID_SPARE_PAD_PWR_INIT                0x00000000 /* RWI-V */
+#define NV_PMGR_HYBRID_SPARE_PAD_PWR_POWERDOWN           0x00000001 /* RW--V */
+#define NV_PMGR_HYBRID_SPARE_PAD_PWR_POWERUP             0x00000000 /* RW--V */
+#define NV_PMGR_HYBRID_SPARE_REG                               31:1 /* RWIVF */
+#define NV_PMGR_HYBRID_SPARE_REG_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_MUTEX_ID_ACQUIRE                                  0x0000DF00 /* R--4R */
+#define NV_PMGR_MUTEX_ID_ACQUIRE_VALUE                            7:0        /* R-IUF */
+#define NV_PMGR_MUTEX_ID_ACQUIRE_VALUE_INIT                       0x00000000 /* R-I-V */
+#define NV_PMGR_MUTEX_ID_ACQUIRE_VALUE_NOT_AVAIL                  0x000000ff /* R---V */
+#define NV_PMGR_MUTEX_ID_RELEASE                                  0x0000DF04 /* RW-4R */
+#define NV_PMGR_MUTEX_ID_RELEASE_VALUE                            7:0        /* RWIUF */
+#define NV_PMGR_MUTEX_ID_RELEASE_VALUE_INIT                       0x00000000 /* RWI-V */
+#define NV_PMGR_MUTEX_REG(i)                                          (0x0000DF08+(i)*4) /* RW-4A */
+#define NV_PMGR_MUTEX_REG__SIZE_1                                             32         /*       */
+#define NV_PMGR_MUTEX_REG_VALUE                                               7:0        /* RWIVF */
+#define NV_PMGR_MUTEX_REG_VALUE_INITIAL_LOCK                                  0x00000000 /* RWI-V */
+#define NV_PMGR_VPLL_EXT_REF_CONFIG(i)                      (0x0000E2F8+(i)*4) /* RW-4A */
+#define NV_PMGR_VPLL_EXT_REF_CONFIG__SIZE_1                                  4 /*       */
+#define NV_PMGR_VPLL_EXT_REF_CONFIG_QUAL_DIV                               5:0 /* RWIUF */
+#define NV_PMGR_VPLL_EXT_REF_CONFIG_QUAL_DIV_INIT                   0x0000000E /* RWI-V */
+#define NV_PMGR_VPLL_EXT_REF_CONFIG_QUAL_TEST_PER                         12:6 /* RWIUF */
+#define NV_PMGR_VPLL_EXT_REF_CONFIG_QUAL_TEST_PER_INIT              0x00000063 /* RWI-V */
+#define NV_PMGR_VPLL_EXT_REF_CONFIG_QUAL_STATUS                          13:13 /* R--VF */
+#define NV_PMGR_VPLL_EXT_REF_CONFIG_QUAL_STATUS_INACTIVE            0x00000000 /* R---V */
+#define NV_PMGR_VPLL_EXT_REF_CONFIG_QUAL_STATUS_ACTIVE              0x00000001 /* R---V */
+#define NV_PMGR_PAD_EXT_REFCLKA                               0x0000E30C /* RW-4R */
+#define NV_PMGR_PAD_EXT_REFCLKA_SPARE                                1:0 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKA_SPARE_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKA_SCHMITT                              3:2 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKA_SCHMITT_INIT                  0x00000003 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKA_SCHMITT_DIS                   0x00000000 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKA_SCHMITT_0075V                 0x00000001 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKA_SCHMITT_015V                  0x00000002 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKA_SCHMITT_024V                  0x00000003 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_ONE                                4:4 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_ONE_INIT                    0x00000001 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_TWO                                5:5 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_TWO_INIT                    0x00000001 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKA_EN                                   6:6 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKA_EN_INIT                       0x00000001 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKA_EN_ACTIVE                     0x00000000 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKA_EN_TRISTATE                   0x00000001 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_INPUT                              7:7 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_INPUT_INIT                  0x00000001 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_INPUT_LOW                   0x00000000 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_INPUT_ACTIVE                0x00000001 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_PULLDN                             8:8 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_PULLDN_INIT                 0x00000000 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_PULLUP                             9:9 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_PULLUP_INIT                 0x00000000 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_SCH                              10:10 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKA_E_SCH_INIT                    0x00000001 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKB                               0x0000E310 /* RW-4R */
+#define NV_PMGR_PAD_EXT_REFCLKB_SPARE                                1:0 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKB_SPARE_INIT                    0x00000000 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKB_SCHMITT                              3:2 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKB_SCHMITT_INIT                  0x00000003 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKB_SCHMITT_DIS                   0x00000000 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKB_SCHMITT_0075V                 0x00000001 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKB_SCHMITT_015V                  0x00000002 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKB_SCHMITT_024V                  0x00000003 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_ONE                                4:4 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_ONE_INIT                    0x00000001 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_TWO                                5:5 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_TWO_INIT                    0x00000001 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKB_EN                                   6:6 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKB_EN_INIT                       0x00000001 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKB_EN_ACTIVE                     0x00000000 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKB_EN_TRISTATE                   0x00000001 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_INPUT                              7:7 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_INPUT_INIT                  0x00000001 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_INPUT_LOW                   0x00000000 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_INPUT_ACTIVE                0x00000001 /* RW--V */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_PULLDN                             8:8 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_PULLDN_INIT                 0x00000000 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_PULLUP                             9:9 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_PULLUP_INIT                  0x00000000 /* RWI-V */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_SCH                              10:10 /* RWIVF */
+#define NV_PMGR_PAD_EXT_REFCLKB_E_SCH_INIT                    0x00000001 /* RWI-V */
+
+--------------------------------------------------------------------------------
+                         KEY LEGEND
+--------------------------------------------------------------------------------
+
+Each define in the .ref file has a 5 field code to say what kind of define it is: i.e. /* RW--R */
+The following legend shows accepted values for each of the 5 fields:
+  Read, Write, Internal State, Declaration/Size, and Define Indicator.
+
+  Read
+    ' ' = Other Information
+    '-' = Field is part of a write-only register
+    'C' = Value read is always the same, constant value line follows (C)
+    'R' = Value is read
+
+
+  Write
+    ' ' = Other Information
+    '-' = Must not be written (D), value ignored when written (R,A,F)
+    'W' = Can be written
+
+
+  Internal State
+    ' ' = Other Information
+    '-' = No internal state
+    'X' = Internal state, initial value is unknown
+    'I' = Internal state, initial value is known and follows (I), see "Reset Signal" section for signal.
+    'E' = Internal state, initial value is known and follows (E), see "Reset Signal" section for signal.
+    'B' = Internal state, initial value is known and follows (B), see "Reset Signal" section for signal.
+    'C' = Internal state, initial value is known and follows (C), see "Reset Signal" section for signal.
+
+    'V' = (legacy) Internal state, initialize at volatile reset
+    'D' = (legacy) Internal state, default initial value at object creation (legacy: Only used in dev_ram.ref)
+    'C' = (legacy) Internal state, initial value at object creation
+    'C' = (legacy) Internal state, class-based initial value at object creation (legacy: Only used in dev_ram.ref)
+
+
+  Declaration/Size
+    ' ' = Other Information
+    '-' = Does Not Apply
+    'V' = Type is void
+    'U' = Type is unsigned integer
+    'S' = Type is signed integer
+    'F' = Type is IEEE floating point
+    '1' = Byte size (008)
+    '2' = Short size (016)
+    '3' = Three byte size (024)
+    '4' = Word size (032)
+    '8' = Double size (064)
+
+
+  Define Indicator
+    ' ' = Other Information
+    'C' = Clear value
+    'D' = Device
+    'L' = Logical device.
+    'M' = Memory
+    'R' = Register
+    'A' = Array of Registers
+    'F' = Field
+    'V' = Value
+    'T' = Task
+    'P' = Phantom Register
+
+    'B' = (legacy) Bundle address
+    'G' = (legacy) General purpose configuration register
+    'C' = (legacy) Class
+
+  Reset signal defaults for graphics engine registers.
+    All graphics engine registers use the following defaults for reset signals:
+     'E' = initialized with engine_reset_
+     'I' = initialized with context_reset_
+     'B' = initialized with reset_IB_dly_
+
+  Reset signal
+    For units that differ from the graphics engine defaults, the reset signals should be defined here:
