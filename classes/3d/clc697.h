@@ -303,6 +303,30 @@
 #define NVC697_SET_GO_IDLE_TIMEOUT                                                                         0x022c
 #define NVC697_SET_GO_IDLE_TIMEOUT_V                                                                         31:0
 
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL                                                             0x0230
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_EXTRA_PRIM_BLOAT                                               3:0
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_EXTRA_PRIM_BLOAT_BLOAT_0                                0x00000000
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_EXTRA_PRIM_BLOAT_BLOAT_25                               0x00000001
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_EXTRA_PRIM_BLOAT_BLOAT_50                               0x00000002
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_EXTRA_PRIM_BLOAT_BLOAT_75                               0x00000003
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_EXTRA_PRIM_BLOAT_BLOAT_PRI                              0x00000004
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_COPY_INNER_TO_OUTER                                            4:4
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_COPY_INNER_TO_OUTER_FALSE                               0x00000000
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_COPY_INNER_TO_OUTER_TRUE                                0x00000001
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_TRIANGLE_SNAP_MODE                                            10:8
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_TRIANGLE_SNAP_MODE_MODE_POST_SNAP                       0x00000000
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_TRIANGLE_SNAP_MODE_MODE_PRE_SNAP                        0x00000001
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_TRIANGLE_SNAP_MODE_MODE_PRI                             0x00000002
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_LINE_AND_POINT_SNAP_MODE                                     14:12
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_LINE_AND_POINT_SNAP_MODE_MODE_POST_SNAP                 0x00000000
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_LINE_AND_POINT_SNAP_MODE_MODE_PRE_SNAP                  0x00000001
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_LINE_AND_POINT_SNAP_MODE_MODE_PRI                       0x00000002
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_UNCERTAINTY_REGION_SIZE                                      19:16
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_UNCERTAINTY_REGION_SIZE_SIZE_64                         0x00000000
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_UNCERTAINTY_REGION_SIZE_SIZE_128                        0x00000001
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_UNCERTAINTY_REGION_SIZE_SIZE_256                        0x00000002
+#define NVC697_SET_CONSERVATIVE_RASTER_CONTROL_UNCERTAINTY_REGION_SIZE_SIZE_512                        0x00000003
+
 #define NVC697_SET_MME_VERSION                                                                             0x0234
 #define NVC697_SET_MME_VERSION_MAJOR                                                                          7:0
 
@@ -1995,6 +2019,11 @@
 
 #define NVC697_FLUSH_PENDING_WRITES                                                                        0x1144
 #define NVC697_FLUSH_PENDING_WRITES_SM_DOES_GLOBAL_STORE                                                      0:0
+
+#define NVC697_SET_CONSERVATIVE_RASTER                                                                     0x1148
+#define NVC697_SET_CONSERVATIVE_RASTER_ENABLE                                                                 0:0
+#define NVC697_SET_CONSERVATIVE_RASTER_ENABLE_FALSE                                                    0x00000000
+#define NVC697_SET_CONSERVATIVE_RASTER_ENABLE_TRUE                                                     0x00000001
 
 #define NVC697_SET_VERTEX_ATTRIBUTE_A(i)                                                           (0x1160+(i)*4)
 #define NVC697_SET_VERTEX_ATTRIBUTE_A_STREAM                                                                  4:0

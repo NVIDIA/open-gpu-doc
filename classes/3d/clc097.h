@@ -1833,6 +1833,11 @@
 #define NVC097_FLUSH_PENDING_WRITES                                                                        0x1144
 #define NVC097_FLUSH_PENDING_WRITES_SM_DOES_GLOBAL_STORE                                                      0:0
 
+#define NVC097_SET_CONSERVATIVE_RASTER                                                                     0x1148
+#define NVC097_SET_CONSERVATIVE_RASTER_ENABLE                                                                 0:0
+#define NVC097_SET_CONSERVATIVE_RASTER_ENABLE_FALSE                                                    0x00000000
+#define NVC097_SET_CONSERVATIVE_RASTER_ENABLE_TRUE                                                     0x00000001
+
 #define NVC097_SET_VERTEX_ATTRIBUTE_A(i)                                                           (0x1160+(i)*4)
 #define NVC097_SET_VERTEX_ATTRIBUTE_A_STREAM                                                                  4:0
 #define NVC097_SET_VERTEX_ATTRIBUTE_A_SOURCE                                                                  6:6
