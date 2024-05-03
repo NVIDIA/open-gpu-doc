@@ -2153,6 +2153,40 @@
 #define NVC997_SET_CONSERVATIVE_RASTER_ENABLE_FALSE                                                    0x00000000
 #define NVC997_SET_CONSERVATIVE_RASTER_ENABLE_TRUE                                                     0x00000001
 
+#define NVC997_SET_MESH_CONTROL                                                                            0x114c
+#define NVC997_SET_MESH_CONTROL_ENABLE                                                                        0:0
+#define NVC997_SET_MESH_CONTROL_ENABLE_FALSE                                                           0x00000000
+#define NVC997_SET_MESH_CONTROL_ENABLE_TRUE                                                            0x00000001
+
+#define NVC997_SET_MESH_SHADER_A                                                                           0x1150
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY                                                              3:0
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_POINTS                                                0x00000000
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_LINES                                                 0x00000001
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_LINE_LOOP                                             0x00000002
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_LINE_STRIP                                            0x00000003
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_TRIANGLES                                             0x00000004
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_TRIANGLE_STRIP                                        0x00000005
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_TRIANGLE_FAN                                          0x00000006
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_QUADS                                                 0x00000007
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_QUAD_STRIP                                            0x00000008
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_POLYGON                                               0x00000009
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_LINELIST_ADJCY                                        0x0000000A
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_LINESTRIP_ADJCY                                       0x0000000B
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_TRIANGLELIST_ADJCY                                    0x0000000C
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_TRIANGLESTRIP_ADJCY                                   0x0000000D
+#define NVC997_SET_MESH_SHADER_A_OUTPUT_TOPOLOGY_PATCH                                                 0x0000000E
+#define NVC997_SET_MESH_SHADER_A_MAX_VERTEX                                                                  12:4
+#define NVC997_SET_MESH_SHADER_A_MAX_PRIMITIVE                                                              22:13
+
+#define NVC997_SET_MESH_SHADER_B                                                                           0x1154
+#define NVC997_SET_MESH_SHADER_B_SHARED_MEM_LINES                                                            16:8
+#define NVC997_SET_MESH_SHADER_B_THREAD_COUNT                                                               25:20
+
+#define NVC997_SET_MESH_INIT_SHADER                                                                        0x1158
+#define NVC997_SET_MESH_INIT_SHADER_THREAD_COUNT                                                              5:0
+#define NVC997_SET_MESH_INIT_SHADER_LOCAL_BUFFER_LINES                                                      20:12
+#define NVC997_SET_MESH_INIT_SHADER_OUTPUT_TO_M_S_LINES                                                     30:22
+
 #define NVC997_SET_VERTEX_ATTRIBUTE_A(i)                                                           (0x1160+(i)*4)
 #define NVC997_SET_VERTEX_ATTRIBUTE_A_STREAM                                                                  4:0
 #define NVC997_SET_VERTEX_ATTRIBUTE_A_SOURCE                                                                  6:6
