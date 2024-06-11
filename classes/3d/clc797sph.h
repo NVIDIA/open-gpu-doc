@@ -23,8 +23,8 @@
 /* AUTO GENERATED FILE -- DO NOT EDIT */
 
 #ifndef __CLC797SPH_H__
-#define __CLC797SPH_H_
-_
+#define __CLC797SPH_H__
+
 /*
 ** Shader Program Header State, Version 4, Type 1
  */
