@@ -229,3 +229,14 @@ DISP_SF_USER:               clc671.h
 GPUs:                       ga102,ga103,ga104,ga106,ga107
 __________________________________________________________________________
 
+Class Name:                 NVD_40
+Software Class Number:      C770
+Cursor Channel:             clc67a.h
+Window Immediate Channel:   clc67b.h
+Core Channel:               clc77d.h
+Window Channel:             clc67e.h
+CRC notifier definitions:   clc37dcrcnotif.h
+DISP_SF_USER:               clc771.h
+GPUs:                       ad102,ad103,ad104,ad106,ad107
+__________________________________________________________________________
+
