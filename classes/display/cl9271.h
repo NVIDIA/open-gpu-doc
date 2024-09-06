@@ -74,6 +74,27 @@ typedef volatile struct _cl9271_tag0 {
 #define NV9271_SF_HDMI_INFO_STATUS_SENT_INIT                            0x00000000 /* R-I-V */
 #define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL(i)                    (0x00690000-0x00690000+(i)*1024) /* RWX4A */
 #define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL__SIZE_1                                   4 /*       */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE                                  0:0 /* RWIVF */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE_NO                        0x00000000 /* RWI-V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE_YES                       0x00000001 /* RW--V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE_DIS                       0x00000000 /* RW--V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_ENABLE_EN                        0x00000001 /* RW--V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_OTHER                                   4:4 /* RWIVF */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_OTHER_DIS                        0x00000000 /* RWI-V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_OTHER_EN                         0x00000001 /* RW--V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_SINGLE                                  8:8 /* RWIVF */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_SINGLE_DIS                       0x00000000 /* RWI-V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_SINGLE_EN                        0x00000001 /* RW--V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_CHKSUM_HW                               9:9 /* RWIVF */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_CHKSUM_HW_ENABLE                 0x00000001 /* RW--V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_CHKSUM_HW_DISABLE                0x00000000 /* RW--V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_CTRL_CHKSUM_HW_INIT                   0x00000001 /* RWI-V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_STATUS(i)                  (0x00690004-0x00690000+(i)*1024) /* R--4A */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_STATUS__SIZE_1                                 4 /*       */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_STATUS_SENT                                  0:0 /* R--VF */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_STATUS_SENT_DONE                      0x00000001 /* R---V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_STATUS_SENT_WAITING                   0x00000000 /* R---V */
+#define NV9271_SF_HDMI_AVI_INFOFRAME_STATUS_SENT_INIT                      0x00000000 /* R-I-V */
 #define NV9271_SF_HDMI_AVI_INFOFRAME_HEADER(i)                  (0x00690008-0x00690000+(i)*1024) /* RWX4A */
 #define NV9271_SF_HDMI_AVI_INFOFRAME_HEADER__SIZE_1                                 4 /*       */
 #define NV9271_SF_HDMI_AVI_INFOFRAME_HEADER_HB0                                   7:0 /* RWIVF */
