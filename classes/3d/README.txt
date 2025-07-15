@@ -110,3 +110,16 @@ Class Name:                 HOPPER_A
 3D Class Header:            clcb97.h
 3D Class Texture Header:    clcb97tex.h
 GPUs:                       gh100
+__________________________________________________________________________
+
+Class Name:                 BLACKWELL_A
+3D Class Header:            clcd97.h
+3D Class Texture Header:    clcd97tex.h
+GPUs:                       gb100, gb102, gb10b, gb110, gb112
+__________________________________________________________________________
+
+Class Name:                 BLACKWELL_B
+3D Class Header:            clce97.h
+3D Class Texture Header:    clce97tex.h
+GPUs:                       gb202, gb203, gb205, gb206, gb207, gb20b
+
