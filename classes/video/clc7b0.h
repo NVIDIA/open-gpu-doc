@@ -590,7 +590,6 @@ extern "C" {
 #define NVC7B0_DEC_ERROR_MPEG4_INVALID_CTXID_SLH                                (0xDEC40904)
 #define NVC7B0_DEC_ERROR_MPEG4_INVALID_UCODE_SIZE                               (0xDEC40905)
 #define NVC7B0_DEC_ERROR_MPEG4_INVALID_SLICE_COUNT                              (0xDEC40906)
-#endif // (!defined(NVRM_UNPUBLISHED_OPAQUE) || NVRM_UNPUBLISHED_OPAQUE == 1)
 
 #ifdef __cplusplus
 };     /* extern "C" */

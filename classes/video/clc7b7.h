@@ -303,7 +303,6 @@ extern "C" {
 #define NVC7B7_ENC_ERROR_H264_INVALID_INPUT                                     (0x30000002)
 #define NVC7B7_ENC_ERROR_H264_HWERR_INTERRUPT                                   (0x30000003)
 #define NVC7B7_ENC_ERROR_H264_BAD_MAGIC                                         (0x30000004)
-#endif // (!defined(NVRM_UNPUBLISHED_OPAQUE) || NVRM_UNPUBLISHED_OPAQUE == 1)
 
 #ifdef __cplusplus
 };     /* extern "C" */
